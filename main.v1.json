@@ -3370,7 +3370,7 @@
       }
     },
     "/search/image": {
-      "get": {
+      "post": {
         "summary": "Search by image",
         "tags": [],
         "responses": {
@@ -3383,7 +3383,7 @@
       }
     },
     "/search/image/saucenao": {
-      "get": {
+      "post": {
         "summary": "Search by image at saucenao",
         "tags": [],
         "responses": {
@@ -3595,7 +3595,7 @@
       "parameters": []
     },
     "/accounts/login/form": {
-      "get": {
+      "post": {
         "summary": "Login with form",
         "tags": [],
         "responses": {
