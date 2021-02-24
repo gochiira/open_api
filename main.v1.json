@@ -109,7 +109,7 @@
         "tags": [],
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "ヒットしたデータが応答のdataに配列で返却されます",
             "content": {
               "application/json": {
                 "schema": {
@@ -195,7 +195,7 @@
                   ]
                 },
                 "examples": {
-                  "example-1": {
+                  "example": {
                     "value": {
                       "status": 200,
                       "message": "found",
@@ -214,7 +214,7 @@
                             "twitterID": null,
                             "mastodon": null,
                             "homepage": null,
-                            "endpoint": "https://***REMOVED***",
+                            "endpoint": "https://example.com",
                             "count": 1,
                             "lcount": 1
                           },
@@ -227,7 +227,7 @@
                             "twitterID": null,
                             "mastodon": null,
                             "homepage": null,
-                            "endpoint": "https://***REMOVED***",
+                            "endpoint": "https://example.com",
                             "count": 1,
                             "lcount": 1
                           },
@@ -240,7 +240,7 @@
                             "twitterID": null,
                             "mastodon": null,
                             "homepage": null,
-                            "endpoint": "https://***REMOVED***",
+                            "endpoint": "https://example.com",
                             "count": 1,
                             "lcount": 1
                           },
@@ -253,7 +253,7 @@
                             "twitterID": null,
                             "mastodon": null,
                             "homepage": null,
-                            "endpoint": "https://***REMOVED***",
+                            "endpoint": "https://example.com",
                             "count": 1,
                             "lcount": 1
                           },
@@ -266,7 +266,7 @@
                             "twitterID": null,
                             "mastodon": null,
                             "homepage": null,
-                            "endpoint": "https://***REMOVED***",
+                            "endpoint": "https://example.com",
                             "count": 4,
                             "lcount": 57
                           }
@@ -284,26 +284,42 @@
         "parameters": [
           {
             "schema": {
-              "type": "number"
+              "type": "number",
+              "default": 1,
+              "minimum": 1,
+              "exclusiveMinimum": true
             },
             "in": "query",
             "name": "page",
-            "description": "取得したいページ番号"
+            "description": "ページ番号"
           },
           {
             "schema": {
-              "type": "string"
+              "type": "string",
+              "default": "c",
+              "enum": [
+                "d",
+                "l",
+                "c",
+                "n"
+              ]
             },
             "in": "query",
-            "name": "sort"
+            "name": "sort",
+            "description": "ソート方法 c:ヒット数 d:最終更新 l:いいね数 n:名前"
           },
           {
             "schema": {
-              "type": "string"
+              "type": "string",
+              "enum": [
+                "d",
+                "a"
+              ],
+              "default": "a"
             },
             "in": "query",
             "name": "order",
-            "description": "\"d\"esc / \"a\"sc"
+            "description": "ソート方向 最小が先頭: \"d\"esc, 最大が先頭:\"a\"sc"
           }
         ]
       },
@@ -315,7 +331,288 @@
         "tags": [],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "ヒットしたデータが応答のdataに配列で返却されます",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "number"
+                    },
+                    "message": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "data": {
+                      "type": "object",
+                      "required": [
+                        "title",
+                        "count",
+                        "current",
+                        "pages",
+                        "contents"
+                      ],
+                      "properties": {
+                        "title": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "count": {
+                          "type": "number"
+                        },
+                        "current": {
+                          "type": "number"
+                        },
+                        "pages": {
+                          "type": "number"
+                        },
+                        "contents": {
+                          "type": "array",
+                          "uniqueItems": true,
+                          "minItems": 1,
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "number"
+                              },
+                              "name": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "description": {},
+                              "nsfw": {
+                                "type": "number"
+                              },
+                              "endpoint": {},
+                              "count": {
+                                "type": "number"
+                              },
+                              "lcount": {
+                                "type": "number"
+                              },
+                              "": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "name",
+                              "nsfw",
+                              "count",
+                              "lcount"
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "example": {
+                    "value": {
+                      "status": 200,
+                      "message": "found",
+                      "data": {
+                        "title": "タグ",
+                        "count": 4073,
+                        "current": 1,
+                        "pages": 204,
+                        "contents": [
+                          {
+                            "id": 4175,
+                            "name": "魅惑の脚線美",
+                            "description": null,
+                            "nsfw": 0,
+                            "endpoint": null,
+                            "count": 1,
+                            "lcount": 0
+                          },
+                          {
+                            "id": 3931,
+                            "name": "2021年02月",
+                            "description": null,
+                            "nsfw": 0,
+                            "endpoint": null,
+                            "count": 574,
+                            "lcount": 172
+                          },
+                          {
+                            "id": 1230,
+                            "name": "タイツ越しのパンツ",
+                            "description": null,
+                            "nsfw": 0,
+                            "endpoint": null,
+                            "count": 4,
+                            "lcount": 10
+                          },
+                          {
+                            "id": 5,
+                            "name": "宇治松千夜",
+                            "description": "千夜さん",
+                            "nsfw": 0,
+                            "endpoint": null,
+                            "count": 909,
+                            "lcount": 925
+                          },
+                          {
+                            "id": 510,
+                            "name": "HD",
+                            "description": null,
+                            "nsfw": 0,
+                            "endpoint": null,
+                            "count": 1022,
+                            "lcount": 745
+                          },
+                          {
+                            "id": 89,
+                            "name": "パンツ",
+                            "description": null,
+                            "nsfw": 0,
+                            "endpoint": null,
+                            "count": 134,
+                            "lcount": 376
+                          },
+                          {
+                            "id": 192,
+                            "name": "ぱんつ",
+                            "description": null,
+                            "nsfw": 0,
+                            "endpoint": null,
+                            "count": 84,
+                            "lcount": 75
+                          },
+                          {
+                            "id": 422,
+                            "name": "差分",
+                            "description": null,
+                            "nsfw": 0,
+                            "endpoint": null,
+                            "count": 521,
+                            "lcount": 279
+                          },
+                          {
+                            "id": 2,
+                            "name": "保登心愛",
+                            "description": "ココアさん",
+                            "nsfw": 0,
+                            "endpoint": null,
+                            "count": 2140,
+                            "lcount": 4543
+                          },
+                          {
+                            "id": 469,
+                            "name": "FHD",
+                            "description": null,
+                            "nsfw": 0,
+                            "endpoint": null,
+                            "count": 2696,
+                            "lcount": 2818
+                          },
+                          {
+                            "id": 1,
+                            "name": "香風智乃",
+                            "description": "チノちゃん",
+                            "nsfw": 0,
+                            "endpoint": null,
+                            "count": 4366,
+                            "lcount": 12920
+                          },
+                          {
+                            "id": 414,
+                            "name": "R18",
+                            "description": null,
+                            "nsfw": 0,
+                            "endpoint": null,
+                            "count": 1869,
+                            "lcount": 681
+                          },
+                          {
+                            "id": 471,
+                            "name": "2K",
+                            "description": null,
+                            "nsfw": 0,
+                            "endpoint": null,
+                            "count": 1392,
+                            "lcount": 1639
+                          },
+                          {
+                            "id": 546,
+                            "name": "女の子",
+                            "description": null,
+                            "nsfw": 0,
+                            "endpoint": null,
+                            "count": 498,
+                            "lcount": 264
+                          },
+                          {
+                            "id": 4174,
+                            "name": "eQGMN5bqb8n",
+                            "description": null,
+                            "nsfw": 0,
+                            "endpoint": null,
+                            "count": 2,
+                            "lcount": 0
+                          },
+                          {
+                            "id": 920,
+                            "name": "めぐみ",
+                            "description": null,
+                            "nsfw": 0,
+                            "endpoint": null,
+                            "count": 69,
+                            "lcount": 6
+                          },
+                          {
+                            "id": 81,
+                            "name": "奈津恵",
+                            "description": null,
+                            "nsfw": 0,
+                            "endpoint": null,
+                            "count": 689,
+                            "lcount": 622
+                          },
+                          {
+                            "id": 4173,
+                            "name": "eTH7NS2kKk7",
+                            "description": null,
+                            "nsfw": 0,
+                            "endpoint": null,
+                            "count": 2,
+                            "lcount": 0
+                          },
+                          {
+                            "id": 2085,
+                            "name": "ほとここあ",
+                            "description": null,
+                            "nsfw": 0,
+                            "endpoint": null,
+                            "count": 3,
+                            "lcount": 0
+                          },
+                          {
+                            "id": 468,
+                            "name": "4K",
+                            "description": null,
+                            "nsfw": 0,
+                            "endpoint": null,
+                            "count": 3066,
+                            "lcount": 2723
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
           },
           "": {
             "content": {
@@ -602,25 +899,42 @@
         "parameters": [
           {
             "schema": {
-              "type": "number"
+              "type": "number",
+              "exclusiveMinimum": true,
+              "minimum": 1,
+              "default": 1
             },
             "in": "query",
-            "name": "page"
+            "name": "page",
+            "description": "ページ番号"
           },
           {
             "schema": {
-              "type": "string"
+              "type": "string",
+              "enum": [
+                "c",
+                "d",
+                "l",
+                "n"
+              ],
+              "default": "c"
             },
             "in": "query",
-            "name": "sort"
+            "name": "sort",
+            "description": "ソート方法 c:ヒット数 d:最終更新 l:いいね数 n:名前"
           },
           {
             "schema": {
-              "type": "string"
+              "type": "string",
+              "enum": [
+                "d",
+                "a"
+              ],
+              "default": "a"
             },
             "in": "query",
             "name": "order",
-            "description": "\"d\"esc / \"a\"sc"
+            "description": "ソート方向 最小が先頭: \"d\"esc, 最大が先頭:\"a\"sc"
           }
         ]
       },
@@ -632,7 +946,7 @@
         "tags": [],
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "ヒットしたデータが応答のdataに配列で返却されます",
             "content": {
               "application/json": {
                 "schema": {
@@ -712,7 +1026,7 @@
                   ]
                 },
                 "examples": {
-                  "example-1": {
+                  "example": {
                     "value": {
                       "status": 200,
                       "message": "found",
@@ -744,25 +1058,42 @@
         "parameters": [
           {
             "schema": {
-              "type": "number"
+              "type": "number",
+              "default": 1,
+              "minimum": 1,
+              "exclusiveMinimum": true
             },
             "in": "query",
-            "name": "page"
+            "name": "page",
+            "description": "ページ番号"
           },
           {
             "schema": {
-              "type": "string"
+              "type": "string",
+              "enum": [
+                "c",
+                "d",
+                "l",
+                "n"
+              ],
+              "default": "c"
             },
             "in": "query",
-            "name": "sort"
+            "name": "sort",
+            "description": "ソート方法 c:ヒット数 d:最終更新 l:いいね数 n:名前"
           },
           {
             "schema": {
-              "type": "string"
+              "type": "string",
+              "default": "a",
+              "enum": [
+                "d",
+                "a"
+              ]
             },
             "in": "query",
             "name": "order",
-            "description": "\"d\"esc / \"a\"sc"
+            "description": "ソート方向 最小が先頭: \"d\"esc, 最大が先頭:\"a\"sc"
           }
         ]
       }
@@ -1068,7 +1399,82 @@
         "tags": [],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "応答のdataに配列で返却されます",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "number"
+                    },
+                    "data": {
+                      "type": "array",
+                      "uniqueItems": true,
+                      "minItems": 1,
+                      "items": {
+                        "required": [
+                          "name",
+                          "id",
+                          "count"
+                        ],
+                        "properties": {
+                          "name": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "id": {
+                            "type": "number"
+                          },
+                          "count": {
+                            "type": "number"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "example": {
+                    "value": {
+                      "status": 200,
+                      "data": [
+                        {
+                          "name": "香風智乃",
+                          "id": 1,
+                          "count": 4366
+                        },
+                        {
+                          "name": "保登心愛",
+                          "id": 2,
+                          "count": 2140
+                        },
+                        {
+                          "name": "桐間紗路",
+                          "id": 4,
+                          "count": 1183
+                        },
+                        {
+                          "name": "天々座理世",
+                          "id": 3,
+                          "count": 1140
+                        },
+                        {
+                          "name": "宇治松千夜",
+                          "id": 5,
+                          "count": 909
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         "operationId": "get-navigations-characters",
@@ -1081,7 +1487,82 @@
         "tags": [],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "応答のdataに配列で返却されます",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "number"
+                    },
+                    "data": {
+                      "type": "array",
+                      "uniqueItems": true,
+                      "minItems": 1,
+                      "items": {
+                        "required": [
+                          "name",
+                          "id",
+                          "count"
+                        ],
+                        "properties": {
+                          "name": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "id": {
+                            "type": "number"
+                          },
+                          "count": {
+                            "type": "number"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "example": {
+                    "value": {
+                      "status": 200,
+                      "data": [
+                        {
+                          "name": "ごちシコ",
+                          "id": 413,
+                          "count": 129
+                        },
+                        {
+                          "name": "きゅんもふ",
+                          "id": 88,
+                          "count": 92
+                        },
+                        {
+                          "name": "KS",
+                          "id": 146,
+                          "count": 86
+                        },
+                        {
+                          "name": "りかたん☆",
+                          "id": 548,
+                          "count": 83
+                        },
+                        {
+                          "name": "きよ蔵",
+                          "id": 71,
+                          "count": 80
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         "operationId": "get-navigations-artists",
@@ -1094,7 +1575,82 @@
         "tags": [],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "応答のdataに配列で返却されます",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "number"
+                    },
+                    "data": {
+                      "type": "array",
+                      "uniqueItems": true,
+                      "minItems": 1,
+                      "items": {
+                        "required": [
+                          "name",
+                          "id",
+                          "count"
+                        ],
+                        "properties": {
+                          "name": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "id": {
+                            "type": "number"
+                          },
+                          "count": {
+                            "type": "number"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "example": {
+                    "value": {
+                      "status": 200,
+                      "data": [
+                        {
+                          "name": "2020年12月",
+                          "id": 2973,
+                          "count": 1580
+                        },
+                        {
+                          "name": "2020年10月",
+                          "id": 1793,
+                          "count": 1536
+                        },
+                        {
+                          "name": "2020年11月",
+                          "id": 2429,
+                          "count": 1324
+                        },
+                        {
+                          "name": "2021年01月",
+                          "id": 3529,
+                          "count": 874
+                        },
+                        {
+                          "name": "2021年02月",
+                          "id": 3931,
+                          "count": 574
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         "operationId": "get-navigations-tags",
@@ -1158,7 +1714,7 @@
                   ]
                 },
                 "examples": {
-                  "example-1": {
+                  "example": {
                     "value": {
                       "status": 200,
                       "data": [
@@ -1199,7 +1755,9 @@
       "parameters": [
         {
           "schema": {
-            "type": "string"
+            "type": "number",
+            "minimum": 1,
+            "exclusiveMinimum": true
           },
           "name": "newsID",
           "in": "path",
@@ -1258,7 +1816,7 @@
                   ]
                 },
                 "examples": {
-                  "example-1": {
+                  "example": {
                     "value": {
                       "status": 200,
                       "data": {
@@ -1422,12 +1980,12 @@
                   ]
                 },
                 "examples": {
-                  "example-1": {
+                  "example": {
                     "value": {
                       "status": 200,
                       "message": "ok",
                       "data": {
-                        "title": "Demoのマイリスト",
+                        "title": "Testのマイリスト",
                         "count": 1,
                         "current": 1,
                         "pages": 1,
@@ -1473,7 +2031,8 @@
           }
         },
         "operationId": "get-mylist-list",
-        "description": "自分の作成したマイリスト一覧を取得します"
+        "description": "自分の作成したマイリスト一覧を取得します",
+        "deprecated": true
       }
     },
     "/search/tag": {
@@ -2975,7 +3534,7 @@
         "tags": [],
         "responses": {
           "200": {
-            "description": "応答",
+            "description": "ログインできたかどうかはstatusを参照",
             "content": {
               "application/json": {
                 "schema": {
@@ -3011,7 +3570,8 @@
                   "login-failed": {
                     "value": {
                       "status": 404,
-                      "message": "account not found"
+                      "message": "account not found",
+                      "apiKey": null
                     }
                   }
                 }
@@ -3020,7 +3580,7 @@
           }
         },
         "operationId": "get-accounts-login-form",
-        "description": "IDとパスワードを用いてAPIトークンを発行する",
+        "description": "IDとパスワードを用いてユーザー認証し、APIトークンを発行します",
         "requestBody": {
           "content": {
             "application/json": {
@@ -3058,7 +3618,7 @@
               }
             }
           },
-          "description": "ユーザーIDとパスワードをパラメータに取る"
+          "description": "ユーザーIDとパスワードをパラメータに取ります"
         }
       }
     }
