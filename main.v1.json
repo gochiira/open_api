@@ -36,7 +36,7 @@
         }
       ],
       "get": {
-        "summary": "Your GET endpoint",
+        "summary": "Get user info",
         "tags": [],
         "responses": {
           "200": {
@@ -68,7 +68,7 @@
         }
       ],
       "get": {
-        "summary": "Your GET endpoint",
+        "summary": "Get upload history",
         "tags": [],
         "responses": {
           "200": {
@@ -92,7 +92,7 @@
         }
       ],
       "get": {
-        "summary": "Your GET endpoint",
+        "summary": "Reissue api key",
         "tags": [],
         "responses": {
           "200": {
@@ -105,7 +105,7 @@
     },
     "/catalog/artists": {
       "get": {
-        "summary": "Your GET endpoint",
+        "summary": "Get artist list",
         "tags": [],
         "responses": {
           "200": {
@@ -319,7 +319,7 @@
             },
             "in": "query",
             "name": "order",
-            "description": "ソート方向 最小が先頭: \"d\"esc, 最大が先頭:\"a\"sc"
+            "description": "ソート方向 最大が先頭: \"d\"esc, 最小が先頭:\"a\"sc"
           }
         ]
       },
@@ -327,7 +327,7 @@
     },
     "/catalog/tags": {
       "get": {
-        "summary": "Your GET endpoint",
+        "summary": "Get tag list",
         "tags": [],
         "responses": {
           "200": {
@@ -392,9 +392,6 @@
                               },
                               "lcount": {
                                 "type": "number"
-                              },
-                              "": {
-                                "type": "string"
                               }
                             },
                             "required": [
@@ -934,7 +931,7 @@
             },
             "in": "query",
             "name": "order",
-            "description": "ソート方向 最小が先頭: \"d\"esc, 最大が先頭:\"a\"sc"
+            "description": "ソート方向 最大が先頭: \"d\"esc, 最小が先頭:\"a\"sc"
           }
         ]
       },
@@ -942,7 +939,7 @@
     },
     "/catalog/characters": {
       "get": {
-        "summary": "Your GET endpoint",
+        "summary": "Get character list",
         "tags": [],
         "responses": {
           "200": {
@@ -1093,7 +1090,7 @@
             },
             "in": "query",
             "name": "order",
-            "description": "ソート方向 最小が先頭: \"d\"esc, 最大が先頭:\"a\"sc"
+            "description": "ソート方向 最大が先頭: \"d\"esc, 最小が先頭:\"a\"sc"
           }
         ]
       }
@@ -1110,7 +1107,7 @@
         }
       ],
       "get": {
-        "summary": "Your GET endpoint",
+        "summary": "Get art info",
         "tags": [],
         "responses": {
           "200": {
@@ -1395,7 +1392,7 @@
     },
     "/navigations/characters": {
       "get": {
-        "summary": "Your GET endpoint",
+        "summary": "Get character navigation tab (for site)",
         "tags": [],
         "responses": {
           "200": {
@@ -1483,7 +1480,7 @@
     },
     "/navigations/artists": {
       "get": {
-        "summary": "Your GET endpoint",
+        "summary": "Get artist navigation tab (for site)",
         "tags": [],
         "responses": {
           "200": {
@@ -1571,7 +1568,7 @@
     },
     "/navigations/tags": {
       "get": {
-        "summary": "Your GET endpoint",
+        "summary": "Get tag navigation tab (for site)",
         "tags": [],
         "responses": {
           "200": {
@@ -1659,11 +1656,11 @@
     },
     "/news/list": {
       "get": {
-        "summary": "Your GET endpoint",
+        "summary": "Get news list",
         "tags": [],
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "応答のdataに配列で返却されます",
             "content": {
               "application/json": {
                 "schema": {
@@ -1765,11 +1762,11 @@
         }
       ],
       "get": {
-        "summary": "Your GET endpoint",
+        "summary": "Get news",
         "tags": [],
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "応答のdataに返却されます",
             "content": {
               "application/json": {
                 "schema": {
@@ -1849,7 +1846,7 @@
         }
       ],
       "get": {
-        "summary": "Your GET endpoint",
+        "summary": "Get mylist data",
         "tags": [],
         "responses": {
           "200": {
@@ -2023,7 +2020,7 @@
     },
     "/mylist/list": {
       "get": {
-        "summary": "Your GET endpoint",
+        "summary": "Get mylist list",
         "tags": [],
         "responses": {
           "200": {
@@ -2037,7 +2034,7 @@
     },
     "/search/tag": {
       "get": {
-        "summary": "Your GET endpoint",
+        "summary": "Search by tag",
         "tags": [],
         "responses": {
           "200": {
@@ -2228,38 +2225,55 @@
         "parameters": [
           {
             "schema": {
-              "type": "string"
+              "type": "string",
+              "enum": [
+                "l",
+                "d"
+              ],
+              "default": "d"
             },
             "in": "query",
-            "name": "sort"
+            "name": "sort",
+            "description": "ソート方法 l:いいね数順 d:投稿日順"
           },
           {
             "schema": {
-              "type": "string"
+              "type": "string",
+              "enum": [
+                "d",
+                "a"
+              ],
+              "default": "d"
             },
             "in": "query",
-            "name": "order"
+            "name": "order",
+            "description": "ソート方向 d:降順 a:昇順"
+          },
+          {
+            "schema": {
+              "type": "number",
+              "minimum": 1,
+              "exclusiveMinimum": true
+            },
+            "in": "query",
+            "name": "page",
+            "description": "ページ番号"
           },
           {
             "schema": {
               "type": "number"
             },
             "in": "query",
-            "name": "page"
-          },
-          {
-            "schema": {
-              "type": "number"
-            },
-            "in": "query",
-            "name": "id"
+            "name": "id",
+            "description": "タグID",
+            "required": true
           }
         ]
       }
     },
     "/search/character": {
       "get": {
-        "summary": "Your GET endpoint",
+        "summary": "Search by character",
         "tags": [],
         "responses": {
           "200": {
@@ -2433,38 +2447,55 @@
         "parameters": [
           {
             "schema": {
-              "type": "string"
+              "type": "string",
+              "enum": [
+                "l",
+                "d"
+              ],
+              "default": "d"
             },
             "in": "query",
-            "name": "sort"
+            "name": "sort",
+            "description": "ソート方法 l:いいね数順 d:投稿日順"
           },
           {
             "schema": {
-              "type": "string"
+              "type": "string",
+              "default": "d",
+              "enum": [
+                "d",
+                "a"
+              ]
             },
             "in": "query",
-            "name": "order"
+            "name": "order",
+            "description": "ソート方向 d:降順 a:昇順"
+          },
+          {
+            "schema": {
+              "type": "number",
+              "minimum": 1,
+              "exclusiveMinimum": true
+            },
+            "in": "query",
+            "name": "page",
+            "description": "ページ番号"
           },
           {
             "schema": {
               "type": "number"
             },
             "in": "query",
-            "name": "page"
-          },
-          {
-            "schema": {
-              "type": "number"
-            },
-            "in": "query",
-            "name": "id"
+            "name": "id",
+            "description": "キャラID(タグIDと同一)",
+            "required": true
           }
         ]
       }
     },
     "/search/artist": {
       "get": {
-        "summary": "Your GET endpoint",
+        "summary": "Search by artist",
         "tags": [],
         "responses": {
           "200": {
@@ -2692,7 +2723,12 @@
         "parameters": [
           {
             "schema": {
-              "type": "string"
+              "type": "string",
+              "enum": [
+                "l",
+                "d"
+              ],
+              "default": "d"
             },
             "in": "query",
             "name": "sort",
@@ -2700,7 +2736,12 @@
           },
           {
             "schema": {
-              "type": "string"
+              "type": "string",
+              "default": "d",
+              "enum": [
+                "d",
+                "a"
+              ]
             },
             "in": "query",
             "name": "order",
@@ -2708,7 +2749,9 @@
           },
           {
             "schema": {
-              "type": "number"
+              "type": "number",
+              "minimum": 1,
+              "exclusiveMinimum": true
             },
             "in": "query",
             "name": "page",
@@ -2720,7 +2763,8 @@
             },
             "in": "query",
             "name": "id",
-            "description": "絵師ID"
+            "description": "絵師ID",
+            "required": true
           }
         ]
       }
@@ -2901,14 +2945,25 @@
         "parameters": [
           {
             "schema": {
-              "type": "string"
+              "type": "string",
+              "default": "d",
+              "enum": [
+                "l",
+                "d"
+              ]
             },
             "in": "query",
-            "name": "sort"
+            "name": "sort",
+            "description": "ソート方法 l:いいね数順 d:投稿日順"
           },
           {
             "schema": {
-              "type": "string"
+              "type": "string",
+              "enum": [
+                "d",
+                "a"
+              ],
+              "default": "d"
             },
             "in": "query",
             "name": "order",
@@ -2916,7 +2971,9 @@
           },
           {
             "schema": {
-              "type": "number"
+              "type": "number",
+              "minimum": 1,
+              "exclusiveMinimum": true
             },
             "in": "query",
             "name": "page",
@@ -2928,7 +2985,8 @@
             },
             "in": "query",
             "name": "keyword",
-            "description": "検索対象ワード"
+            "description": "検索対象ワード",
+            "required": true
           }
         ]
       }
@@ -3234,14 +3292,25 @@
         "parameters": [
           {
             "schema": {
-              "type": "string"
+              "type": "string",
+              "default": "d",
+              "enum": [
+                "l",
+                "d"
+              ]
             },
             "in": "query",
-            "name": "sort"
+            "name": "sort",
+            "description": "ソート方法 l:いいね数順 d:投稿日順"
           },
           {
             "schema": {
-              "type": "string"
+              "type": "string",
+              "default": "d",
+              "enum": [
+                "d",
+                "a"
+              ]
             },
             "in": "query",
             "name": "order",
@@ -3249,7 +3318,9 @@
           },
           {
             "schema": {
-              "type": "number"
+              "type": "number",
+              "minimum": 1,
+              "exclusiveMinimum": true
             },
             "in": "query",
             "name": "page",
@@ -3299,7 +3370,7 @@
     },
     "/accounts/me": {
       "get": {
-        "summary": "Your GET endpoint",
+        "summary": "Get user info (self)",
         "tags": [],
         "responses": {
           "200": {
@@ -3530,7 +3601,7 @@
     },
     "/accounts/login/form": {
       "get": {
-        "summary": "Your GET endpoint",
+        "summary": "Login with form",
         "tags": [],
         "responses": {
           "200": {
