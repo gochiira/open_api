@@ -1123,29 +1123,6 @@
                     },
                     "data": {
                       "type": "object",
-                      "required": [
-                        "illustID",
-                        "title",
-                        "caption",
-                        "date",
-                        "pages",
-                        "like",
-                        "view",
-                        "mylist",
-                        "mylisted",
-                        "originUrl",
-                        "originService",
-                        "nsfw",
-                        "hash",
-                        "extension",
-                        "artist",
-                        "user",
-                        "status",
-                        "width",
-                        "height",
-                        "filesize",
-                        "tag"
-                      ],
                       "properties": {
                         "illustID": {
                           "type": "number"
@@ -1196,10 +1173,6 @@
                         },
                         "artist": {
                           "type": "object",
-                          "required": [
-                            "id",
-                            "name"
-                          ],
                           "properties": {
                             "id": {
                               "type": "number"
@@ -1208,14 +1181,14 @@
                               "type": "string",
                               "minLength": 1
                             }
-                          }
+                          },
+                          "required": [
+                            "id",
+                            "name"
+                          ]
                         },
                         "user": {
                           "type": "object",
-                          "required": [
-                            "id",
-                            "name"
-                          ],
                           "properties": {
                             "id": {
                               "type": "number"
@@ -1224,7 +1197,11 @@
                               "type": "string",
                               "minLength": 1
                             }
-                          }
+                          },
+                          "required": [
+                            "id",
+                            "name"
+                          ]
                         },
                         "status": {
                           "type": "number"
@@ -1242,34 +1219,30 @@
                         "tag": {
                           "type": "array",
                           "items": {
-                            "type": "object",
+                            "required": [],
                             "properties": {
                               "0": {
                                 "type": "array",
                                 "uniqueItems": true,
                                 "items": {
-                                  "type": "object"
+                                  "required": [],
+                                  "properties": {}
                                 }
                               },
                               "1": {
                                 "type": "array",
                                 "uniqueItems": true,
                                 "items": {
-                                  "type": "object"
+                                  "required": [],
+                                  "properties": {}
                                 }
                               },
                               "2": {
                                 "type": "array",
                                 "uniqueItems": true,
                                 "items": {
-                                  "type": "object"
-                                }
-                              },
-                              "3": {
-                                "type": "array",
-                                "uniqueItems": true,
-                                "items": {
-                                  "type": "object"
+                                  "required": [],
+                                  "properties": {}
                                 }
                               }
                             }
@@ -1278,32 +1251,84 @@
                         "chara": {
                           "type": "array",
                           "items": {
-                            "type": "object"
+                            "required": [],
+                            "properties": {}
                           }
                         },
                         "group": {
                           "type": "array",
                           "items": {
-                            "type": "object"
+                            "required": [],
+                            "properties": {}
                           }
                         },
                         "system": {
                           "type": "array",
-                          "items": {}
+                          "items": {
+                            "required": [],
+                            "properties": {
+                              "0": {
+                                "type": "array",
+                                "uniqueItems": true,
+                                "items": {
+                                  "required": [],
+                                  "properties": {}
+                                }
+                              },
+                              "1": {
+                                "type": "array",
+                                "uniqueItems": true,
+                                "items": {
+                                  "required": [],
+                                  "properties": {}
+                                }
+                              }
+                            }
+                          }
                         },
                         "replace": {
                           "type": "array",
                           "items": {
-                            "type": "object"
+                            "required": [],
+                            "properties": {}
                           }
                         },
                         "star": {
                           "type": "array",
                           "items": {
-                            "type": "object"
+                            "required": [],
+                            "properties": {}
                           }
                         }
-                      }
+                      },
+                      "required": [
+                        "illustID",
+                        "title",
+                        "caption",
+                        "date",
+                        "pages",
+                        "like",
+                        "view",
+                        "mylist",
+                        "mylisted",
+                        "originUrl",
+                        "originService",
+                        "nsfw",
+                        "hash",
+                        "extension",
+                        "artist",
+                        "user",
+                        "status",
+                        "width",
+                        "height",
+                        "filesize",
+                        "tag",
+                        "chara",
+                        "group",
+                        "system",
+                        "replace",
+                        "star"
+                      ]
                     }
                   },
                   "required": [
@@ -2771,7 +2796,7 @@
     },
     "/search/keyword": {
       "get": {
-        "summary": "Your GET endpoint",
+        "summary": "Search by keyword",
         "tags": [],
         "responses": {
           "200": {
@@ -2903,7 +2928,7 @@
                   ]
                 },
                 "examples": {
-                  "example-1": {
+                  "example": {
                     "value": {
                       "status": 200,
                       "message": "found",
@@ -2981,7 +3006,8 @@
           },
           {
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "cafe"
             },
             "in": "query",
             "name": "keyword",
@@ -2993,7 +3019,7 @@
     },
     "/search/all": {
       "get": {
-        "summary": "Your GET endpoint",
+        "summary": "Search all arts",
         "tags": [],
         "responses": {
           "200": {
@@ -3331,7 +3357,7 @@
     },
     "/search/random": {
       "get": {
-        "summary": "Your GET endpoint",
+        "summary": "Search by random",
         "tags": [],
         "responses": {
           "200": {
@@ -3344,7 +3370,7 @@
     },
     "/search/image": {
       "get": {
-        "summary": "Your GET endpoint",
+        "summary": "Search by image",
         "tags": [],
         "responses": {
           "200": {
@@ -3357,7 +3383,7 @@
     },
     "/search/image/saucenao": {
       "get": {
-        "summary": "Your GET endpoint",
+        "summary": "Search by image at saucenao",
         "tags": [],
         "responses": {
           "200": {
@@ -3569,7 +3595,7 @@
     },
     "/upload_history": {
       "get": {
-        "summary": "Your GET endpoint",
+        "summary": "Get upload history",
         "tags": [],
         "responses": {},
         "operationId": "get-upload_history",
@@ -3626,8 +3652,7 @@
                   },
                   "required": [
                     "status",
-                    "message",
-                    "apiKey"
+                    "message"
                   ]
                 },
                 "examples": {
@@ -3641,8 +3666,7 @@
                   "login-failed": {
                     "value": {
                       "status": 404,
-                      "message": "account not found",
-                      "apiKey": null
+                      "message": "account not found"
                     }
                   }
                 }
@@ -3695,17 +3719,7 @@
     }
   },
   "components": {
-    "schemas": {
-      "SearchResult": {
-        "title": "SearchResult",
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string"
-          }
-        }
-      }
-    },
+    "schemas": {},
     "securitySchemes": {
       "Authorization": {
         "type": "http",
