@@ -1,25 +1,26 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "main",
+    "title": "Gochiira Backend API",
     "version": "1.0",
     "contact": {
       "name": "Omado",
       "url": "https://twitter.com/shallow_omado"
     },
     "termsOfService": "https://illust.gochiusa.team/terms",
-    "description": "ごちイラ内でメインに使用されているAPI。\nどうしても使いたい人は自分で調べてください。",
+    "description": "ごちイラ内でメインに使用されているAPI。\n現在Bot、ガチャ、フロントエンド の 3箇所で使用中。",
     "license": {
       "name": "GPLv3"
     }
   },
   "servers": [
     {
-      "url": "https://api.gochiusa.team"
+      "url": "https://api.gochiusa.team",
+      "description": "Prod"
     },
     {
       "url": "http://127.0.0.1:8080",
-      "description": ""
+      "description": "Dev"
     }
   ],
   "paths": {
@@ -2053,7 +2054,7 @@
           }
         },
         "operationId": "get-mylist-list",
-        "description": "自分の作成したマイリスト一覧を取得します",
+        "description": "自分の作成したマイリスト一覧を取得します\n(現在1人辺り1マイリストしか作成できないのでこのエンドポイントは無意味です)",
         "deprecated": true
       }
     },
@@ -2190,7 +2191,7 @@
                   ]
                 },
                 "examples": {
-                  "example-1": {
+                  "example": {
                     "value": {
                       "status": 200,
                       "message": "found",
@@ -2430,7 +2431,7 @@
                   ]
                 },
                 "examples": {
-                  "example-1": {
+                  "example": {
                     "value": {
                       "status": 200,
                       "message": "found",
@@ -2652,7 +2653,7 @@
                   ]
                 },
                 "examples": {
-                  "example-1": {
+                  "example": {
                     "value": {
                       "status": 200,
                       "message": "found",
@@ -3150,7 +3151,7 @@
                   ]
                 },
                 "examples": {
-                  "example-1": {
+                  "example": {
                     "value": {
                       "status": 200,
                       "message": "found",
@@ -3592,38 +3593,6 @@
         "description": "自分自身の情報を取得する"
       },
       "parameters": []
-    },
-    "/upload_history": {
-      "get": {
-        "summary": "Get upload history",
-        "tags": [],
-        "responses": {},
-        "operationId": "get-upload_history",
-        "description": "投稿履歴を取得します",
-        "parameters": [
-          {
-            "schema": {
-              "type": "string"
-            },
-            "in": "query",
-            "name": "sort"
-          },
-          {
-            "schema": {
-              "type": "string"
-            },
-            "in": "query",
-            "name": "order"
-          },
-          {
-            "schema": {
-              "type": "number"
-            },
-            "in": "query",
-            "name": "page"
-          }
-        ]
-      }
     },
     "/accounts/login/form": {
       "get": {
