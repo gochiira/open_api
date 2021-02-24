@@ -1,0 +1,3091 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "main",
+    "version": "1.0",
+    "contact": {
+      "name": "Omado",
+      "url": "https://twitter.com/shallow_omado"
+    },
+    "termsOfService": "https://illust.gochiusa.team/terms",
+    "description": "ごちイラ内でメインに使用されているAPI。\nどうしても使いたい人は自分で調べてください。",
+    "license": {
+      "name": "GPLv3"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://api.gochiusa.team"
+    },
+    {
+      "url": "http://127.0.0.1:8080",
+      "description": ""
+    }
+  ],
+  "paths": {
+    "/accounts/{accountID}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "number"
+          },
+          "name": "accountID",
+          "in": "path",
+          "required": true,
+          "description": "取得したいユーザーのアカウントID"
+        }
+      ],
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "examples": {}
+              }
+            }
+          }
+        },
+        "operationId": "get-accounts-accountID",
+        "description": "ユーザーのアカウント情報を取得します"
+      }
+    },
+    "/accounts/{accountID}/upload_history": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "number"
+          },
+          "name": "accountID",
+          "in": "path",
+          "required": true,
+          "description": "取得したいユーザーのアカウントID"
+        }
+      ],
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "operationId": "get-accounts-accountID-upload_history",
+        "description": "イラスト投稿履歴を取得します"
+      }
+    },
+    "/accounts/{accountID}/apiKey": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "number"
+          },
+          "name": "accountID",
+          "in": "path",
+          "required": true,
+          "description": "取得したいユーザーのアカウントID"
+        }
+      ],
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "operationId": "get-accounts-accountID-apiKey",
+        "description": "アカウントのログインキーを再生成します"
+      }
+    },
+    "/catalog/artists": {
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "number"
+                    },
+                    "message": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "title": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "count": {
+                          "type": "number"
+                        },
+                        "current": {
+                          "type": "number"
+                        },
+                        "pages": {
+                          "type": "number"
+                        },
+                        "contents": {
+                          "type": "array",
+                          "uniqueItems": true,
+                          "minItems": 1,
+                          "items": {
+                            "required": [
+                              "id",
+                              "name",
+                              "endpoint",
+                              "count",
+                              "lcount"
+                            ],
+                            "properties": {
+                              "id": {
+                                "type": "number"
+                              },
+                              "name": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "description": {},
+                              "group": {},
+                              "pixivID": {},
+                              "twitterID": {},
+                              "mastodon": {},
+                              "homepage": {},
+                              "endpoint": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "count": {
+                                "type": "number"
+                              },
+                              "lcount": {
+                                "type": "number"
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "required": [
+                        "title",
+                        "count",
+                        "current",
+                        "pages",
+                        "contents"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "status": 200,
+                      "message": "found",
+                      "data": {
+                        "title": "絵師",
+                        "count": 5,
+                        "current": 1,
+                        "pages": 1,
+                        "contents": [
+                          {
+                            "id": 5,
+                            "name": "CHI CHEN",
+                            "description": null,
+                            "group": null,
+                            "pixivID": null,
+                            "twitterID": null,
+                            "mastodon": null,
+                            "homepage": null,
+                            "endpoint": "https://***REMOVED***",
+                            "count": 1,
+                            "lcount": 1
+                          },
+                          {
+                            "id": 4,
+                            "name": "Manki Kim",
+                            "description": null,
+                            "group": null,
+                            "pixivID": null,
+                            "twitterID": null,
+                            "mastodon": null,
+                            "homepage": null,
+                            "endpoint": "https://***REMOVED***",
+                            "count": 1,
+                            "lcount": 1
+                          },
+                          {
+                            "id": 3,
+                            "name": "Andy Falconer",
+                            "description": null,
+                            "group": null,
+                            "pixivID": null,
+                            "twitterID": null,
+                            "mastodon": null,
+                            "homepage": null,
+                            "endpoint": "https://***REMOVED***",
+                            "count": 1,
+                            "lcount": 1
+                          },
+                          {
+                            "id": 2,
+                            "name": "Nathan Dumlao",
+                            "description": null,
+                            "group": null,
+                            "pixivID": null,
+                            "twitterID": null,
+                            "mastodon": null,
+                            "homepage": null,
+                            "endpoint": "https://***REMOVED***",
+                            "count": 1,
+                            "lcount": 1
+                          },
+                          {
+                            "id": 1,
+                            "name": "みふね",
+                            "description": null,
+                            "group": null,
+                            "pixivID": null,
+                            "twitterID": null,
+                            "mastodon": null,
+                            "homepage": null,
+                            "endpoint": "https://***REMOVED***",
+                            "count": 4,
+                            "lcount": 57
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-catalog-artists",
+        "description": "絵師一覧を取得します",
+        "parameters": [
+          {
+            "schema": {
+              "type": "number"
+            },
+            "in": "query",
+            "name": "page",
+            "description": "取得したいページ番号"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "sort"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "order",
+            "description": "\"d\"esc / \"a\"sc"
+          }
+        ]
+      },
+      "parameters": []
+    },
+    "/catalog/tags": {
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "number"
+                    },
+                    "message": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "title": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "count": {
+                          "type": "number"
+                        },
+                        "current": {
+                          "type": "number"
+                        },
+                        "pages": {
+                          "type": "number"
+                        },
+                        "contents": {
+                          "type": "array",
+                          "uniqueItems": true,
+                          "minItems": 1,
+                          "items": {
+                            "required": [
+                              "id",
+                              "name",
+                              "nsfw",
+                              "count",
+                              "lcount"
+                            ],
+                            "properties": {
+                              "id": {
+                                "type": "number"
+                              },
+                              "name": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "description": {},
+                              "nsfw": {
+                                "type": "number"
+                              },
+                              "endpoint": {},
+                              "count": {
+                                "type": "number"
+                              },
+                              "lcount": {
+                                "type": "number"
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "required": [
+                        "title",
+                        "count",
+                        "current",
+                        "pages",
+                        "contents"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "status": 200,
+                      "message": "found",
+                      "data": {
+                        "title": "タグ",
+                        "count": 21,
+                        "current": 1,
+                        "pages": 2,
+                        "contents": [
+                          {
+                            "id": 20,
+                            "name": "紅茶",
+                            "description": null,
+                            "nsfw": 0,
+                            "endpoint": null,
+                            "count": 2,
+                            "lcount": 2
+                          },
+                          {
+                            "id": 21,
+                            "name": "ティーカップ",
+                            "description": null,
+                            "nsfw": 0,
+                            "endpoint": null,
+                            "count": 2,
+                            "lcount": 2
+                          },
+                          {
+                            "id": 4,
+                            "name": "2021年01月",
+                            "description": null,
+                            "nsfw": 0,
+                            "endpoint": null,
+                            "count": 8,
+                            "lcount": 61
+                          },
+                          {
+                            "id": 17,
+                            "name": "4K",
+                            "description": null,
+                            "nsfw": 0,
+                            "endpoint": null,
+                            "count": 4,
+                            "lcount": 4
+                          },
+                          {
+                            "id": 18,
+                            "name": "カフェ",
+                            "description": null,
+                            "nsfw": 0,
+                            "endpoint": null,
+                            "count": 3,
+                            "lcount": 3
+                          },
+                          {
+                            "id": 19,
+                            "name": "カップ",
+                            "description": null,
+                            "nsfw": 0,
+                            "endpoint": null,
+                            "count": 1,
+                            "lcount": 1
+                          },
+                          {
+                            "id": 13,
+                            "name": "コーヒー",
+                            "description": null,
+                            "nsfw": 0,
+                            "endpoint": null,
+                            "count": 2,
+                            "lcount": 2
+                          },
+                          {
+                            "id": 14,
+                            "name": "コーヒーカップ",
+                            "description": null,
+                            "nsfw": 0,
+                            "endpoint": null,
+                            "count": 1,
+                            "lcount": 1
+                          },
+                          {
+                            "id": 15,
+                            "name": "Unsplash",
+                            "description": null,
+                            "nsfw": 0,
+                            "endpoint": null,
+                            "count": 1,
+                            "lcount": 1
+                          },
+                          {
+                            "id": 16,
+                            "name": "ラテ",
+                            "description": null,
+                            "nsfw": 0,
+                            "endpoint": null,
+                            "count": 1,
+                            "lcount": 1
+                          },
+                          {
+                            "id": 8,
+                            "name": "HD",
+                            "description": null,
+                            "nsfw": 0,
+                            "endpoint": null,
+                            "count": 3,
+                            "lcount": 4
+                          },
+                          {
+                            "id": 10,
+                            "name": "社畜",
+                            "description": null,
+                            "nsfw": 0,
+                            "endpoint": null,
+                            "count": 1,
+                            "lcount": 1
+                          },
+                          {
+                            "id": 11,
+                            "name": "会社",
+                            "description": null,
+                            "nsfw": 0,
+                            "endpoint": null,
+                            "count": 1,
+                            "lcount": 1
+                          },
+                          {
+                            "id": 12,
+                            "name": "サラリーマン",
+                            "description": null,
+                            "nsfw": 0,
+                            "endpoint": null,
+                            "count": 1,
+                            "lcount": 1
+                          },
+                          {
+                            "id": 6,
+                            "name": "男性",
+                            "description": null,
+                            "nsfw": 0,
+                            "endpoint": null,
+                            "count": 3,
+                            "lcount": 4
+                          },
+                          {
+                            "id": 9,
+                            "name": "ガチャ",
+                            "description": null,
+                            "nsfw": 0,
+                            "endpoint": null,
+                            "count": 1,
+                            "lcount": 1
+                          },
+                          {
+                            "id": 1,
+                            "name": "いらすとや",
+                            "description": null,
+                            "nsfw": 0,
+                            "endpoint": null,
+                            "count": 2,
+                            "lcount": 55
+                          },
+                          {
+                            "id": 3,
+                            "name": "イラスト",
+                            "description": null,
+                            "nsfw": 0,
+                            "endpoint": null,
+                            "count": 2,
+                            "lcount": 55
+                          },
+                          {
+                            "id": 7,
+                            "name": "大学生",
+                            "description": null,
+                            "nsfw": 0,
+                            "endpoint": null,
+                            "count": 1,
+                            "lcount": 2
+                          },
+                          {
+                            "id": 2,
+                            "name": "パソコン",
+                            "description": null,
+                            "nsfw": 0,
+                            "endpoint": null,
+                            "count": 1,
+                            "lcount": 53
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-catalog-tags",
+        "description": "タグ一覧を取得します",
+        "parameters": [
+          {
+            "schema": {
+              "type": "number"
+            },
+            "in": "query",
+            "name": "page"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "sort"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "order",
+            "description": "\"d\"esc / \"a\"sc"
+          }
+        ]
+      },
+      "parameters": []
+    },
+    "/catalog/characters": {
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "number"
+                    },
+                    "message": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "title": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "count": {
+                          "type": "number"
+                        },
+                        "current": {
+                          "type": "number"
+                        },
+                        "pages": {
+                          "type": "number"
+                        },
+                        "contents": {
+                          "type": "array",
+                          "uniqueItems": true,
+                          "minItems": 1,
+                          "items": {
+                            "required": [
+                              "id",
+                              "name",
+                              "nsfw",
+                              "count",
+                              "lcount"
+                            ],
+                            "properties": {
+                              "id": {
+                                "type": "number"
+                              },
+                              "name": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "description": {},
+                              "nsfw": {
+                                "type": "number"
+                              },
+                              "count": {
+                                "type": "number"
+                              },
+                              "lcount": {
+                                "type": "number"
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "required": [
+                        "title",
+                        "count",
+                        "current",
+                        "pages",
+                        "contents"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "status": 200,
+                      "message": "found",
+                      "data": {
+                        "title": "キャラ",
+                        "count": 1,
+                        "current": 1,
+                        "pages": 1,
+                        "contents": [
+                          {
+                            "id": 2,
+                            "name": "パソコン",
+                            "description": null,
+                            "nsfw": 0,
+                            "count": 1,
+                            "lcount": 53
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-catalog-characters",
+        "description": "キャラクター一覧を取得します",
+        "parameters": [
+          {
+            "schema": {
+              "type": "number"
+            },
+            "in": "query",
+            "name": "page"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "sort"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "order",
+            "description": "\"d\"esc / \"a\"sc"
+          }
+        ]
+      }
+    },
+    "/arts/{illustID}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "illustID",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "number"
+                    },
+                    "data": {
+                      "type": "object",
+                      "required": [
+                        "illustID",
+                        "title",
+                        "caption",
+                        "date",
+                        "pages",
+                        "like",
+                        "view",
+                        "mylist",
+                        "mylisted",
+                        "originUrl",
+                        "originService",
+                        "nsfw",
+                        "hash",
+                        "extension",
+                        "artist",
+                        "user",
+                        "status",
+                        "width",
+                        "height",
+                        "filesize",
+                        "tag"
+                      ],
+                      "properties": {
+                        "illustID": {
+                          "type": "number"
+                        },
+                        "title": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "caption": {
+                          "type": "string"
+                        },
+                        "date": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "pages": {
+                          "type": "number"
+                        },
+                        "like": {
+                          "type": "number"
+                        },
+                        "view": {
+                          "type": "number"
+                        },
+                        "mylist": {
+                          "type": "number"
+                        },
+                        "mylisted": {
+                          "type": "boolean"
+                        },
+                        "originUrl": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "originService": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "nsfw": {
+                          "type": "number"
+                        },
+                        "hash": {
+                          "type": "number"
+                        },
+                        "extension": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "artist": {
+                          "type": "object",
+                          "required": [
+                            "id",
+                            "name"
+                          ],
+                          "properties": {
+                            "id": {
+                              "type": "number"
+                            },
+                            "name": {
+                              "type": "string",
+                              "minLength": 1
+                            }
+                          }
+                        },
+                        "user": {
+                          "type": "object",
+                          "required": [
+                            "id",
+                            "name"
+                          ],
+                          "properties": {
+                            "id": {
+                              "type": "number"
+                            },
+                            "name": {
+                              "type": "string",
+                              "minLength": 1
+                            }
+                          }
+                        },
+                        "status": {
+                          "type": "number"
+                        },
+                        "width": {
+                          "type": "number"
+                        },
+                        "height": {
+                          "type": "number"
+                        },
+                        "filesize": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "tag": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "0": {
+                                "type": "array",
+                                "uniqueItems": true,
+                                "items": {
+                                  "type": "object"
+                                }
+                              },
+                              "1": {
+                                "type": "array",
+                                "uniqueItems": true,
+                                "items": {
+                                  "type": "object"
+                                }
+                              },
+                              "2": {
+                                "type": "array",
+                                "uniqueItems": true,
+                                "items": {
+                                  "type": "object"
+                                }
+                              },
+                              "3": {
+                                "type": "array",
+                                "uniqueItems": true,
+                                "items": {
+                                  "type": "object"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "chara": {
+                          "type": "array",
+                          "items": {
+                            "type": "object"
+                          }
+                        },
+                        "group": {
+                          "type": "array",
+                          "items": {
+                            "type": "object"
+                          }
+                        },
+                        "system": {
+                          "type": "array",
+                          "items": {}
+                        },
+                        "replace": {
+                          "type": "array",
+                          "items": {
+                            "type": "object"
+                          }
+                        },
+                        "star": {
+                          "type": "array",
+                          "items": {
+                            "type": "object"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "status": 200,
+                      "data": {
+                        "illustID": 8,
+                        "title": "tea pours into white teacup photo",
+                        "caption": "",
+                        "date": "2021-01-07 15:16:58",
+                        "pages": 1,
+                        "like": 1,
+                        "view": 2,
+                        "mylist": 0,
+                        "mylisted": false,
+                        "originUrl": "https://unsplash.com/photos/oBoELXgJR1w?page=1",
+                        "originService": "独自",
+                        "nsfw": 0,
+                        "hash": 12743176166585612000,
+                        "extension": "jpg",
+                        "artist": {
+                          "id": 5,
+                          "name": "CHI CHEN"
+                        },
+                        "user": {
+                          "id": 2,
+                          "name": "ドマオーさん"
+                        },
+                        "status": 0,
+                        "width": 3333,
+                        "height": 4391,
+                        "filesize": "491K",
+                        "tag": [
+                          [
+                            21,
+                            "ティーカップ",
+                            0
+                          ],
+                          [
+                            20,
+                            "紅茶",
+                            0
+                          ],
+                          [
+                            18,
+                            "カフェ",
+                            0
+                          ]
+                        ],
+                        "chara": [],
+                        "group": [],
+                        "system": [
+                          [
+                            4,
+                            "2021年01月"
+                          ],
+                          [
+                            17,
+                            "4K"
+                          ]
+                        ],
+                        "replace": [],
+                        "star": [
+                          1,
+                          0,
+                          0,
+                          0
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-arts-artID",
+        "description": "指定したイラストを取得します"
+      }
+    },
+    "/navigations/characters": {
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "operationId": "get-navigations-characters",
+        "description": "イラスト数の多いキャラクター上位5件を取得します"
+      }
+    },
+    "/navigations/artists": {
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "operationId": "get-navigations-artists",
+        "description": "イラスト数の多い絵師上位5件を取得します"
+      }
+    },
+    "/navigations/tags": {
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "operationId": "get-navigations-tags",
+        "description": "イラスト数の多いタグ上位5件を取得します"
+      }
+    },
+    "/news/list": {
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "number"
+                    },
+                    "data": {
+                      "type": "array",
+                      "uniqueItems": true,
+                      "minItems": 1,
+                      "items": {
+                        "required": [
+                          "id",
+                          "date",
+                          "color",
+                          "title",
+                          "body"
+                        ],
+                        "properties": {
+                          "id": {
+                            "type": "number"
+                          },
+                          "date": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "color": {
+                            "type": "number"
+                          },
+                          "title": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "body": {
+                            "type": "string",
+                            "minLength": 1
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "status": 200,
+                      "data": [
+                        {
+                          "id": 3,
+                          "date": "2021-01-07 15:31:24",
+                          "color": 0,
+                          "title": "記載中の画像について / About these arts",
+                          "body": "これらの画像は素材配布としての意図はなく、サイトの機能検証の"
+                        },
+                        {
+                          "id": 2,
+                          "date": "2021-01-07 15:25:14",
+                          "color": 0,
+                          "title": "デモ版の仕様 / Limitations of demo",
+                          "body": "通知機能は動作しません。 Notification feat"
+                        },
+                        {
+                          "id": 1,
+                          "date": "2021-01-07 15:21:06",
+                          "color": 4,
+                          "title": "既知のバグ Known bugs",
+                          "body": "ログイン済み状態でトップページをリロードすると真っ白になりま"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-news-list",
+        "description": "ニュース一覧を取得します"
+      }
+    },
+    "/news/{newsID}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "newsID",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "number"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "number"
+                        },
+                        "date": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "color": {
+                          "type": "number"
+                        },
+                        "title": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "body": {
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "date",
+                        "color",
+                        "title",
+                        "body"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "status": 200,
+                      "data": {
+                        "id": 3,
+                        "date": "2021-01-07 15:31:24",
+                        "color": 0,
+                        "title": "記載中の画像について / About these arts",
+                        "body": "これらの画像は素材配布としての意図はなく、サイトの機能検証のためのものです。素材をお求めの場合はhttps://unsplash.com または https://www.irasutoya.com に直接アクセスしてください。 These arts are for feature-test purpose only. You can get free images on https://unsplash.com or https://www.irasutoya.com."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-news-newsID",
+        "description": "指定したニュースの内容を取得します"
+      }
+    },
+    "/mylist/{mylistID}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "mylistID",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "number"
+                    },
+                    "message": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "title": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "count": {
+                          "type": "number"
+                        },
+                        "current": {
+                          "type": "number"
+                        },
+                        "pages": {
+                          "type": "number"
+                        },
+                        "imgs": {
+                          "type": "array",
+                          "uniqueItems": true,
+                          "minItems": 1,
+                          "items": {
+                            "required": [
+                              "illustID",
+                              "artistID",
+                              "title",
+                              "caption",
+                              "date",
+                              "pages",
+                              "like",
+                              "mylist",
+                              "mylisted",
+                              "originUrl",
+                              "originService",
+                              "nsfw",
+                              "extension"
+                            ],
+                            "properties": {
+                              "illustID": {
+                                "type": "number"
+                              },
+                              "artistID": {
+                                "type": "number"
+                              },
+                              "title": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "caption": {
+                                "type": "string"
+                              },
+                              "date": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "pages": {
+                                "type": "number"
+                              },
+                              "like": {
+                                "type": "number"
+                              },
+                              "mylist": {
+                                "type": "number"
+                              },
+                              "mylisted": {
+                                "type": "boolean"
+                              },
+                              "originUrl": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "originService": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "nsfw": {
+                                "type": "number"
+                              },
+                              "artist": {
+                                "type": "object",
+                                "properties": {
+                                  "name": {
+                                    "type": "string",
+                                    "minLength": 1
+                                  }
+                                },
+                                "required": [
+                                  "name"
+                                ]
+                              },
+                              "extension": {
+                                "type": "string",
+                                "minLength": 1
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "required": [
+                        "title",
+                        "count",
+                        "current",
+                        "pages",
+                        "imgs"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "status": 200,
+                      "message": "ok",
+                      "data": {
+                        "title": "Demoのマイリスト",
+                        "count": 1,
+                        "current": 1,
+                        "pages": 1,
+                        "imgs": [
+                          {
+                            "illustID": 7,
+                            "artistID": 4,
+                            "title": "clear glass cup with tea near brown ceramic teapot",
+                            "caption": "",
+                            "date": "2021-01-07 15:15:28",
+                            "pages": 1,
+                            "like": 1,
+                            "mylist": 1,
+                            "mylisted": true,
+                            "originUrl": "https://unsplash.com/photos/L82-kkEBOd0?page=1",
+                            "originService": "独自",
+                            "nsfw": 0,
+                            "artist": {
+                              "name": "Manki Kim"
+                            },
+                            "extension": "jpg"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-mylist-mylistID",
+        "description": "指定したマイリストに登録されたイラスト一覧を取得します"
+      }
+    },
+    "/mylist/list": {
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "operationId": "get-mylist-list",
+        "description": "自分の作成したマイリスト一覧を取得します"
+      }
+    },
+    "/search/tag": {
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "number"
+                    },
+                    "message": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "title": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "count": {
+                          "type": "number"
+                        },
+                        "current": {
+                          "type": "number"
+                        },
+                        "pages": {
+                          "type": "number"
+                        },
+                        "imgs": {
+                          "type": "array",
+                          "uniqueItems": true,
+                          "minItems": 1,
+                          "items": {
+                            "required": [
+                              "illustID",
+                              "artistID",
+                              "title",
+                              "caption",
+                              "date",
+                              "pages",
+                              "like",
+                              "mylist",
+                              "mylisted",
+                              "originUrl",
+                              "originService",
+                              "nsfw",
+                              "extension"
+                            ],
+                            "properties": {
+                              "illustID": {
+                                "type": "number"
+                              },
+                              "artistID": {
+                                "type": "number"
+                              },
+                              "title": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "caption": {
+                                "type": "string"
+                              },
+                              "date": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "pages": {
+                                "type": "number"
+                              },
+                              "like": {
+                                "type": "number"
+                              },
+                              "mylist": {
+                                "type": "number"
+                              },
+                              "mylisted": {
+                                "type": "boolean"
+                              },
+                              "originUrl": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "originService": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "nsfw": {
+                                "type": "number"
+                              },
+                              "artist": {
+                                "type": "object",
+                                "properties": {
+                                  "name": {
+                                    "type": "string",
+                                    "minLength": 1
+                                  }
+                                },
+                                "required": [
+                                  "name"
+                                ]
+                              },
+                              "extension": {
+                                "type": "string",
+                                "minLength": 1
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "required": [
+                        "title",
+                        "count",
+                        "current",
+                        "pages",
+                        "imgs"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "status": 200,
+                      "message": "found",
+                      "data": {
+                        "title": "ティーカップ",
+                        "count": 2,
+                        "current": 1,
+                        "pages": 1,
+                        "imgs": [
+                          {
+                            "illustID": 8,
+                            "artistID": 5,
+                            "title": "tea pours into white teacup photo",
+                            "caption": "",
+                            "date": "2021-01-07 15:16:58",
+                            "pages": 1,
+                            "like": 1,
+                            "mylist": 0,
+                            "mylisted": false,
+                            "originUrl": "https://unsplash.com/photos/oBoELXgJR1w?page=1",
+                            "originService": "独自",
+                            "nsfw": 0,
+                            "artist": {
+                              "name": "CHI CHEN"
+                            },
+                            "extension": "jpg"
+                          },
+                          {
+                            "illustID": 7,
+                            "artistID": 4,
+                            "title": "clear glass cup with tea near brown ceramic teapot",
+                            "caption": "",
+                            "date": "2021-01-07 15:15:28",
+                            "pages": 1,
+                            "like": 1,
+                            "mylist": 1,
+                            "mylisted": true,
+                            "originUrl": "https://unsplash.com/photos/L82-kkEBOd0?page=1",
+                            "originService": "独自",
+                            "nsfw": 0,
+                            "artist": {
+                              "name": "Manki Kim"
+                            },
+                            "extension": "jpg"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-search-tag",
+        "description": "指定したタグを持つイラスト一覧を取得します",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "sort"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "order"
+          },
+          {
+            "schema": {
+              "type": "number"
+            },
+            "in": "query",
+            "name": "page"
+          },
+          {
+            "schema": {
+              "type": "number"
+            },
+            "in": "query",
+            "name": "id"
+          }
+        ]
+      }
+    },
+    "/search/character": {
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "number"
+                    },
+                    "message": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "title": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "count": {
+                          "type": "number"
+                        },
+                        "current": {
+                          "type": "number"
+                        },
+                        "pages": {
+                          "type": "number"
+                        },
+                        "imgs": {
+                          "type": "array",
+                          "uniqueItems": true,
+                          "minItems": 1,
+                          "items": {
+                            "required": [
+                              "illustID",
+                              "artistID",
+                              "title",
+                              "caption",
+                              "date",
+                              "pages",
+                              "like",
+                              "mylist",
+                              "mylisted",
+                              "originUrl",
+                              "originService",
+                              "nsfw",
+                              "extension"
+                            ],
+                            "properties": {
+                              "illustID": {
+                                "type": "number"
+                              },
+                              "artistID": {
+                                "type": "number"
+                              },
+                              "title": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "caption": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "date": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "pages": {
+                                "type": "number"
+                              },
+                              "like": {
+                                "type": "number"
+                              },
+                              "mylist": {
+                                "type": "number"
+                              },
+                              "mylisted": {
+                                "type": "boolean"
+                              },
+                              "originUrl": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "originService": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "nsfw": {
+                                "type": "number"
+                              },
+                              "artist": {
+                                "type": "object",
+                                "properties": {
+                                  "name": {
+                                    "type": "string",
+                                    "minLength": 1
+                                  }
+                                },
+                                "required": [
+                                  "name"
+                                ]
+                              },
+                              "extension": {
+                                "type": "string",
+                                "minLength": 1
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "required": [
+                        "title",
+                        "count",
+                        "current",
+                        "pages",
+                        "imgs"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "status": 200,
+                      "message": "found",
+                      "data": {
+                        "title": "パソコン",
+                        "count": 1,
+                        "current": 1,
+                        "pages": 1,
+                        "imgs": [
+                          {
+                            "illustID": 1,
+                            "artistID": 1,
+                            "title": "パソコンのキャラクター（ノートパソコン）(笑顔)",
+                            "caption": "快調に動く笑顔のノート型のコンピューターと、壊れて困った顔をしているコンピューターのイラストです。\n",
+                            "date": "2021-01-07 12:31:01",
+                            "pages": 1,
+                            "like": 53,
+                            "mylist": 1,
+                            "mylisted": false,
+                            "originUrl": "https://www.irasutoya.com/2017/01/blog-post_792.html?page=1",
+                            "originService": "独自",
+                            "nsfw": 0,
+                            "artist": {
+                              "name": "みふね"
+                            },
+                            "extension": "png"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-search-character",
+        "description": "指定したキャラクターを持つイラスト一覧を取得します",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "sort"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "order"
+          },
+          {
+            "schema": {
+              "type": "number"
+            },
+            "in": "query",
+            "name": "page"
+          },
+          {
+            "schema": {
+              "type": "number"
+            },
+            "in": "query",
+            "name": "id"
+          }
+        ]
+      }
+    },
+    "/search/artist": {
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "number"
+                    },
+                    "message": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "title": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "count": {
+                          "type": "number"
+                        },
+                        "current": {
+                          "type": "number"
+                        },
+                        "pages": {
+                          "type": "number"
+                        },
+                        "imgs": {
+                          "type": "array",
+                          "uniqueItems": true,
+                          "minItems": 1,
+                          "items": {
+                            "required": [
+                              "illustID",
+                              "artistID",
+                              "title",
+                              "caption",
+                              "date",
+                              "pages",
+                              "like",
+                              "mylist",
+                              "mylisted",
+                              "originUrl",
+                              "originService",
+                              "nsfw",
+                              "extension"
+                            ],
+                            "properties": {
+                              "illustID": {
+                                "type": "number"
+                              },
+                              "artistID": {
+                                "type": "number"
+                              },
+                              "title": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "caption": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "date": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "pages": {
+                                "type": "number"
+                              },
+                              "like": {
+                                "type": "number"
+                              },
+                              "mylist": {
+                                "type": "number"
+                              },
+                              "mylisted": {
+                                "type": "boolean"
+                              },
+                              "originUrl": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "originService": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "nsfw": {
+                                "type": "number"
+                              },
+                              "artist": {
+                                "type": "object",
+                                "properties": {
+                                  "name": {
+                                    "type": "string",
+                                    "minLength": 1
+                                  }
+                                },
+                                "required": [
+                                  "name"
+                                ]
+                              },
+                              "extension": {
+                                "type": "string",
+                                "minLength": 1
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "required": [
+                        "title",
+                        "count",
+                        "current",
+                        "pages",
+                        "imgs"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "status": 200,
+                      "message": "found",
+                      "data": {
+                        "title": "みふね",
+                        "count": 4,
+                        "current": 1,
+                        "pages": 1,
+                        "imgs": [
+                          {
+                            "illustID": 4,
+                            "artistID": 1,
+                            "title": "社畜のイラスト",
+                            "caption": "会社に飼い慣らされ家畜のように扱われている男性会社員（サラリーマン）、俗にいう社畜のイラストです。",
+                            "date": "2021-01-07 14:53:43",
+                            "pages": 1,
+                            "like": 1,
+                            "mylist": 0,
+                            "mylisted": false,
+                            "originUrl": "?page=1",
+                            "originService": "独自",
+                            "nsfw": 0,
+                            "artist": {
+                              "name": "みふね"
+                            },
+                            "extension": "png"
+                          },
+                          {
+                            "illustID": 3,
+                            "artistID": 1,
+                            "title": "なかなか当たらないガチャのイラスト",
+                            "caption": "当たりが出る確率がとても低いガチャガチャを回し続けている人のイラストです。",
+                            "date": "2021-01-07 14:51:59",
+                            "pages": 1,
+                            "like": 1,
+                            "mylist": 0,
+                            "mylisted": false,
+                            "originUrl": "https://www.irasutoya.com/2016/02/blog-post_256.html?page=1",
+                            "originService": "独自",
+                            "nsfw": 0,
+                            "artist": {
+                              "name": "みふね"
+                            },
+                            "extension": "png"
+                          },
+                          {
+                            "illustID": 2,
+                            "artistID": 1,
+                            "title": "単位を落とす学生のイラスト（男性）",
+                            "caption": "大学生の男の子が単位を落として焦っているイラストです。",
+                            "date": "2021-01-07 12:53:04",
+                            "pages": 1,
+                            "like": 2,
+                            "mylist": 0,
+                            "mylisted": false,
+                            "originUrl": "https://www.irasutoya.com/2016/10/blog-post_23.html?page=1",
+                            "originService": "独自",
+                            "nsfw": 0,
+                            "artist": {
+                              "name": "みふね"
+                            },
+                            "extension": "png"
+                          },
+                          {
+                            "illustID": 1,
+                            "artistID": 1,
+                            "title": "パソコンのキャラクター（ノートパソコン）(笑顔)",
+                            "caption": "快調に動く笑顔のノート型のコンピューターと、壊れて困った顔をしているコンピューターのイラストです。\n",
+                            "date": "2021-01-07 12:31:01",
+                            "pages": 1,
+                            "like": 53,
+                            "mylist": 1,
+                            "mylisted": false,
+                            "originUrl": "https://www.irasutoya.com/2017/01/blog-post_792.html?page=1",
+                            "originService": "独自",
+                            "nsfw": 0,
+                            "artist": {
+                              "name": "みふね"
+                            },
+                            "extension": "png"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-search-artist",
+        "description": "指定した絵師のイラスト一覧を取得します",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "sort",
+            "description": "ソート方法 l:いいね数順 d:投稿日順"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "order",
+            "description": "ソート方向 d:降順 a:昇順"
+          },
+          {
+            "schema": {
+              "type": "number"
+            },
+            "in": "query",
+            "name": "page",
+            "description": "ページ番号"
+          },
+          {
+            "schema": {
+              "type": "number"
+            },
+            "in": "query",
+            "name": "id",
+            "description": "絵師ID"
+          }
+        ]
+      }
+    },
+    "/search/keyword": {
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "number"
+                    },
+                    "message": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "title": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "count": {
+                          "type": "number"
+                        },
+                        "current": {
+                          "type": "number"
+                        },
+                        "pages": {
+                          "type": "number"
+                        },
+                        "imgs": {
+                          "type": "array",
+                          "uniqueItems": true,
+                          "minItems": 1,
+                          "items": {
+                            "required": [
+                              "illustID",
+                              "artistID",
+                              "title",
+                              "caption",
+                              "date",
+                              "pages",
+                              "like",
+                              "mylist",
+                              "mylisted",
+                              "originUrl",
+                              "originService",
+                              "nsfw",
+                              "extension"
+                            ],
+                            "properties": {
+                              "illustID": {
+                                "type": "number"
+                              },
+                              "artistID": {
+                                "type": "number"
+                              },
+                              "title": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "caption": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "date": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "pages": {
+                                "type": "number"
+                              },
+                              "like": {
+                                "type": "number"
+                              },
+                              "mylist": {
+                                "type": "number"
+                              },
+                              "mylisted": {
+                                "type": "boolean"
+                              },
+                              "originUrl": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "originService": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "nsfw": {
+                                "type": "number"
+                              },
+                              "artist": {
+                                "type": "object",
+                                "properties": {
+                                  "name": {
+                                    "type": "string",
+                                    "minLength": 1
+                                  }
+                                },
+                                "required": [
+                                  "name"
+                                ]
+                              },
+                              "extension": {
+                                "type": "string",
+                                "minLength": 1
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "required": [
+                        "title",
+                        "count",
+                        "current",
+                        "pages",
+                        "imgs"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "status": 200,
+                      "message": "found",
+                      "data": {
+                        "title": "cafe",
+                        "count": 1,
+                        "current": 1,
+                        "pages": 1,
+                        "imgs": [
+                          {
+                            "illustID": 6,
+                            "artistID": 3,
+                            "title": "Cafe Image",
+                            "caption": "Ready for the breakfast rush to start",
+                            "date": "2021-01-07 15:01:01",
+                            "pages": 1,
+                            "like": 1,
+                            "mylist": 0,
+                            "mylisted": false,
+                            "originUrl": "https://unsplash.com/photos/dwQRixazu9I?page=1",
+                            "originService": "独自",
+                            "nsfw": 0,
+                            "artist": {
+                              "name": "Andy Falconer"
+                            },
+                            "extension": "jpg"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-search-keyword",
+        "description": "指定したキーワードを含むイラスト一覧を取得します",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "sort"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "order",
+            "description": "ソート方向 d:降順 a:昇順"
+          },
+          {
+            "schema": {
+              "type": "number"
+            },
+            "in": "query",
+            "name": "page",
+            "description": "ページ番号"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "keyword",
+            "description": "検索対象ワード"
+          }
+        ]
+      }
+    },
+    "/search/all": {
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "number"
+                    },
+                    "message": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "title": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "count": {
+                          "type": "number"
+                        },
+                        "current": {
+                          "type": "number"
+                        },
+                        "pages": {
+                          "type": "number"
+                        },
+                        "imgs": {
+                          "type": "array",
+                          "uniqueItems": true,
+                          "minItems": 1,
+                          "items": {
+                            "required": [
+                              "illustID",
+                              "artistID",
+                              "title",
+                              "caption",
+                              "date",
+                              "pages",
+                              "like",
+                              "mylist",
+                              "mylisted",
+                              "originUrl",
+                              "originService",
+                              "nsfw",
+                              "extension"
+                            ],
+                            "properties": {
+                              "illustID": {
+                                "type": "number"
+                              },
+                              "artistID": {
+                                "type": "number"
+                              },
+                              "title": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "caption": {
+                                "type": "string"
+                              },
+                              "date": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "pages": {
+                                "type": "number"
+                              },
+                              "like": {
+                                "type": "number"
+                              },
+                              "mylist": {
+                                "type": "number"
+                              },
+                              "mylisted": {
+                                "type": "boolean"
+                              },
+                              "originUrl": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "originService": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "nsfw": {
+                                "type": "number"
+                              },
+                              "artist": {
+                                "type": "object",
+                                "properties": {
+                                  "name": {
+                                    "type": "string",
+                                    "minLength": 1
+                                  }
+                                },
+                                "required": [
+                                  "name"
+                                ]
+                              },
+                              "extension": {
+                                "type": "string",
+                                "minLength": 1
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "required": [
+                        "title",
+                        "count",
+                        "current",
+                        "pages",
+                        "imgs"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "status": 200,
+                      "message": "found",
+                      "data": {
+                        "title": "全て",
+                        "count": 8,
+                        "current": 1,
+                        "pages": 1,
+                        "imgs": [
+                          {
+                            "illustID": 8,
+                            "artistID": 5,
+                            "title": "tea pours into white teacup photo",
+                            "caption": "",
+                            "date": "2021-01-07 15:16:58",
+                            "pages": 1,
+                            "like": 1,
+                            "mylist": 0,
+                            "mylisted": false,
+                            "originUrl": "https://unsplash.com/photos/oBoELXgJR1w?page=1",
+                            "originService": "独自",
+                            "nsfw": 0,
+                            "artist": {
+                              "name": "CHI CHEN"
+                            },
+                            "extension": "jpg"
+                          },
+                          {
+                            "illustID": 7,
+                            "artistID": 4,
+                            "title": "clear glass cup with tea near brown ceramic teapot",
+                            "caption": "",
+                            "date": "2021-01-07 15:15:28",
+                            "pages": 1,
+                            "like": 1,
+                            "mylist": 1,
+                            "mylisted": true,
+                            "originUrl": "https://unsplash.com/photos/L82-kkEBOd0?page=1",
+                            "originService": "独自",
+                            "nsfw": 0,
+                            "artist": {
+                              "name": "Manki Kim"
+                            },
+                            "extension": "jpg"
+                          },
+                          {
+                            "illustID": 6,
+                            "artistID": 3,
+                            "title": "Cafe Image",
+                            "caption": "Ready for the breakfast rush to start",
+                            "date": "2021-01-07 15:01:01",
+                            "pages": 1,
+                            "like": 1,
+                            "mylist": 0,
+                            "mylisted": false,
+                            "originUrl": "https://unsplash.com/photos/dwQRixazu9I?page=1",
+                            "originService": "独自",
+                            "nsfw": 0,
+                            "artist": {
+                              "name": "Andy Falconer"
+                            },
+                            "extension": "jpg"
+                          },
+                          {
+                            "illustID": 5,
+                            "artistID": 2,
+                            "title": "top view photography of heart latte coffee photo",
+                            "caption": "Cappuccino in a bed of fresh roasted coffee beans.",
+                            "date": "2021-01-07 14:56:37",
+                            "pages": 1,
+                            "like": 1,
+                            "mylist": 0,
+                            "mylisted": false,
+                            "originUrl": "https://unsplash.com/photos/XOhI_kW_TaM?page=1",
+                            "originService": "独自",
+                            "nsfw": 0,
+                            "artist": {
+                              "name": "Nathan Dumlao"
+                            },
+                            "extension": "jpg"
+                          },
+                          {
+                            "illustID": 4,
+                            "artistID": 1,
+                            "title": "社畜のイラスト",
+                            "caption": "会社に飼い慣らされ家畜のように扱われている男性会社員（サラリーマン）、俗にいう社畜のイラストです。",
+                            "date": "2021-01-07 14:53:43",
+                            "pages": 1,
+                            "like": 1,
+                            "mylist": 0,
+                            "mylisted": false,
+                            "originUrl": "?page=1",
+                            "originService": "独自",
+                            "nsfw": 0,
+                            "artist": {
+                              "name": "みふね"
+                            },
+                            "extension": "png"
+                          },
+                          {
+                            "illustID": 3,
+                            "artistID": 1,
+                            "title": "なかなか当たらないガチャのイラスト",
+                            "caption": "当たりが出る確率がとても低いガチャガチャを回し続けている人のイラストです。",
+                            "date": "2021-01-07 14:51:59",
+                            "pages": 1,
+                            "like": 1,
+                            "mylist": 0,
+                            "mylisted": false,
+                            "originUrl": "https://www.irasutoya.com/2016/02/blog-post_256.html?page=1",
+                            "originService": "独自",
+                            "nsfw": 0,
+                            "artist": {
+                              "name": "みふね"
+                            },
+                            "extension": "png"
+                          },
+                          {
+                            "illustID": 2,
+                            "artistID": 1,
+                            "title": "単位を落とす学生のイラスト（男性）",
+                            "caption": "大学生の男の子が単位を落として焦っているイラストです。",
+                            "date": "2021-01-07 12:53:04",
+                            "pages": 1,
+                            "like": 2,
+                            "mylist": 0,
+                            "mylisted": false,
+                            "originUrl": "https://www.irasutoya.com/2016/10/blog-post_23.html?page=1",
+                            "originService": "独自",
+                            "nsfw": 0,
+                            "artist": {
+                              "name": "みふね"
+                            },
+                            "extension": "png"
+                          },
+                          {
+                            "illustID": 1,
+                            "artistID": 1,
+                            "title": "パソコンのキャラクター（ノートパソコン）(笑顔)",
+                            "caption": "快調に動く笑顔のノート型のコンピューターと、壊れて困った顔をしているコンピューターのイラストです。\n",
+                            "date": "2021-01-07 12:31:01",
+                            "pages": 1,
+                            "like": 53,
+                            "mylist": 1,
+                            "mylisted": false,
+                            "originUrl": "https://www.irasutoya.com/2017/01/blog-post_792.html?page=1",
+                            "originService": "独自",
+                            "nsfw": 0,
+                            "artist": {
+                              "name": "みふね"
+                            },
+                            "extension": "png"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-search-all",
+        "description": "登録されたイラスト一覧を取得します",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "sort"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "order",
+            "description": "ソート方向 d:降順 a:昇順"
+          },
+          {
+            "schema": {
+              "type": "number"
+            },
+            "in": "query",
+            "name": "page",
+            "description": "ページ番号"
+          }
+        ]
+      }
+    },
+    "/search/random": {
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "operationId": "get-search-random",
+        "description": "ランダムなイラストを取得します"
+      }
+    },
+    "/search/image": {
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "operationId": "get-search-image",
+        "description": "画像からごちイラ内に登録されたイラストを検索します"
+      }
+    },
+    "/search/image/saucenao": {
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "operationId": "get-search-image-saucenao",
+        "description": "画像からSauceNAOに登録されたイラストを検索します"
+      }
+    },
+    "/accounts/me": {
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "number"
+                    },
+                    "message": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "userID": {
+                          "type": "number"
+                        },
+                        "displayID": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "name": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "favorite": {
+                          "type": "number"
+                        },
+                        "lineConnect": {
+                          "type": "number"
+                        },
+                        "lineNotify": {
+                          "type": "number"
+                        },
+                        "oneSignalNotify": {},
+                        "permission": {
+                          "type": "number"
+                        },
+                        "registeredDate": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "inviter": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "number"
+                            },
+                            "name": {
+                              "type": "string",
+                              "minLength": 1
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "name"
+                          ]
+                        },
+                        "invite": {
+                          "type": "object",
+                          "properties": {
+                            "id": {},
+                            "code": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "invited": {
+                              "type": "number"
+                            },
+                            "enabled": {
+                              "type": "boolean"
+                            }
+                          },
+                          "required": [
+                            "code",
+                            "invited",
+                            "enabled"
+                          ]
+                        },
+                        "mylist": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "number"
+                            }
+                          },
+                          "required": [
+                            "id"
+                          ]
+                        },
+                        "apiKey": {
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      },
+                      "required": [
+                        "userID",
+                        "displayID",
+                        "name",
+                        "favorite",
+                        "lineConnect",
+                        "lineNotify",
+                        "permission",
+                        "registeredDate",
+                        "inviter",
+                        "invite",
+                        "mylist",
+                        "apiKey"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "me-user": {
+                    "value": {
+                      "status": 200,
+                      "message": "ok",
+                      "data": {
+                        "userID": 3,
+                        "displayID": "test_user",
+                        "name": "Test",
+                        "favorite": 42,
+                        "lineConnect": 0,
+                        "lineNotify": 0,
+                        "oneSignalNotify": null,
+                        "permission": 0,
+                        "registeredDate": "2021-01-07 12:48:42",
+                        "inviter": {
+                          "id": 1,
+                          "name": "ドマオー"
+                        },
+                        "invite": {
+                          "id": null,
+                          "code": "INVITE_IS_DISABLED",
+                          "invited": 0,
+                          "enabled": false
+                        },
+                        "mylist": {
+                          "id": 3
+                        },
+                        "apiKey": "DUMMY_API_KEY"
+                      }
+                    }
+                  },
+                  "me-admin": {
+                    "value": {
+                      "status": 200,
+                      "message": "ok",
+                      "data": {
+                        "userID": 4,
+                        "displayID": "test_admin",
+                        "name": "Admin",
+                        "favorite": 43,
+                        "lineConnect": 0,
+                        "lineNotify": 0,
+                        "oneSignalNotify": null,
+                        "permission": 5,
+                        "registeredDate": "2021-01-07 12:48:42",
+                        "inviter": {
+                          "id": 1,
+                          "name": "ドマオー"
+                        },
+                        "invite": {
+                          "id": null,
+                          "code": "INVITE_IS_DISABLED",
+                          "invited": 0,
+                          "enabled": false
+                        },
+                        "mylist": {
+                          "id": 4
+                        },
+                        "apiKey": "DUMMY_API_KEY"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-accounts-me",
+        "description": "自分自身の情報を取得する"
+      },
+      "parameters": []
+    },
+    "/upload_history": {
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {},
+        "operationId": "get-upload_history",
+        "description": "投稿履歴を取得します",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "sort"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "order"
+          },
+          {
+            "schema": {
+              "type": "number"
+            },
+            "in": "query",
+            "name": "page"
+          }
+        ]
+      }
+    },
+    "/accounts/login/form": {
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "応答",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "number"
+                    },
+                    "message": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "apiKey": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "message",
+                    "apiKey"
+                  ]
+                },
+                "examples": {
+                  "login-success": {
+                    "value": {
+                      "status": 200,
+                      "message": "welcome back",
+                      "apiKey": "DUMMY_API_KEY"
+                    }
+                  },
+                  "login-failed": {
+                    "value": {
+                      "status": 404,
+                      "message": "account not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-accounts-login-form",
+        "description": "IDとパスワードを用いてAPIトークンを発行する",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "description": "",
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "password": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "id",
+                  "password"
+                ]
+              },
+              "examples": {
+                "user": {
+                  "value": {
+                    "id": "test_user",
+                    "password": "this_is_only_for_test"
+                  }
+                },
+                "admin": {
+                  "value": {
+                    "id": "test_admin",
+                    "password": "this_is_only_for_test"
+                  }
+                }
+              }
+            }
+          },
+          "description": "ユーザーIDとパスワードをパラメータに取る"
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "SearchResult": {
+        "title": "SearchResult",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "Authorization": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    },
+    "parameters": {}
+  },
+  "security": [
+    {
+      "Authorization": []
+    }
+  ]
+}
