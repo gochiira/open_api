@@ -5,12 +5,14 @@
     "version": "1.0",
     "contact": {
       "name": "Omado",
-      "url": "https://twitter.com/shallow_omado"
+      "url": "https://twitter.com/shallow_omado",
+      "email": "dsgamer777@gmail.com"
     },
     "termsOfService": "https://illust.gochiusa.team/terms",
     "description": "ごちイラ内でメインに使用されているAPI。\n現在Bot、ガチャ、フロントエンド の 3箇所で使用中。",
     "license": {
-      "name": "GPLv3"
+      "name": "GPLv3",
+      "url": "https://www.gnu.org/licenses/gpl-3.0.ja.html"
     }
   },
   "servers": [
@@ -611,285 +613,6 @@
                 }
               }
             }
-          },
-          "": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "description": "",
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "number"
-                    },
-                    "message": {
-                      "type": "string",
-                      "minLength": 1
-                    },
-                    "data": {
-                      "type": "object",
-                      "properties": {
-                        "title": {
-                          "type": "string",
-                          "minLength": 1
-                        },
-                        "count": {
-                          "type": "number"
-                        },
-                        "current": {
-                          "type": "number"
-                        },
-                        "pages": {
-                          "type": "number"
-                        },
-                        "contents": {
-                          "type": "array",
-                          "uniqueItems": true,
-                          "minItems": 1,
-                          "items": {
-                            "required": [
-                              "id",
-                              "name",
-                              "nsfw",
-                              "count",
-                              "lcount"
-                            ],
-                            "properties": {
-                              "id": {
-                                "type": "number"
-                              },
-                              "name": {
-                                "type": "string",
-                                "minLength": 1
-                              },
-                              "description": {},
-                              "nsfw": {
-                                "type": "number"
-                              },
-                              "endpoint": {},
-                              "count": {
-                                "type": "number"
-                              },
-                              "lcount": {
-                                "type": "number"
-                              }
-                            }
-                          }
-                        }
-                      },
-                      "required": [
-                        "title",
-                        "count",
-                        "current",
-                        "pages",
-                        "contents"
-                      ]
-                    }
-                  },
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ]
-                },
-                "examples": {
-                  "example-1": {
-                    "value": {
-                      "status": 200,
-                      "message": "found",
-                      "data": {
-                        "title": "タグ",
-                        "count": 21,
-                        "current": 1,
-                        "pages": 2,
-                        "contents": [
-                          {
-                            "id": 20,
-                            "name": "紅茶",
-                            "description": null,
-                            "nsfw": 0,
-                            "endpoint": null,
-                            "count": 2,
-                            "lcount": 2
-                          },
-                          {
-                            "id": 21,
-                            "name": "ティーカップ",
-                            "description": null,
-                            "nsfw": 0,
-                            "endpoint": null,
-                            "count": 2,
-                            "lcount": 2
-                          },
-                          {
-                            "id": 4,
-                            "name": "2021年01月",
-                            "description": null,
-                            "nsfw": 0,
-                            "endpoint": null,
-                            "count": 8,
-                            "lcount": 61
-                          },
-                          {
-                            "id": 17,
-                            "name": "4K",
-                            "description": null,
-                            "nsfw": 0,
-                            "endpoint": null,
-                            "count": 4,
-                            "lcount": 4
-                          },
-                          {
-                            "id": 18,
-                            "name": "カフェ",
-                            "description": null,
-                            "nsfw": 0,
-                            "endpoint": null,
-                            "count": 3,
-                            "lcount": 3
-                          },
-                          {
-                            "id": 19,
-                            "name": "カップ",
-                            "description": null,
-                            "nsfw": 0,
-                            "endpoint": null,
-                            "count": 1,
-                            "lcount": 1
-                          },
-                          {
-                            "id": 13,
-                            "name": "コーヒー",
-                            "description": null,
-                            "nsfw": 0,
-                            "endpoint": null,
-                            "count": 2,
-                            "lcount": 2
-                          },
-                          {
-                            "id": 14,
-                            "name": "コーヒーカップ",
-                            "description": null,
-                            "nsfw": 0,
-                            "endpoint": null,
-                            "count": 1,
-                            "lcount": 1
-                          },
-                          {
-                            "id": 15,
-                            "name": "Unsplash",
-                            "description": null,
-                            "nsfw": 0,
-                            "endpoint": null,
-                            "count": 1,
-                            "lcount": 1
-                          },
-                          {
-                            "id": 16,
-                            "name": "ラテ",
-                            "description": null,
-                            "nsfw": 0,
-                            "endpoint": null,
-                            "count": 1,
-                            "lcount": 1
-                          },
-                          {
-                            "id": 8,
-                            "name": "HD",
-                            "description": null,
-                            "nsfw": 0,
-                            "endpoint": null,
-                            "count": 3,
-                            "lcount": 4
-                          },
-                          {
-                            "id": 10,
-                            "name": "社畜",
-                            "description": null,
-                            "nsfw": 0,
-                            "endpoint": null,
-                            "count": 1,
-                            "lcount": 1
-                          },
-                          {
-                            "id": 11,
-                            "name": "会社",
-                            "description": null,
-                            "nsfw": 0,
-                            "endpoint": null,
-                            "count": 1,
-                            "lcount": 1
-                          },
-                          {
-                            "id": 12,
-                            "name": "サラリーマン",
-                            "description": null,
-                            "nsfw": 0,
-                            "endpoint": null,
-                            "count": 1,
-                            "lcount": 1
-                          },
-                          {
-                            "id": 6,
-                            "name": "男性",
-                            "description": null,
-                            "nsfw": 0,
-                            "endpoint": null,
-                            "count": 3,
-                            "lcount": 4
-                          },
-                          {
-                            "id": 9,
-                            "name": "ガチャ",
-                            "description": null,
-                            "nsfw": 0,
-                            "endpoint": null,
-                            "count": 1,
-                            "lcount": 1
-                          },
-                          {
-                            "id": 1,
-                            "name": "いらすとや",
-                            "description": null,
-                            "nsfw": 0,
-                            "endpoint": null,
-                            "count": 2,
-                            "lcount": 55
-                          },
-                          {
-                            "id": 3,
-                            "name": "イラスト",
-                            "description": null,
-                            "nsfw": 0,
-                            "endpoint": null,
-                            "count": 2,
-                            "lcount": 55
-                          },
-                          {
-                            "id": 7,
-                            "name": "大学生",
-                            "description": null,
-                            "nsfw": 0,
-                            "endpoint": null,
-                            "count": 1,
-                            "lcount": 2
-                          },
-                          {
-                            "id": 2,
-                            "name": "パソコン",
-                            "description": null,
-                            "nsfw": 0,
-                            "endpoint": null,
-                            "count": 1,
-                            "lcount": 53
-                          }
-                        ]
-                      }
-                    }
-                  }
-                }
-              }
-            }
           }
         },
         "operationId": "get-catalog-tags",
@@ -1124,6 +847,33 @@
                     },
                     "data": {
                       "type": "object",
+                      "required": [
+                        "illustID",
+                        "title",
+                        "caption",
+                        "date",
+                        "pages",
+                        "like",
+                        "view",
+                        "mylist",
+                        "mylisted",
+                        "originUrl",
+                        "originService",
+                        "nsfw",
+                        "hash",
+                        "extension",
+                        "user",
+                        "status",
+                        "width",
+                        "height",
+                        "filesize",
+                        "tag",
+                        "chara",
+                        "group",
+                        "system",
+                        "replace",
+                        "star"
+                      ],
                       "properties": {
                         "illustID": {
                           "type": "number"
@@ -1174,6 +924,10 @@
                         },
                         "artist": {
                           "type": "object",
+                          "required": [
+                            "id",
+                            "name"
+                          ],
                           "properties": {
                             "id": {
                               "type": "number"
@@ -1182,14 +936,14 @@
                               "type": "string",
                               "minLength": 1
                             }
-                          },
-                          "required": [
-                            "id",
-                            "name"
-                          ]
+                          }
                         },
                         "user": {
                           "type": "object",
+                          "required": [
+                            "id",
+                            "name"
+                          ],
                           "properties": {
                             "id": {
                               "type": "number"
@@ -1198,11 +952,7 @@
                               "type": "string",
                               "minLength": 1
                             }
-                          },
-                          "required": [
-                            "id",
-                            "name"
-                          ]
+                          }
                         },
                         "status": {
                           "type": "number"
@@ -1219,117 +969,92 @@
                         },
                         "tag": {
                           "type": "array",
+                          "uniqueItems": true,
+                          "minItems": 1,
                           "items": {
-                            "required": [],
+                            "type": "object",
                             "properties": {
-                              "0": {
-                                "type": "array",
-                                "uniqueItems": true,
-                                "items": {
-                                  "required": [],
-                                  "properties": {}
-                                }
+                              "id": {
+                                "type": "number"
                               },
-                              "1": {
-                                "type": "array",
-                                "uniqueItems": true,
-                                "items": {
-                                  "required": [],
-                                  "properties": {}
-                                }
+                              "name": {
+                                "type": "string",
+                                "minLength": 1
                               },
-                              "2": {
-                                "type": "array",
-                                "uniqueItems": true,
-                                "items": {
-                                  "required": [],
-                                  "properties": {}
-                                }
+                              "nsfw": {
+                                "type": "number"
                               }
-                            }
+                            },
+                            "required": [
+                              "id",
+                              "name",
+                              "nsfw"
+                            ]
                           }
                         },
                         "chara": {
                           "type": "array",
                           "items": {
-                            "required": [],
-                            "properties": {}
+                            "type": "object"
                           }
                         },
                         "group": {
                           "type": "array",
                           "items": {
-                            "required": [],
-                            "properties": {}
+                            "type": "object"
                           }
                         },
                         "system": {
                           "type": "array",
+                          "uniqueItems": true,
+                          "minItems": 1,
                           "items": {
-                            "required": [],
+                            "type": "object",
                             "properties": {
-                              "0": {
-                                "type": "array",
-                                "uniqueItems": true,
-                                "items": {
-                                  "required": [],
-                                  "properties": {}
-                                }
+                              "id": {
+                                "type": "number"
                               },
-                              "1": {
-                                "type": "array",
-                                "uniqueItems": true,
-                                "items": {
-                                  "required": [],
-                                  "properties": {}
-                                }
+                              "name": {
+                                "type": "string",
+                                "minLength": 1
                               }
-                            }
+                            },
+                            "required": [
+                              "id",
+                              "name"
+                            ]
                           }
                         },
                         "replace": {
                           "type": "array",
                           "items": {
-                            "required": [],
-                            "properties": {}
+                            "type": "object"
                           }
                         },
                         "star": {
-                          "type": "array",
-                          "items": {
-                            "required": [],
-                            "properties": {}
+                          "type": "object",
+                          "required": [
+                            "yellow",
+                            "green",
+                            "red",
+                            "blue"
+                          ],
+                          "properties": {
+                            "yellow": {
+                              "type": "number"
+                            },
+                            "green": {
+                              "type": "number"
+                            },
+                            "red": {
+                              "type": "number"
+                            },
+                            "blue": {
+                              "type": "number"
+                            }
                           }
                         }
-                      },
-                      "required": [
-                        "illustID",
-                        "title",
-                        "caption",
-                        "date",
-                        "pages",
-                        "like",
-                        "view",
-                        "mylist",
-                        "mylisted",
-                        "originUrl",
-                        "originService",
-                        "nsfw",
-                        "hash",
-                        "extension",
-                        "artist",
-                        "user",
-                        "status",
-                        "width",
-                        "height",
-                        "filesize",
-                        "tag",
-                        "chara",
-                        "group",
-                        "system",
-                        "replace",
-                        "star"
-                      ]
+                      }
                     }
                   },
                   "required": [
@@ -1369,41 +1094,41 @@
                         "height": 4391,
                         "filesize": "491K",
                         "tag": [
-                          [
-                            21,
-                            "ティーカップ",
-                            0
-                          ],
-                          [
-                            20,
-                            "紅茶",
-                            0
-                          ],
-                          [
-                            18,
-                            "カフェ",
-                            0
-                          ]
+                          {
+                            "id": 21,
+                            "name": "ティーカップ",
+                            "nsfw": 0
+                          },
+                          {
+                            "id": 20,
+                            "name": "紅茶",
+                            "nsfw": 0
+                          },
+                          {
+                            "id": 18,
+                            "name": "カフェ",
+                            "nsfw": 0
+                          }
                         ],
                         "chara": [],
                         "group": [],
                         "system": [
-                          [
-                            4,
-                            "2021年01月"
-                          ],
-                          [
-                            17,
-                            "4K"
-                          ]
+                          {
+                            "id": 4,
+                            "name": "2021年01月"
+                          },
+                          {
+                            "id": 17,
+                            "name": "4K"
+                          }
                         ],
                         "replace": [],
-                        "star": [
-                          1,
-                          0,
-                          0,
-                          0
-                        ]
+                        "star": {
+                          "yellow": 1,
+                          "green": 0,
+                          "blue": 0,
+                          "red": 0
+                        }
                       }
                     }
                   }
