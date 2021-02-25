@@ -40,7 +40,6 @@
       ],
       "get": {
         "summary": "Get user info",
-        "tags": [],
         "responses": {
           "200": {
             "description": "OK",
@@ -55,7 +54,10 @@
           }
         },
         "operationId": "get-accounts-accountID",
-        "description": "ユーザーのアカウント情報を取得します"
+        "description": "ユーザーのアカウント情報を取得します",
+        "tags": [
+          "accounts"
+        ]
       }
     },
     "/accounts/{accountID}/upload_history": {
@@ -72,7 +74,9 @@
       ],
       "get": {
         "summary": "Get upload history",
-        "tags": [],
+        "tags": [
+          "accounts"
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -96,7 +100,9 @@
       ],
       "get": {
         "summary": "Reissue api key",
-        "tags": [],
+        "tags": [
+          "accounts"
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -3425,6 +3431,11 @@
   "security": [
     {
       "Authorization": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "accounts"
     }
   ]
 }
