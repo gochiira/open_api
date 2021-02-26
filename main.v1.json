@@ -1858,7 +1858,9 @@
       ],
       "get": {
         "summary": "Get mylist data",
-        "tags": [],
+        "tags": [
+          "mylist"
+        ],
         "responses": {
           "200": {
             "description": "OK",
@@ -2032,7 +2034,9 @@
     "/mylist/list": {
       "get": {
         "summary": "Get mylist list",
-        "tags": [],
+        "tags": [
+          "mylist"
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -3354,16 +3358,16 @@
     "/search/random": {
       "get": {
         "summary": "Search by random",
-        "tags": [
-          "search"
-        ],
         "responses": {
           "200": {
             "description": "OK"
           }
         },
         "operationId": "get-search-random",
-        "description": "ランダムなイラストを取得します"
+        "description": "ランダムなイラストを取得します",
+        "tags": [
+          "search"
+        ]
       }
     },
     "/search/image": {
@@ -3716,6 +3720,9 @@
     },
     {
       "name": "catalog"
+    },
+    {
+      "name": "mylist"
     },
     {
       "name": "navigations"
