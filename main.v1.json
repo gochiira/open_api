@@ -79,7 +79,243 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "ヒットしたデータが応答のdata->contentsに配列で返却されます",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "number"
+                    },
+                    "message": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "title": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "count": {
+                          "type": "number"
+                        },
+                        "current": {
+                          "type": "number"
+                        },
+                        "pages": {
+                          "type": "number"
+                        },
+                        "contents": {
+                          "type": "array",
+                          "uniqueItems": true,
+                          "minItems": 1,
+                          "items": {
+                            "required": [
+                              "uploadID",
+                              "started",
+                              "finished",
+                              "status",
+                              "illustID"
+                            ],
+                            "properties": {
+                              "uploadID": {
+                                "type": "number"
+                              },
+                              "started": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "finished": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "status": {
+                                "type": "number"
+                              },
+                              "illustID": {
+                                "type": "number"
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "required": [
+                        "title",
+                        "count",
+                        "current",
+                        "pages",
+                        "contents"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "example": {
+                    "value": {
+                      "status": 200,
+                      "message": "ok",
+                      "data": {
+                        "title": "アップロード履歴",
+                        "count": 2321,
+                        "current": 1,
+                        "pages": 117,
+                        "contents": [
+                          {
+                            "uploadID": 12045,
+                            "started": "2021-02-21 22:24:22",
+                            "finished": "2021-02-21 22:24:27",
+                            "status": 5,
+                            "illustID": 9381
+                          },
+                          {
+                            "uploadID": 12044,
+                            "started": "2021-02-21 22:23:41",
+                            "finished": "2021-02-21 22:23:45",
+                            "status": 5,
+                            "illustID": 9380
+                          },
+                          {
+                            "uploadID": 12036,
+                            "started": "2021-02-21 20:30:39",
+                            "finished": "2021-02-21 20:30:43",
+                            "status": 5,
+                            "illustID": 9375
+                          },
+                          {
+                            "uploadID": 12004,
+                            "started": "2021-02-20 20:20:19",
+                            "finished": "2021-02-20 20:20:29",
+                            "status": 5,
+                            "illustID": 9355
+                          },
+                          {
+                            "uploadID": 12003,
+                            "started": "2021-02-20 20:03:30",
+                            "finished": "2021-02-20 20:03:46",
+                            "status": 5,
+                            "illustID": 9354
+                          },
+                          {
+                            "uploadID": 11972,
+                            "started": "2021-02-19 21:30:58",
+                            "finished": "2021-02-19 21:31:00",
+                            "status": 5,
+                            "illustID": 9336
+                          },
+                          {
+                            "uploadID": 11971,
+                            "started": "2021-02-19 21:30:52",
+                            "finished": "2021-02-19 21:30:55",
+                            "status": 5,
+                            "illustID": 9335
+                          },
+                          {
+                            "uploadID": 11970,
+                            "started": "2021-02-19 21:30:46",
+                            "finished": "2021-02-19 21:30:49",
+                            "status": 5,
+                            "illustID": 9334
+                          },
+                          {
+                            "uploadID": 10756,
+                            "started": "2021-01-20 03:12:57",
+                            "finished": "2021-01-20 03:13:04",
+                            "status": 5,
+                            "illustID": 8418
+                          },
+                          {
+                            "uploadID": 10755,
+                            "started": "2021-01-20 03:09:31",
+                            "finished": "2021-01-20 03:09:39",
+                            "status": 5,
+                            "illustID": 8417
+                          },
+                          {
+                            "uploadID": 10754,
+                            "started": "2021-01-20 02:57:00",
+                            "finished": "2021-01-20 02:57:09",
+                            "status": 5,
+                            "illustID": 8416
+                          },
+                          {
+                            "uploadID": 10753,
+                            "started": "2021-01-20 02:56:44",
+                            "finished": "2021-01-20 02:56:52",
+                            "status": 5,
+                            "illustID": 8415
+                          },
+                          {
+                            "uploadID": 10663,
+                            "started": "2021-01-17 22:21:22",
+                            "finished": "2021-01-17 22:21:35",
+                            "status": 5,
+                            "illustID": 8364
+                          },
+                          {
+                            "uploadID": 10658,
+                            "started": "2021-01-17 21:14:02",
+                            "finished": "2021-01-17 21:14:06",
+                            "status": 5,
+                            "illustID": 8360
+                          },
+                          {
+                            "uploadID": 10657,
+                            "started": "2021-01-17 21:07:54",
+                            "finished": "2021-01-17 21:07:57",
+                            "status": 5,
+                            "illustID": 8359
+                          },
+                          {
+                            "uploadID": 10656,
+                            "started": "2021-01-17 21:07:47",
+                            "finished": "2021-01-17 21:07:51",
+                            "status": 5,
+                            "illustID": 8358
+                          },
+                          {
+                            "uploadID": 10655,
+                            "started": "2021-01-17 21:07:41",
+                            "finished": "2021-01-17 21:07:43",
+                            "status": 5,
+                            "illustID": 8357
+                          },
+                          {
+                            "uploadID": 10654,
+                            "started": "2021-01-17 21:07:34",
+                            "finished": "2021-01-17 21:07:37",
+                            "status": 5,
+                            "illustID": 8356
+                          },
+                          {
+                            "uploadID": 10653,
+                            "started": "2021-01-17 21:07:27",
+                            "finished": "2021-01-17 21:07:30",
+                            "status": 5,
+                            "illustID": 8355
+                          },
+                          {
+                            "uploadID": 10652,
+                            "started": "2021-01-17 21:06:35",
+                            "finished": "2021-01-17 21:06:39",
+                            "status": 5,
+                            "illustID": 8354
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         "operationId": "get-accounts-accountID-upload_history",
@@ -115,10 +351,12 @@
     "/catalog/artists": {
       "get": {
         "summary": "Get artist list",
-        "tags": [],
+        "tags": [
+          "catalog"
+        ],
         "responses": {
           "200": {
-            "description": "ヒットしたデータが応答のdataに配列で返却されます",
+            "description": "ヒットしたデータが応答のdata->contentsに配列で返却されます",
             "content": {
               "application/json": {
                 "schema": {
@@ -337,10 +575,12 @@
     "/catalog/tags": {
       "get": {
         "summary": "Get tag list",
-        "tags": [],
+        "tags": [
+          "catalog"
+        ],
         "responses": {
           "200": {
-            "description": "ヒットしたデータが応答のdataに配列で返却されます",
+            "description": "ヒットしたデータが応答のdata->contentsに配列で返却されます",
             "content": {
               "application/json": {
                 "schema": {
@@ -670,10 +910,12 @@
     "/catalog/characters": {
       "get": {
         "summary": "Get character list",
-        "tags": [],
+        "tags": [
+          "catalog"
+        ],
         "responses": {
           "200": {
-            "description": "ヒットしたデータが応答のdataに配列で返却されます",
+            "description": "ヒットしたデータが応答のdata->contentsに配列で返却されます",
             "content": {
               "application/json": {
                 "schema": {
@@ -838,7 +1080,9 @@
       ],
       "get": {
         "summary": "Get art info",
-        "tags": [],
+        "tags": [
+          "arts"
+        ],
         "responses": {
           "200": {
             "description": "OK",
@@ -1069,7 +1313,7 @@
                   ]
                 },
                 "examples": {
-                  "example-1": {
+                  "example": {
                     "value": {
                       "status": 200,
                       "data": {
@@ -1150,7 +1394,9 @@
     "/navigations/characters": {
       "get": {
         "summary": "Get character navigation tab (for site)",
-        "tags": [],
+        "tags": [
+          "navigations"
+        ],
         "responses": {
           "200": {
             "description": "応答のdataに配列で返却されます",
@@ -1238,7 +1484,9 @@
     "/navigations/artists": {
       "get": {
         "summary": "Get artist navigation tab (for site)",
-        "tags": [],
+        "tags": [
+          "navigations"
+        ],
         "responses": {
           "200": {
             "description": "応答のdataに配列で返却されます",
@@ -1326,7 +1574,9 @@
     "/navigations/tags": {
       "get": {
         "summary": "Get tag navigation tab (for site)",
-        "tags": [],
+        "tags": [
+          "navigations"
+        ],
         "responses": {
           "200": {
             "description": "応答のdataに配列で返却されます",
@@ -1414,7 +1664,9 @@
     "/news/list": {
       "get": {
         "summary": "Get news list",
-        "tags": [],
+        "tags": [
+          "news"
+        ],
         "responses": {
           "200": {
             "description": "応答のdataに配列で返却されます",
@@ -1520,7 +1772,9 @@
       ],
       "get": {
         "summary": "Get news",
-        "tags": [],
+        "tags": [
+          "news"
+        ],
         "responses": {
           "200": {
             "description": "応答のdataに返却されます",
@@ -1792,7 +2046,9 @@
     "/search/tag": {
       "get": {
         "summary": "Search by tag",
-        "tags": [],
+        "tags": [
+          "search"
+        ],
         "responses": {
           "200": {
             "description": "OK",
@@ -2031,7 +2287,9 @@
     "/search/character": {
       "get": {
         "summary": "Search by character",
-        "tags": [],
+        "tags": [
+          "search"
+        ],
         "responses": {
           "200": {
             "description": "OK",
@@ -2253,7 +2511,9 @@
     "/search/artist": {
       "get": {
         "summary": "Search by artist",
-        "tags": [],
+        "tags": [
+          "search"
+        ],
         "responses": {
           "200": {
             "description": "OK",
@@ -2529,7 +2789,9 @@
     "/search/keyword": {
       "get": {
         "summary": "Search by keyword",
-        "tags": [],
+        "tags": [
+          "search"
+        ],
         "responses": {
           "200": {
             "description": "OK",
@@ -2752,7 +3014,9 @@
     "/search/all": {
       "get": {
         "summary": "Search all arts",
-        "tags": [],
+        "tags": [
+          "search"
+        ],
         "responses": {
           "200": {
             "description": "OK",
@@ -3090,7 +3354,9 @@
     "/search/random": {
       "get": {
         "summary": "Search by random",
-        "tags": [],
+        "tags": [
+          "search"
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -3103,7 +3369,9 @@
     "/search/image": {
       "post": {
         "summary": "Search by image",
-        "tags": [],
+        "tags": [
+          "search"
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -3116,7 +3384,9 @@
     "/search/image/saucenao": {
       "post": {
         "summary": "Search by image at saucenao",
-        "tags": [],
+        "tags": [
+          "search"
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -3129,7 +3399,9 @@
     "/accounts/me": {
       "get": {
         "summary": "Get user info (self)",
-        "tags": [],
+        "tags": [
+          "accounts"
+        ],
         "responses": {
           "200": {
             "description": "OK",
@@ -3328,7 +3600,9 @@
     "/accounts/login/form": {
       "post": {
         "summary": "Login with form",
-        "tags": [],
+        "tags": [
+          "accounts"
+        ],
         "responses": {
           "200": {
             "description": "ログインできたかどうかはstatusを参照",
@@ -3436,6 +3710,21 @@
   "tags": [
     {
       "name": "accounts"
+    },
+    {
+      "name": "arts"
+    },
+    {
+      "name": "catalog"
+    },
+    {
+      "name": "navigations"
+    },
+    {
+      "name": "news"
+    },
+    {
+      "name": "search"
     }
   ]
 }
