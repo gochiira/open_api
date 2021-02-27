@@ -1075,7 +1075,8 @@
           },
           "name": "illustID",
           "in": "path",
-          "required": true
+          "required": true,
+          "description": "取得したいイラストのID"
         }
       ],
       "get": {
@@ -1389,6 +1390,33 @@
         },
         "operationId": "get-arts-artID",
         "description": "指定したイラストを取得します"
+      },
+      "put": {
+        "summary": "Edit art",
+        "operationId": "put-arts-illustID",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "指定したイラストの情報を編集します\nパラメータで与えられたデータに応じて柔軟に\n絵師名・タグ・キャラクター等を同時に書き換えます",
+        "tags": [
+          "arts"
+        ]
+      },
+      "delete": {
+        "summary": "Delete art",
+        "operationId": "delete-arts-illustID",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "指定したイラストを削除します\n削除してほしくないため非推奨とします\n(このエンドポイントから削除したイラストは\n参照が不可能になるだけであり一定日数サーバー上に残されます)",
+        "deprecated": true,
+        "tags": [
+          "arts"
+        ]
       }
     },
     "/navigations/characters": {
@@ -1478,7 +1506,7 @@
           }
         },
         "operationId": "get-navigations-characters",
-        "description": "イラスト数の多いキャラクター上位5件を取得します"
+        "description": "イラスト数の多いキャラクター上位5件を取得します\nサイト内上部 ナビゲーションメニューで使用しています"
       }
     },
     "/navigations/artists": {
@@ -1568,7 +1596,7 @@
           }
         },
         "operationId": "get-navigations-artists",
-        "description": "イラスト数の多い絵師上位5件を取得します"
+        "description": "イラスト数の多い絵師上位5件を取得します\nサイト内上部 ナビゲーションメニューで使用しています"
       }
     },
     "/navigations/tags": {
@@ -1658,7 +1686,7 @@
           }
         },
         "operationId": "get-navigations-tags",
-        "description": "イラスト数の多いタグ上位5件を取得します"
+        "description": "イラスト数の多いタグ上位5件を取得します\nサイト内上部 ナビゲーションメニューで使用しています"
       }
     },
     "/news/list": {
@@ -3597,7 +3625,7 @@
           }
         },
         "operationId": "get-accounts-me",
-        "description": "自分自身の情報を取得する"
+        "description": "自分自身にまつわる情報をすべて取得します\n通常、ログイン時に一度だけ呼び出されます"
       },
       "parameters": []
     },
@@ -3694,6 +3722,399 @@
           "description": "ユーザーIDとパスワードをパラメータに取ります"
         }
       }
+    },
+    "/artists": {
+      "post": {
+        "summary": "Create artist",
+        "operationId": "post-artists",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "新しい絵師を生成します(イラスト投稿時に存在しなければ自動で作成されるため\n直接操作する必要はありません)",
+        "deprecated": true,
+        "tags": [
+          "artists"
+        ]
+      }
+    },
+    "/artists/{artistID}": {
+      "get": {
+        "summary": "Get artist",
+        "tags": [
+          "artists"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "operationId": "get-artists",
+        "description": "指定した絵師の情報を取得します。存在しない情報欄にはnullが入ります。"
+      },
+      "parameters": [
+        {
+          "schema": {
+            "type": "number"
+          },
+          "name": "artistID",
+          "in": "path",
+          "required": true,
+          "description": "対象の絵師ID"
+        }
+      ],
+      "delete": {
+        "summary": "Delete artist",
+        "operationId": "delete-artists-artistID",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "指定した絵師の情報を削除します\n(イラストによって参照されていない場合のみ削除できるため、通常利用機会はありません)",
+        "deprecated": true,
+        "tags": [
+          "artists"
+        ]
+      },
+      "put": {
+        "summary": "Edit artist",
+        "operationId": "put-artists-artistID",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "指定した絵師の情報を置き換えます。\nリクエストで指定されたパラメータだけを置き換えます。",
+        "tags": [
+          "artists"
+        ]
+      }
+    },
+    "/arts/{illustID}/replace": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "illustID",
+          "in": "path",
+          "required": true,
+          "description": "置き換えしたい(画質が低い方の)イラストID"
+        }
+      ],
+      "put": {
+        "summary": "Combine art info",
+        "operationId": "put-arts-illustID-replace",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "arts"
+        ],
+        "description": "パスパラメータで指定された低画質なイラストに対して\nクエリパラメータで指定されたより画質の良いイラストで統合(置き換え)処理を行います。\n画質が低い方のいいね・タグ・出典・コメントが画質が高い方のイラストに対して統合されます。\n置き換えられた画質が低い方のイラストは検索結果に表示されなくなりますが、IDを直接指定すれば閲覧できる状態で残ります。"
+      }
+    },
+    "/arts/{illustID}/tags": {
+      "get": {
+        "summary": "Get art tags",
+        "tags": [
+          "arts"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "operationId": "get-arts-hage",
+        "description": "指定したイラストに付いているタグのみを一覧で取得します"
+      },
+      "parameters": [
+        {
+          "schema": {
+            "type": "number"
+          },
+          "name": "illustID",
+          "in": "path",
+          "required": true,
+          "description": "対象のイラストID"
+        }
+      ],
+      "put": {
+        "summary": "Edit art tags",
+        "operationId": "put-arts-illustID-tags",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "指定したイラストのタグ一覧に、与えられたIDのタグを追加します\n(イラスト本体の編集時に付けられたタグ名から\n自動的にタグIDを引き出し追加/削除を行う処理が追加されたため\nこちらのエンドポイントを使用する必要はありません)",
+        "deprecated": true,
+        "tags": [
+          "arts"
+        ]
+      },
+      "delete": {
+        "summary": "Delete art tag",
+        "operationId": "delete-arts-illustID-tags",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "指定したイラストのタグ一覧から、与えられたIDのタグを削除します\n(イラスト本体の編集時に付けられたタグ名から\n自動的にタグIDを引き出し追加/削除を行う処理が追加されたため\nこちらのエンドポイントを使用する必要はありません)",
+        "deprecated": true,
+        "tags": [
+          "arts"
+        ]
+      }
+    },
+    "/arts/{illustID}/characters": {
+      "get": {
+        "summary": "Get art characters",
+        "tags": [
+          "arts"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "operationId": "get-arts-hoe",
+        "description": "指定したイラストに付いているキャラクターのみを一覧で取得します"
+      },
+      "parameters": [
+        {
+          "schema": {
+            "type": "number"
+          },
+          "name": "illustID",
+          "in": "path",
+          "required": true,
+          "description": "対象のイラストID"
+        }
+      ],
+      "put": {
+        "summary": "Edit art characters",
+        "operationId": "put-arts-illustID-characters",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "指定したイラストのキャラクター一覧に、与えられたIDのキャラクターを追加します\n(イラスト本体の編集時に付けられたキャラクター名から\n自動的にキャラクターIDを引き出し追加/削除を行う処理が追加されたため\nこちらのエンドポイントを使用する必要はありません)",
+        "deprecated": true,
+        "tags": [
+          "arts"
+        ]
+      },
+      "delete": {
+        "summary": "Delete art character",
+        "operationId": "delete-arts-illustID-characters",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "指定したイラストのキャラクター一覧から、与えられたIDのキャラクターを削除します\n(イラスト本体の編集時に付けられたキャラクター名から\n自動的にキャラクターIDを引き出し追加/削除を行う処理が追加されたため\nこちらのエンドポイントを使用する必要はありません)",
+        "deprecated": true,
+        "tags": [
+          "arts"
+        ]
+      }
+    },
+    "/arts/{illustID}/likes": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "number"
+          },
+          "name": "illustID",
+          "in": "path",
+          "required": true,
+          "description": "いいねしたいイラストのID"
+        }
+      ],
+      "put": {
+        "summary": "Plus art like",
+        "operationId": "put-arts-illustID-likes",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "arts"
+        ],
+        "description": "指定したイラストのいいね数を1増加させます\n(いいねの種別を選択できる仕様となったため、このエンドポイントは現在非推奨ですが\n種別を指定するいいねよりも応答が速いため残っています)",
+        "deprecated": true
+      }
+    },
+    "/arts/{illustID}/likes/{likeType}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "number"
+          },
+          "name": "illustID",
+          "in": "path",
+          "required": true,
+          "description": "いいねしたいイラストのID"
+        },
+        {
+          "schema": {
+            "type": "number"
+          },
+          "name": "likeType",
+          "in": "path",
+          "required": true,
+          "description": "いいね種別 1:黄 2:緑 3:赤 4:青"
+        }
+      ],
+      "put": {
+        "summary": "Plus art like (with using star)",
+        "operationId": "put-arts-illustID-likes-likeType",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "arts"
+        ],
+        "description": "指定したイラストのいいね数を1増加させます\nいいねする都度、likeTypeに指定されたスターを消費します\n(ToyMoneyApiに問い合わせを行った上で増加処理を行うため若干時間がかかります)"
+      }
+    },
+    "/arts/{illustID}/views": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "illustID",
+          "in": "path",
+          "required": true,
+          "description": "閲覧したイラストのID"
+        }
+      ],
+      "put": {
+        "summary": "Plus art view",
+        "operationId": "put-arts-illustID-views",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "arts"
+        ],
+        "description": "指定したイラストの閲覧回数を1増加させます\n同一アカウントからのイラスト閲覧は1日1回のみカウントされます"
+      }
+    },
+    "/arts/{illustID}/comments": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "illustID",
+          "in": "path",
+          "required": true,
+          "description": "対象のイラストID"
+        }
+      ],
+      "get": {
+        "summary": "Get art comments",
+        "tags": [
+          "arts"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "operationId": "get-arts-illustID-comments",
+        "description": "指定したイラストに付いているコメントのみを一覧で取得します"
+      },
+      "post": {
+        "summary": "Add art comment",
+        "operationId": "post-arts-illustID-comments",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "指定したイラストにコメントを追加します",
+        "tags": [
+          "arts"
+        ]
+      }
+    },
+    "/arts/{illustID}/comments/{commentID}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "illustID",
+          "in": "path",
+          "required": true,
+          "description": "対象のイラストID"
+        },
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "commentID",
+          "in": "path",
+          "required": true,
+          "description": "編集したいコメントのID"
+        }
+      ],
+      "put": {
+        "summary": "Edit art comment",
+        "operationId": "put-arts-illustID-comments-commentID",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "arts"
+        ],
+        "description": "指定したイラストに付けたコメントを編集します"
+      },
+      "delete": {
+        "summary": "Delete art comment",
+        "operationId": "delete-arts-illustID-comments-commentID",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "指定したイラストに付けたコメントを削除します",
+        "tags": [
+          "arts"
+        ]
+      }
+    },
+    "/arts": {
+      "post": {
+        "summary": "Create art",
+        "operationId": "post-arts",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "arts"
+        ],
+        "description": "パラメータで与えられたイラストを投稿します"
+      }
     }
   },
   "components": {
@@ -3714,6 +4135,9 @@
   "tags": [
     {
       "name": "accounts"
+    },
+    {
+      "name": "artists"
     },
     {
       "name": "arts"
