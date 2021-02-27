@@ -58,6 +58,32 @@
         "tags": [
           "accounts"
         ]
+      },
+      "put": {
+        "summary": "Edit user info",
+        "operationId": "put-accounts-accountID",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "accounts"
+        ],
+        "description": "アカウント情報を編集します\n(本人または管理者のみがリクエストできます)"
+      },
+      "delete": {
+        "summary": "Delete user info",
+        "operationId": "delete-accounts-accountID",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "アカウントを削除します\n(本人または管理者のみがリクエストできます)",
+        "tags": [
+          "accounts"
+        ]
       }
     },
     "/accounts/{accountID}/upload_history": {
@@ -1071,7 +1097,7 @@
       "parameters": [
         {
           "schema": {
-            "type": "string"
+            "type": "number"
           },
           "name": "illustID",
           "in": "path",
@@ -1877,7 +1903,7 @@
       "parameters": [
         {
           "schema": {
-            "type": "string"
+            "type": "number"
           },
           "name": "mylistID",
           "in": "path",
@@ -3796,7 +3822,7 @@
       "parameters": [
         {
           "schema": {
-            "type": "string"
+            "type": "number"
           },
           "name": "illustID",
           "in": "path",
@@ -3992,7 +4018,7 @@
       "parameters": [
         {
           "schema": {
-            "type": "string"
+            "type": "number"
           },
           "name": "illustID",
           "in": "path",
@@ -4018,7 +4044,7 @@
       "parameters": [
         {
           "schema": {
-            "type": "string"
+            "type": "number"
           },
           "name": "illustID",
           "in": "path",
@@ -4057,7 +4083,7 @@
       "parameters": [
         {
           "schema": {
-            "type": "string"
+            "type": "number"
           },
           "name": "illustID",
           "in": "path",
@@ -4066,7 +4092,7 @@
         },
         {
           "schema": {
-            "type": "string"
+            "type": "number"
           },
           "name": "commentID",
           "in": "path",
@@ -4114,6 +4140,96 @@
           "arts"
         ],
         "description": "パラメータで与えられたイラストを投稿します"
+      }
+    },
+    "/accounts/login/line": {
+      "post": {
+        "summary": "Login with line",
+        "operationId": "post-accounts-login-line",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "LINEアカウントを使ってログインする際にコールバックするエンドポイント\n(サイト内以外からこちらにリクエストすることはできません)",
+        "tags": [
+          "accounts"
+        ]
+      }
+    },
+    "/accounts/{accountID}/connect/line": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "number"
+          },
+          "name": "accountID",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "post": {
+        "summary": "Connect to line account (for site)",
+        "operationId": "post-accounts-accountID-connect-line",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "LINEアカウントにアカウントを連携する際にコールバックするエンドポイント\n(サイト内以外からこちらにリクエストすることはできません)",
+        "tags": [
+          "accounts"
+        ]
+      }
+    },
+    "/accounts/{accountID}/connect/telegram": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "number"
+          },
+          "name": "accountID",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "post": {
+        "summary": "Connect to telegram account (for site)",
+        "operationId": "post-accounts-accountID-connect-telegram",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "Telegramアカウントにアカウントを連携する際にコールバックするエンドポイント\n(サイト内以外からこちらにリクエストすることはできません)",
+        "tags": [
+          "accounts"
+        ]
+      }
+    },
+    "/accounts/{accountID}/connect/line_notify": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "number"
+          },
+          "name": "accountID",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "post": {
+        "summary": "Connect to line notify (for site)",
+        "operationId": "post-accounts-accountID-connect-line_notify",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "Line Notifyにアカウントを連携する際にコールバックするエンドポイント\n(サイト内以外からこちらにリクエストすることはできません)",
+        "tags": [
+          "accounts"
+        ]
       }
     }
   },
