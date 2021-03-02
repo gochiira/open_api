@@ -348,7 +348,7 @@
         "description": "イラスト投稿履歴を取得します"
       }
     },
-    "/accounts/{accountID}/apiKey": {
+    "/accounts/{accountID}/reissue_token": {
       "parameters": [
         {
           "schema": {
@@ -360,18 +360,18 @@
           "description": "取得したいユーザーのアカウントID"
         }
       ],
-      "get": {
+      "post": {
         "summary": "Reissue api key",
-        "tags": [
-          "accounts"
-        ],
+        "operationId": "post-accounts-accountID-reissue_token",
         "responses": {
           "200": {
             "description": "OK"
           }
         },
-        "operationId": "get-accounts-accountID-apiKey",
-        "description": "アカウントのログインキーを再生成します"
+        "description": "アカウントのログインキーを再生成します",
+        "tags": [
+          "accounts"
+        ]
       }
     },
     "/catalog/artists": {
@@ -3424,7 +3424,7 @@
         ]
       }
     },
-    "/search/image": {
+    "/search/image/self": {
       "post": {
         "summary": "Search by image",
         "tags": [
@@ -3437,7 +3437,8 @@
         },
         "operationId": "get-search-image",
         "description": "画像からごちイラ内に登録されたイラストを検索します"
-      }
+      },
+      "parameters": []
     },
     "/search/image/saucenao": {
       "post": {
@@ -3977,6 +3978,19 @@
         ],
         "description": "指定したイラストのいいね数を1増加させます\n(いいねの種別を選択できる仕様となったため、このエンドポイントは現在非推奨ですが\n種別を指定するいいねよりも応答が速いため残っています)",
         "deprecated": true
+      },
+      "get": {
+        "summary": "Get art likes",
+        "operationId": "get-arts-illustID-likes",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "指定したイラストのいいね数だけを取得します",
+        "tags": [
+          "arts"
+        ]
       }
     },
     "/arts/{illustID}/likes/{likeType}": {
@@ -4038,6 +4052,19 @@
           "arts"
         ],
         "description": "指定したイラストの閲覧回数を1増加させます\n同一アカウントからのイラスト閲覧は1日1回のみカウントされます"
+      },
+      "get": {
+        "summary": "Get art views",
+        "operationId": "get-arts-illustID-views",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "指定したイラストの閲覧回数のみを取得します",
+        "tags": [
+          "arts"
+        ]
       }
     },
     "/arts/{illustID}/comments": {
@@ -4111,7 +4138,7 @@
         "tags": [
           "arts"
         ],
-        "description": "指定したイラストに付けたコメントを編集します"
+        "description": "指定したイラストに付けたコメントを編集します\n(ActivityPubを使用している場合、編集後の内容が再投稿されます)"
       },
       "delete": {
         "summary": "Delete art comment",
@@ -4122,6 +4149,19 @@
           }
         },
         "description": "指定したイラストに付けたコメントを削除します",
+        "tags": [
+          "arts"
+        ]
+      },
+      "get": {
+        "summary": "Get art comment",
+        "operationId": "get-arts-illustID-comments-commentID",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "指定したイラストに付いている、指定されたIDのコメントを取得します",
         "tags": [
           "arts"
         ]
@@ -4238,7 +4278,11 @@
         "tags": [
           "search"
         ],
-        "responses": {},
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
         "operationId": "get-search-uploaders",
         "description": "指定した投稿者のイラスト一覧を取得します"
       }
