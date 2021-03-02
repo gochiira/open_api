@@ -4231,6 +4231,17 @@
           "accounts"
         ]
       }
+    },
+    "/search/uploaders": {
+      "get": {
+        "summary": "Search by uploader",
+        "tags": [
+          "search"
+        ],
+        "responses": {},
+        "operationId": "get-search-uploaders",
+        "description": "指定した投稿者のイラスト一覧を取得します"
+      }
     }
   },
   "components": {
