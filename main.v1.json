@@ -50,8 +50,11 @@
                   "type": "object",
                   "properties": {
                     "status": {
-                      "type": "number",
-                      "description": "HTTPステータスコードが入ります"
+                      "type": "integer",
+                      "description": "HTTPステータスコードが入ります",
+                      "format": "int32",
+                      "minimum": 100,
+                      "maximum": 999
                     },
                     "message": {
                       "type": "string",
@@ -63,23 +66,34 @@
                       "required": [
                         "userID",
                         "displayID",
-                        "name",
-                        "favorite"
+                        "favorite",
+                        "name"
                       ],
+                      "description": "応答本体はdataに入ります(共通)",
                       "properties": {
                         "userID": {
-                          "type": "number"
+                          "type": "integer",
+                          "description": "ユーザーID(累計何番目のアカウントか)",
+                          "format": "int32",
+                          "example": 1
                         },
                         "displayID": {
                           "type": "string",
-                          "minLength": 1
+                          "minLength": 1,
+                          "description": "表示ID/ログインID 英数字(ユーザーページで使われる想定)",
+                          "example": "omado"
+                        },
+                        "favorite": {
+                          "type": "integer",
+                          "description": "推しているキャラクターのID",
+                          "format": "int32",
+                          "example": 1,
+                          "minimum": 1
                         },
                         "name": {
                           "type": "string",
-                          "minLength": 1
-                        },
-                        "favorite": {
-                          "type": "number"
+                          "description": "ユーザー表示名",
+                          "example": "お窓"
                         }
                       }
                     }
@@ -96,10 +110,10 @@
                       "status": 200,
                       "message": "ok",
                       "data": {
-                        "userID": 33,
-                        "displayID": "pixivbot",
-                        "name": "ﾋﾟｸｼｰﾌﾞ",
-                        "favorite": 42
+                        "userID": 3,
+                        "displayID": "omado",
+                        "name": "お窓",
+                        "favorite": 1
                       }
                     }
                   }
@@ -137,32 +151,39 @@
                     "type": "string",
                     "description": "(Twitterのような)表示IDを指定します。ここで指定したIDがログインに使用されます。英数字のみ入力できます。",
                     "example": "omado",
-                    "maxLength": 20
+                    "maxLength": 20,
+                    "minLength": 3
                   },
                   "userName": {
                     "type": "string",
                     "description": "他のユーザーに表示されるユーザー名/投稿者名です",
                     "example": "お窓",
-                    "maxLength": 20
+                    "maxLength": 20,
+                    "minLength": 3
                   },
                   "userPassword": {
                     "type": "string",
                     "description": "新しいパスワードを入力します",
                     "example": "kafuuch1n0",
                     "format": "password",
-                    "maxLength": 50
+                    "maxLength": 50,
+                    "minLength": 38
                   },
                   "userOldPassword": {
                     "type": "string",
                     "description": "現時点のパスワードを入力します。\nuserPasswordを変更する場合に必要となります。",
                     "example": "h0t0c0c0a",
                     "format": "password",
-                    "maxLength": 50
+                    "maxLength": 50,
+                    "minLength": 8
                   },
                   "userFavorite": {
                     "type": "integer",
                     "description": "ユーザーの推しキャラのIDを選択します",
-                    "example": 1
+                    "example": 1,
+                    "format": "int32",
+                    "maximum": 100,
+                    "minimum": 0
                   },
                   "userTheme": {
                     "type": "integer",
@@ -170,7 +191,8 @@
                     "example": 0,
                     "exclusiveMinimum": false,
                     "minimum": 0,
-                    "maximum": 9
+                    "maximum": 9,
+                    "format": "int32"
                   },
                   "userPermission": {
                     "type": "integer",
@@ -224,13 +246,74 @@
         "operationId": "delete-accounts-accountID",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "number"
+                    },
+                    "message": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "message"
+                  ]
+                },
+                "examples": {
+                  "example-success": {
+                    "value": {
+                      "status": 200,
+                      "message": "ok"
+                    }
+                  },
+                  "example-failed": {
+                    "value": {
+                      "status": 400,
+                      "message": "authorization failed"
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         "description": "アカウントを削除します\n(本人または管理者のみがリクエストできます)",
         "tags": [
           "accounts"
-        ]
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "description": "",
+                "type": "object",
+                "properties": {
+                  "password": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "password"
+                ]
+              },
+              "examples": {
+                "example": {
+                  "value": {
+                    "password": "kafuuch1n0"
+                  }
+                }
+              }
+            }
+          },
+          "description": "危険な操作のため、パスワードが必要になります"
+        }
       }
     },
     "/accounts/{accountID}/upload_history": {
