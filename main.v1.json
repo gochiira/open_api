@@ -67,7 +67,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/AccountPutRequest"
+                "$ref": "#/components/schemas/PutAccountRequest"
               },
               "examples": {
                 "example": {
@@ -100,7 +100,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/AccountDeleteRequest"
+                "$ref": "#/components/schemas/DeleteAccountRequest"
               }
             }
           },
@@ -939,306 +939,7 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "description": "",
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "number"
-                    },
-                    "data": {
-                      "type": "object",
-                      "required": [
-                        "illustID",
-                        "title",
-                        "caption",
-                        "date",
-                        "pages",
-                        "like",
-                        "view",
-                        "mylist",
-                        "mylisted",
-                        "originUrl",
-                        "originService",
-                        "nsfw",
-                        "hash",
-                        "extension",
-                        "user",
-                        "status",
-                        "width",
-                        "height",
-                        "filesize",
-                        "tag",
-                        "chara",
-                        "group",
-                        "system",
-                        "replace",
-                        "star"
-                      ],
-                      "properties": {
-                        "illustID": {
-                          "type": "number"
-                        },
-                        "title": {
-                          "type": "string",
-                          "minLength": 1
-                        },
-                        "caption": {
-                          "type": "string"
-                        },
-                        "date": {
-                          "type": "string",
-                          "minLength": 1
-                        },
-                        "pages": {
-                          "type": "number"
-                        },
-                        "like": {
-                          "type": "number"
-                        },
-                        "view": {
-                          "type": "number"
-                        },
-                        "mylist": {
-                          "type": "number"
-                        },
-                        "mylisted": {
-                          "type": "boolean"
-                        },
-                        "originUrl": {
-                          "type": "string",
-                          "minLength": 1
-                        },
-                        "originService": {
-                          "type": "string",
-                          "minLength": 1
-                        },
-                        "nsfw": {
-                          "type": "number"
-                        },
-                        "hash": {
-                          "type": "number"
-                        },
-                        "extension": {
-                          "type": "string",
-                          "minLength": 1
-                        },
-                        "artist": {
-                          "type": "object",
-                          "required": [
-                            "id",
-                            "name"
-                          ],
-                          "properties": {
-                            "id": {
-                              "type": "number"
-                            },
-                            "name": {
-                              "type": "string",
-                              "minLength": 1
-                            }
-                          }
-                        },
-                        "user": {
-                          "type": "object",
-                          "required": [
-                            "id",
-                            "name"
-                          ],
-                          "properties": {
-                            "id": {
-                              "type": "number"
-                            },
-                            "name": {
-                              "type": "string",
-                              "minLength": 1
-                            }
-                          }
-                        },
-                        "status": {
-                          "type": "number"
-                        },
-                        "width": {
-                          "type": "number"
-                        },
-                        "height": {
-                          "type": "number"
-                        },
-                        "filesize": {
-                          "type": "string",
-                          "minLength": 1
-                        },
-                        "tag": {
-                          "type": "array",
-                          "uniqueItems": true,
-                          "minItems": 1,
-                          "items": {
-                            "type": "object",
-                            "properties": {
-                              "id": {
-                                "type": "number"
-                              },
-                              "name": {
-                                "type": "string",
-                                "minLength": 1
-                              },
-                              "nsfw": {
-                                "type": "number"
-                              }
-                            },
-                            "required": [
-                              "id",
-                              "name",
-                              "nsfw"
-                            ]
-                          }
-                        },
-                        "chara": {
-                          "type": "array",
-                          "items": {
-                            "type": "object"
-                          }
-                        },
-                        "group": {
-                          "type": "array",
-                          "items": {
-                            "type": "object"
-                          }
-                        },
-                        "system": {
-                          "type": "array",
-                          "uniqueItems": true,
-                          "minItems": 1,
-                          "items": {
-                            "type": "object",
-                            "properties": {
-                              "id": {
-                                "type": "number"
-                              },
-                              "name": {
-                                "type": "string",
-                                "minLength": 1
-                              }
-                            },
-                            "required": [
-                              "id",
-                              "name"
-                            ]
-                          }
-                        },
-                        "replace": {
-                          "type": "array",
-                          "items": {
-                            "type": "object"
-                          }
-                        },
-                        "star": {
-                          "type": "object",
-                          "required": [
-                            "yellow",
-                            "green",
-                            "red",
-                            "blue"
-                          ],
-                          "properties": {
-                            "yellow": {
-                              "type": "number"
-                            },
-                            "green": {
-                              "type": "number"
-                            },
-                            "red": {
-                              "type": "number"
-                            },
-                            "blue": {
-                              "type": "number"
-                            }
-                          }
-                        }
-                      }
-                    }
-                  },
-                  "required": [
-                    "status",
-                    "data"
-                  ]
-                },
-                "examples": {
-                  "example": {
-                    "value": {
-                      "status": 200,
-                      "data": {
-                        "illustID": 8,
-                        "title": "tea pours into white teacup photo",
-                        "caption": "",
-                        "date": "2021-01-07 15:16:58",
-                        "pages": 1,
-                        "like": 1,
-                        "view": 2,
-                        "mylist": 0,
-                        "mylisted": false,
-                        "originUrl": "https://unsplash.com/photos/oBoELXgJR1w?page=1",
-                        "originService": "独自",
-                        "nsfw": 0,
-                        "hash": 12743176166585612000,
-                        "extension": "jpg",
-                        "artist": {
-                          "id": 5,
-                          "name": "CHI CHEN"
-                        },
-                        "user": {
-                          "id": 2,
-                          "name": "ドマオーさん"
-                        },
-                        "status": 0,
-                        "width": 3333,
-                        "height": 4391,
-                        "filesize": "491K",
-                        "tag": [
-                          {
-                            "id": 21,
-                            "name": "ティーカップ",
-                            "nsfw": 0
-                          },
-                          {
-                            "id": 20,
-                            "name": "紅茶",
-                            "nsfw": 0
-                          },
-                          {
-                            "id": 18,
-                            "name": "カフェ",
-                            "nsfw": 0
-                          }
-                        ],
-                        "chara": [],
-                        "group": [],
-                        "system": [
-                          {
-                            "id": 4,
-                            "name": "2021年01月"
-                          },
-                          {
-                            "id": 17,
-                            "name": "4K"
-                          }
-                        ],
-                        "replace": [],
-                        "star": {
-                          "yellow": 1,
-                          "green": 0,
-                          "blue": 0,
-                          "red": 0
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/GetArtResposnse"
           }
         },
         "operationId": "get-arts-artID",
@@ -1249,20 +950,30 @@
         "operationId": "put-arts-illustID",
         "responses": {
           "200": {
-            "description": "OK"
+            "$ref": "#/components/responses/PutArtResponse"
           }
         },
         "description": "指定したイラストの情報を編集します\nパラメータで与えられたデータに応じて柔軟に\n絵師名・タグ・キャラクター等を同時に書き換えます",
         "tags": [
           "arts"
-        ]
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PutAccountRequest"
+              }
+            }
+          },
+          "description": ""
+        }
       },
       "delete": {
         "summary": "Delete art",
         "operationId": "delete-arts-illustID",
         "responses": {
           "200": {
-            "description": "OK"
+            "$ref": "#/components/responses/DeleteArtResponse"
           }
         },
         "description": "指定したイラストを削除します\n削除してほしくないため非推奨とします\n(このエンドポイントから削除したイラストは\n参照が不可能になるだけであり一定日数サーバー上に残されます)",
@@ -3705,8 +3416,8 @@
           "count"
         ]
       },
-      "AccountPutRequest": {
-        "title": "AccountPutRequest",
+      "PutAccountRequest": {
+        "title": "PutAccountRequest",
         "type": "object",
         "properties": {
           "userDisplayID": {
@@ -3797,8 +3508,8 @@
         },
         "description": "アカウントの編集に使うリクエスト"
       },
-      "AccountDeleteRequest": {
-        "title": "AccountDeleteRequest",
+      "DeleteAccountRequest": {
+        "title": "DeleteAccountRequest",
         "type": "object",
         "properties": {
           "password": {
@@ -3814,6 +3525,15 @@
         "x-examples": {
           "example": {
             "password": "kafuuch1n0"
+          }
+        }
+      },
+      "PutArtRequest": {
+        "title": "PutArtRequest",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
           }
         }
       }
@@ -4629,6 +4349,70 @@
                       "red": 0
                     }
                   }
+                }
+              }
+            }
+          }
+        }
+      },
+      "PutArtResponse": {
+        "description": "イラスト編集結果",
+        "content": {
+          "application/json": {
+            "schema": {
+              "description": "",
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "number"
+                },
+                "message": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "status",
+                "message"
+              ]
+            },
+            "examples": {
+              "example-1": {
+                "value": {
+                  "status": 200,
+                  "message": "ok"
+                }
+              }
+            }
+          }
+        }
+      },
+      "DeleteArtResponse": {
+        "description": "イラスト削除結果",
+        "content": {
+          "application/json": {
+            "schema": {
+              "description": "",
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "number"
+                },
+                "message": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "status",
+                "message"
+              ]
+            },
+            "examples": {
+              "example-1": {
+                "value": {
+                  "status": 200,
+                  "message": "ok"
                 }
               }
             }
