@@ -42,85 +42,7 @@
         "summary": "Get user info",
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "description": "",
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "integer",
-                      "description": "HTTPステータスコードが入ります",
-                      "format": "int32",
-                      "minimum": 100,
-                      "maximum": 999
-                    },
-                    "message": {
-                      "type": "string",
-                      "minLength": 1,
-                      "description": "ok もしくは エラー内容"
-                    },
-                    "data": {
-                      "type": "object",
-                      "required": [
-                        "userID",
-                        "displayID",
-                        "name",
-                        "favorite"
-                      ],
-                      "description": "応答本体はdataに入ります(共通)",
-                      "properties": {
-                        "userID": {
-                          "type": "integer",
-                          "description": "ユーザーID(累計何番目のアカウントか)",
-                          "format": "int32",
-                          "example": 1
-                        },
-                        "displayID": {
-                          "type": "string",
-                          "minLength": 1,
-                          "description": "表示ID/ログインID 英数字(ユーザーページで使われる想定)",
-                          "example": "omado"
-                        },
-                        "name": {
-                          "type": "string",
-                          "description": "ユーザー表示名",
-                          "example": "お窓",
-                          "minLength": 1
-                        },
-                        "favorite": {
-                          "type": "integer",
-                          "format": "int32",
-                          "example": 1,
-                          "minimum": 1,
-                          "description": "推しているキャラクターのID"
-                        }
-                      }
-                    }
-                  },
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ]
-                },
-                "examples": {
-                  "example": {
-                    "value": {
-                      "status": 200,
-                      "message": "ok",
-                      "data": {
-                        "userID": 3,
-                        "displayID": "omado",
-                        "name": "お窓",
-                        "favorite": 1
-                      }
-                    }
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/GetAccountResponse"
           }
         },
         "operationId": "get-accounts-accountID",
@@ -145,82 +67,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "description": "",
-                "type": "object",
-                "properties": {
-                  "userDisplayID": {
-                    "type": "string",
-                    "description": "(Twitterのような)表示IDを指定します。ここで指定したIDがログインに使用されます。英数字のみ入力できます。",
-                    "example": "omado",
-                    "maxLength": 20,
-                    "minLength": 3
-                  },
-                  "userName": {
-                    "type": "string",
-                    "description": "他のユーザーに表示されるユーザー名/投稿者名です",
-                    "example": "お窓",
-                    "maxLength": 20,
-                    "minLength": 1
-                  },
-                  "userPassword": {
-                    "type": "string",
-                    "description": "新しいパスワードを入力します",
-                    "example": "kafuuch1n0",
-                    "format": "password",
-                    "maxLength": 50,
-                    "minLength": 8
-                  },
-                  "userOldPassword": {
-                    "type": "string",
-                    "description": "現時点のパスワードを入力します。\nuserPasswordを変更する場合に必要となります。",
-                    "example": "h0t0c0c0a",
-                    "format": "password",
-                    "maxLength": 50,
-                    "minLength": 8
-                  },
-                  "userFavorite": {
-                    "type": "integer",
-                    "description": "ユーザーの推しキャラのIDを選択します",
-                    "example": 1,
-                    "format": "int32",
-                    "maximum": 100,
-                    "minimum": 0
-                  },
-                  "userTheme": {
-                    "type": "integer",
-                    "description": "サイト内のテーマ色(もしくはレイアウト?)が変更できることを想定して仮に置かれたものです(未使用)",
-                    "example": 0,
-                    "exclusiveMinimum": false,
-                    "minimum": 0,
-                    "maximum": 9,
-                    "format": "int32"
-                  },
-                  "userPermission": {
-                    "type": "integer",
-                    "description": "ユーザーが持つ権限を指定します、SysOpのみ変更できます。\n0:User 5:Admin 9:Sysop になっています\n(変更されたユーザーは再ログインが必要です)",
-                    "example": 0,
-                    "enum": [
-                      0,
-                      5,
-                      9
-                    ],
-                    "format": "int32",
-                    "minimum": 0,
-                    "maximum": 9
-                  },
-                  "userLineID": {
-                    "type": "string",
-                    "description": "LINEと連携している場合にユーザーページに表示されることを想定して仮に置かれたものです(未使用)",
-                    "example": "dosugamea",
-                    "maxLength": 30
-                  },
-                  "userTwitterID": {
-                    "type": "string",
-                    "description": "Twitterと連携している場合にユーザーページに表示されることを想定して仮に置かれたものです(未使用)",
-                    "example": "shallow_omado",
-                    "maxLength": 30
-                  }
-                }
+                "$ref": "#/components/schemas/AccountPutRequest"
               },
               "examples": {
                 "example": {
@@ -245,48 +92,6 @@
       "delete": {
         "summary": "Delete user info",
         "operationId": "delete-accounts-accountID",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "description": "",
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "number",
-                      "description": "HTTPステータスコード"
-                    },
-                    "message": {
-                      "type": "string",
-                      "minLength": 1,
-                      "description": "ok もしくは エラー内容"
-                    }
-                  },
-                  "required": [
-                    "status",
-                    "message"
-                  ]
-                },
-                "examples": {
-                  "example-success": {
-                    "value": {
-                      "status": 200,
-                      "message": "ok"
-                    }
-                  },
-                  "example-failed": {
-                    "value": {
-                      "status": 400,
-                      "message": "authorization failed"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
         "description": "アカウントを削除します\n(本人または管理者のみがリクエストできます)",
         "tags": [
           "accounts"
@@ -295,27 +100,16 @@
           "content": {
             "application/json": {
               "schema": {
-                "description": "",
-                "type": "object",
-                "properties": {
-                  "password": {
-                    "type": "string"
-                  }
-                },
-                "required": [
-                  "password"
-                ]
-              },
-              "examples": {
-                "example": {
-                  "value": {
-                    "password": "kafuuch1n0"
-                  }
-                }
+                "$ref": "#/components/schemas/AccountDeleteRequest"
               }
             }
           },
           "description": "危険な操作のため、パスワードが必要になります"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/DeleteAccountResponse"
+          }
         }
       }
     },
@@ -338,296 +132,14 @@
         ],
         "responses": {
           "200": {
-            "description": "ヒットしたデータが応答のdata->contentsに配列で返却されます",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "description": "",
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "integer",
-                      "description": "HTTPステータスコードが入ります",
-                      "format": "int32",
-                      "minimum": 100,
-                      "maximum": 999,
-                      "example": 200
-                    },
-                    "message": {
-                      "type": "string",
-                      "description": "ok もしくは エラー内容",
-                      "minLength": 1,
-                      "example": "ok"
-                    },
-                    "data": {
-                      "type": "object",
-                      "required": [
-                        "title",
-                        "count",
-                        "current",
-                        "pages",
-                        "contents"
-                      ],
-                      "properties": {
-                        "title": {
-                          "type": "string",
-                          "description": "検索関連共通化のため\"アップロード履歴\"が入る",
-                          "example": "アップロード履歴",
-                          "enum": [
-                            "アップロード履歴"
-                          ],
-                          "maxLength": 8,
-                          "minLength": 8
-                        },
-                        "count": {
-                          "type": "integer",
-                          "description": "総ヒット数",
-                          "format": "int32"
-                        },
-                        "current": {
-                          "type": "integer",
-                          "description": "現在開いているページ",
-                          "example": 1,
-                          "minimum": 1
-                        },
-                        "pages": {
-                          "type": "integer",
-                          "description": "ヒット数をページ毎の個数で割ったページ数",
-                          "minimum": 0,
-                          "example": 1,
-                          "format": "int32"
-                        },
-                        "contents": {
-                          "type": "array",
-                          "uniqueItems": true,
-                          "minItems": 1,
-                          "description": "指定された範囲の一致データがこちらに入ります",
-                          "items": {
-                            "type": "object",
-                            "properties": {
-                              "uploadID": {
-                                "type": "integer",
-                                "description": "通し投稿履歴番号(インデックス用)",
-                                "minimum": 1,
-                                "format": "int32"
-                              },
-                              "started": {
-                                "type": "string",
-                                "minLength": 1,
-                                "description": "データ登録処理開始時刻"
-                              },
-                              "finished": {
-                                "type": "string",
-                                "minLength": 1,
-                                "description": "データ登録完了時刻"
-                              },
-                              "status": {
-                                "type": "integer",
-                                "description": "登録処理結果 5:成功 9:内部エラー",
-                                "format": "int32",
-                                "minimum": 0,
-                                "maximum": 9,
-                                "example": 5,
-                                "enum": [
-                                  5,
-                                  9
-                                ],
-                                "default": 5
-                              },
-                              "illustID": {
-                                "type": "integer",
-                                "description": "投稿に成功した場合入るID",
-                                "example": 1
-                              }
-                            },
-                            "required": [
-                              "uploadID",
-                              "started",
-                              "finished",
-                              "status",
-                              "illustID"
-                            ]
-                          }
-                        }
-                      }
-                    }
-                  },
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ]
-                },
-                "examples": {
-                  "example": {
-                    "value": {
-                      "status": 200,
-                      "message": "ok",
-                      "data": {
-                        "title": "アップロード履歴",
-                        "count": 2321,
-                        "current": 1,
-                        "pages": 117,
-                        "contents": [
-                          {
-                            "uploadID": 12045,
-                            "started": "2021-02-21 22:24:22",
-                            "finished": "2021-02-21 22:24:27",
-                            "status": 5,
-                            "illustID": 9381
-                          },
-                          {
-                            "uploadID": 12044,
-                            "started": "2021-02-21 22:23:41",
-                            "finished": "2021-02-21 22:23:45",
-                            "status": 5,
-                            "illustID": 9380
-                          },
-                          {
-                            "uploadID": 12036,
-                            "started": "2021-02-21 20:30:39",
-                            "finished": "2021-02-21 20:30:43",
-                            "status": 5,
-                            "illustID": 9375
-                          },
-                          {
-                            "uploadID": 12004,
-                            "started": "2021-02-20 20:20:19",
-                            "finished": "2021-02-20 20:20:29",
-                            "status": 5,
-                            "illustID": 9355
-                          },
-                          {
-                            "uploadID": 12003,
-                            "started": "2021-02-20 20:03:30",
-                            "finished": "2021-02-20 20:03:46",
-                            "status": 5,
-                            "illustID": 9354
-                          },
-                          {
-                            "uploadID": 11972,
-                            "started": "2021-02-19 21:30:58",
-                            "finished": "2021-02-19 21:31:00",
-                            "status": 5,
-                            "illustID": 9336
-                          },
-                          {
-                            "uploadID": 11971,
-                            "started": "2021-02-19 21:30:52",
-                            "finished": "2021-02-19 21:30:55",
-                            "status": 5,
-                            "illustID": 9335
-                          },
-                          {
-                            "uploadID": 11970,
-                            "started": "2021-02-19 21:30:46",
-                            "finished": "2021-02-19 21:30:49",
-                            "status": 5,
-                            "illustID": 9334
-                          },
-                          {
-                            "uploadID": 10756,
-                            "started": "2021-01-20 03:12:57",
-                            "finished": "2021-01-20 03:13:04",
-                            "status": 5,
-                            "illustID": 8418
-                          },
-                          {
-                            "uploadID": 10755,
-                            "started": "2021-01-20 03:09:31",
-                            "finished": "2021-01-20 03:09:39",
-                            "status": 5,
-                            "illustID": 8417
-                          },
-                          {
-                            "uploadID": 10754,
-                            "started": "2021-01-20 02:57:00",
-                            "finished": "2021-01-20 02:57:09",
-                            "status": 5,
-                            "illustID": 8416
-                          },
-                          {
-                            "uploadID": 10753,
-                            "started": "2021-01-20 02:56:44",
-                            "finished": "2021-01-20 02:56:52",
-                            "status": 5,
-                            "illustID": 8415
-                          },
-                          {
-                            "uploadID": 10663,
-                            "started": "2021-01-17 22:21:22",
-                            "finished": "2021-01-17 22:21:35",
-                            "status": 5,
-                            "illustID": 8364
-                          },
-                          {
-                            "uploadID": 10658,
-                            "started": "2021-01-17 21:14:02",
-                            "finished": "2021-01-17 21:14:06",
-                            "status": 5,
-                            "illustID": 8360
-                          },
-                          {
-                            "uploadID": 10657,
-                            "started": "2021-01-17 21:07:54",
-                            "finished": "2021-01-17 21:07:57",
-                            "status": 5,
-                            "illustID": 8359
-                          },
-                          {
-                            "uploadID": 10656,
-                            "started": "2021-01-17 21:07:47",
-                            "finished": "2021-01-17 21:07:51",
-                            "status": 5,
-                            "illustID": 8358
-                          },
-                          {
-                            "uploadID": 10655,
-                            "started": "2021-01-17 21:07:41",
-                            "finished": "2021-01-17 21:07:43",
-                            "status": 5,
-                            "illustID": 8357
-                          },
-                          {
-                            "uploadID": 10654,
-                            "started": "2021-01-17 21:07:34",
-                            "finished": "2021-01-17 21:07:37",
-                            "status": 5,
-                            "illustID": 8356
-                          },
-                          {
-                            "uploadID": 10653,
-                            "started": "2021-01-17 21:07:27",
-                            "finished": "2021-01-17 21:07:30",
-                            "status": 5,
-                            "illustID": 8355
-                          },
-                          {
-                            "uploadID": 10652,
-                            "started": "2021-01-17 21:06:35",
-                            "finished": "2021-01-17 21:06:39",
-                            "status": 5,
-                            "illustID": 8354
-                          }
-                        ]
-                      }
-                    }
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/UploadHistoryResponse"
           }
         },
         "operationId": "get-accounts-accountID-upload_history",
         "description": "イラスト投稿履歴を取得します",
         "parameters": [
           {
-            "schema": {
-              "type": "integer"
-            },
-            "in": "query",
-            "name": "page",
-            "description": "ページ番号"
+            "$ref": "#/components/parameters/SearchQueryPage"
           },
           {
             "schema": {
@@ -644,20 +156,7 @@
             "description": "ソート方法 d:最終更新"
           },
           {
-            "schema": {
-              "type": "string",
-              "minLength": 1,
-              "maxLength": 1,
-              "example": "d",
-              "default": "d",
-              "enum": [
-                "d",
-                "a"
-              ]
-            },
-            "in": "query",
-            "name": "order",
-            "description": "ソート方向 最大が先頭: \"d\"esc, 最小が先頭:\"a\"sc"
+            "$ref": "#/components/parameters/SearchQueryOrder"
           }
         ]
       }
@@ -679,45 +178,7 @@
         "operationId": "post-accounts-accountID-reissue_token",
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "integer",
-                      "example": 200,
-                      "minimum": 100,
-                      "maximum": 999,
-                      "description": "HTTPステータスコード"
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "ok",
-                      "description": "ok もしくはエラー内容"
-                    },
-                    "apiKey": {
-                      "type": "string",
-                      "description": "新しく発行したトークン"
-                    }
-                  },
-                  "required": [
-                    "status",
-                    "message"
-                  ]
-                },
-                "examples": {
-                  "example": {
-                    "value": {
-                      "status": 200,
-                      "message": "ok",
-                      "api_key": "DUMMY_API_KEY"
-                    }
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/ReissueTokenResponse"
           }
         },
         "description": "アカウントのログインキーを再生成します",
@@ -2138,12 +1599,11 @@
                     }
                   },
                   "required": [
-                    "status",
-                    "data"
+                    "status"
                   ]
                 },
                 "examples": {
-                  "example": {
+                  "example-exists": {
                     "value": {
                       "status": 200,
                       "data": {
@@ -2153,6 +1613,12 @@
                         "title": "記載中の画像について / About these arts",
                         "body": "これらの画像は素材配布としての意図はなく、サイトの機能検証のためのものです。素材をお求めの場合はhttps://unsplash.com または https://www.irasutoya.com に直接アクセスしてください。 These arts are for feature-test purpose only. You can get free images on https://unsplash.com or https://www.irasutoya.com."
                       }
+                    }
+                  },
+                  "example-error": {
+                    "value": {
+                      "status": 404,
+                      "data": {}
                     }
                   }
                 }
@@ -2488,42 +1954,13 @@
         "description": "指定したタグを持つイラスト一覧を取得します",
         "parameters": [
           {
-            "schema": {
-              "type": "string",
-              "enum": [
-                "l",
-                "d"
-              ],
-              "default": "d"
-            },
-            "in": "query",
-            "name": "sort",
-            "description": "ソート方法 l:いいね数順 d:投稿日順"
+            "$ref": "#/components/parameters/SearchQuerySort"
           },
           {
-            "schema": {
-              "type": "string",
-              "enum": [
-                "d",
-                "a"
-              ],
-              "default": "d",
-              "minLength": 1,
-              "maxLength": 1
-            },
-            "in": "query",
-            "name": "order",
-            "description": "ソート方向 d:降順 a:昇順"
+            "$ref": "#/components/parameters/SearchQueryOrder"
           },
           {
-            "schema": {
-              "type": "integer",
-              "minimum": 1,
-              "exclusiveMinimum": true
-            },
-            "in": "query",
-            "name": "page",
-            "description": "ページ番号"
+            "$ref": "#/components/parameters/SearchQueryPage"
           },
           {
             "schema": {
@@ -2641,42 +2078,13 @@
         "description": "指定したキャラクターを持つイラスト一覧を取得します",
         "parameters": [
           {
-            "schema": {
-              "type": "string",
-              "enum": [
-                "l",
-                "d"
-              ],
-              "default": "d"
-            },
-            "in": "query",
-            "name": "sort",
-            "description": "ソート方法 l:いいね数順 d:投稿日順"
+            "$ref": "#/components/parameters/SearchQuerySort"
           },
           {
-            "schema": {
-              "type": "string",
-              "default": "d",
-              "enum": [
-                "d",
-                "a"
-              ],
-              "minLength": 1,
-              "maxLength": 1
-            },
-            "in": "query",
-            "name": "order",
-            "description": "ソート方向 d:降順 a:昇順"
+            "$ref": "#/components/parameters/SearchQueryOrder"
           },
           {
-            "schema": {
-              "type": "integer",
-              "minimum": 1,
-              "exclusiveMinimum": true
-            },
-            "in": "query",
-            "name": "page",
-            "description": "ページ番号"
+            "$ref": "#/components/parameters/SearchQueryPage"
           },
           {
             "schema": {
@@ -2848,44 +2256,13 @@
         "description": "指定した絵師のイラスト一覧を取得します",
         "parameters": [
           {
-            "schema": {
-              "type": "string",
-              "enum": [
-                "l",
-                "d"
-              ],
-              "default": "d",
-              "maxLength": 1,
-              "minLength": 1
-            },
-            "in": "query",
-            "name": "sort",
-            "description": "ソート方法 l:いいね数順 d:投稿日順"
+            "$ref": "#/components/parameters/SearchQuerySort"
           },
           {
-            "schema": {
-              "type": "string",
-              "default": "d",
-              "enum": [
-                "d",
-                "a"
-              ],
-              "minLength": 1,
-              "maxLength": 1
-            },
-            "in": "query",
-            "name": "order",
-            "description": "ソート方向 d:降順 a:昇順"
+            "$ref": "#/components/parameters/SearchQueryOrder"
           },
           {
-            "schema": {
-              "type": "integer",
-              "minimum": 1,
-              "exclusiveMinimum": true
-            },
-            "in": "query",
-            "name": "page",
-            "description": "ページ番号"
+            "$ref": "#/components/parameters/SearchQueryPage"
           },
           {
             "schema": {
@@ -3003,44 +2380,13 @@
         "description": "指定したキーワードを含むイラスト一覧を取得します",
         "parameters": [
           {
-            "schema": {
-              "type": "string",
-              "default": "d",
-              "enum": [
-                "l",
-                "d"
-              ],
-              "minLength": 1,
-              "maxLength": 1
-            },
-            "in": "query",
-            "name": "sort",
-            "description": "ソート方法 l:いいね数順 d:投稿日順"
+            "$ref": "#/components/parameters/SearchQuerySort"
           },
           {
-            "schema": {
-              "type": "string",
-              "enum": [
-                "d",
-                "a"
-              ],
-              "default": "d",
-              "minLength": 1,
-              "maxLength": 1
-            },
-            "in": "query",
-            "name": "order",
-            "description": "ソート方向 d:降順 a:昇順"
+            "$ref": "#/components/parameters/SearchQueryOrder"
           },
           {
-            "schema": {
-              "type": "integer",
-              "minimum": 1,
-              "exclusiveMinimum": true
-            },
-            "in": "query",
-            "name": "page",
-            "description": "ページ番号"
+            "$ref": "#/components/parameters/SearchQueryPage"
           },
           {
             "schema": {
@@ -3285,42 +2631,13 @@
         "description": "登録されたイラスト一覧を取得します",
         "parameters": [
           {
-            "schema": {
-              "type": "string",
-              "default": "d",
-              "enum": [
-                "l",
-                "d"
-              ]
-            },
-            "in": "query",
-            "name": "sort",
-            "description": "ソート方法 l:いいね数順 d:投稿日順"
+            "$ref": "#/components/parameters/SearchQuerySort"
           },
           {
-            "schema": {
-              "type": "string",
-              "default": "d",
-              "enum": [
-                "d",
-                "a"
-              ],
-              "minLength": 1,
-              "maxLength": 1
-            },
-            "in": "query",
-            "name": "order",
-            "description": "ソート方向 d:降順 a:昇順"
+            "$ref": "#/components/parameters/SearchQueryOrder"
           },
           {
-            "schema": {
-              "type": "integer",
-              "minimum": 1,
-              "exclusiveMinimum": true
-            },
-            "in": "query",
-            "name": "page",
-            "description": "ページ番号"
+            "$ref": "#/components/parameters/SearchQueryPage"
           }
         ]
       }
@@ -4387,6 +3704,118 @@
           "id",
           "count"
         ]
+      },
+      "AccountPutRequest": {
+        "title": "AccountPutRequest",
+        "type": "object",
+        "properties": {
+          "userDisplayID": {
+            "type": "string",
+            "description": "(Twitterのような)表示IDを指定します。ここで指定したIDがログインに使用されます。英数字のみ入力できます。",
+            "example": "omado",
+            "maxLength": 20,
+            "minLength": 3
+          },
+          "userName": {
+            "type": "string",
+            "description": "他のユーザーに表示されるユーザー名/投稿者名です",
+            "example": "お窓",
+            "maxLength": 20,
+            "minLength": 1
+          },
+          "userPassword": {
+            "type": "string",
+            "description": "新しいパスワードを入力します",
+            "example": "kafuuch1n0",
+            "format": "password",
+            "maxLength": 50,
+            "minLength": 8
+          },
+          "userOldPassword": {
+            "type": "string",
+            "description": "現時点のパスワードを入力します。\nuserPasswordを変更する場合に必要となります。",
+            "example": "h0t0c0c0a",
+            "format": "password",
+            "maxLength": 50,
+            "minLength": 8
+          },
+          "userFavorite": {
+            "type": "integer",
+            "description": "ユーザーの推しキャラのIDを選択します",
+            "example": 1,
+            "format": "int32",
+            "maximum": 100,
+            "minimum": 0
+          },
+          "userTheme": {
+            "type": "integer",
+            "description": "サイト内のテーマ色(もしくはレイアウト?)が変更できることを想定して仮に置かれたものです(未使用)",
+            "example": 0,
+            "exclusiveMinimum": false,
+            "minimum": 0,
+            "maximum": 9,
+            "format": "int32"
+          },
+          "userPermission": {
+            "type": "integer",
+            "description": "ユーザーが持つ権限を指定します、SysOpのみ変更できます。\n0:User 5:Admin 9:Sysop になっています\n(変更されたユーザーは再ログインが必要です)",
+            "example": 0,
+            "enum": [
+              0,
+              5,
+              9
+            ],
+            "format": "int32",
+            "minimum": 0,
+            "maximum": 9
+          },
+          "userLineID": {
+            "type": "string",
+            "description": "LINEと連携している場合にユーザーページに表示されることを想定して仮に置かれたものです(未使用)",
+            "example": "dosugamea",
+            "maxLength": 30
+          },
+          "userTwitterID": {
+            "type": "string",
+            "description": "Twitterと連携している場合にユーザーページに表示されることを想定して仮に置かれたものです(未使用)",
+            "example": "shallow_omado",
+            "maxLength": 30
+          }
+        },
+        "x-examples": {
+          "example": {
+            "userDisplayID": "omado",
+            "userName": "お窓",
+            "userPassword": "kafuuch1n0",
+            "userOldPassword": "h0t0c0c0a",
+            "userFavorite": 1,
+            "userTheme": 0,
+            "userPermission": 0,
+            "userLineID": "dosugamea",
+            "userTwitterID": "shallow_omado"
+          }
+        },
+        "description": "アカウントの編集に使うリクエスト"
+      },
+      "AccountDeleteRequest": {
+        "title": "AccountDeleteRequest",
+        "type": "object",
+        "properties": {
+          "password": {
+            "type": "string",
+            "format": "password",
+            "description": "削除したいアカウントのパスワード"
+          }
+        },
+        "required": [
+          "password"
+        ],
+        "description": "アカウントの削除に使うリクエスト",
+        "x-examples": {
+          "example": {
+            "password": "kafuuch1n0"
+          }
+        }
       }
     },
     "securitySchemes": {
@@ -4396,17 +3825,748 @@
       }
     },
     "parameters": {
-      "SearchQuery": {
-        "name": "SearchQuery",
+      "SearchQuerySort": {
+        "name": "sort",
         "in": "query",
         "required": false,
         "schema": {
-          "type": "string"
-        }
+          "type": "string",
+          "enum": [
+            "l",
+            "d"
+          ],
+          "example": "d",
+          "default": "d"
+        },
+        "description": "ソート方法 l:いいね数順 d:投稿日順"
+      },
+      "SearchQueryOrder": {
+        "name": "order",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "enum": [
+            "d",
+            "a"
+          ],
+          "default": "d",
+          "example": "d",
+          "minLength": 1,
+          "maxLength": 1
+        },
+        "description": "ソート方向 d:降順(大→小) a:昇順(小→大)"
+      },
+      "SearchQueryPage": {
+        "name": "page",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "description": "ページ番号 (NOTE: 1ページ辺りの応答は20件)"
       }
     },
     "examples": {},
-    "responses": {}
+    "responses": {
+      "UploadHistoryResponse": {
+        "description": "投稿履歴取得結果",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "description": "HTTPステータスコードが入ります",
+                  "format": "int32",
+                  "minimum": 100,
+                  "maximum": 999,
+                  "example": 200
+                },
+                "message": {
+                  "type": "string",
+                  "description": "ok もしくは エラー内容",
+                  "minLength": 1,
+                  "example": "ok"
+                },
+                "data": {
+                  "type": "object",
+                  "required": [
+                    "title",
+                    "count",
+                    "current",
+                    "pages",
+                    "contents"
+                  ],
+                  "properties": {
+                    "title": {
+                      "type": "string",
+                      "description": "検索関連共通化のため\"アップロード履歴\"が入る",
+                      "example": "アップロード履歴",
+                      "enum": [
+                        "アップロード履歴"
+                      ],
+                      "maxLength": 8,
+                      "minLength": 8
+                    },
+                    "count": {
+                      "type": "integer",
+                      "description": "総ヒット数",
+                      "format": "int32"
+                    },
+                    "current": {
+                      "type": "integer",
+                      "description": "現在開いているページ",
+                      "example": 1,
+                      "minimum": 1
+                    },
+                    "pages": {
+                      "type": "integer",
+                      "description": "ヒット数をページ毎の個数で割ったページ数",
+                      "minimum": 0,
+                      "example": 1,
+                      "format": "int32"
+                    },
+                    "contents": {
+                      "type": "array",
+                      "uniqueItems": true,
+                      "minItems": 1,
+                      "description": "指定された範囲の一致データがこちらに入ります",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "uploadID": {
+                            "type": "integer",
+                            "description": "通し投稿履歴番号(インデックス用)",
+                            "minimum": 1,
+                            "format": "int32"
+                          },
+                          "started": {
+                            "type": "string",
+                            "minLength": 1,
+                            "description": "データ登録処理開始時刻"
+                          },
+                          "finished": {
+                            "type": "string",
+                            "minLength": 1,
+                            "description": "データ登録完了時刻"
+                          },
+                          "status": {
+                            "type": "integer",
+                            "description": "登録処理結果 5:成功 9:内部エラー",
+                            "format": "int32",
+                            "minimum": 0,
+                            "maximum": 9,
+                            "example": 5,
+                            "enum": [
+                              5,
+                              9
+                            ],
+                            "default": 5
+                          },
+                          "illustID": {
+                            "type": "integer",
+                            "description": "投稿に成功した場合入るID",
+                            "example": 1
+                          }
+                        },
+                        "required": [
+                          "uploadID",
+                          "started",
+                          "finished",
+                          "status",
+                          "illustID"
+                        ]
+                      }
+                    }
+                  }
+                }
+              },
+              "required": [
+                "status",
+                "message",
+                "data"
+              ]
+            },
+            "examples": {
+              "example": {
+                "value": {
+                  "status": 200,
+                  "message": "ok",
+                  "data": {
+                    "title": "アップロード履歴",
+                    "count": 2321,
+                    "current": 1,
+                    "pages": 117,
+                    "contents": [
+                      {
+                        "uploadID": 12045,
+                        "started": "2021-02-21 22:24:22",
+                        "finished": "2021-02-21 22:24:27",
+                        "status": 5,
+                        "illustID": 9381
+                      },
+                      {
+                        "uploadID": 12044,
+                        "started": "2021-02-21 22:23:41",
+                        "finished": "2021-02-21 22:23:45",
+                        "status": 5,
+                        "illustID": 9380
+                      },
+                      {
+                        "uploadID": 12036,
+                        "started": "2021-02-21 20:30:39",
+                        "finished": "2021-02-21 20:30:43",
+                        "status": 5,
+                        "illustID": 9375
+                      },
+                      {
+                        "uploadID": 12004,
+                        "started": "2021-02-20 20:20:19",
+                        "finished": "2021-02-20 20:20:29",
+                        "status": 5,
+                        "illustID": 9355
+                      },
+                      {
+                        "uploadID": 12003,
+                        "started": "2021-02-20 20:03:30",
+                        "finished": "2021-02-20 20:03:46",
+                        "status": 5,
+                        "illustID": 9354
+                      },
+                      {
+                        "uploadID": 11972,
+                        "started": "2021-02-19 21:30:58",
+                        "finished": "2021-02-19 21:31:00",
+                        "status": 5,
+                        "illustID": 9336
+                      },
+                      {
+                        "uploadID": 11971,
+                        "started": "2021-02-19 21:30:52",
+                        "finished": "2021-02-19 21:30:55",
+                        "status": 5,
+                        "illustID": 9335
+                      },
+                      {
+                        "uploadID": 11970,
+                        "started": "2021-02-19 21:30:46",
+                        "finished": "2021-02-19 21:30:49",
+                        "status": 5,
+                        "illustID": 9334
+                      },
+                      {
+                        "uploadID": 10756,
+                        "started": "2021-01-20 03:12:57",
+                        "finished": "2021-01-20 03:13:04",
+                        "status": 5,
+                        "illustID": 8418
+                      },
+                      {
+                        "uploadID": 10755,
+                        "started": "2021-01-20 03:09:31",
+                        "finished": "2021-01-20 03:09:39",
+                        "status": 5,
+                        "illustID": 8417
+                      },
+                      {
+                        "uploadID": 10754,
+                        "started": "2021-01-20 02:57:00",
+                        "finished": "2021-01-20 02:57:09",
+                        "status": 5,
+                        "illustID": 8416
+                      },
+                      {
+                        "uploadID": 10753,
+                        "started": "2021-01-20 02:56:44",
+                        "finished": "2021-01-20 02:56:52",
+                        "status": 5,
+                        "illustID": 8415
+                      },
+                      {
+                        "uploadID": 10663,
+                        "started": "2021-01-17 22:21:22",
+                        "finished": "2021-01-17 22:21:35",
+                        "status": 5,
+                        "illustID": 8364
+                      },
+                      {
+                        "uploadID": 10658,
+                        "started": "2021-01-17 21:14:02",
+                        "finished": "2021-01-17 21:14:06",
+                        "status": 5,
+                        "illustID": 8360
+                      },
+                      {
+                        "uploadID": 10657,
+                        "started": "2021-01-17 21:07:54",
+                        "finished": "2021-01-17 21:07:57",
+                        "status": 5,
+                        "illustID": 8359
+                      },
+                      {
+                        "uploadID": 10656,
+                        "started": "2021-01-17 21:07:47",
+                        "finished": "2021-01-17 21:07:51",
+                        "status": 5,
+                        "illustID": 8358
+                      },
+                      {
+                        "uploadID": 10655,
+                        "started": "2021-01-17 21:07:41",
+                        "finished": "2021-01-17 21:07:43",
+                        "status": 5,
+                        "illustID": 8357
+                      },
+                      {
+                        "uploadID": 10654,
+                        "started": "2021-01-17 21:07:34",
+                        "finished": "2021-01-17 21:07:37",
+                        "status": 5,
+                        "illustID": 8356
+                      },
+                      {
+                        "uploadID": 10653,
+                        "started": "2021-01-17 21:07:27",
+                        "finished": "2021-01-17 21:07:30",
+                        "status": 5,
+                        "illustID": 8355
+                      },
+                      {
+                        "uploadID": 10652,
+                        "started": "2021-01-17 21:06:35",
+                        "finished": "2021-01-17 21:06:39",
+                        "status": 5,
+                        "illustID": 8354
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "GetAccountResponse": {
+        "description": "アカウント取得結果",
+        "content": {
+          "application/json": {
+            "schema": {
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "description": "HTTPステータスコードが入ります",
+                  "format": "int32",
+                  "minimum": 100,
+                  "maximum": 999
+                },
+                "message": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "ok もしくは エラー内容"
+                },
+                "data": {
+                  "type": "object",
+                  "required": [
+                    "userID",
+                    "displayID",
+                    "name",
+                    "favorite"
+                  ],
+                  "description": "応答本体はdataに入ります(共通)",
+                  "properties": {
+                    "userID": {
+                      "type": "integer",
+                      "description": "ユーザーID(累計何番目のアカウントか)",
+                      "format": "int32",
+                      "example": 1
+                    },
+                    "displayID": {
+                      "type": "string",
+                      "minLength": 1,
+                      "description": "表示ID/ログインID 英数字(ユーザーページで使われる想定)",
+                      "example": "omado"
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "ユーザー表示名",
+                      "example": "お窓",
+                      "minLength": 1
+                    },
+                    "favorite": {
+                      "type": "integer",
+                      "format": "int32",
+                      "example": 1,
+                      "minimum": 1,
+                      "description": "推しているキャラクターのID"
+                    }
+                  }
+                }
+              },
+              "required": [
+                "status",
+                "message",
+                "data"
+              ]
+            },
+            "examples": {
+              "example": {
+                "value": {
+                  "status": 200,
+                  "message": "ok",
+                  "data": {
+                    "userID": 3,
+                    "displayID": "omado",
+                    "name": "お窓",
+                    "favorite": 1
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "DeleteAccountResponse": {
+        "description": "アカウント削除結果",
+        "content": {
+          "application/json": {
+            "schema": {
+              "description": "",
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "number"
+                },
+                "message": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "status",
+                "message"
+              ]
+            },
+            "examples": {
+              "example-success": {
+                "value": {
+                  "status": 200,
+                  "message": "ok"
+                }
+              },
+              "example-failed": {
+                "value": {
+                  "status": 400,
+                  "message": "authorization failed"
+                }
+              }
+            }
+          }
+        }
+      },
+      "ReissueTokenResponse": {
+        "description": "Example response",
+        "content": {
+          "application/json": {
+            "schema": {
+              "description": "",
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "number"
+                },
+                "message": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "api_key": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "status",
+                "message"
+              ]
+            },
+            "examples": {
+              "example": {
+                "value": {
+                  "status": 200,
+                  "message": "ok",
+                  "api_key": "DUMMY_API_KEY"
+                }
+              }
+            }
+          }
+        }
+      },
+      "PutAccountResponse": {
+        "description": "Example response",
+        "content": {
+          "application/json": {
+            "schema": {
+              "description": "",
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "number"
+                },
+                "message": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "status",
+                "message"
+              ]
+            },
+            "examples": {
+              "example-1": {
+                "value": {
+                  "status": 200,
+                  "message": "ok"
+                }
+              }
+            }
+          }
+        }
+      },
+      "GetArtResposnse": {
+        "description": "Example response",
+        "content": {
+          "application/json": {
+            "schema": {
+              "properties": {
+                    "status": {
+                      "type": "number"
+                    },
+                    "data": {
+                      "type": "object",
+                      "required": [
+                        "illustID",
+                        "title",
+                        "caption",
+                        "date",
+                        "pages",
+                        "like",
+                        "view",
+                        "mylist",
+                        "mylisted",
+                        "originUrl",
+                        "originService",
+                        "nsfw",
+                        "hash",
+                        "extension",
+                        "user",
+                        "status",
+                        "width",
+                        "height",
+                        "filesize",
+                        "tag",
+                        "chara",
+                        "group",
+                        "system",
+                        "replace",
+                        "star"
+                      ],
+                      "properties": {
+                        "illustID": {
+                          "type": "number"
+                        },
+                        "title": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "caption": {
+                          "type": "string"
+                        },
+                        "date": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "pages": {
+                          "type": "number"
+                        },
+                        "like": {
+                          "type": "number"
+                        },
+                        "view": {
+                          "type": "number"
+                        },
+                        "mylist": {
+                          "type": "number"
+                        },
+                        "mylisted": {
+                          "type": "boolean"
+                        },
+                        "originUrl": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "originService": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "nsfw": {
+                          "type": "number"
+                        },
+                        "hash": {
+                          "type": "number"
+                        },
+                        "extension": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "artist": {
+                          "type": "object",
+                          "required": [
+                            "id",
+                            "name"
+                          ],
+                          "properties": {
+                            "id": {
+                              "type": "number"
+                            },
+                            "name": {
+                              "type": "string",
+                              "minLength": 1
+                            }
+                          }
+                        },
+                        "user": {
+                          "type": "object",
+                          "required": [
+                            "id",
+                            "name"
+                          ],
+                          "properties": {
+                            "id": {
+                              "type": "number"
+                            },
+                            "name": {
+                              "type": "string",
+                              "minLength": 1
+                            }
+                          }
+                        },
+                        "status": {
+                          "type": "number"
+                        },
+                        "width": {
+                          "type": "number"
+                        },
+                        "height": {
+                          "type": "number"
+                        },
+                        "filesize": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "tag": {
+                          "type": "array",
+                          "uniqueItems": true,
+                          "minItems": 1,
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "number"
+                              },
+                              "name": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "nsfw": {
+                                "type": "number"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "name",
+                              "nsfw"
+                            ]
+                          }
+                        },
+                        "chara": {
+                          "type": "array",
+                          "items": {
+                            "type": "object"
+                          }
+                        },
+                        "group": {
+                          "type": "array",
+                          "items": {
+                            "type": "object"
+                          }
+                        },
+                        "system": {
+                          "type": "array",
+                          "uniqueItems": true,
+                          "minItems": 1,
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "number"
+                              },
+                              "name": {
+                                "type": "string",
+                                "minLength": 1
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "name"
+                            ]
+                          }
+                        },
+                        "replace": {
+                          "type": "array",
+                          "items": {
+                            "type": "object"
+                          }
+                        },
+                        "star": {
+                          "type": "object",
+                          "required": [
+                            "yellow",
+                            "green",
+                            "red",
+                            "blue"
+                          ],
+                          "properties": {
+                            "yellow": {
+                              "type": "number"
+                            },
+                            "green": {
+                              "type": "number"
+                            },
+                            "red": {
+                              "type": "number"
+                            },
+                            "blue": {
+                              "type": "number"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "data"
+                  ]
+                
+          
+            }
+          }
+        }
+      }
+    }
   },
   "security": [
     {
