@@ -255,11 +255,13 @@
                   "type": "object",
                   "properties": {
                     "status": {
-                      "type": "number"
+                      "type": "number",
+                      "description": "HTTPステータスコード"
                     },
                     "message": {
                       "type": "string",
-                      "minLength": 1
+                      "minLength": 1,
+                      "description": "ok もしくは エラー内容"
                     }
                   },
                   "required": [
@@ -433,11 +435,9 @@
                                 "default": 5
                               },
                               "illustID": {
+                                "type": "integer",
                                 "description": "投稿に成功した場合入るID",
-                                "type": [
-                                  "null",
-                                  "integer"
-                                ]
+                                "example": 1
                               }
                             },
                             "required": [
@@ -679,7 +679,45 @@
         "operationId": "post-accounts-accountID-reissue_token",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200,
+                      "minimum": 100,
+                      "maximum": 999,
+                      "description": "HTTPステータスコード"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "ok",
+                      "description": "ok もしくはエラー内容"
+                    },
+                    "apiKey": {
+                      "type": "string",
+                      "description": "新しく発行したトークン"
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "message"
+                  ]
+                },
+                "examples": {
+                  "example": {
+                    "value": {
+                      "status": 200,
+                      "message": "ok",
+                      "api_key": "DUMMY_API_KEY"
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         "description": "アカウントのログインキーを再生成します",
@@ -3398,7 +3436,7 @@
           },
           {
             "schema": {
-              "type": "integer",
+              "type": "string",
               "example": "cafe"
             },
             "in": "query",
@@ -3813,96 +3851,16 @@
                   "type": "object",
                   "properties": {
                     "status": {
-                      "type": "number"
+                      "type": "number",
+                      "description": "HTTPステータスコード"
                     },
                     "message": {
                       "type": "string",
-                      "minLength": 1
+                      "minLength": 1,
+                      "description": "ok もしくはエラー内容"
                     },
                     "data": {
                       "type": "object",
-                      "properties": {
-                        "userID": {
-                          "type": "number"
-                        },
-                        "displayID": {
-                          "type": "string",
-                          "minLength": 1
-                        },
-                        "name": {
-                          "type": "string",
-                          "minLength": 1
-                        },
-                        "favorite": {
-                          "type": "number"
-                        },
-                        "lineConnect": {
-                          "type": "number"
-                        },
-                        "lineNotify": {
-                          "type": "number"
-                        },
-                        "oneSignalNotify": {},
-                        "permission": {
-                          "type": "number"
-                        },
-                        "registeredDate": {
-                          "type": "string",
-                          "minLength": 1
-                        },
-                        "inviter": {
-                          "type": "object",
-                          "properties": {
-                            "id": {
-                              "type": "number"
-                            },
-                            "name": {
-                              "type": "string",
-                              "minLength": 1
-                            }
-                          },
-                          "required": [
-                            "id",
-                            "name"
-                          ]
-                        },
-                        "invite": {
-                          "type": "object",
-                          "properties": {
-                            "id": {},
-                            "code": {
-                              "type": "string",
-                              "minLength": 1
-                            },
-                            "invited": {
-                              "type": "number"
-                            },
-                            "enabled": {
-                              "type": "boolean"
-                            }
-                          },
-                          "required": [
-                            "code",
-                            "invited",
-                            "enabled"
-                          ]
-                        },
-                        "mylist": {
-                          "type": "object",
-                          "properties": {
-                            "id": {
-                              "type": "number"
-                            }
-                          },
-                          "required": [
-                            "id"
-                          ]
-                        },
-                        "apiKey": {
-                          "type": "string",
-                          "minLength": 1
-                        }
-                      },
                       "required": [
                         "userID",
                         "displayID",
@@ -3916,7 +3874,115 @@
                         "invite",
                         "mylist",
                         "apiKey"
-                      ]
+                      ],
+                      "properties": {
+                        "userID": {
+                          "type": "number",
+                          "description": "ユーザー通し番号"
+                        },
+                        "displayID": {
+                          "type": "string",
+                          "minLength": 1,
+                          "description": "表示ID(英数字のみ)"
+                        },
+                        "name": {
+                          "type": "string",
+                          "minLength": 1,
+                          "description": "ユーザー名(日本語可)"
+                        },
+                        "favorite": {
+                          "type": "number",
+                          "description": "推しキャラのID"
+                        },
+                        "lineConnect": {
+                          "type": "boolean",
+                          "description": "LINEログイン連携済かどうか"
+                        },
+                        "lineNotify": {
+                          "type": "boolean",
+                          "description": "LINENotifyに連携済かどうか"
+                        },
+                        "oneSignalNotify": {
+                          "type": "boolean",
+                          "description": "OneSignal設定済みかどうか"
+                        },
+                        "permission": {
+                          "type": "number",
+                          "description": "権限レベル 0:一般 5:Admin 9:SysOp"
+                        },
+                        "registeredDate": {
+                          "type": "string",
+                          "minLength": 1,
+                          "description": "登録日時(datetime)"
+                        },
+                        "inviter": {
+                          "type": "object",
+                          "required": [
+                            "id",
+                            "name"
+                          ],
+                          "description": "招待者の情報",
+                          "properties": {
+                            "id": {
+                              "type": "number",
+                              "description": "招待者のユーザー通し番号"
+                            },
+                            "name": {
+                              "type": "string",
+                              "minLength": 1,
+                              "description": "招待者の名前"
+                            }
+                          }
+                        },
+                        "invite": {
+                          "type": "object",
+                          "required": [
+                            "id",
+                            "code",
+                            "invited",
+                            "enabled"
+                          ],
+                          "description": "招待情報",
+                          "properties": {
+                            "id": {
+                              "type": "integer",
+                              "description": "招待通し番号"
+                            },
+                            "code": {
+                              "type": "string",
+                              "description": "招待コード(shortuuid)",
+                              "minLength": 6,
+                              "maxLength": 12
+                            },
+                            "invited": {
+                              "type": "number",
+                              "description": "招待した人数の累計(誰を招待したかは表示されない)"
+                            },
+                            "enabled": {
+                              "type": "boolean",
+                              "description": "招待可能な状態か否か"
+                            }
+                          }
+                        },
+                        "mylist": {
+                          "type": "object",
+                          "required": [
+                            "id"
+                          ],
+                          "description": "マイリスト情報",
+                          "properties": {
+                            "id": {
+                              "type": "number",
+                              "description": "自分のマイリストID"
+                            }
+                          }
+                        },
+                        "apiKey": {
+                          "type": "string",
+                          "minLength": 1,
+                          "description": "ログインに使用したAPIキー"
+                        }
+                      }
                     }
                   },
                   "required": [
@@ -3935,9 +4001,9 @@
                         "displayID": "test_user",
                         "name": "Test",
                         "favorite": 42,
-                        "lineConnect": 0,
-                        "lineNotify": 0,
-                        "oneSignalNotify": null,
+                        "lineConnect": true,
+                        "lineNotify": true,
+                        "oneSignalNotify": true,
                         "permission": 0,
                         "registeredDate": "2021-01-07 12:48:42",
                         "inviter": {
@@ -3945,8 +4011,8 @@
                           "name": "ドマオー"
                         },
                         "invite": {
-                          "id": null,
-                          "code": "INVITE_IS_DISABLED",
+                          "id": 1,
+                          "code": "DISABLED",
                           "invited": 0,
                           "enabled": false
                         },
@@ -3966,18 +4032,18 @@
                         "displayID": "test_admin",
                         "name": "Admin",
                         "favorite": 43,
-                        "lineConnect": 0,
-                        "lineNotify": 0,
-                        "oneSignalNotify": null,
-                        "permission": 5,
+                        "lineConnect": true,
+                        "lineNotify": true,
+                        "oneSignalNotify": true,
+                        "permission": 9,
                         "registeredDate": "2021-01-07 12:48:42",
                         "inviter": {
                           "id": 1,
                           "name": "ドマオー"
                         },
                         "invite": {
-                          "id": null,
-                          "code": "INVITE_IS_DISABLED",
+                          "id": 1,
+                          "code": "DISABLED",
                           "invited": 0,
                           "enabled": false
                         },
