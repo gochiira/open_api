@@ -1834,23 +1834,7 @@
                       "uniqueItems": true,
                       "minItems": 1,
                       "items": {
-                        "required": [
-                          "name",
-                          "id",
-                          "count"
-                        ],
-                        "properties": {
-                          "name": {
-                            "type": "string",
-                            "minLength": 1
-                          },
-                          "id": {
-                            "type": "number"
-                          },
-                          "count": {
-                            "type": "number"
-                          }
-                        }
+                        "$ref": "#/components/schemas/NavigationResult"
                       }
                     }
                   },
@@ -1924,23 +1908,7 @@
                       "uniqueItems": true,
                       "minItems": 1,
                       "items": {
-                        "required": [
-                          "name",
-                          "id",
-                          "count"
-                        ],
-                        "properties": {
-                          "name": {
-                            "type": "string",
-                            "minLength": 1
-                          },
-                          "id": {
-                            "type": "number"
-                          },
-                          "count": {
-                            "type": "number"
-                          }
-                        }
+                        "$ref": "#/components/schemas/NavigationResult"
                       }
                     }
                   },
@@ -2014,23 +1982,7 @@
                       "uniqueItems": true,
                       "minItems": 1,
                       "items": {
-                        "required": [
-                          "name",
-                          "id",
-                          "count"
-                        ],
-                        "properties": {
-                          "name": {
-                            "type": "string",
-                            "minLength": 1
-                          },
-                          "id": {
-                            "type": "number"
-                          },
-                          "count": {
-                            "type": "number"
-                          }
-                        }
+                        "$ref": "#/components/schemas/NavigationResult"
                       }
                     }
                   },
@@ -2104,33 +2056,7 @@
                       "uniqueItems": true,
                       "minItems": 1,
                       "items": {
-                        "required": [
-                          "id",
-                          "date",
-                          "color",
-                          "title",
-                          "body"
-                        ],
-                        "properties": {
-                          "id": {
-                            "type": "number"
-                          },
-                          "date": {
-                            "type": "string",
-                            "minLength": 1
-                          },
-                          "color": {
-                            "type": "number"
-                          },
-                          "title": {
-                            "type": "string",
-                            "minLength": 1
-                          },
-                          "body": {
-                            "type": "string",
-                            "minLength": 1
-                          }
-                        }
+                        "$ref": "#/components/schemas/News"
                       }
                     }
                   },
@@ -2208,34 +2134,7 @@
                       "type": "number"
                     },
                     "data": {
-                      "type": "object",
-                      "properties": {
-                        "id": {
-                          "type": "number"
-                        },
-                        "date": {
-                          "type": "string",
-                          "minLength": 1
-                        },
-                        "color": {
-                          "type": "number"
-                        },
-                        "title": {
-                          "type": "string",
-                          "minLength": 1
-                        },
-                        "body": {
-                          "type": "string",
-                          "minLength": 1
-                        }
-                      },
-                      "required": [
-                        "id",
-                        "date",
-                        "color",
-                        "title",
-                        "body"
-                      ]
+                      "$ref": "#/components/schemas/News"
                     }
                   },
                   "required": [
@@ -2491,6 +2390,13 @@
                     },
                     "data": {
                       "type": "object",
+                      "required": [
+                        "title",
+                        "count",
+                        "current",
+                        "pages",
+                        "imgs"
+                      ],
                       "properties": {
                         "title": {
                           "type": "string",
@@ -2510,89 +2416,10 @@
                           "uniqueItems": true,
                           "minItems": 1,
                           "items": {
-                            "required": [
-                              "illustID",
-                              "artistID",
-                              "title",
-                              "caption",
-                              "date",
-                              "pages",
-                              "like",
-                              "mylist",
-                              "mylisted",
-                              "originUrl",
-                              "originService",
-                              "nsfw",
-                              "extension"
-                            ],
-                            "properties": {
-                              "illustID": {
-                                "type": "number"
-                              },
-                              "artistID": {
-                                "type": "number"
-                              },
-                              "title": {
-                                "type": "string",
-                                "minLength": 1
-                              },
-                              "caption": {
-                                "type": "string"
-                              },
-                              "date": {
-                                "type": "string",
-                                "minLength": 1
-                              },
-                              "pages": {
-                                "type": "number"
-                              },
-                              "like": {
-                                "type": "number"
-                              },
-                              "mylist": {
-                                "type": "number"
-                              },
-                              "mylisted": {
-                                "type": "boolean"
-                              },
-                              "originUrl": {
-                                "type": "string",
-                                "minLength": 1
-                              },
-                              "originService": {
-                                "type": "string",
-                                "minLength": 1
-                              },
-                              "nsfw": {
-                                "type": "number"
-                              },
-                              "artist": {
-                                "type": "object",
-                                "properties": {
-                                  "name": {
-                                    "type": "string",
-                                    "minLength": 1
-                                  }
-                                },
-                                "required": [
-                                  "name"
-                                ]
-                              },
-                              "extension": {
-                                "type": "string",
-                                "minLength": 1
-                              }
-                            }
+                            "$ref": "#/components/schemas/SearchResult"
                           }
                         }
-                      },
-                      "required": [
-                        "title",
-                        "count",
-                        "current",
-                        "pages",
-                        "imgs"
-                      ]
+                      }
                     }
                   },
                   "required": [
@@ -2734,6 +2561,13 @@
                     },
                     "data": {
                       "type": "object",
+                      "required": [
+                        "title",
+                        "count",
+                        "current",
+                        "pages",
+                        "imgs"
+                      ],
                       "properties": {
                         "title": {
                           "type": "string",
@@ -2753,90 +2587,10 @@
                           "uniqueItems": true,
                           "minItems": 1,
                           "items": {
-                            "required": [
-                              "illustID",
-                              "artistID",
-                              "title",
-                              "caption",
-                              "date",
-                              "pages",
-                              "like",
-                              "mylist",
-                              "mylisted",
-                              "originUrl",
-                              "originService",
-                              "nsfw",
-                              "extension"
-                            ],
-                            "properties": {
-                              "illustID": {
-                                "type": "number"
-                              },
-                              "artistID": {
-                                "type": "number"
-                              },
-                              "title": {
-                                "type": "string",
-                                "minLength": 1
-                              },
-                              "caption": {
-                                "type": "string",
-                                "minLength": 1
-                              },
-                              "date": {
-                                "type": "string",
-                                "minLength": 1
-                              },
-                              "pages": {
-                                "type": "number"
-                              },
-                              "like": {
-                                "type": "number"
-                              },
-                              "mylist": {
-                                "type": "number"
-                              },
-                              "mylisted": {
-                                "type": "boolean"
-                              },
-                              "originUrl": {
-                                "type": "string",
-                                "minLength": 1
-                              },
-                              "originService": {
-                                "type": "string",
-                                "minLength": 1
-                              },
-                              "nsfw": {
-                                "type": "number"
-                              },
-                              "artist": {
-                                "type": "object",
-                                "properties": {
-                                  "name": {
-                                    "type": "string",
-                                    "minLength": 1
-                                  }
-                                },
-                                "required": [
-                                  "name"
-                                ]
-                              },
-                              "extension": {
-                                "type": "string",
-                                "minLength": 1
-                              }
-                            }
+                            "$ref": "#/components/schemas/SearchResult"
                           }
                         }
-                      },
-                      "required": [
-                        "title",
-                        "count",
-                        "current",
-                        "pages",
-                        "imgs"
-                      ]
+                      }
                     }
                   },
                   "required": [
@@ -2960,6 +2714,13 @@
                     },
                     "data": {
                       "type": "object",
+                      "required": [
+                        "title",
+                        "count",
+                        "current",
+                        "pages",
+                        "imgs"
+                      ],
                       "properties": {
                         "title": {
                           "type": "string",
@@ -2979,90 +2740,10 @@
                           "uniqueItems": true,
                           "minItems": 1,
                           "items": {
-                            "required": [
-                              "illustID",
-                              "artistID",
-                              "title",
-                              "caption",
-                              "date",
-                              "pages",
-                              "like",
-                              "mylist",
-                              "mylisted",
-                              "originUrl",
-                              "originService",
-                              "nsfw",
-                              "extension"
-                            ],
-                            "properties": {
-                              "illustID": {
-                                "type": "number"
-                              },
-                              "artistID": {
-                                "type": "number"
-                              },
-                              "title": {
-                                "type": "string",
-                                "minLength": 1
-                              },
-                              "caption": {
-                                "type": "string",
-                                "minLength": 1
-                              },
-                              "date": {
-                                "type": "string",
-                                "minLength": 1
-                              },
-                              "pages": {
-                                "type": "number"
-                              },
-                              "like": {
-                                "type": "number"
-                              },
-                              "mylist": {
-                                "type": "number"
-                              },
-                              "mylisted": {
-                                "type": "boolean"
-                              },
-                              "originUrl": {
-                                "type": "string",
-                                "minLength": 1
-                              },
-                              "originService": {
-                                "type": "string",
-                                "minLength": 1
-                              },
-                              "nsfw": {
-                                "type": "number"
-                              },
-                              "artist": {
-                                "type": "object",
-                                "properties": {
-                                  "name": {
-                                    "type": "string",
-                                    "minLength": 1
-                                  }
-                                },
-                                "required": [
-                                  "name"
-                                ]
-                              },
-                              "extension": {
-                                "type": "string",
-                                "minLength": 1
-                              }
-                            }
+                            "$ref": "#/components/schemas/SearchResult"
                           }
                         }
-                      },
-                      "required": [
-                        "title",
-                        "count",
-                        "current",
-                        "pages",
-                        "imgs"
-                      ]
+                      }
                     }
                   },
                   "required": [
@@ -3242,6 +2923,13 @@
                     },
                     "data": {
                       "type": "object",
+                      "required": [
+                        "title",
+                        "count",
+                        "current",
+                        "pages",
+                        "imgs"
+                      ],
                       "properties": {
                         "title": {
                           "type": "string",
@@ -3261,90 +2949,10 @@
                           "uniqueItems": true,
                           "minItems": 1,
                           "items": {
-                            "required": [
-                              "illustID",
-                              "artistID",
-                              "title",
-                              "caption",
-                              "date",
-                              "pages",
-                              "like",
-                              "mylist",
-                              "mylisted",
-                              "originUrl",
-                              "originService",
-                              "nsfw",
-                              "extension"
-                            ],
-                            "properties": {
-                              "illustID": {
-                                "type": "number"
-                              },
-                              "artistID": {
-                                "type": "number"
-                              },
-                              "title": {
-                                "type": "string",
-                                "minLength": 1
-                              },
-                              "caption": {
-                                "type": "string",
-                                "minLength": 1
-                              },
-                              "date": {
-                                "type": "string",
-                                "minLength": 1
-                              },
-                              "pages": {
-                                "type": "number"
-                              },
-                              "like": {
-                                "type": "number"
-                              },
-                              "mylist": {
-                                "type": "number"
-                              },
-                              "mylisted": {
-                                "type": "boolean"
-                              },
-                              "originUrl": {
-                                "type": "string",
-                                "minLength": 1
-                              },
-                              "originService": {
-                                "type": "string",
-                                "minLength": 1
-                              },
-                              "nsfw": {
-                                "type": "number"
-                              },
-                              "artist": {
-                                "type": "object",
-                                "properties": {
-                                  "name": {
-                                    "type": "string",
-                                    "minLength": 1
-                                  }
-                                },
-                                "required": [
-                                  "name"
-                                ]
-                              },
-                              "extension": {
-                                "type": "string",
-                                "minLength": 1
-                              }
-                            }
+                            "$ref": "#/components/schemas/SearchResult"
                           }
                         }
-                      },
-                      "required": [
-                        "title",
-                        "count",
-                        "current",
-                        "pages",
-                        "imgs"
-                      ]
+                      }
                     }
                   },
                   "required": [
@@ -3471,6 +3079,13 @@
                     },
                     "data": {
                       "type": "object",
+                      "required": [
+                        "title",
+                        "count",
+                        "current",
+                        "pages",
+                        "imgs"
+                      ],
                       "properties": {
                         "title": {
                           "type": "string",
@@ -3490,89 +3105,10 @@
                           "uniqueItems": true,
                           "minItems": 1,
                           "items": {
-                            "required": [
-                              "illustID",
-                              "artistID",
-                              "title",
-                              "caption",
-                              "date",
-                              "pages",
-                              "like",
-                              "mylist",
-                              "mylisted",
-                              "originUrl",
-                              "originService",
-                              "nsfw",
-                              "extension"
-                            ],
-                            "properties": {
-                              "illustID": {
-                                "type": "number"
-                              },
-                              "artistID": {
-                                "type": "number"
-                              },
-                              "title": {
-                                "type": "string",
-                                "minLength": 1
-                              },
-                              "caption": {
-                                "type": "string"
-                              },
-                              "date": {
-                                "type": "string",
-                                "minLength": 1
-                              },
-                              "pages": {
-                                "type": "number"
-                              },
-                              "like": {
-                                "type": "number"
-                              },
-                              "mylist": {
-                                "type": "number"
-                              },
-                              "mylisted": {
-                                "type": "boolean"
-                              },
-                              "originUrl": {
-                                "type": "string",
-                                "minLength": 1
-                              },
-                              "originService": {
-                                "type": "string",
-                                "minLength": 1
-                              },
-                              "nsfw": {
-                                "type": "number"
-                              },
-                              "artist": {
-                                "type": "object",
-                                "properties": {
-                                  "name": {
-                                    "type": "string",
-                                    "minLength": 1
-                                  }
-                                },
-                                "required": [
-                                  "name"
-                                ]
-                              },
-                              "extension": {
-                                "type": "string",
-                                "minLength": 1
-                              }
-                            }
+                            "$ref": "#/components/schemas/SearchResult"
                           }
                         }
-                      },
-                      "required": [
-                        "title",
-                        "count",
-                        "current",
-                        "pages",
-                        "imgs"
-                      ]
+                      }
                     }
                   },
                   "required": [
@@ -4697,14 +4233,180 @@
     }
   },
   "components": {
-    "schemas": {},
+    "schemas": {
+      "SearchResult": {
+        "title": "SearchResult",
+        "type": "object",
+        "properties": {
+          "illustID": {
+            "type": "number"
+          },
+          "artistID": {
+            "type": "number"
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1
+          },
+          "caption": {
+            "type": "string"
+          },
+          "date": {
+            "type": "string",
+            "minLength": 1
+          },
+          "pages": {
+            "type": "number"
+          },
+          "like": {
+            "type": "number"
+          },
+          "mylist": {
+            "type": "number"
+          },
+          "mylisted": {
+            "type": "boolean"
+          },
+          "originUrl": {
+            "type": "string",
+            "minLength": 1
+          },
+          "originService": {
+            "type": "string",
+            "minLength": 1
+          },
+          "nsfw": {
+            "type": "number"
+          },
+          "artist": {
+            "type": "object",
+            "required": [
+              "name"
+            ],
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "extension": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "illustID",
+          "artistID",
+          "title",
+          "caption",
+          "date",
+          "pages",
+          "like",
+          "mylist",
+          "mylisted",
+          "originUrl",
+          "originService",
+          "nsfw",
+          "artist",
+          "extension"
+        ],
+        "x-examples": {
+          "example-1": {
+            "illustID": 0,
+            "artistID": 0,
+            "title": "string",
+            "caption": "string",
+            "date": "string",
+            "pages": 0,
+            "like": 0,
+            "mylist": 0,
+            "mylisted": true,
+            "originUrl": "string",
+            "originService": "string",
+            "nsfw": 0,
+            "artist": {
+              "name": "string"
+            },
+            "extension": "string"
+          }
+        },
+        "description": "検索の応答モデル。配列で並んで返される。"
+      },
+      "News": {
+        "title": "News",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "date": {
+            "type": "string",
+            "minLength": 1
+          },
+          "color": {
+            "type": "number"
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1
+          },
+          "body": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "id",
+          "date",
+          "color",
+          "title",
+          "body"
+        ],
+        "description": "サイト内の新着情報モデル。"
+      },
+      "NavigationResult": {
+        "title": "NavigationResult",
+        "type": "object",
+        "description": "サイト内上部ナビゲーションのエンドポイントで用いる応答モデル",
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 50
+          },
+          "id": {
+            "type": "integer"
+          },
+          "count": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "name",
+          "id",
+          "count"
+        ]
+      }
+    },
     "securitySchemes": {
       "Authorization": {
         "type": "http",
         "scheme": "bearer"
       }
     },
-    "parameters": {}
+    "parameters": {
+      "SearchQuery": {
+        "name": "SearchQuery",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string"
+        }
+      }
+    },
+    "examples": {},
+    "responses": {}
   },
   "security": [
     {
