@@ -3728,7 +3728,7 @@
               ]
             },
             "examples": {
-              "example": {
+              "success": {
                 "value": {
                   "status": 200,
                   "message": "ok",
@@ -3841,10 +3841,28 @@
               ]
             },
             "examples": {
-              "example-1": {
+              "success": {
                 "value": {
                   "status": 200,
-                  "message": "ok"
+                  "message": "Update complete"
+                }
+              },
+              "server-error": {
+                "value": {
+                  "status": 500,
+                  "message": "Server bombed."
+                }
+              },
+              "password-mismatch": {
+                "value": {
+                  "status": 400,
+                  "message": "password mismatch"
+                }
+              },
+              "not-satisfied-params": {
+                "value": {
+                  "status": 400,
+                  "message": "Request parameters are not satisfied."
                 }
               }
             }
