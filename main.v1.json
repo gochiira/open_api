@@ -3377,6 +3377,167 @@
             "type": "string"
           }
         }
+      },
+      "Tag": {
+        "title": "Tag",
+        "type": "object",
+        "x-examples": {
+          "example-1": {
+            "id": 1,
+            "name": "香風智乃"
+          }
+        },
+        "description": "タグデータモデル",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "minimum": 1,
+            "format": "int32",
+            "description": "サイト内通しタグ番号"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 20,
+            "description": "タグの名称"
+          },
+          "nsfw": {
+            "type": "boolean",
+            "description": "アダルトコンテンツが含まれるタグか"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "nsfw"
+        ]
+      },
+      "Replace": {
+        "description": "置き換えモデル",
+        "type": "object",
+        "properties": {
+          "illustID": {
+            "type": "number"
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1
+          },
+          "caption": {
+            "type": "string",
+            "minLength": 1
+          },
+          "date": {
+            "type": "string"
+          },
+          "originService": {
+            "type": "string",
+            "minLength": 1
+          },
+          "originUrl": {
+            "type": "string",
+            "minLength": 1
+          },
+          "width": {
+            "type": "number"
+          },
+          "height": {
+            "type": "number"
+          },
+          "filesize": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "illustID",
+          "title",
+          "caption",
+          "date",
+          "originService",
+          "originUrl",
+          "width",
+          "height",
+          "filesize"
+        ],
+        "x-examples": {
+          "example": {
+            "illustID": 1,
+            "title": "チノちゃん",
+            "caption": "",
+            "date": "2021-03-05 01:27:22",
+            "originService": "Pixiv",
+            "originUrl": "https://www.pixiv.net/artworks/88062684",
+            "width": 750,
+            "height": 1200,
+            "filesize": "2M"
+          }
+        },
+        "title": "Replace"
+      },
+      "UploadHistory": {
+        "description": "アップロード履歴",
+        "type": "object",
+        "title": "UploadHistory",
+        "x-examples": {
+          "example": {
+            "uploadID": 12045,
+            "started": "2021-02-21 22:24:22",
+            "finished": "2021-02-21 22:24:27",
+            "status": 5,
+            "illustID": 9381
+          }
+        },
+        "properties": {
+          "uploadID": {
+            "type": "integer",
+            "format": "int32",
+            "description": "通し投稿履歴番号(インデックス用)",
+            "minimum": 1,
+            "example": 1
+          },
+          "started": {
+            "type": "string",
+            "description": "データ登録処理開始時刻",
+            "minLength": 19,
+            "maxLength": 19,
+            "example": "2021-02-21 22:24:22"
+          },
+          "finished": {
+            "type": "string",
+            "description": "データ登録完了時刻",
+            "minLength": 19,
+            "maxLength": 19,
+            "example": "2021-02-21 22:24:27"
+          },
+          "status": {
+            "type": "integer",
+            "description": "登録処理結果 5:成功 9:内部エラー",
+            "minimum": 0,
+            "maximum": 9,
+            "example": 5,
+            "enum": [
+              0,
+              5,
+              9
+            ],
+            "default": 0
+          },
+          "illustID": {
+            "type": "integer",
+            "format": "int32",
+            "description": "投稿に成功した場合入るID",
+            "minimum": 1,
+            "example": 1
+          }
+        },
+        "required": [
+          "uploadID",
+          "started",
+          "finished",
+          "status",
+          "illustID"
+        ]
       }
     },
     "securitySchemes": {
@@ -3495,50 +3656,7 @@
                       "description": "指定された範囲で一致するデータ\n一致するものがなければ空配列",
                       "minItems": 0,
                       "items": {
-                        "type": "object",
-                        "properties": {
-                          "uploadID": {
-                            "type": "integer",
-                            "format": "int32",
-                            "description": "通し投稿履歴番号(インデックス用)",
-                            "minimum": 1,
-                            "example": 1
-                          },
-                          "started": {
-                            "type": "string",
-                            "description": "データ登録処理開始時刻",
-                            "minLength": 19,
-                            "maxLength": 19,
-                            "example": "2021-02-21 22:24:22"
-                          },
-                          "finished": {
-                            "type": "string",
-                            "description": "データ登録完了時刻",
-                            "minLength": 19,
-                            "maxLength": 19,
-                            "example": "2021-02-21 22:24:27"
-                          },
-                          "status": {
-                            "type": "integer",
-                            "description": "登録処理結果 5:成功 9:内部エラー",
-                            "minimum": 0,
-                            "maximum": 9,
-                            "example": 5,
-                            "enum": [
-                              0,
-                              5,
-                              9
-                            ],
-                            "default": 0
-                          },
-                          "illustID": {
-                            "type": "integer",
-                            "format": "int32",
-                            "description": "投稿に成功した場合入るID",
-                            "minimum": 1,
-                            "example": 1
-                          }
-                        }
+                        "$ref": "#/components/schemas/UploadHistory"
                       }
                     }
                   }
@@ -4033,11 +4151,13 @@
                       "description": "絵師情報",
                       "properties": {
                         "id": {
-                          "type": "number"
+                          "type": "number",
+                          "description": "絵師のサイト内通し番号"
                         },
                         "name": {
                           "type": "string",
-                          "minLength": 1
+                          "minLength": 1,
+                          "description": "絵師名"
                         }
                       },
                       "required": [
@@ -4051,91 +4171,74 @@
                         "id",
                         "name"
                       ],
+                      "description": "投稿者情報",
                       "properties": {
                         "id": {
-                          "type": "number"
+                          "type": "number",
+                          "description": "投稿したユーザーのサイト内通し番号"
                         },
                         "name": {
                           "type": "string",
-                          "minLength": 1
+                          "minLength": 1,
+                          "description": "投稿したユーザーの名前"
                         }
                       }
                     },
                     "status": {
-                      "type": "number"
+                      "type": "number",
+                      "description": "公開/非公開等の表示状態 0:公開 1:置換済み 2:削除(ユーザー) 3:削除(管理者)",
+                      "example": 0
                     },
                     "width": {
-                      "type": "number"
+                      "type": "number",
+                      "description": "RAW画像の縦方向のピクセル数"
                     },
                     "height": {
-                      "type": "number"
+                      "type": "number",
+                      "description": "RAW画像の横方向のピクセル数"
                     },
                     "filesize": {
                       "type": "string",
-                      "minLength": 1
+                      "minLength": 1,
+                      "description": "RAW画像のファイルサイズに単位を付けたもの"
                     },
                     "tag": {
                       "type": "array",
                       "uniqueItems": true,
-                      "minItems": 1,
+                      "description": "一般タグ情報",
                       "items": {
-                        "type": "object",
-                        "properties": {
-                          "id": {
-                            "type": "number"
-                          },
-                          "name": {
-                            "type": "string",
-                            "minLength": 1
-                          },
-                          "nsfw": {
-                            "type": "number"
-                          }
-                        },
-                        "required": [
-                          "id",
-                          "name",
-                          "nsfw"
-                        ]
+                        "$ref": "#/components/schemas/Tag"
                       }
                     },
                     "chara": {
                       "type": "array",
+                      "description": "キャラクタータグ情報",
+                      "uniqueItems": true,
                       "items": {
-                        "type": "object"
+                        "$ref": "#/components/schemas/Tag"
                       }
                     },
                     "group": {
                       "type": "array",
+                      "description": "グループタグ情報",
+                      "uniqueItems": true,
                       "items": {
-                        "type": "object"
+                        "$ref": "#/components/schemas/Tag"
                       }
                     },
                     "system": {
                       "type": "array",
                       "uniqueItems": true,
-                      "minItems": 1,
+                      "description": "システムタグ情報",
                       "items": {
-                        "type": "object",
-                        "properties": {
-                          "id": {
-                            "type": "number"
-                          },
-                          "name": {
-                            "type": "string",
-                            "minLength": 1
-                          }
-                        },
-                        "required": [
-                          "id",
-                          "name"
-                        ]
+                        "$ref": "#/components/schemas/Tag"
                       }
                     },
                     "replace": {
                       "type": "array",
+                      "description": "置き換えたイラスト情報",
                       "items": {
-                        "type": "object"
+                        "$ref": "#/components/schemas/Replace"
                       }
                     },
                     "star": {
@@ -4146,6 +4249,7 @@
                         "red",
                         "blue"
                       ],
+                      "description": "スター(いいね)情報",
                       "properties": {
                         "yellow": {
                           "type": "number"
@@ -4232,29 +4336,43 @@
                       {
                         "id": 21,
                         "name": "ティーカップ",
-                        "nsfw": 0
+                        "nsfw": false
                       },
                       {
                         "id": 20,
                         "name": "紅茶",
-                        "nsfw": 0
+                        "nsfw": false
                       },
                       {
                         "id": 18,
                         "name": "カフェ",
-                        "nsfw": 0
+                        "nsfw": false
                       }
                     ],
-                    "chara": [],
-                    "group": [],
+                    "chara": [
+                      {
+                        "id": 20,
+                        "name": "サンプル",
+                        "nsfw": false
+                      }
+                    ],
+                    "group": [
+                      {
+                        "id": 20,
+                        "name": "サンプル",
+                        "nsfw": false
+                      }
+                    ],
                     "system": [
                       {
                         "id": 4,
-                        "name": "2021年01月"
+                        "name": "2021年01月",
+                        "nsfw": false
                       },
                       {
                         "id": 17,
-                        "name": "4K"
+                        "name": "4K",
+                        "nsfw": false
                       }
                     ],
                     "replace": [],
