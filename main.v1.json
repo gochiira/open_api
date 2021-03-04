@@ -3792,7 +3792,7 @@
               "success": {
                 "value": {
                   "status": 200,
-                  "message": "ok"
+                  "message": "ok thanks for using!"
                 }
               },
               "failed": {
@@ -4257,7 +4257,7 @@
         }
       },
       "GetAccountMeResponse": {
-        "description": "Example response",
+        "description": "自分自身の情報取得結果",
         "content": {
           "application/json": {
             "schema": {
@@ -4399,7 +4399,7 @@
               }
             },
             "examples": {
-              "me-user": {
+              "success-user": {
                 "value": {
                   "status": 200,
                   "message": "ok",
@@ -4430,7 +4430,7 @@
                   }
                 }
               },
-              "me-admin": {
+              "success-admin": {
                 "value": {
                   "status": 200,
                   "message": "ok",
@@ -4459,6 +4459,12 @@
                     },
                     "apiKey": "DUMMY_API_KEY"
                   }
+                }
+              },
+              "failed": {
+                "value": {
+                  "status": 500,
+                  "message": "Server exploded"
                 }
               }
             }
@@ -4681,7 +4687,7 @@
         }
       },
       "DeleteArtistResponse": {
-        "description": "Example response",
+        "description": "絵師削除結果",
         "content": {
           "application/json": {
             "schema": {
