@@ -1622,8 +1622,9 @@
                             "mylisted": false,
                             "originUrl": "https://unsplash.com/photos/oBoELXgJR1w?page=1",
                             "originService": "独自",
-                            "nsfw": 0,
+                            "nsfw": false,
                             "artist": {
+                              "id": 5,
                               "name": "CHI CHEN"
                             },
                             "extension": "jpg"
@@ -1640,8 +1641,9 @@
                             "mylisted": true,
                             "originUrl": "https://unsplash.com/photos/L82-kkEBOd0?page=1",
                             "originService": "独自",
-                            "nsfw": 0,
+                            "nsfw": false,
                             "artist": {
+                              "id": 4,
                               "name": "Manki Kim"
                             },
                             "extension": "jpg"
@@ -1764,8 +1766,9 @@
                             "mylisted": false,
                             "originUrl": "https://www.irasutoya.com/2017/01/blog-post_792.html?page=1",
                             "originService": "独自",
-                            "nsfw": 0,
+                            "nsfw": false,
                             "artist": {
+                              "id": 1,
                               "name": "みふね"
                             },
                             "extension": "png"
@@ -1888,8 +1891,9 @@
                             "mylisted": false,
                             "originUrl": "?page=1",
                             "originService": "独自",
-                            "nsfw": 0,
+                            "nsfw": false,
                             "artist": {
+                              "id": 1,
                               "name": "みふね"
                             },
                             "extension": "png"
@@ -1906,8 +1910,9 @@
                             "mylisted": false,
                             "originUrl": "https://www.irasutoya.com/2016/02/blog-post_256.html?page=1",
                             "originService": "独自",
-                            "nsfw": 0,
+                            "nsfw": false,
                             "artist": {
+                              "id": 1,
                               "name": "みふね"
                             },
                             "extension": "png"
@@ -1924,8 +1929,9 @@
                             "mylisted": false,
                             "originUrl": "https://www.irasutoya.com/2016/10/blog-post_23.html?page=1",
                             "originService": "独自",
-                            "nsfw": 0,
+                            "nsfw": false,
                             "artist": {
+                              "id": 1,
                               "name": "みふね"
                             },
                             "extension": "png"
@@ -1942,8 +1948,9 @@
                             "mylisted": false,
                             "originUrl": "https://www.irasutoya.com/2017/01/blog-post_792.html?page=1",
                             "originService": "独自",
-                            "nsfw": 0,
+                            "nsfw": false,
                             "artist": {
+                              "id": 1,
                               "name": "みふね"
                             },
                             "extension": "png"
@@ -2066,8 +2073,9 @@
                             "mylisted": false,
                             "originUrl": "https://unsplash.com/photos/dwQRixazu9I?page=1",
                             "originService": "独自",
-                            "nsfw": 0,
+                            "nsfw": false,
                             "artist": {
+                              "id": 3,
                               "name": "Andy Falconer"
                             },
                             "extension": "jpg"
@@ -2191,8 +2199,9 @@
                             "mylisted": false,
                             "originUrl": "https://unsplash.com/photos/oBoELXgJR1w?page=1",
                             "originService": "独自",
-                            "nsfw": 0,
+                            "nsfw": false,
                             "artist": {
+                              "id": 5,
                               "name": "CHI CHEN"
                             },
                             "extension": "jpg"
@@ -2209,8 +2218,9 @@
                             "mylisted": true,
                             "originUrl": "https://unsplash.com/photos/L82-kkEBOd0?page=1",
                             "originService": "独自",
-                            "nsfw": 0,
+                            "nsfw": false,
                             "artist": {
+                              "id": 4,
                               "name": "Manki Kim"
                             },
                             "extension": "jpg"
@@ -2227,8 +2237,9 @@
                             "mylisted": false,
                             "originUrl": "https://unsplash.com/photos/dwQRixazu9I?page=1",
                             "originService": "独自",
-                            "nsfw": 0,
+                            "nsfw": false,
                             "artist": {
+                              "id": 3,
                               "name": "Andy Falconer"
                             },
                             "extension": "jpg"
@@ -2245,8 +2256,9 @@
                             "mylisted": false,
                             "originUrl": "https://unsplash.com/photos/XOhI_kW_TaM?page=1",
                             "originService": "独自",
-                            "nsfw": 0,
+                            "nsfw": false,
                             "artist": {
+                              "id": 2,
                               "name": "Nathan Dumlao"
                             },
                             "extension": "jpg"
@@ -2263,8 +2275,9 @@
                             "mylisted": false,
                             "originUrl": "?page=1",
                             "originService": "独自",
-                            "nsfw": 0,
+                            "nsfw": false,
                             "artist": {
+                              "id": 1,
                               "name": "みふね"
                             },
                             "extension": "png"
@@ -2281,8 +2294,9 @@
                             "mylisted": false,
                             "originUrl": "https://www.irasutoya.com/2016/02/blog-post_256.html?page=1",
                             "originService": "独自",
-                            "nsfw": 0,
+                            "nsfw": false,
                             "artist": {
+                              "id": 1,
                               "name": "みふね"
                             },
                             "extension": "png"
@@ -2299,8 +2313,9 @@
                             "mylisted": false,
                             "originUrl": "https://www.irasutoya.com/2016/10/blog-post_23.html?page=1",
                             "originService": "独自",
-                            "nsfw": 0,
+                            "nsfw": false,
                             "artist": {
+                              "id": 1,
                               "name": "みふね"
                             },
                             "extension": "png"
@@ -2317,8 +2332,9 @@
                             "mylisted": false,
                             "originUrl": "https://www.irasutoya.com/2017/01/blog-post_792.html?page=1",
                             "originService": "独自",
-                            "nsfw": 0,
+                            "nsfw": false,
                             "artist": {
+                              "id": 1,
                               "name": "みふね"
                             },
                             "extension": "png"
@@ -3010,62 +3026,112 @@
       "SearchResult": {
         "title": "SearchResult",
         "type": "object",
+        "x-examples": {
+          "example-1": {
+            "illustID": 0,
+            "artistID": 0,
+            "title": "string",
+            "caption": "string",
+            "date": "string",
+            "pages": 0,
+            "like": 0,
+            "mylist": 0,
+            "mylisted": true,
+            "originUrl": "string",
+            "originService": "string",
+            "nsfw": false,
+            "artist": {
+              "name": "string"
+            },
+            "extension": "string"
+          }
+        },
+        "description": "検索の応答モデル。配列で並んで返される。",
         "properties": {
           "illustID": {
-            "type": "number"
+            "type": "number",
+            "description": "イラストID"
           },
           "artistID": {
-            "type": "number"
+            "type": "number",
+            "description": "絵師ID(前との互換のために用意、非推奨)"
           },
           "title": {
             "type": "string",
-            "minLength": 1
+            "minLength": 1,
+            "description": "イラスト(作品)名"
           },
           "caption": {
-            "type": "string"
+            "type": "string",
+            "description": "説明文\nNOTE: 通常出典記載の説明文と同じ物が入る"
           },
           "date": {
             "type": "string",
-            "minLength": 1
+            "minLength": 19,
+            "maxLength": 19,
+            "example": "2021-01-07 12:48:42",
+            "description": "登録日(%Y-%m-%d %H:%M:%S)"
           },
           "pages": {
-            "type": "number"
+            "type": "number",
+            "description": "グループの場合のページ数(未使用)"
           },
           "like": {
-            "type": "number"
+            "type": "number",
+            "description": "累計いいね数"
           },
           "mylist": {
-            "type": "number"
+            "type": "number",
+            "description": "マイリスト済みのユーザー数"
           },
           "mylisted": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "リクエストしたユーザーがマイリストしているか"
           },
           "originUrl": {
             "type": "string",
-            "minLength": 1
+            "minLength": 1,
+            "description": "出典URL"
           },
           "originService": {
             "type": "string",
-            "minLength": 1
+            "minLength": 1,
+            "description": "出典のサービス名"
           },
           "nsfw": {
-            "type": "number"
+            "type": "boolean",
+            "description": "アダルトコンテンツか否か"
           },
           "artist": {
             "type": "object",
             "required": [
-              "name"
+              "name",
+              "id"
             ],
             "properties": {
               "name": {
                 "type": "string",
-                "minLength": 1
+                "minLength": 1,
+                "description": "絵師名"
+              },
+              "id": {
+                "type": "integer",
+                "description": "絵師のサイト内通し番号"
               }
             }
           },
           "extension": {
             "type": "string",
-            "minLength": 1
+            "minLength": 1,
+            "description": "RAWファイルの拡張子",
+            "enum": [
+              "png",
+              "jpg",
+              "jpeg",
+              "webp",
+              "mp4"
+            ],
+            "example": "png"
           }
         },
         "required": [
@@ -3083,28 +3149,7 @@
           "nsfw",
           "artist",
           "extension"
-        ],
-        "x-examples": {
-          "example-1": {
-            "illustID": 0,
-            "artistID": 0,
-            "title": "string",
-            "caption": "string",
-            "date": "string",
-            "pages": 0,
-            "like": 0,
-            "mylist": 0,
-            "mylisted": true,
-            "originUrl": "string",
-            "originService": "string",
-            "nsfw": 0,
-            "artist": {
-              "name": "string"
-            },
-            "extension": "string"
-          }
-        },
-        "description": "検索の応答モデル。配列で並んで返される。"
+        ]
       },
       "News": {
         "title": "News",
@@ -3897,93 +3942,95 @@
         "content": {
           "application/json": {
             "schema": {
+              "type": "object",
               "properties": {
                 "status": {
-                  "type": "number"
+                  "type": "number",
+                  "description": "HTTPステータスコード"
+                },
+                "message": {
+                  "type": "string",
+                  "description": "ok もしくは エラー内容"
                 },
                 "data": {
                   "type": "object",
-                  "required": [
-                    "illustID",
-                    "title",
-                    "caption",
-                    "date",
-                    "pages",
-                    "like",
-                    "view",
-                    "mylist",
-                    "mylisted",
-                    "originUrl",
-                    "originService",
-                    "nsfw",
-                    "hash",
-                    "extension",
-                    "user",
-                    "status",
-                    "width",
-                    "height",
-                    "filesize",
-                    "tag",
-                    "chara",
-                    "group",
-                    "system",
-                    "replace",
-                    "star"
-                  ],
+                  "description": "ヒットした場合のみ存在する",
                   "properties": {
                     "illustID": {
-                      "type": "number"
+                      "type": "number",
+                      "description": "サイト内通しイラストID"
                     },
                     "title": {
                       "type": "string",
-                      "minLength": 1
+                      "minLength": 1,
+                      "description": "イラスト(作品)名\nNOTE: 連番の場合は (2) (3)のような番号が入る"
                     },
                     "caption": {
-                      "type": "string"
+                      "type": "string",
+                      "description": "説明文\nNOTE: 通常出典に記載されていた内容そのままが入る"
                     },
                     "date": {
                       "type": "string",
-                      "minLength": 1
+                      "description": "登録日時(%Y-%m-%d %H:%M:%S)",
+                      "minLength": 19,
+                      "maxLength": 19,
+                      "example": "2021-01-07 12:48:42"
                     },
                     "pages": {
-                      "type": "number"
+                      "type": "number",
+                      "description": "グループになっている場合の総ページ数(未使用)"
                     },
                     "like": {
-                      "type": "number"
+                      "type": "number",
+                      "description": "累計いいね数"
                     },
                     "view": {
-                      "type": "number"
+                      "type": "number",
+                      "description": "累計閲覧回数"
                     },
                     "mylist": {
-                      "type": "number"
+                      "type": "number",
+                      "description": "累計マイリスト数"
                     },
                     "mylisted": {
-                      "type": "boolean"
+                      "type": "boolean",
+                      "description": "リクエストしたユーザーがマイリストしているか"
                     },
                     "originUrl": {
                       "type": "string",
-                      "minLength": 1
+                      "minLength": 1,
+                      "description": "出典URL"
                     },
                     "originService": {
                       "type": "string",
-                      "minLength": 1
+                      "minLength": 1,
+                      "description": "出典サービス名"
                     },
                     "nsfw": {
-                      "type": "number"
+                      "description": "アダルトコンテンツかどうか",
+                      "type": "boolean"
                     },
                     "hash": {
-                      "type": "number"
+                      "type": "number",
+                      "description": "画像ハッシュ(pHash)"
                     },
                     "extension": {
                       "type": "string",
-                      "minLength": 1
+                      "minLength": 1,
+                      "description": "拡張子(通常、jpgもしくはpng)",
+                      "enum": [
+                        "jpg",
+                        "png",
+                        "jpeg",
+                        "gif",
+                        "mp4",
+                        "webp"
+                      ],
+                      "example": "png"
                     },
                     "artist": {
                       "type": "object",
-                      "required": [
-                        "id",
-                        "name"
-                      ],
+                      "description": "絵師情報",
                       "properties": {
                         "id": {
                           "type": "number"
@@ -3992,7 +4039,11 @@
                           "type": "string",
                           "minLength": 1
                         }
-                      }
+                      },
+                      "required": [
+                        "id",
+                        "name"
+                      ]
                     },
                     "user": {
                       "type": "object",
@@ -4110,18 +4161,46 @@
                         }
                       }
                     }
-                  }
+                  },
+                  "required": [
+                    "illustID",
+                    "title",
+                    "caption",
+                    "date",
+                    "pages",
+                    "like",
+                    "view",
+                    "mylist",
+                    "mylisted",
+                    "originUrl",
+                    "originService",
+                    "nsfw",
+                    "hash",
+                    "extension",
+                    "user",
+                    "status",
+                    "width",
+                    "height",
+                    "filesize",
+                    "tag",
+                    "chara",
+                    "group",
+                    "system",
+                    "replace",
+                    "star"
+                  ]
                 }
               },
               "required": [
                 "status",
-                "data"
+                "message"
               ]
             },
             "examples": {
-              "example": {
+              "success": {
                 "value": {
                   "status": 200,
+                  "message": "ok",
                   "data": {
                     "illustID": 8,
                     "title": "tea pours into white teacup photo",
@@ -4134,7 +4213,7 @@
                     "mylisted": false,
                     "originUrl": "https://unsplash.com/photos/oBoELXgJR1w?page=1",
                     "originService": "独自",
-                    "nsfw": 0,
+                    "nsfw": false,
                     "hash": 12743176166585612000,
                     "extension": "jpg",
                     "artist": {
@@ -4186,6 +4265,12 @@
                       "red": 0
                     }
                   }
+                }
+              },
+              "failed": {
+                "value": {
+                  "status": 404,
+                  "message": "The art data was not found."
                 }
               }
             }
