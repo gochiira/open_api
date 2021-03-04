@@ -3413,8 +3413,7 @@
                     "title",
                     "count",
                     "current",
-                    "pages",
-                    "contents"
+                    "pages"
                   ],
                   "properties": {
                     "title": {
@@ -3449,52 +3448,50 @@
                       "type": "array",
                       "uniqueItems": true,
                       "minItems": 1,
-                      "description": "指定された範囲の一致データがこちらに入ります",
+                      "description": "指定された範囲で一致するデータ\n一致するものがなければ空配列",
                       "items": {
                         "type": "object",
                         "properties": {
                           "uploadID": {
                             "type": "integer",
-                            "description": "通し投稿履歴番号(インデックス用)",
-                            "minimum": 1,
-                            "format": "int32"
+                            "format": "int32",
+                            "description": "通し投稿履歴番号(インデックス用)"
                           },
                           "started": {
                             "type": "string",
-                            "minLength": 1,
-                            "description": "データ登録処理開始時刻"
+                            "description": "データ登録処理開始時刻",
+                            "minLength": 19,
+                            "maxLength": 19,
+                            "example": "2021-02-21 22:24:22"
                           },
                           "finished": {
                             "type": "string",
-                            "minLength": 1,
-                            "description": "データ登録完了時刻"
+                            "description": "データ登録完了時刻",
+                            "minLength": 19,
+                            "maxLength": 19,
+                            "example": "2021-02-21 22:24:27"
                           },
                           "status": {
                             "type": "integer",
                             "description": "登録処理結果 5:成功 9:内部エラー",
-                            "format": "int32",
                             "minimum": 0,
                             "maximum": 9,
                             "example": 5,
                             "enum": [
+                              0,
                               5,
                               9
                             ],
-                            "default": 5
+                            "default": 0
                           },
                           "illustID": {
                             "type": "integer",
+                            "format": "int32",
                             "description": "投稿に成功した場合入るID",
+                            "minimum": 1,
                             "example": 1
                           }
-                        },
-                        "required": [
-                          "uploadID",
-                          "started",
-                          "finished",
-                          "status",
-                          "illustID"
-                        ]
+                        }
                       }
                     }
                   }
@@ -3670,6 +3667,7 @@
         "content": {
           "application/json": {
             "schema": {
+              "type": "object",
               "properties": {
                 "status": {
                   "type": "integer",
@@ -3685,13 +3683,13 @@
                 },
                 "data": {
                   "type": "object",
+                  "description": "応答本体はdataに入ります(共通) 存在しなければキー自体がありません",
                   "required": [
                     "userID",
                     "displayID",
                     "name",
                     "favorite"
                   ],
-                  "description": "応答本体はdataに入ります(共通)",
                   "properties": {
                     "userID": {
                       "type": "integer",
@@ -3723,8 +3721,7 @@
               },
               "required": [
                 "status",
-                "message",
-                "data"
+                "message"
               ]
             },
             "examples": {
@@ -3738,6 +3735,12 @@
                     "name": "お窓",
                     "favorite": 1
                   }
+                }
+              },
+              "failed": {
+                "value": {
+                  "status": 404,
+                  "message": "The account data was not found."
                 }
               }
             }
@@ -3766,13 +3769,13 @@
               ]
             },
             "examples": {
-              "example-success": {
+              "success": {
                 "value": {
                   "status": 200,
                   "message": "ok"
                 }
               },
-              "example-failed": {
+              "failed": {
                 "value": {
                   "status": 400,
                   "message": "authorization failed"
