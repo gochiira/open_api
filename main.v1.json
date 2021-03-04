@@ -1369,6 +1369,13 @@
                     },
                     "data": {
                       "type": "object",
+                      "required": [
+                        "title",
+                        "count",
+                        "current",
+                        "pages",
+                        "imgs"
+                      ],
                       "properties": {
                         "title": {
                           "type": "string",
@@ -1388,89 +1395,10 @@
                           "uniqueItems": true,
                           "minItems": 1,
                           "items": {
-                            "required": [
-                              "illustID",
-                              "artistID",
-                              "title",
-                              "caption",
-                              "date",
-                              "pages",
-                              "like",
-                              "mylist",
-                              "mylisted",
-                              "originUrl",
-                              "originService",
-                              "nsfw",
-                              "extension"
-                            ],
-                            "properties": {
-                              "illustID": {
-                                "type": "number"
-                              },
-                              "artistID": {
-                                "type": "number"
-                              },
-                              "title": {
-                                "type": "string",
-                                "minLength": 1
-                              },
-                              "caption": {
-                                "type": "string"
-                              },
-                              "date": {
-                                "type": "string",
-                                "minLength": 1
-                              },
-                              "pages": {
-                                "type": "number"
-                              },
-                              "like": {
-                                "type": "number"
-                              },
-                              "mylist": {
-                                "type": "number"
-                              },
-                              "mylisted": {
-                                "type": "boolean"
-                              },
-                              "originUrl": {
-                                "type": "string",
-                                "minLength": 1
-                              },
-                              "originService": {
-                                "type": "string",
-                                "minLength": 1
-                              },
-                              "nsfw": {
-                                "type": "number"
-                              },
-                              "artist": {
-                                "type": "object",
-                                "properties": {
-                                  "name": {
-                                    "type": "string",
-                                    "minLength": 1
-                                  }
-                                },
-                                "required": [
-                                  "name"
-                                ]
-                              },
-                              "extension": {
-                                "type": "string",
-                                "minLength": 1
-                              }
-                            }
+                            "$ref": "#/components/schemas/SearchResult"
                           }
                         }
-                      },
-                      "required": [
-                        "title",
-                        "count",
-                        "current",
-                        "pages",
-                        "imgs"
-                      ]
+                      }
                     }
                   },
                   "required": [
@@ -1502,8 +1430,9 @@
                             "mylisted": true,
                             "originUrl": "https://unsplash.com/photos/L82-kkEBOd0?page=1",
                             "originService": "独自",
-                            "nsfw": 0,
+                            "nsfw": false,
                             "artist": {
+                              "id": 4,
                               "name": "Manki Kim"
                             },
                             "extension": "jpg"
