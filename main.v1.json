@@ -3256,92 +3256,131 @@
         "properties": {
           "title": {
             "type": "string",
-            "minLength": 1
+            "minLength": 1,
+            "description": "イラスト(作品)名 NOTE: 連番の場合は (2) (3)のような番号が入る"
           },
           "caption": {
             "type": "string",
-            "minLength": 1
+            "minLength": 1,
+            "description": "説明文 NOTE: 通常出典に記載されていた内容そのままが入る"
           },
           "date": {
             "type": "string",
             "minLength": 19,
-            "maxLength": 19
+            "maxLength": 19,
+            "description": "登録日時(%Y-%m-%d %H:%M:%S)"
           },
-          "page": {
-            "type": "integer"
+          "pages": {
+            "type": "integer",
+            "description": "グループになっている場合の総ページ数(未使用)"
+          },
+          "like": {
+            "type": "integer",
+            "description": "累計いいね数"
+          },
+          "view": {
+            "type": "integer",
+            "description": "累計閲覧数"
+          },
+          "originUrl": {
+            "type": "string",
+            "minLength": 1,
+            "description": "出典URL"
+          },
+          "originService": {
+            "type": "string",
+            "minLength": 1,
+            "description": "出典サービス名"
+          },
+          "nsfw": {
+            "type": "boolean",
+            "description": "アダルトコンテンツかどうか"
+          },
+          "hash": {
+            "type": "string",
+            "description": "画像ハッシュ(pHash)"
+          },
+          "extension": {
+            "type": "string",
+            "description": "拡張子(通常、jpgもしくはpng)",
+            "enum": [
+              "jpg",
+              "jpeg",
+              "png",
+              "webp",
+              "gif"
+            ],
+            "example": "jpg"
+          },
+          "artist": {
+            "type": "object",
+            "description": "絵師情報",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "絵師名(絵師IDをそのままで、他のイラストも同時に変更する時用)"
+              },
+              "id": {
+                "type": "integer",
+                "description": "絵師のサイト内通し番号(別の絵師のIDを付けたい場合用)"
+              }
+            }
+          },
+          "user": {
+            "type": "object",
+            "description": "投稿者情報",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "description": "投稿者のユーザーID"
+              }
+            }
+          },
+          "status": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9,
+            "description": "公開/非公開等の表示状態 0:公開 1:置換済み 2:削除(ユーザー) 3:削除(管理者)"
+          },
+          "width": {
+            "type": "integer",
+            "description": "RAW画像の横方向のピクセル数"
+          },
+          "height": {
+            "type": "integer",
+            "description": "RAW画像の縦方向のピクセル数"
           },
           "tag": {
             "type": "array",
+            "description": "指定したいタグを\"名称(文字列)\"で指定する NOTE: 内部的に同じものなのでtag/chara/group/systemは全部同じ場所に入力してOK",
             "items": {
               "type": "string"
             }
           },
           "chara": {
             "type": "array",
+            "description": "指定したいタグを\"名称(文字列)\"で指定する NOTE: 内部的に同じものなのでtag/chara/group/systemは全部同じ場所に入力してOK",
             "items": {
               "type": "string"
             }
           },
           "group": {
             "type": "array",
+            "description": "指定したいタグを\"名称(文字列)\"で指定する NOTE: 内部的に同じものなのでtag/chara/group/systemは全部同じ場所に入力してOK",
             "items": {
               "type": "string"
             }
           },
           "system": {
             "type": "array",
+            "description": "指定したいタグを\"名称(文字列)\"で指定する NOTE: 内部的に同じものなのでtag/chara/group/systemは全部同じ場所に入力してOK",
             "items": {
               "type": "string"
             }
           },
-          "originUrl": {
-            "type": "string",
-            "minLength": 1
-          },
-          "originService": {
-            "type": "string",
-            "minLength": 1
-          },
-          "illustLikeCount": {
-            "type": "integer"
-          },
-          "illustOwnerId": {
-            "type": "integer"
-          },
-          "nsfw": {
-            "type": "boolean"
-          },
-          "status": {
-            "type": "string",
-            "minLength": 1
-          },
-          "artist": {
-            "type": "object",
-            "properties": {
-              "name": {
-                "type": "string"
-              },
-              "id": {
-                "type": "integer"
-              }
-            }
-          },
-          "hash": {
-            "type": "string"
-          },
-          "like": {
-            "type": "integer"
-          },
-          "view": {
-            "type": "integer"
-          },
-          "user": {
-            "type": "object",
-            "properties": {
-              "id": {
-                "type": "integer"
-              }
-            }
+          "filesize": {
+            "type": "integer",
+            "description": "ファイルサイズをbytesで入力"
           }
         }
       },
@@ -4185,11 +4224,11 @@
                     },
                     "user": {
                       "type": "object",
+                      "description": "投稿者情報",
                       "required": [
                         "id",
                         "name"
                       ],
-                      "description": "投稿者情報",
                       "properties": {
                         "id": {
                           "type": "number",
@@ -4209,11 +4248,11 @@
                     },
                     "width": {
                       "type": "number",
-                      "description": "RAW画像の縦方向のピクセル数"
+                      "description": "RAW画像の横方向のピクセル数"
                     },
                     "height": {
                       "type": "number",
-                      "description": "RAW画像の横方向のピクセル数"
+                      "description": "RAW画像の縦方向のピクセル数"
                     },
                     "filesize": {
                       "type": "string",
@@ -4261,13 +4300,13 @@
                     },
                     "star": {
                       "type": "object",
+                      "description": "スター(いいね)情報",
                       "required": [
                         "yellow",
                         "green",
                         "red",
                         "blue"
                       ],
-                      "description": "スター(いいね)情報",
                       "properties": {
                         "yellow": {
                           "type": "number"
