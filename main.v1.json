@@ -3037,6 +3037,7 @@
               "name",
               "id"
             ],
+            "description": "絵師情報",
             "properties": {
               "name": {
                 "type": "string",
@@ -3139,6 +3140,20 @@
       "PutAccountRequest": {
         "title": "PutAccountRequest",
         "type": "object",
+        "x-examples": {
+          "example": {
+            "userDisplayID": "omado",
+            "userName": "お窓",
+            "userPassword": "kafuuch1n0",
+            "userOldPassword": "h0t0c0c0a",
+            "userFavorite": 1,
+            "userTheme": 0,
+            "userPermission": 0,
+            "userLineID": "dosugamea",
+            "userTwitterID": "shallow_omado"
+          }
+        },
+        "description": "アカウントの編集に使うリクエスト",
         "properties": {
           "userDisplayID": {
             "type": "string",
@@ -3149,7 +3164,7 @@
           },
           "userName": {
             "type": "string",
-            "description": "他のユーザーに表示されるユーザー名/投稿者名です",
+            "description": "他のユーザーに表示されるユーザー名/投稿者名",
             "example": "お窓",
             "maxLength": 20,
             "minLength": 1
@@ -3212,21 +3227,7 @@
             "example": "shallow_omado",
             "maxLength": 30
           }
-        },
-        "x-examples": {
-          "example": {
-            "userDisplayID": "omado",
-            "userName": "お窓",
-            "userPassword": "kafuuch1n0",
-            "userOldPassword": "h0t0c0c0a",
-            "userFavorite": 1,
-            "userTheme": 0,
-            "userPermission": 0,
-            "userLineID": "dosugamea",
-            "userTwitterID": "shallow_omado"
-          }
-        },
-        "description": "アカウントの編集に使うリクエスト"
+        }
       },
       "DeleteAccountRequest": {
         "title": "DeleteAccountRequest",
