@@ -56,7 +56,7 @@
         "operationId": "put-accounts-accountID",
         "responses": {
           "200": {
-            "description": "OK"
+            "$ref": "#/components/responses/PutAccountResponse"
           }
         },
         "tags": [
@@ -961,7 +961,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/PutAccountRequest"
+                "$ref": "#/components/schemas/PutArtRequest"
               }
             }
           },
@@ -1324,12 +1324,6 @@
                         "title": "記載中の画像について / About these arts",
                         "body": "これらの画像は素材配布としての意図はなく、サイトの機能検証のためのものです。素材をお求めの場合はhttps://unsplash.com または https://www.irasutoya.com に直接アクセスしてください。 These arts are for feature-test purpose only. You can get free images on https://unsplash.com or https://www.irasutoya.com."
                       }
-                    }
-                  },
-                  "example-error": {
-                    "value": {
-                      "status": 404,
-                      "data": {}
                     }
                   }
                 }
@@ -2423,47 +2417,7 @@
         ],
         "responses": {
           "200": {
-            "description": "ログインできたかどうかはstatusを参照",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "description": "",
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "number"
-                    },
-                    "message": {
-                      "type": "string",
-                      "minLength": 1
-                    },
-                    "apiKey": {
-                      "type": "string",
-                      "minLength": 1
-                    }
-                  },
-                  "required": [
-                    "status",
-                    "message"
-                  ]
-                },
-                "examples": {
-                  "login-success": {
-                    "value": {
-                      "status": 200,
-                      "message": "welcome back",
-                      "apiKey": "DUMMY_API_KEY"
-                    }
-                  },
-                  "login-failed": {
-                    "value": {
-                      "status": 404,
-                      "message": "account not found"
-                    }
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/LoginWithFormResponse"
           }
         },
         "operationId": "get-accounts-login-form",
@@ -2472,22 +2426,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "description": "",
-                "type": "object",
-                "properties": {
-                  "id": {
-                    "type": "string",
-                    "minLength": 1
-                  },
-                  "password": {
-                    "type": "string",
-                    "minLength": 1
-                  }
-                },
-                "required": [
-                  "id",
-                  "password"
-                ]
+                "$ref": "#/components/schemas/LoginWithFormRequest"
               },
               "examples": {
                 "user": {
@@ -3329,7 +3268,31 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "string"
+            "type": "string",
+            "minLength": 1
+          },
+          "password": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "id",
+          "password"
+        ],
+        "description": "",
+        "x-examples": {
+          "user": {
+            "value": {
+              "id": "test_user",
+              "password": "this_is_only_for_test"
+            }
+          },
+          "admin": {
+            "value": {
+              "id": "test_admin",
+              "password": "this_is_only_for_test"
+            }
           }
         }
       }
@@ -4429,9 +4392,38 @@
         "content": {
           "application/json": {
             "schema": {
+              "description": "",
+              "type": "object",
               "properties": {
-                "id": {
-                  "type": "string"
+                "status": {
+                  "type": "number"
+                },
+                "message": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "apiKey": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "status",
+                "message"
+              ]
+            },
+            "examples": {
+              "login-success": {
+                "value": {
+                  "status": 200,
+                  "message": "welcome back",
+                  "apiKey": "DUMMY_API_KEY"
+                }
+              },
+              "login-failed": {
+                "value": {
+                  "status": 404,
+                  "message": "account not found"
                 }
               }
             }
