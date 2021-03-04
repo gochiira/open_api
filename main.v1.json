@@ -3470,53 +3470,8 @@
         ]
       },
       "Replace": {
-        "description": "置き換えモデル",
+        "description": "イラストを置き換えた情報のモデル(簡易型イラストモデル)",
         "type": "object",
-        "properties": {
-          "illustID": {
-            "type": "number"
-          },
-          "title": {
-            "type": "string",
-            "minLength": 1
-          },
-          "caption": {
-            "type": "string",
-            "minLength": 1
-          },
-          "date": {
-            "type": "string"
-          },
-          "originService": {
-            "type": "string",
-            "minLength": 1
-          },
-          "originUrl": {
-            "type": "string",
-            "minLength": 1
-          },
-          "width": {
-            "type": "number"
-          },
-          "height": {
-            "type": "number"
-          },
-          "filesize": {
-            "type": "string",
-            "minLength": 1
-          }
-        },
-        "required": [
-          "illustID",
-          "title",
-          "caption",
-          "date",
-          "originService",
-          "originUrl",
-          "width",
-          "height",
-          "filesize"
-        ],
         "x-examples": {
           "example": {
             "illustID": 1,
@@ -3530,7 +3485,61 @@
             "filesize": "2M"
           }
         },
-        "title": "Replace"
+        "title": "Replace",
+        "properties": {
+          "illustID": {
+            "type": "number",
+            "description": "サイト内イラスト通し番号"
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1,
+            "description": "作品名"
+          },
+          "caption": {
+            "type": "string",
+            "minLength": 1,
+            "description": "作品の説明文"
+          },
+          "date": {
+            "type": "string",
+            "description": "投稿日付"
+          },
+          "originService": {
+            "type": "string",
+            "minLength": 1,
+            "description": "出典サービス名"
+          },
+          "originUrl": {
+            "type": "string",
+            "minLength": 1,
+            "description": "出典URL"
+          },
+          "width": {
+            "type": "number",
+            "description": "RAW画像の横幅"
+          },
+          "height": {
+            "type": "number",
+            "description": "RAW画像の縦幅"
+          },
+          "filesize": {
+            "type": "string",
+            "minLength": 1,
+            "description": "ファイルサイズに単位を付けた人間が読めるもの"
+          }
+        },
+        "required": [
+          "illustID",
+          "title",
+          "caption",
+          "date",
+          "originService",
+          "originUrl",
+          "width",
+          "height",
+          "filesize"
+        ]
       },
       "UploadHistory": {
         "description": "アップロード履歴",
