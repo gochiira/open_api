@@ -2461,7 +2461,16 @@
         "deprecated": true,
         "tags": [
           "artists"
-        ]
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateArtistRequest"
+              }
+            }
+          }
+        }
       }
     },
     "/artists/{artistID}": {
@@ -2472,7 +2481,7 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "$ref": "#/components/responses/GetArtistResponse"
           }
         },
         "operationId": "get-artists",
@@ -2508,13 +2517,23 @@
         "operationId": "put-artists-artistID",
         "responses": {
           "200": {
-            "description": "OK"
+            "$ref": "#/components/responses/PutArtistResponse"
           }
         },
         "description": "指定した絵師の情報を置き換えます。\nリクエストで指定されたパラメータだけを置き換えます。",
         "tags": [
           "artists"
-        ]
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PutArtistRequest"
+              }
+            }
+          },
+          "description": ""
+        }
       }
     },
     "/arts/{illustID}/replace": {
@@ -3293,6 +3312,24 @@
               "id": "test_admin",
               "password": "this_is_only_for_test"
             }
+          }
+        }
+      },
+      "CreateArtistRequest": {
+        "title": "CreateArtistRequest",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        }
+      },
+      "PutArtistRequest": {
+        "title": "PutArtistRequest",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
           }
         }
       }
@@ -4168,7 +4205,7 @@
               ]
             },
             "examples": {
-              "example-1": {
+              "example": {
                 "value": {
                   "status": 200,
                   "message": "ok"
@@ -4452,6 +4489,66 @@
               "properties": {
                 "id": {
                   "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "GetArtistResponse": {
+        "description": "Example response",
+        "content": {
+          "application/json": {
+            "schema": {
+              "properties": {
+                "id": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "PutArtistResponse": {
+        "description": "Example response",
+        "content": {
+          "application/json": {
+            "schema": {
+              "properties": {
+                "id": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "DeleteArtistResponse": {
+        "description": "Example response",
+        "content": {
+          "application/json": {
+            "schema": {
+              "description": "",
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "number"
+                },
+                "message": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "status",
+                "message"
+              ]
+            },
+            "examples": {
+              "example": {
+                "value": {
+                  "status": 200,
+                  "message": "ok"
                 }
               }
             }
