@@ -3249,11 +3249,99 @@
         }
       },
       "PutArtRequest": {
-        "title": "PutArtRequest",
+        "description": "イラスト編集リクエスト",
         "type": "object",
+        "title": "PutArtRequest",
+        "x-examples": {},
         "properties": {
-          "id": {
+          "title": {
+            "type": "string",
+            "minLength": 1
+          },
+          "caption": {
+            "type": "string",
+            "minLength": 1
+          },
+          "date": {
+            "type": "string",
+            "minLength": 19,
+            "maxLength": 19
+          },
+          "page": {
+            "type": "integer"
+          },
+          "tag": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "chara": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "group": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "system": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "originUrl": {
+            "type": "string",
+            "minLength": 1
+          },
+          "originService": {
+            "type": "string",
+            "minLength": 1
+          },
+          "illustLikeCount": {
+            "type": "integer"
+          },
+          "illustOwnerId": {
+            "type": "integer"
+          },
+          "nsfw": {
+            "type": "boolean"
+          },
+          "status": {
+            "type": "string",
+            "minLength": 1
+          },
+          "artist": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "id": {
+                "type": "integer"
+              }
+            }
+          },
+          "hash": {
             "type": "string"
+          },
+          "like": {
+            "type": "integer"
+          },
+          "view": {
+            "type": "integer"
+          },
+          "user": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer"
+              }
+            }
           }
         }
       },
