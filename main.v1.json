@@ -3110,7 +3110,8 @@
           "title",
           "body"
         ],
-        "description": "サイト内の新着情報モデル。"
+        "description": "サイト内の新着情報モデル。",
+        "x-examples": {}
       },
       "NavigationResult": {
         "title": "NavigationResult",
