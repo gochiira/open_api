@@ -1285,7 +1285,7 @@
                       "uniqueItems": true,
                       "minItems": 1,
                       "items": {
-                        "$ref": "#/components/schemas/News"
+                        "$ref": "#/components/schemas/NewsStruct"
                       }
                     }
                   },
@@ -1363,7 +1363,7 @@
                       "type": "number"
                     },
                     "data": {
-                      "$ref": "#/components/schemas/News"
+                      "$ref": "#/components/schemas/NewsStruct"
                     }
                   },
                   "required": [
@@ -3187,7 +3187,7 @@
           "extension"
         ]
       },
-      "News": {
+      "NewsStruct": {
         "title": "News",
         "type": "object",
         "properties": {
@@ -3542,7 +3542,7 @@
           }
         }
       },
-      "Tag": {
+      "TagStruct": {
         "title": "Tag",
         "type": "object",
         "x-examples": {
@@ -3576,7 +3576,7 @@
           "nsfw"
         ]
       },
-      "Replace": {
+      "ReplaceStruct": {
         "description": "イラストを置き換えた情報のモデル(簡易型イラストモデル)",
         "type": "object",
         "x-examples": {
@@ -4291,7 +4291,7 @@
                 "uniqueItems": true,
                 "description": "一般タグ情報",
                 "items": {
-                  "$ref": "#/components/schemas/Tag"
+                  "$ref": "#/components/schemas/TagStruct"
                 }
               },
               "chara": {
@@ -4299,7 +4299,7 @@
                 "description": "キャラクタータグ情報",
                 "uniqueItems": true,
                 "items": {
-                  "$ref": "#/components/schemas/Tag"
+                  "$ref": "#/components/schemas/TagStruct"
                 }
               },
               "group": {
@@ -4307,7 +4307,7 @@
                 "description": "グループタグ情報",
                 "uniqueItems": true,
                 "items": {
-                  "$ref": "#/components/schemas/Tag"
+                  "$ref": "#/components/schemas/TagStruct"
                 }
               },
               "system": {
@@ -4315,14 +4315,14 @@
                 "uniqueItems": true,
                 "description": "システムタグ情報",
                 "items": {
-                  "$ref": "#/components/schemas/Tag"
+                  "$ref": "#/components/schemas/TagStruct"
                 }
               },
               "replace": {
                 "type": "array",
                 "description": "置き換えたイラスト情報",
                 "items": {
-                  "$ref": "#/components/schemas/Replace"
+                  "$ref": "#/components/schemas/ReplaceStruct"
                 }
               },
               "star": {
@@ -4794,79 +4794,6 @@
       "GetArtistResponse": {
         "title": "GetArtistResponse",
         "type": "object",
-        "properties": {
-          "status": {
-            "type": "number",
-            "description": "処理結果のHTTPステータスコード"
-          },
-          "message": {
-            "type": "string",
-            "description": "ok もしくはエラー内容"
-          },
-          "data": {
-            "type": "object",
-            "description": "取得に成功していれば結果が入る\n(なければキー自体がない)",
-            "properties": {
-              "id": {
-                "type": "number",
-                "description": "絵師のID"
-              },
-              "userID": {
-                "description": "絵師情報を登録したユーザーのID",
-                "type": "integer"
-              },
-              "name": {
-                "type": "string",
-                "minLength": 1,
-                "description": "絵師の名前(ペンネーム正式名)",
-                "example": "彩電"
-              },
-              "description": {
-                "type": "string",
-                "example": "ごちうさなどのきらら系中心に、オリジナルなどのサークルやってます",
-                "description": "絵師を説明する文章(1行分)"
-              },
-              "group": {
-                "type": "string",
-                "example": "こねこぼたん",
-                "description": "サークル名"
-              },
-              "pixivID": {
-                "type": "string",
-                "example": "40436",
-                "description": "PixivのユーザーID(数字)"
-              },
-              "twitterID": {
-                "type": "string",
-                "example": "harufcs",
-                "description": "Twitterの表示ID(英数字+)"
-              },
-              "mastodon": {
-                "type": "string",
-                "example": "https://pawoo.net/@saiden",
-                "format": "uri-reference",
-                "description": "マストドンアカウントのURL"
-              },
-              "homepage": {
-                "type": "string",
-                "example": "http://konebota.x0.com/PAGE/",
-                "description": "HPのURL",
-                "format": "uri-reference"
-              }
-            },
-            "required": [
-              "id",
-              "userID",
-              "name",
-              "description",
-              "group",
-              "pixivID",
-              "twitterID",
-              "mastodon",
-              "homepage"
-            ]
-          }
-        },
         "x-examples": {
           "success-default": {
             "value": {
@@ -4909,6 +4836,19 @@
             }
           }
         },
+        "properties": {
+          "status": {
+            "type": "number",
+            "description": "処理結果のHTTPステータスコード"
+          },
+          "message": {
+            "type": "string",
+            "description": "ok もしくはエラー内容"
+          },
+          "data": {
+            "$ref": "#/components/schemas/ArtistStruct"
+          }
+        },
         "required": [
           "status",
           "message"
@@ -4946,6 +4886,69 @@
         "required": [
           "status",
           "message"
+        ]
+      },
+      "ArtistStruct": {
+        "title": "ArtistStruct",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "description": "絵師のID"
+          },
+          "userID": {
+            "description": "絵師情報を登録したユーザーのID",
+            "type": "integer"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "description": "絵師の名前(ペンネーム正式名)",
+            "example": "彩電"
+          },
+          "description": {
+            "type": "string",
+            "example": "ごちうさなどのきらら系中心に、オリジナルなどのサークルやってます",
+            "description": "絵師を説明する文章(1行分)"
+          },
+          "group": {
+            "type": "string",
+            "example": "こねこぼたん",
+            "description": "サークル名"
+          },
+          "pixivID": {
+            "type": "string",
+            "example": "40436",
+            "description": "PixivのユーザーID(数字)"
+          },
+          "twitterID": {
+            "type": "string",
+            "example": "harufcs",
+            "description": "Twitterの表示ID(英数字+)"
+          },
+          "mastodon": {
+            "type": "string",
+            "example": "https://pawoo.net/@saiden",
+            "format": "uri-reference",
+            "description": "マストドンアカウントのURL"
+          },
+          "homepage": {
+            "type": "string",
+            "example": "http://konebota.x0.com/PAGE/",
+            "description": "HPのURL",
+            "format": "uri-reference"
+          }
+        },
+        "required": [
+          "id",
+          "userID",
+          "name",
+          "description",
+          "group",
+          "pixivID",
+          "twitterID",
+          "mastodon",
+          "homepage"
         ]
       }
     },
