@@ -52,7 +52,7 @@
             }
           }
         },
-        "operationId": "get-accounts-accountID",
+        "operationId": "getAccount",
         "description": "ユーザーのアカウント情報を取得します",
         "tags": [
           "accounts"
@@ -60,7 +60,7 @@
       },
       "put": {
         "summary": "Edit user info",
-        "operationId": "put-accounts-accountID",
+        "operationId": "editAccount",
         "responses": {
           "200": {
             "description": "OK",
@@ -68,7 +68,8 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/PutAccountResponse"
-                }
+                },
+                "examples": {}
               }
             }
           }
@@ -105,7 +106,7 @@
       },
       "delete": {
         "summary": "Delete user info",
-        "operationId": "delete-accounts-accountID",
+        "operationId": "deleteAccount",
         "description": "アカウントを削除します\n(本人または管理者のみがリクエストできます)",
         "tags": [
           "accounts"
@@ -163,7 +164,7 @@
             }
           }
         },
-        "operationId": "get-accounts-accountID-upload_history",
+        "operationId": "getUploadHistory",
         "description": "イラスト投稿履歴を取得します",
         "parameters": [
           {
@@ -203,7 +204,7 @@
       ],
       "post": {
         "summary": "Reissue api key",
-        "operationId": "post-accounts-accountID-reissue_token",
+        "operationId": "reissueToken",
         "responses": {
           "200": {
             "description": "OK",
@@ -400,7 +401,7 @@
             }
           }
         },
-        "operationId": "get-catalog-artists",
+        "operationId": "getArtistList",
         "description": "絵師一覧を取得します",
         "parameters": [
           {
@@ -739,7 +740,7 @@
             }
           }
         },
-        "operationId": "get-catalog-tags",
+        "operationId": "getTagList",
         "description": "タグ一覧を取得します",
         "parameters": [
           {
@@ -905,7 +906,7 @@
             }
           }
         },
-        "operationId": "get-catalog-characters",
+        "operationId": "getCharacterList",
         "description": "キャラクター一覧を取得します",
         "parameters": [
           {
@@ -984,7 +985,7 @@
             }
           }
         },
-        "operationId": "get-art",
+        "operationId": "getArt",
         "description": "指定したイラストを取得します"
       },
       "put": {
@@ -1109,7 +1110,7 @@
             }
           }
         },
-        "operationId": "get-navigations-characters",
+        "operationId": "getCharacterNavigation",
         "description": "イラスト数の多いキャラクター上位5件を取得します\nサイト内上部 ナビゲーションメニューで使用しています"
       }
     },
@@ -1183,7 +1184,7 @@
             }
           }
         },
-        "operationId": "get-navigations-artists",
+        "operationId": "getArtistNavigation",
         "description": "イラスト数の多い絵師上位5件を取得します\nサイト内上部 ナビゲーションメニューで使用しています"
       }
     },
@@ -1257,7 +1258,7 @@
             }
           }
         },
-        "operationId": "get-navigations-tags",
+        "operationId": "getTagNavigation",
         "description": "イラスト数の多いタグ上位5件を取得します\nサイト内上部 ナビゲーションメニューで使用しています"
       }
     },
@@ -1327,7 +1328,7 @@
             }
           }
         },
-        "operationId": "get-news-list",
+        "operationId": "getNewsList",
         "description": "ニュース一覧を取得します"
       }
     },
@@ -1387,7 +1388,7 @@
             }
           }
         },
-        "operationId": "get-news-newsID",
+        "operationId": "getNewsById",
         "description": "指定したニュースの内容を取得します"
       }
     },
@@ -1502,7 +1503,7 @@
             }
           }
         },
-        "operationId": "get-mylist-mylistID",
+        "operationId": "getMylistById",
         "description": "指定したマイリストに登録されたイラスト一覧を取得します"
       }
     },
@@ -1517,7 +1518,7 @@
             "description": "OK"
           }
         },
-        "operationId": "get-mylist-list",
+        "operationId": "getMylists",
         "description": "自分の作成したマイリスト一覧を取得します\n(現在1人辺り1マイリストしか作成できないのでこのエンドポイントは無意味です)",
         "deprecated": true
       }
@@ -1642,7 +1643,7 @@
             }
           }
         },
-        "operationId": "get-search-tag",
+        "operationId": "searchArtByTag",
         "description": "指定したタグを持つイラスト一覧を取得します",
         "parameters": [
           {
@@ -1767,7 +1768,7 @@
             }
           }
         },
-        "operationId": "get-search-character",
+        "operationId": "searchArtByCharacter",
         "description": "指定したキャラクターを持つイラスト一覧を取得します",
         "parameters": [
           {
@@ -1949,7 +1950,7 @@
             }
           }
         },
-        "operationId": "get-search-artist",
+        "operationId": "searchArtByArtist",
         "description": "指定した絵師のイラスト一覧を取得します",
         "parameters": [
           {
@@ -2074,7 +2075,7 @@
             }
           }
         },
-        "operationId": "get-search-keyword",
+        "operationId": "searchArtByKeyword",
         "description": "指定したキーワードを含むイラスト一覧を取得します",
         "parameters": [
           {
@@ -2333,7 +2334,7 @@
             }
           }
         },
-        "operationId": "get-search-all",
+        "operationId": "searchArtByAll",
         "description": "登録されたイラスト一覧を取得します",
         "parameters": [
           {
@@ -2356,7 +2357,7 @@
             "description": "OK"
           }
         },
-        "operationId": "get-search-random",
+        "operationId": "searchArtByRandom",
         "description": "ランダムなイラストを取得します",
         "tags": [
           "search"
@@ -2374,7 +2375,7 @@
             "description": "OK"
           }
         },
-        "operationId": "get-search-image",
+        "operationId": "searchArtByImage",
         "description": "画像からごちイラ内に登録されたイラストを検索します"
       },
       "parameters": []
@@ -2390,7 +2391,7 @@
             "description": "OK"
           }
         },
-        "operationId": "get-search-image-saucenao",
+        "operationId": "searchArtByImageUsingSaucenao",
         "description": "画像からSauceNAOに登録されたイラストを検索します"
       }
     },
@@ -2412,7 +2413,7 @@
             }
           }
         },
-        "operationId": "get-accounts-me",
+        "operationId": "getSelfAccount",
         "description": "自分自身にまつわる情報をすべて取得します\n通常、ログイン時に一度だけ呼び出されます"
       },
       "parameters": []
@@ -2435,7 +2436,7 @@
             }
           }
         },
-        "operationId": "get-accounts-login-form",
+        "operationId": "loginWithForm",
         "description": "IDとパスワードを用いてユーザー認証し、APIトークンを発行します",
         "requestBody": {
           "content": {
@@ -2466,7 +2467,7 @@
     "/artists": {
       "post": {
         "summary": "Create artist",
-        "operationId": "post-artists",
+        "operationId": "createArtist",
         "responses": {
           "200": {
             "description": "OK",
@@ -2513,7 +2514,7 @@
             }
           }
         },
-        "operationId": "get-artists",
+        "operationId": "getArtist",
         "description": "指定した絵師の情報を取得します。存在しない情報欄にはnullが入ります。"
       },
       "parameters": [
@@ -2529,7 +2530,7 @@
       ],
       "delete": {
         "summary": "Delete artist",
-        "operationId": "delete-artists-artistID",
+        "operationId": "deleteArtist",
         "responses": {
           "200": {
             "description": "OK",
@@ -2550,7 +2551,7 @@
       },
       "put": {
         "summary": "Edit artist",
-        "operationId": "put-artists-artistID",
+        "operationId": "editArtist",
         "responses": {
           "200": {
             "description": "OK",
@@ -2593,7 +2594,7 @@
       ],
       "put": {
         "summary": "Combine art info",
-        "operationId": "put-arts-illustID-replace",
+        "operationId": "replaceArt",
         "responses": {
           "200": {
             "description": "OK"
@@ -2616,7 +2617,7 @@
             "description": "OK"
           }
         },
-        "operationId": "get-arts-hage",
+        "operationId": "getArtTags",
         "description": "指定したイラストに付いているタグのみを一覧で取得します"
       },
       "parameters": [
@@ -2632,7 +2633,7 @@
       ],
       "put": {
         "summary": "Edit art tags",
-        "operationId": "put-arts-illustID-tags",
+        "operationId": "editArtTags",
         "responses": {
           "200": {
             "description": "OK"
@@ -2646,7 +2647,7 @@
       },
       "delete": {
         "summary": "Delete art tag",
-        "operationId": "delete-arts-illustID-tags",
+        "operationId": "deleteArtTags",
         "responses": {
           "200": {
             "description": "OK"
@@ -2670,7 +2671,7 @@
             "description": "OK"
           }
         },
-        "operationId": "get-arts-hoe",
+        "operationId": "getArtCharacters",
         "description": "指定したイラストに付いているキャラクターのみを一覧で取得します"
       },
       "parameters": [
@@ -2686,7 +2687,7 @@
       ],
       "put": {
         "summary": "Edit art characters",
-        "operationId": "put-arts-illustID-characters",
+        "operationId": "editArtCharacters",
         "responses": {
           "200": {
             "description": "OK"
@@ -2700,7 +2701,7 @@
       },
       "delete": {
         "summary": "Delete art character",
-        "operationId": "delete-arts-illustID-characters",
+        "operationId": "deleteArtCharacters",
         "responses": {
           "200": {
             "description": "OK"
@@ -2727,7 +2728,7 @@
       ],
       "put": {
         "summary": "Plus art like",
-        "operationId": "put-arts-illustID-likes",
+        "operationId": "addArtLike",
         "responses": {
           "200": {
             "description": "OK"
@@ -2741,7 +2742,7 @@
       },
       "get": {
         "summary": "Get art likes",
-        "operationId": "get-arts-illustID-likes",
+        "operationId": "getArtLikes",
         "responses": {
           "200": {
             "description": "OK"
@@ -2776,7 +2777,7 @@
       ],
       "put": {
         "summary": "Plus art like (with using star)",
-        "operationId": "put-arts-illustID-likes-likeType",
+        "operationId": "addArtLikeByStar",
         "responses": {
           "200": {
             "description": "OK"
@@ -2802,7 +2803,7 @@
       ],
       "put": {
         "summary": "Plus art view",
-        "operationId": "put-arts-illustID-views",
+        "operationId": "addArtView",
         "responses": {
           "200": {
             "description": "OK"
@@ -2815,7 +2816,7 @@
       },
       "get": {
         "summary": "Get art views",
-        "operationId": "get-arts-illustID-views",
+        "operationId": "getArtViews",
         "responses": {
           "200": {
             "description": "OK"
@@ -2849,12 +2850,12 @@
             "description": "OK"
           }
         },
-        "operationId": "get-arts-illustID-comments",
+        "operationId": "getArtComments",
         "description": "指定したイラストに付いているコメントのみを一覧で取得します"
       },
       "post": {
         "summary": "Add art comment",
-        "operationId": "post-arts-illustID-comments",
+        "operationId": "addArtComment",
         "responses": {
           "200": {
             "description": "OK"
@@ -2889,7 +2890,7 @@
       ],
       "put": {
         "summary": "Edit art comment",
-        "operationId": "put-arts-illustID-comments-commentID",
+        "operationId": "editArtCommentById",
         "responses": {
           "200": {
             "description": "OK"
@@ -2902,7 +2903,7 @@
       },
       "delete": {
         "summary": "Delete art comment",
-        "operationId": "delete-arts-illustID-comments-commentID",
+        "operationId": "deleteArtCommentById",
         "responses": {
           "200": {
             "description": "OK"
@@ -2915,7 +2916,7 @@
       },
       "get": {
         "summary": "Get art comment",
-        "operationId": "get-arts-illustID-comments-commentID",
+        "operationId": "getArtCommentById",
         "responses": {
           "200": {
             "description": "OK"
@@ -2930,7 +2931,7 @@
     "/arts": {
       "post": {
         "summary": "Create art",
-        "operationId": "post-arts",
+        "operationId": "addArt",
         "responses": {
           "200": {
             "description": "OK"
@@ -2945,7 +2946,7 @@
     "/accounts/login/line": {
       "post": {
         "summary": "Login with line",
-        "operationId": "post-accounts-login-line",
+        "operationId": "loginWithLine",
         "responses": {
           "200": {
             "description": "OK",
@@ -2977,7 +2978,7 @@
       ],
       "post": {
         "summary": "Connect to line account (for site)",
-        "operationId": "post-accounts-accountID-connect-line",
+        "operationId": "connectLineAccount",
         "responses": {
           "200": {
             "description": "OK"
@@ -3002,7 +3003,7 @@
       ],
       "post": {
         "summary": "Connect to telegram account (for site)",
-        "operationId": "post-accounts-accountID-connect-telegram",
+        "operationId": "connectTelegramAccount",
         "responses": {
           "200": {
             "description": "OK"
@@ -3027,7 +3028,7 @@
       ],
       "post": {
         "summary": "Connect to line notify (for site)",
-        "operationId": "post-accounts-accountID-connect-line_notify",
+        "operationId": "connectLineNotify",
         "responses": {
           "200": {
             "description": "OK"
@@ -3050,7 +3051,7 @@
             "description": "OK"
           }
         },
-        "operationId": "get-search-uploaders",
+        "operationId": "searchArtByUploader",
         "description": "指定した投稿者のイラスト一覧を取得します"
       }
     }
@@ -4769,7 +4770,8 @@
         "required": [
           "status",
           "message"
-        ]
+        ],
+        "description": ""
       },
       "LoginWithLineResponse": {
         "title": "LoginWithLineResponse",
