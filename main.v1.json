@@ -942,7 +942,7 @@
             "$ref": "#/components/responses/GetArtResposnse"
           }
         },
-        "operationId": "get-arts-artID",
+        "operationId": "get-art",
         "description": "指定したイラストを取得します"
       },
       "put": {
