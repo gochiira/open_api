@@ -3648,7 +3648,7 @@
           "filesize"
         ]
       },
-      "UploadHistory": {
+      "UploadHistoryStruct": {
         "description": "アップロード履歴",
         "type": "object",
         "title": "UploadHistory",
@@ -3773,7 +3773,7 @@
                 "description": "指定された範囲で一致するデータ\n一致するものがなければ空配列",
                 "minItems": 0,
                 "items": {
-                  "$ref": "#/components/schemas/UploadHistory"
+                  "$ref": "#/components/schemas/UploadHistoryStruct"
                 }
               }
             }
