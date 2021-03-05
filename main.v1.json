@@ -42,7 +42,14 @@
         "summary": "Get user info",
         "responses": {
           "200": {
-            "$ref": "#/components/responses/GetAccountResponse"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetAccountResponse"
+                }
+              }
+            }
           }
         },
         "operationId": "get-accounts-accountID",
@@ -56,7 +63,14 @@
         "operationId": "put-accounts-accountID",
         "responses": {
           "200": {
-            "$ref": "#/components/responses/PutAccountResponse"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PutAccountResponse"
+                }
+              }
+            }
           }
         },
         "tags": [
@@ -108,7 +122,14 @@
         },
         "responses": {
           "200": {
-            "$ref": "#/components/responses/DeleteAccountResponse"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteAccountResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -132,7 +153,14 @@
         ],
         "responses": {
           "200": {
-            "$ref": "#/components/responses/GetUploadHistoryResponse"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetUploadHistoryResponse"
+                }
+              }
+            }
           }
         },
         "operationId": "get-accounts-accountID-upload_history",
@@ -178,7 +206,14 @@
         "operationId": "post-accounts-accountID-reissue_token",
         "responses": {
           "200": {
-            "$ref": "#/components/responses/PostReissueTokenResponse"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostReissueTokenResponse"
+                }
+              }
+            }
           }
         },
         "description": "アカウントのログインキーを再生成します",
@@ -939,7 +974,14 @@
         ],
         "responses": {
           "200": {
-            "$ref": "#/components/responses/GetArtResposnse"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetArtResponse"
+                }
+              }
+            }
           }
         },
         "operationId": "get-art",
@@ -950,7 +992,14 @@
         "operationId": "put-arts-illustID",
         "responses": {
           "200": {
-            "$ref": "#/components/responses/PutArtResponse"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PutArtResponse"
+                }
+              }
+            }
           }
         },
         "description": "指定したイラストの情報を編集します\nパラメータで与えられたデータに応じて柔軟に\n絵師名・タグ・キャラクター等を同時に書き換えます",
@@ -973,7 +1022,14 @@
         "operationId": "delete-arts-illustID",
         "responses": {
           "200": {
-            "$ref": "#/components/responses/DeleteArtResponse"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteArtResponse"
+                }
+              }
+            }
           }
         },
         "description": "指定したイラストを削除します\n削除してほしくないため非推奨とします\n(このエンドポイントから削除したイラストは\n参照が不可能になるだけであり一定日数サーバー上に残されます)",
@@ -2346,7 +2402,14 @@
         ],
         "responses": {
           "200": {
-            "$ref": "#/components/responses/GetAccountMeResponse"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetAccountMeResponse"
+                }
+              }
+            }
           }
         },
         "operationId": "get-accounts-me",
@@ -2362,7 +2425,14 @@
         ],
         "responses": {
           "200": {
-            "$ref": "#/components/responses/LoginWithFormResponse"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginWithFormResponse"
+                }
+              }
+            }
           }
         },
         "operationId": "get-accounts-login-form",
@@ -2399,7 +2469,14 @@
         "operationId": "post-artists",
         "responses": {
           "200": {
-            "$ref": "#/components/responses/CreateArtistResponse"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateArtistResponse"
+                }
+              }
+            }
           }
         },
         "description": "新しい絵師を生成します(イラスト投稿時に存在しなければ自動で作成されるため\n直接操作する必要はありません)",
@@ -2426,7 +2503,14 @@
         ],
         "responses": {
           "200": {
-            "$ref": "#/components/responses/GetArtistResponse"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetArtistResponse"
+                }
+              }
+            }
           }
         },
         "operationId": "get-artists",
@@ -2448,7 +2532,14 @@
         "operationId": "delete-artists-artistID",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteArtistResponse"
+                }
+              }
+            }
           }
         },
         "description": "指定した絵師の情報を削除します\n(イラストによって参照されていない場合のみ削除できるため、通常利用機会はありません)",
@@ -2462,7 +2553,14 @@
         "operationId": "put-artists-artistID",
         "responses": {
           "200": {
-            "$ref": "#/components/responses/PutArtistResponse"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PutArtistResponse"
+                }
+              }
+            }
           }
         },
         "description": "指定した絵師の情報を置き換えます。\nリクエストで指定されたパラメータだけを置き換えます。",
@@ -2850,7 +2948,14 @@
         "operationId": "post-accounts-login-line",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginWithLineResponse"
+                }
+              }
+            }
           }
         },
         "description": "LINEアカウントを使ってログインする際にコールバックするエンドポイント\n(サイト内以外からこちらにリクエストすることはできません)",
@@ -3605,6 +3710,1241 @@
           "status",
           "illustID"
         ]
+      },
+      "GetUploadHistoryResponse": {
+        "title": "GetUploadHistoryResponse",
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "integer",
+            "description": "HTTPステータスコードが入ります",
+            "format": "int32",
+            "minimum": 100,
+            "maximum": 999,
+            "example": 200
+          },
+          "message": {
+            "type": "string",
+            "description": "ok もしくは エラー内容",
+            "minLength": 1,
+            "example": "ok"
+          },
+          "data": {
+            "type": "object",
+            "required": [
+              "title",
+              "count",
+              "current",
+              "pages"
+            ],
+            "properties": {
+              "title": {
+                "type": "string",
+                "description": "検索関連共通化のため\"アップロード履歴\"が入る",
+                "example": "アップロード履歴",
+                "enum": [
+                  "アップロード履歴"
+                ],
+                "maxLength": 8,
+                "minLength": 8
+              },
+              "count": {
+                "type": "integer",
+                "description": "総ヒット数",
+                "format": "int32"
+              },
+              "current": {
+                "type": "integer",
+                "description": "現在開いているページ",
+                "example": 1,
+                "minimum": 1
+              },
+              "pages": {
+                "type": "integer",
+                "description": "ヒット数をページ毎の個数で割ったページ数",
+                "minimum": 0,
+                "example": 1,
+                "format": "int32"
+              },
+              "contents": {
+                "type": "array",
+                "uniqueItems": true,
+                "description": "指定された範囲で一致するデータ\n一致するものがなければ空配列",
+                "minItems": 0,
+                "items": {
+                  "$ref": "#/components/schemas/UploadHistory"
+                }
+              }
+            }
+          }
+        },
+        "x-examples": {
+          "success": {
+            "value": {
+              "status": 200,
+              "message": "ok",
+              "data": {
+                "title": "アップロード履歴",
+                "count": 2321,
+                "current": 1,
+                "pages": 117,
+                "contents": [
+                  {
+                    "uploadID": 12045,
+                    "started": "2021-02-21 22:24:22",
+                    "finished": "2021-02-21 22:24:27",
+                    "status": 5,
+                    "illustID": 9381
+                  },
+                  {
+                    "uploadID": 12044,
+                    "started": "2021-02-21 22:23:41",
+                    "finished": "2021-02-21 22:23:45",
+                    "status": 5,
+                    "illustID": 9380
+                  },
+                  {
+                    "uploadID": 12036,
+                    "started": "2021-02-21 20:30:39",
+                    "finished": "2021-02-21 20:30:43",
+                    "status": 5,
+                    "illustID": 9375
+                  },
+                  {
+                    "uploadID": 12004,
+                    "started": "2021-02-20 20:20:19",
+                    "finished": "2021-02-20 20:20:29",
+                    "status": 5,
+                    "illustID": 9355
+                  },
+                  {
+                    "uploadID": 12003,
+                    "started": "2021-02-20 20:03:30",
+                    "finished": "2021-02-20 20:03:46",
+                    "status": 5,
+                    "illustID": 9354
+                  },
+                  {
+                    "uploadID": 11972,
+                    "started": "2021-02-19 21:30:58",
+                    "finished": "2021-02-19 21:31:00",
+                    "status": 5,
+                    "illustID": 9336
+                  },
+                  {
+                    "uploadID": 11971,
+                    "started": "2021-02-19 21:30:52",
+                    "finished": "2021-02-19 21:30:55",
+                    "status": 5,
+                    "illustID": 9335
+                  },
+                  {
+                    "uploadID": 11970,
+                    "started": "2021-02-19 21:30:46",
+                    "finished": "2021-02-19 21:30:49",
+                    "status": 5,
+                    "illustID": 9334
+                  },
+                  {
+                    "uploadID": 10756,
+                    "started": "2021-01-20 03:12:57",
+                    "finished": "2021-01-20 03:13:04",
+                    "status": 5,
+                    "illustID": 8418
+                  },
+                  {
+                    "uploadID": 10755,
+                    "started": "2021-01-20 03:09:31",
+                    "finished": "2021-01-20 03:09:39",
+                    "status": 5,
+                    "illustID": 8417
+                  },
+                  {
+                    "uploadID": 10754,
+                    "started": "2021-01-20 02:57:00",
+                    "finished": "2021-01-20 02:57:09",
+                    "status": 5,
+                    "illustID": 8416
+                  },
+                  {
+                    "uploadID": 10753,
+                    "started": "2021-01-20 02:56:44",
+                    "finished": "2021-01-20 02:56:52",
+                    "status": 5,
+                    "illustID": 8415
+                  },
+                  {
+                    "uploadID": 10663,
+                    "started": "2021-01-17 22:21:22",
+                    "finished": "2021-01-17 22:21:35",
+                    "status": 5,
+                    "illustID": 8364
+                  },
+                  {
+                    "uploadID": 10658,
+                    "started": "2021-01-17 21:14:02",
+                    "finished": "2021-01-17 21:14:06",
+                    "status": 5,
+                    "illustID": 8360
+                  },
+                  {
+                    "uploadID": 10657,
+                    "started": "2021-01-17 21:07:54",
+                    "finished": "2021-01-17 21:07:57",
+                    "status": 5,
+                    "illustID": 8359
+                  },
+                  {
+                    "uploadID": 10656,
+                    "started": "2021-01-17 21:07:47",
+                    "finished": "2021-01-17 21:07:51",
+                    "status": 5,
+                    "illustID": 8358
+                  },
+                  {
+                    "uploadID": 10655,
+                    "started": "2021-01-17 21:07:41",
+                    "finished": "2021-01-17 21:07:43",
+                    "status": 5,
+                    "illustID": 8357
+                  },
+                  {
+                    "uploadID": 10654,
+                    "started": "2021-01-17 21:07:34",
+                    "finished": "2021-01-17 21:07:37",
+                    "status": 5,
+                    "illustID": 8356
+                  },
+                  {
+                    "uploadID": 10653,
+                    "started": "2021-01-17 21:07:27",
+                    "finished": "2021-01-17 21:07:30",
+                    "status": 5,
+                    "illustID": 8355
+                  },
+                  {
+                    "uploadID": 10652,
+                    "started": "2021-01-17 21:06:35",
+                    "finished": "2021-01-17 21:06:39",
+                    "status": 5,
+                    "illustID": 8354
+                  }
+                ]
+              }
+            }
+          },
+          "no-hit": {
+            "value": {
+              "status": 200,
+              "message": "ok",
+              "data": {
+                "title": "アップロード履歴",
+                "count": 0,
+                "current": 1,
+                "pages": 1,
+                "contents": []
+              }
+            }
+          },
+          "no-account": {
+            "value": {
+              "status": 404,
+              "message": "The account data was not found."
+            }
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ]
+      },
+      "GetAccountResponse": {
+        "title": "GetAccountResponse",
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "integer",
+            "description": "HTTPステータスコードが入ります",
+            "format": "int32",
+            "minimum": 100,
+            "maximum": 999
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1,
+            "description": "ok もしくは エラー内容"
+          },
+          "data": {
+            "type": "object",
+            "description": "応答本体はdataに入ります(共通) 存在しなければキー自体がありません",
+            "required": [
+              "userID",
+              "displayID",
+              "name",
+              "favorite"
+            ],
+            "properties": {
+              "userID": {
+                "type": "integer",
+                "description": "ユーザーID(累計何番目のアカウントか)",
+                "format": "int32",
+                "example": 1
+              },
+              "displayID": {
+                "type": "string",
+                "minLength": 1,
+                "description": "表示ID/ログインID 英数字(ユーザーページで使われる想定)",
+                "example": "omado"
+              },
+              "name": {
+                "type": "string",
+                "description": "ユーザー表示名",
+                "example": "お窓",
+                "minLength": 1
+              },
+              "favorite": {
+                "type": "integer",
+                "format": "int32",
+                "example": 1,
+                "minimum": 1,
+                "description": "推しているキャラクターのID"
+              }
+            }
+          }
+        },
+        "x-examples": {
+          "success": {
+            "value": {
+              "status": 200,
+              "message": "ok",
+              "data": {
+                "userID": 3,
+                "displayID": "omado",
+                "name": "お窓",
+                "favorite": 1
+              }
+            }
+          },
+          "failed": {
+            "value": {
+              "status": 404,
+              "message": "The account data was not found."
+            }
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ]
+      },
+      "DeleteAccountResponse": {
+        "title": "DeleteAccountResponse",
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "number"
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "x-examples": {
+          "success": {
+            "value": {
+              "status": 200,
+              "message": "ok thanks for using!"
+            }
+          },
+          "failed": {
+            "value": {
+              "status": 400,
+              "message": "authorization failed"
+            }
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ]
+      },
+      "PostReissueTokenResponse": {
+        "title": "PostReissueTokenResponse",
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "number"
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          },
+          "api_key": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "x-examples": {
+          "example": {
+            "value": {
+              "status": 200,
+              "message": "ok",
+              "api_key": "DUMMY_API_KEY"
+            }
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ]
+      },
+      "PutAccountResponse": {
+        "title": "PutAccountResponse",
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "number"
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "x-examples": {
+          "success": {
+            "value": {
+              "status": 200,
+              "message": "Update complete"
+            }
+          },
+          "server-error": {
+            "value": {
+              "status": 500,
+              "message": "Server bombed."
+            }
+          },
+          "password-mismatch": {
+            "value": {
+              "status": 400,
+              "message": "password mismatch"
+            }
+          },
+          "not-satisfied-params": {
+            "value": {
+              "status": 400,
+              "message": "Request parameters are not satisfied."
+            }
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ]
+      },
+      "GetArtResponse": {
+        "title": "GetArtResposnse",
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "number",
+            "description": "HTTPステータスコード"
+          },
+          "message": {
+            "type": "string",
+            "description": "ok もしくは エラー内容"
+          },
+          "data": {
+            "type": "object",
+            "description": "ヒットした場合のみ存在する",
+            "properties": {
+              "illustID": {
+                "type": "number",
+                "description": "サイト内通しイラストID"
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1,
+                "description": "イラスト(作品)名\nNOTE: 連番の場合は (2) (3)のような番号が入る"
+              },
+              "caption": {
+                "type": "string",
+                "description": "説明文\nNOTE: 通常出典に記載されていた内容そのままが入る"
+              },
+              "date": {
+                "type": "string",
+                "description": "登録日時(%Y-%m-%d %H:%M:%S)",
+                "minLength": 19,
+                "maxLength": 19,
+                "example": "2021-01-07 12:48:42"
+              },
+              "pages": {
+                "type": "number",
+                "description": "グループになっている場合の総ページ数(未使用)"
+              },
+              "like": {
+                "type": "number",
+                "description": "累計いいね数"
+              },
+              "view": {
+                "type": "number",
+                "description": "累計閲覧回数"
+              },
+              "mylist": {
+                "type": "number",
+                "description": "累計マイリスト数"
+              },
+              "mylisted": {
+                "type": "boolean",
+                "description": "リクエストしたユーザーがマイリストしているか"
+              },
+              "originUrl": {
+                "type": "string",
+                "minLength": 1,
+                "description": "出典URL"
+              },
+              "originService": {
+                "type": "string",
+                "minLength": 1,
+                "description": "出典サービス名"
+              },
+              "nsfw": {
+                "description": "アダルトコンテンツかどうか",
+                "type": "boolean"
+              },
+              "hash": {
+                "type": "number",
+                "description": "画像ハッシュ(pHash)"
+              },
+              "extension": {
+                "type": "string",
+                "minLength": 1,
+                "description": "拡張子(通常、jpgもしくはpng)",
+                "enum": [
+                  "jpg",
+                  "png",
+                  "jpeg",
+                  "gif",
+                  "mp4",
+                  "webp"
+                ],
+                "example": "png"
+              },
+              "artist": {
+                "type": "object",
+                "description": "絵師情報",
+                "properties": {
+                  "id": {
+                    "type": "number",
+                    "description": "絵師のサイト内通し番号"
+                  },
+                  "name": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "絵師名"
+                  }
+                },
+                "required": [
+                  "id",
+                  "name"
+                ]
+              },
+              "user": {
+                "type": "object",
+                "description": "投稿者情報",
+                "required": [
+                  "id",
+                  "name"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "number",
+                    "description": "投稿したユーザーのサイト内通し番号"
+                  },
+                  "name": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "投稿したユーザーの名前"
+                  }
+                }
+              },
+              "status": {
+                "type": "number",
+                "description": "公開/非公開等の表示状態 0:公開 1:置換済み 2:削除(ユーザー) 3:削除(管理者)",
+                "example": 0
+              },
+              "width": {
+                "type": "number",
+                "description": "RAW画像の横方向のピクセル数"
+              },
+              "height": {
+                "type": "number",
+                "description": "RAW画像の縦方向のピクセル数"
+              },
+              "filesize": {
+                "type": "string",
+                "minLength": 1,
+                "description": "RAW画像のファイルサイズに単位を付けたもの"
+              },
+              "tag": {
+                "type": "array",
+                "uniqueItems": true,
+                "description": "一般タグ情報",
+                "items": {
+                  "$ref": "#/components/schemas/Tag"
+                }
+              },
+              "chara": {
+                "type": "array",
+                "description": "キャラクタータグ情報",
+                "uniqueItems": true,
+                "items": {
+                  "$ref": "#/components/schemas/Tag"
+                }
+              },
+              "group": {
+                "type": "array",
+                "description": "グループタグ情報",
+                "uniqueItems": true,
+                "items": {
+                  "$ref": "#/components/schemas/Tag"
+                }
+              },
+              "system": {
+                "type": "array",
+                "uniqueItems": true,
+                "description": "システムタグ情報",
+                "items": {
+                  "$ref": "#/components/schemas/Tag"
+                }
+              },
+              "replace": {
+                "type": "array",
+                "description": "置き換えたイラスト情報",
+                "items": {
+                  "$ref": "#/components/schemas/Replace"
+                }
+              },
+              "star": {
+                "type": "object",
+                "description": "スター(いいね)情報",
+                "required": [
+                  "yellow",
+                  "green",
+                  "red",
+                  "blue"
+                ],
+                "properties": {
+                  "yellow": {
+                    "type": "number"
+                  },
+                  "green": {
+                    "type": "number"
+                  },
+                  "red": {
+                    "type": "number"
+                  },
+                  "blue": {
+                    "type": "number"
+                  }
+                }
+              }
+            },
+            "required": [
+              "illustID",
+              "title",
+              "caption",
+              "date",
+              "pages",
+              "like",
+              "view",
+              "mylist",
+              "mylisted",
+              "originUrl",
+              "originService",
+              "nsfw",
+              "hash",
+              "extension",
+              "user",
+              "status",
+              "width",
+              "height",
+              "filesize",
+              "tag",
+              "chara",
+              "group",
+              "system",
+              "replace",
+              "star"
+            ]
+          }
+        },
+        "x-examples": {
+          "success": {
+            "value": {
+              "status": 200,
+              "message": "ok",
+              "data": {
+                "illustID": 8,
+                "title": "tea pours into white teacup photo",
+                "caption": "",
+                "date": "2021-01-07 15:16:58",
+                "pages": 1,
+                "like": 1,
+                "view": 2,
+                "mylist": 0,
+                "mylisted": false,
+                "originUrl": "https://unsplash.com/photos/oBoELXgJR1w?page=1",
+                "originService": "独自",
+                "nsfw": false,
+                "hash": 12743176166585612000,
+                "extension": "jpg",
+                "artist": {
+                  "id": 5,
+                  "name": "CHI CHEN"
+                },
+                "user": {
+                  "id": 2,
+                  "name": "ドマオーさん"
+                },
+                "status": 0,
+                "width": 3333,
+                "height": 4391,
+                "filesize": "491K",
+                "tag": [
+                  {
+                    "id": 21,
+                    "name": "ティーカップ",
+                    "nsfw": false
+                  },
+                  {
+                    "id": 20,
+                    "name": "紅茶",
+                    "nsfw": false
+                  },
+                  {
+                    "id": 18,
+                    "name": "カフェ",
+                    "nsfw": false
+                  }
+                ],
+                "chara": [
+                  {
+                    "id": 20,
+                    "name": "サンプル",
+                    "nsfw": false
+                  }
+                ],
+                "group": [
+                  {
+                    "id": 20,
+                    "name": "サンプル",
+                    "nsfw": false
+                  }
+                ],
+                "system": [
+                  {
+                    "id": 4,
+                    "name": "2021年01月",
+                    "nsfw": false
+                  },
+                  {
+                    "id": 17,
+                    "name": "4K",
+                    "nsfw": false
+                  }
+                ],
+                "replace": [],
+                "star": {
+                  "yellow": 1,
+                  "green": 0,
+                  "blue": 0,
+                  "red": 0
+                }
+              }
+            }
+          },
+          "failed": {
+            "value": {
+              "status": 404,
+              "message": "The art data was not found."
+            }
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ]
+      },
+      "PutArtResponse": {
+        "title": "PutArtResponse",
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "number"
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "x-examples": {
+          "example-1": {
+            "value": {
+              "status": 200,
+              "message": "ok"
+            }
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ]
+      },
+      "DeleteArtResponse": {
+        "title": "DeleteArtResponse",
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "number"
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "x-examples": {
+          "example": {
+            "value": {
+              "status": 200,
+              "message": "ok"
+            }
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ]
+      },
+      "GetAccountMeResponse": {
+        "title": "GetAccountMeResponse",
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "number",
+            "description": "HTTPステータスコード"
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1,
+            "description": "ok もしくはエラー内容"
+          },
+          "data": {
+            "type": "object",
+            "required": [
+              "userID",
+              "displayID",
+              "name",
+              "favorite",
+              "lineConnect",
+              "lineNotify",
+              "permission",
+              "registeredDate",
+              "inviter",
+              "invite",
+              "mylist",
+              "apiKey"
+            ],
+            "properties": {
+              "userID": {
+                "type": "number",
+                "description": "ユーザー通し番号"
+              },
+              "displayID": {
+                "type": "string",
+                "minLength": 1,
+                "description": "表示ID(英数字のみ)"
+              },
+              "name": {
+                "type": "string",
+                "minLength": 1,
+                "description": "ユーザー名(日本語可)"
+              },
+              "favorite": {
+                "type": "number",
+                "description": "推しキャラのID"
+              },
+              "lineConnect": {
+                "type": "boolean",
+                "description": "LINEログイン連携済かどうか"
+              },
+              "lineNotify": {
+                "type": "boolean",
+                "description": "LINENotifyに連携済かどうか"
+              },
+              "oneSignalNotify": {
+                "type": "boolean",
+                "description": "OneSignal設定済みかどうか"
+              },
+              "permission": {
+                "type": "number",
+                "description": "権限レベル 0:一般 5:Admin 9:SysOp"
+              },
+              "registeredDate": {
+                "type": "string",
+                "minLength": 1,
+                "description": "登録日時(datetime)"
+              },
+              "inviter": {
+                "type": "object",
+                "required": [
+                  "id",
+                  "name"
+                ],
+                "description": "招待者の情報",
+                "properties": {
+                  "id": {
+                    "type": "number",
+                    "description": "招待者のユーザー通し番号"
+                  },
+                  "name": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "招待者の名前"
+                  }
+                }
+              },
+              "invite": {
+                "type": "object",
+                "required": [
+                  "id",
+                  "code",
+                  "invited",
+                  "enabled"
+                ],
+                "description": "招待情報",
+                "properties": {
+                  "id": {
+                    "type": "integer",
+                    "description": "招待通し番号"
+                  },
+                  "code": {
+                    "type": "string",
+                    "description": "招待コード(shortuuid)",
+                    "minLength": 6,
+                    "maxLength": 12
+                  },
+                  "invited": {
+                    "type": "number",
+                    "description": "招待した人数の累計(誰を招待したかは表示されない)"
+                  },
+                  "enabled": {
+                    "type": "boolean",
+                    "description": "招待可能な状態か否か"
+                  }
+                }
+              },
+              "mylist": {
+                "type": "object",
+                "required": [
+                  "id"
+                ],
+                "description": "マイリスト情報",
+                "properties": {
+                  "id": {
+                    "type": "number",
+                    "description": "自分のマイリストID"
+                  }
+                }
+              },
+              "apiKey": {
+                "type": "string",
+                "minLength": 1,
+                "description": "ログインに使用したAPIキー"
+              }
+            }
+          }
+        },
+        "x-examples": {
+          "success-user": {
+            "value": {
+              "status": 200,
+              "message": "ok",
+              "data": {
+                "userID": 3,
+                "displayID": "test_user",
+                "name": "Test",
+                "favorite": 42,
+                "lineConnect": true,
+                "lineNotify": true,
+                "oneSignalNotify": true,
+                "permission": 0,
+                "registeredDate": "2021-01-07 12:48:42",
+                "inviter": {
+                  "id": 1,
+                  "name": "ドマオー"
+                },
+                "invite": {
+                  "id": 1,
+                  "code": "DISABLED",
+                  "invited": 0,
+                  "enabled": false
+                },
+                "mylist": {
+                  "id": 3
+                },
+                "apiKey": "DUMMY_API_KEY"
+              }
+            }
+          },
+          "success-admin": {
+            "value": {
+              "status": 200,
+              "message": "ok",
+              "data": {
+                "userID": 4,
+                "displayID": "test_admin",
+                "name": "Admin",
+                "favorite": 43,
+                "lineConnect": true,
+                "lineNotify": true,
+                "oneSignalNotify": true,
+                "permission": 9,
+                "registeredDate": "2021-01-07 12:48:42",
+                "inviter": {
+                  "id": 1,
+                  "name": "ドマオー"
+                },
+                "invite": {
+                  "id": 1,
+                  "code": "DISABLED",
+                  "invited": 0,
+                  "enabled": false
+                },
+                "mylist": {
+                  "id": 4
+                },
+                "apiKey": "DUMMY_API_KEY"
+              }
+            }
+          },
+          "failed": {
+            "value": {
+              "status": 500,
+              "message": "Server exploded"
+            }
+          }
+        }
+      },
+      "LoginWithFormResponse": {
+        "title": "LoginWithFormResponse",
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "number"
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          },
+          "apiKey": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "x-examples": {
+          "login-success": {
+            "value": {
+              "status": 200,
+              "message": "welcome back",
+              "apiKey": "DUMMY_API_KEY"
+            }
+          },
+          "login-failed": {
+            "value": {
+              "status": 404,
+              "message": "account not found"
+            }
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ]
+      },
+      "LoginWithLineResponse": {
+        "title": "LoginWithLineResponse",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        }
+      },
+      "CreateArtistResponse": {
+        "title": "CreateArtistResponse",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        }
+      },
+      "GetArtistResponse": {
+        "title": "GetArtistResponse",
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "number",
+            "description": "処理結果のHTTPステータスコード"
+          },
+          "message": {
+            "type": "string",
+            "description": "ok もしくはエラー内容"
+          },
+          "data": {
+            "type": "object",
+            "description": "取得に成功していれば結果が入る\n(なければキー自体がない)",
+            "properties": {
+              "id": {
+                "type": "number",
+                "description": "絵師のID"
+              },
+              "userID": {
+                "description": "絵師情報を登録したユーザーのID",
+                "type": "integer"
+              },
+              "name": {
+                "type": "string",
+                "minLength": 1,
+                "description": "絵師の名前(ペンネーム正式名)",
+                "example": "彩電"
+              },
+              "description": {
+                "type": "string",
+                "example": "ごちうさなどのきらら系中心に、オリジナルなどのサークルやってます",
+                "description": "絵師を説明する文章(1行分)"
+              },
+              "group": {
+                "type": "string",
+                "example": "こねこぼたん",
+                "description": "サークル名"
+              },
+              "pixivID": {
+                "type": "string",
+                "example": "40436",
+                "description": "PixivのユーザーID(数字)"
+              },
+              "twitterID": {
+                "type": "string",
+                "example": "harufcs",
+                "description": "Twitterの表示ID(英数字+)"
+              },
+              "mastodon": {
+                "type": "string",
+                "example": "https://pawoo.net/@saiden",
+                "format": "uri-reference",
+                "description": "マストドンアカウントのURL"
+              },
+              "homepage": {
+                "type": "string",
+                "example": "http://konebota.x0.com/PAGE/",
+                "description": "HPのURL",
+                "format": "uri-reference"
+              }
+            },
+            "required": [
+              "id",
+              "userID",
+              "name",
+              "description",
+              "group",
+              "pixivID",
+              "twitterID",
+              "mastodon",
+              "homepage"
+            ]
+          }
+        },
+        "x-examples": {
+          "success-default": {
+            "value": {
+              "status": 200,
+              "message": "ok",
+              "data": {
+                "id": 1,
+                "userID": 0,
+                "name": "彩電",
+                "description": "",
+                "group": "",
+                "pixivID": "",
+                "twitterID": "",
+                "mastodon": "",
+                "homepage": ""
+              }
+            }
+          },
+          "success-fulfilled": {
+            "value": {
+              "status": 200,
+              "message": "ok",
+              "data": {
+                "id": 1,
+                "userID": 1,
+                "name": "彩電",
+                "description": "ごちうさなどのきらら系中心に、オリジナルなど",
+                "group": "こねこぼたん",
+                "pixivID": "40436",
+                "twitterID": "harufcs",
+                "mastodon": "https://pawoo.net/@saiden",
+                "homepage": "http://konebota.x0.com/PAGE/"
+              }
+            }
+          },
+          "not-found": {
+            "value": {
+              "status": 404,
+              "message": "Specified artist was not found"
+            }
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ]
+      },
+      "PutArtistResponse": {
+        "title": "PutArtistResponse",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        }
+      },
+      "DeleteArtistResponse": {
+        "title": "DeleteArtistResponse",
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "number"
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "x-examples": {
+          "example": {
+            "value": {
+              "status": 200,
+              "message": "ok"
+            }
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ]
       }
     },
     "securitySchemes": {
@@ -3658,1337 +4998,7 @@
       }
     },
     "examples": {},
-    "responses": {
-      "GetUploadHistoryResponse": {
-        "description": "投稿履歴取得結果\n404を返すと処理的にめんどくさい部分があるので\n一致結果がない場合は空配列を返す",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "status": {
-                  "type": "integer",
-                  "description": "HTTPステータスコードが入ります",
-                  "format": "int32",
-                  "minimum": 100,
-                  "maximum": 999,
-                  "example": 200
-                },
-                "message": {
-                  "type": "string",
-                  "description": "ok もしくは エラー内容",
-                  "minLength": 1,
-                  "example": "ok"
-                },
-                "data": {
-                  "type": "object",
-                  "required": [
-                    "title",
-                    "count",
-                    "current",
-                    "pages"
-                  ],
-                  "properties": {
-                    "title": {
-                      "type": "string",
-                      "description": "検索関連共通化のため\"アップロード履歴\"が入る",
-                      "example": "アップロード履歴",
-                      "enum": [
-                        "アップロード履歴"
-                      ],
-                      "maxLength": 8,
-                      "minLength": 8
-                    },
-                    "count": {
-                      "type": "integer",
-                      "description": "総ヒット数",
-                      "format": "int32"
-                    },
-                    "current": {
-                      "type": "integer",
-                      "description": "現在開いているページ",
-                      "example": 1,
-                      "minimum": 1
-                    },
-                    "pages": {
-                      "type": "integer",
-                      "description": "ヒット数をページ毎の個数で割ったページ数",
-                      "minimum": 0,
-                      "example": 1,
-                      "format": "int32"
-                    },
-                    "contents": {
-                      "type": "array",
-                      "uniqueItems": true,
-                      "description": "指定された範囲で一致するデータ\n一致するものがなければ空配列",
-                      "minItems": 0,
-                      "items": {
-                        "$ref": "#/components/schemas/UploadHistory"
-                      }
-                    }
-                  }
-                }
-              },
-              "required": [
-                "status",
-                "message"
-              ]
-            },
-            "examples": {
-              "success": {
-                "value": {
-                  "status": 200,
-                  "message": "ok",
-                  "data": {
-                    "title": "アップロード履歴",
-                    "count": 2321,
-                    "current": 1,
-                    "pages": 117,
-                    "contents": [
-                      {
-                        "uploadID": 12045,
-                        "started": "2021-02-21 22:24:22",
-                        "finished": "2021-02-21 22:24:27",
-                        "status": 5,
-                        "illustID": 9381
-                      },
-                      {
-                        "uploadID": 12044,
-                        "started": "2021-02-21 22:23:41",
-                        "finished": "2021-02-21 22:23:45",
-                        "status": 5,
-                        "illustID": 9380
-                      },
-                      {
-                        "uploadID": 12036,
-                        "started": "2021-02-21 20:30:39",
-                        "finished": "2021-02-21 20:30:43",
-                        "status": 5,
-                        "illustID": 9375
-                      },
-                      {
-                        "uploadID": 12004,
-                        "started": "2021-02-20 20:20:19",
-                        "finished": "2021-02-20 20:20:29",
-                        "status": 5,
-                        "illustID": 9355
-                      },
-                      {
-                        "uploadID": 12003,
-                        "started": "2021-02-20 20:03:30",
-                        "finished": "2021-02-20 20:03:46",
-                        "status": 5,
-                        "illustID": 9354
-                      },
-                      {
-                        "uploadID": 11972,
-                        "started": "2021-02-19 21:30:58",
-                        "finished": "2021-02-19 21:31:00",
-                        "status": 5,
-                        "illustID": 9336
-                      },
-                      {
-                        "uploadID": 11971,
-                        "started": "2021-02-19 21:30:52",
-                        "finished": "2021-02-19 21:30:55",
-                        "status": 5,
-                        "illustID": 9335
-                      },
-                      {
-                        "uploadID": 11970,
-                        "started": "2021-02-19 21:30:46",
-                        "finished": "2021-02-19 21:30:49",
-                        "status": 5,
-                        "illustID": 9334
-                      },
-                      {
-                        "uploadID": 10756,
-                        "started": "2021-01-20 03:12:57",
-                        "finished": "2021-01-20 03:13:04",
-                        "status": 5,
-                        "illustID": 8418
-                      },
-                      {
-                        "uploadID": 10755,
-                        "started": "2021-01-20 03:09:31",
-                        "finished": "2021-01-20 03:09:39",
-                        "status": 5,
-                        "illustID": 8417
-                      },
-                      {
-                        "uploadID": 10754,
-                        "started": "2021-01-20 02:57:00",
-                        "finished": "2021-01-20 02:57:09",
-                        "status": 5,
-                        "illustID": 8416
-                      },
-                      {
-                        "uploadID": 10753,
-                        "started": "2021-01-20 02:56:44",
-                        "finished": "2021-01-20 02:56:52",
-                        "status": 5,
-                        "illustID": 8415
-                      },
-                      {
-                        "uploadID": 10663,
-                        "started": "2021-01-17 22:21:22",
-                        "finished": "2021-01-17 22:21:35",
-                        "status": 5,
-                        "illustID": 8364
-                      },
-                      {
-                        "uploadID": 10658,
-                        "started": "2021-01-17 21:14:02",
-                        "finished": "2021-01-17 21:14:06",
-                        "status": 5,
-                        "illustID": 8360
-                      },
-                      {
-                        "uploadID": 10657,
-                        "started": "2021-01-17 21:07:54",
-                        "finished": "2021-01-17 21:07:57",
-                        "status": 5,
-                        "illustID": 8359
-                      },
-                      {
-                        "uploadID": 10656,
-                        "started": "2021-01-17 21:07:47",
-                        "finished": "2021-01-17 21:07:51",
-                        "status": 5,
-                        "illustID": 8358
-                      },
-                      {
-                        "uploadID": 10655,
-                        "started": "2021-01-17 21:07:41",
-                        "finished": "2021-01-17 21:07:43",
-                        "status": 5,
-                        "illustID": 8357
-                      },
-                      {
-                        "uploadID": 10654,
-                        "started": "2021-01-17 21:07:34",
-                        "finished": "2021-01-17 21:07:37",
-                        "status": 5,
-                        "illustID": 8356
-                      },
-                      {
-                        "uploadID": 10653,
-                        "started": "2021-01-17 21:07:27",
-                        "finished": "2021-01-17 21:07:30",
-                        "status": 5,
-                        "illustID": 8355
-                      },
-                      {
-                        "uploadID": 10652,
-                        "started": "2021-01-17 21:06:35",
-                        "finished": "2021-01-17 21:06:39",
-                        "status": 5,
-                        "illustID": 8354
-                      }
-                    ]
-                  }
-                }
-              },
-              "no-hit": {
-                "value": {
-                  "status": 200,
-                  "message": "ok",
-                  "data": {
-                    "title": "アップロード履歴",
-                    "count": 0,
-                    "current": 1,
-                    "pages": 1,
-                    "contents": []
-                  }
-                }
-              },
-              "no-account": {
-                "value": {
-                  "status": 404,
-                  "message": "The account data was not found."
-                }
-              }
-            }
-          }
-        }
-      },
-      "GetAccountResponse": {
-        "description": "アカウント取得結果",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "status": {
-                  "type": "integer",
-                  "description": "HTTPステータスコードが入ります",
-                  "format": "int32",
-                  "minimum": 100,
-                  "maximum": 999
-                },
-                "message": {
-                  "type": "string",
-                  "minLength": 1,
-                  "description": "ok もしくは エラー内容"
-                },
-                "data": {
-                  "type": "object",
-                  "description": "応答本体はdataに入ります(共通) 存在しなければキー自体がありません",
-                  "required": [
-                    "userID",
-                    "displayID",
-                    "name",
-                    "favorite"
-                  ],
-                  "properties": {
-                    "userID": {
-                      "type": "integer",
-                      "description": "ユーザーID(累計何番目のアカウントか)",
-                      "format": "int32",
-                      "example": 1
-                    },
-                    "displayID": {
-                      "type": "string",
-                      "minLength": 1,
-                      "description": "表示ID/ログインID 英数字(ユーザーページで使われる想定)",
-                      "example": "omado"
-                    },
-                    "name": {
-                      "type": "string",
-                      "description": "ユーザー表示名",
-                      "example": "お窓",
-                      "minLength": 1
-                    },
-                    "favorite": {
-                      "type": "integer",
-                      "format": "int32",
-                      "example": 1,
-                      "minimum": 1,
-                      "description": "推しているキャラクターのID"
-                    }
-                  }
-                }
-              },
-              "required": [
-                "status",
-                "message"
-              ]
-            },
-            "examples": {
-              "success": {
-                "value": {
-                  "status": 200,
-                  "message": "ok",
-                  "data": {
-                    "userID": 3,
-                    "displayID": "omado",
-                    "name": "お窓",
-                    "favorite": 1
-                  }
-                }
-              },
-              "failed": {
-                "value": {
-                  "status": 404,
-                  "message": "The account data was not found."
-                }
-              }
-            }
-          }
-        }
-      },
-      "DeleteAccountResponse": {
-        "description": "アカウント削除結果",
-        "content": {
-          "application/json": {
-            "schema": {
-              "description": "",
-              "type": "object",
-              "properties": {
-                "status": {
-                  "type": "number"
-                },
-                "message": {
-                  "type": "string",
-                  "minLength": 1
-                }
-              },
-              "required": [
-                "status",
-                "message"
-              ]
-            },
-            "examples": {
-              "success": {
-                "value": {
-                  "status": 200,
-                  "message": "ok thanks for using!"
-                }
-              },
-              "failed": {
-                "value": {
-                  "status": 400,
-                  "message": "authorization failed"
-                }
-              }
-            }
-          }
-        }
-      },
-      "PostReissueTokenResponse": {
-        "description": "トークン再発行結果",
-        "content": {
-          "application/json": {
-            "schema": {
-              "description": "",
-              "type": "object",
-              "properties": {
-                "status": {
-                  "type": "number"
-                },
-                "message": {
-                  "type": "string",
-                  "minLength": 1
-                },
-                "api_key": {
-                  "type": "string",
-                  "minLength": 1
-                }
-              },
-              "required": [
-                "status",
-                "message"
-              ]
-            },
-            "examples": {
-              "example": {
-                "value": {
-                  "status": 200,
-                  "message": "ok",
-                  "api_key": "DUMMY_API_KEY"
-                }
-              }
-            }
-          }
-        }
-      },
-      "PutAccountResponse": {
-        "description": "アカウント編集結果",
-        "content": {
-          "application/json": {
-            "schema": {
-              "description": "",
-              "type": "object",
-              "properties": {
-                "status": {
-                  "type": "number"
-                },
-                "message": {
-                  "type": "string",
-                  "minLength": 1
-                }
-              },
-              "required": [
-                "status",
-                "message"
-              ]
-            },
-            "examples": {
-              "success": {
-                "value": {
-                  "status": 200,
-                  "message": "Update complete"
-                }
-              },
-              "server-error": {
-                "value": {
-                  "status": 500,
-                  "message": "Server bombed."
-                }
-              },
-              "password-mismatch": {
-                "value": {
-                  "status": 400,
-                  "message": "password mismatch"
-                }
-              },
-              "not-satisfied-params": {
-                "value": {
-                  "status": 400,
-                  "message": "Request parameters are not satisfied."
-                }
-              }
-            }
-          }
-        }
-      },
-      "GetArtResposnse": {
-        "description": "イラスト取得結果",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "status": {
-                  "type": "number",
-                  "description": "HTTPステータスコード"
-                },
-                "message": {
-                  "type": "string",
-                  "description": "ok もしくは エラー内容"
-                },
-                "data": {
-                  "type": "object",
-                  "description": "ヒットした場合のみ存在する",
-                  "properties": {
-                    "illustID": {
-                      "type": "number",
-                      "description": "サイト内通しイラストID"
-                    },
-                    "title": {
-                      "type": "string",
-                      "minLength": 1,
-                      "description": "イラスト(作品)名\nNOTE: 連番の場合は (2) (3)のような番号が入る"
-                    },
-                    "caption": {
-                      "type": "string",
-                      "description": "説明文\nNOTE: 通常出典に記載されていた内容そのままが入る"
-                    },
-                    "date": {
-                      "type": "string",
-                      "description": "登録日時(%Y-%m-%d %H:%M:%S)",
-                      "minLength": 19,
-                      "maxLength": 19,
-                      "example": "2021-01-07 12:48:42"
-                    },
-                    "pages": {
-                      "type": "number",
-                      "description": "グループになっている場合の総ページ数(未使用)"
-                    },
-                    "like": {
-                      "type": "number",
-                      "description": "累計いいね数"
-                    },
-                    "view": {
-                      "type": "number",
-                      "description": "累計閲覧回数"
-                    },
-                    "mylist": {
-                      "type": "number",
-                      "description": "累計マイリスト数"
-                    },
-                    "mylisted": {
-                      "type": "boolean",
-                      "description": "リクエストしたユーザーがマイリストしているか"
-                    },
-                    "originUrl": {
-                      "type": "string",
-                      "minLength": 1,
-                      "description": "出典URL"
-                    },
-                    "originService": {
-                      "type": "string",
-                      "minLength": 1,
-                      "description": "出典サービス名"
-                    },
-                    "nsfw": {
-                      "description": "アダルトコンテンツかどうか",
-                      "type": "boolean"
-                    },
-                    "hash": {
-                      "type": "number",
-                      "description": "画像ハッシュ(pHash)"
-                    },
-                    "extension": {
-                      "type": "string",
-                      "minLength": 1,
-                      "description": "拡張子(通常、jpgもしくはpng)",
-                      "enum": [
-                        "jpg",
-                        "png",
-                        "jpeg",
-                        "gif",
-                        "mp4",
-                        "webp"
-                      ],
-                      "example": "png"
-                    },
-                    "artist": {
-                      "type": "object",
-                      "description": "絵師情報",
-                      "properties": {
-                        "id": {
-                          "type": "number",
-                          "description": "絵師のサイト内通し番号"
-                        },
-                        "name": {
-                          "type": "string",
-                          "minLength": 1,
-                          "description": "絵師名"
-                        }
-                      },
-                      "required": [
-                        "id",
-                        "name"
-                      ]
-                    },
-                    "user": {
-                      "type": "object",
-                      "description": "投稿者情報",
-                      "required": [
-                        "id",
-                        "name"
-                      ],
-                      "properties": {
-                        "id": {
-                          "type": "number",
-                          "description": "投稿したユーザーのサイト内通し番号"
-                        },
-                        "name": {
-                          "type": "string",
-                          "minLength": 1,
-                          "description": "投稿したユーザーの名前"
-                        }
-                      }
-                    },
-                    "status": {
-                      "type": "number",
-                      "description": "公開/非公開等の表示状態 0:公開 1:置換済み 2:削除(ユーザー) 3:削除(管理者)",
-                      "example": 0
-                    },
-                    "width": {
-                      "type": "number",
-                      "description": "RAW画像の横方向のピクセル数"
-                    },
-                    "height": {
-                      "type": "number",
-                      "description": "RAW画像の縦方向のピクセル数"
-                    },
-                    "filesize": {
-                      "type": "string",
-                      "minLength": 1,
-                      "description": "RAW画像のファイルサイズに単位を付けたもの"
-                    },
-                    "tag": {
-                      "type": "array",
-                      "uniqueItems": true,
-                      "description": "一般タグ情報",
-                      "items": {
-                        "$ref": "#/components/schemas/Tag"
-                      }
-                    },
-                    "chara": {
-                      "type": "array",
-                      "description": "キャラクタータグ情報",
-                      "uniqueItems": true,
-                      "items": {
-                        "$ref": "#/components/schemas/Tag"
-                      }
-                    },
-                    "group": {
-                      "type": "array",
-                      "description": "グループタグ情報",
-                      "uniqueItems": true,
-                      "items": {
-                        "$ref": "#/components/schemas/Tag"
-                      }
-                    },
-                    "system": {
-                      "type": "array",
-                      "uniqueItems": true,
-                      "description": "システムタグ情報",
-                      "items": {
-                        "$ref": "#/components/schemas/Tag"
-                      }
-                    },
-                    "replace": {
-                      "type": "array",
-                      "description": "置き換えたイラスト情報",
-                      "items": {
-                        "$ref": "#/components/schemas/Replace"
-                      }
-                    },
-                    "star": {
-                      "type": "object",
-                      "description": "スター(いいね)情報",
-                      "required": [
-                        "yellow",
-                        "green",
-                        "red",
-                        "blue"
-                      ],
-                      "properties": {
-                        "yellow": {
-                          "type": "number"
-                        },
-                        "green": {
-                          "type": "number"
-                        },
-                        "red": {
-                          "type": "number"
-                        },
-                        "blue": {
-                          "type": "number"
-                        }
-                      }
-                    }
-                  },
-                  "required": [
-                    "illustID",
-                    "title",
-                    "caption",
-                    "date",
-                    "pages",
-                    "like",
-                    "view",
-                    "mylist",
-                    "mylisted",
-                    "originUrl",
-                    "originService",
-                    "nsfw",
-                    "hash",
-                    "extension",
-                    "user",
-                    "status",
-                    "width",
-                    "height",
-                    "filesize",
-                    "tag",
-                    "chara",
-                    "group",
-                    "system",
-                    "replace",
-                    "star"
-                  ]
-                }
-              },
-              "required": [
-                "status",
-                "message"
-              ]
-            },
-            "examples": {
-              "success": {
-                "value": {
-                  "status": 200,
-                  "message": "ok",
-                  "data": {
-                    "illustID": 8,
-                    "title": "tea pours into white teacup photo",
-                    "caption": "",
-                    "date": "2021-01-07 15:16:58",
-                    "pages": 1,
-                    "like": 1,
-                    "view": 2,
-                    "mylist": 0,
-                    "mylisted": false,
-                    "originUrl": "https://unsplash.com/photos/oBoELXgJR1w?page=1",
-                    "originService": "独自",
-                    "nsfw": false,
-                    "hash": 12743176166585612000,
-                    "extension": "jpg",
-                    "artist": {
-                      "id": 5,
-                      "name": "CHI CHEN"
-                    },
-                    "user": {
-                      "id": 2,
-                      "name": "ドマオーさん"
-                    },
-                    "status": 0,
-                    "width": 3333,
-                    "height": 4391,
-                    "filesize": "491K",
-                    "tag": [
-                      {
-                        "id": 21,
-                        "name": "ティーカップ",
-                        "nsfw": false
-                      },
-                      {
-                        "id": 20,
-                        "name": "紅茶",
-                        "nsfw": false
-                      },
-                      {
-                        "id": 18,
-                        "name": "カフェ",
-                        "nsfw": false
-                      }
-                    ],
-                    "chara": [
-                      {
-                        "id": 20,
-                        "name": "サンプル",
-                        "nsfw": false
-                      }
-                    ],
-                    "group": [
-                      {
-                        "id": 20,
-                        "name": "サンプル",
-                        "nsfw": false
-                      }
-                    ],
-                    "system": [
-                      {
-                        "id": 4,
-                        "name": "2021年01月",
-                        "nsfw": false
-                      },
-                      {
-                        "id": 17,
-                        "name": "4K",
-                        "nsfw": false
-                      }
-                    ],
-                    "replace": [],
-                    "star": {
-                      "yellow": 1,
-                      "green": 0,
-                      "blue": 0,
-                      "red": 0
-                    }
-                  }
-                }
-              },
-              "failed": {
-                "value": {
-                  "status": 404,
-                  "message": "The art data was not found."
-                }
-              }
-            }
-          }
-        }
-      },
-      "PutArtResponse": {
-        "description": "イラスト編集結果",
-        "content": {
-          "application/json": {
-            "schema": {
-              "description": "",
-              "type": "object",
-              "properties": {
-                "status": {
-                  "type": "number"
-                },
-                "message": {
-                  "type": "string",
-                  "minLength": 1
-                }
-              },
-              "required": [
-                "status",
-                "message"
-              ]
-            },
-            "examples": {
-              "example-1": {
-                "value": {
-                  "status": 200,
-                  "message": "ok"
-                }
-              }
-            }
-          }
-        }
-      },
-      "DeleteArtResponse": {
-        "description": "イラスト削除結果",
-        "content": {
-          "application/json": {
-            "schema": {
-              "description": "",
-              "type": "object",
-              "properties": {
-                "status": {
-                  "type": "number"
-                },
-                "message": {
-                  "type": "string",
-                  "minLength": 1
-                }
-              },
-              "required": [
-                "status",
-                "message"
-              ]
-            },
-            "examples": {
-              "example": {
-                "value": {
-                  "status": 200,
-                  "message": "ok"
-                }
-              }
-            }
-          }
-        }
-      },
-      "GetAccountMeResponse": {
-        "description": "自分自身の情報取得結果",
-        "content": {
-          "application/json": {
-            "schema": {
-              "properties": {
-                "status": {
-                  "type": "number",
-                  "description": "HTTPステータスコード"
-                },
-                "message": {
-                  "type": "string",
-                  "minLength": 1,
-                  "description": "ok もしくはエラー内容"
-                },
-                "data": {
-                  "type": "object",
-                  "required": [
-                    "userID",
-                    "displayID",
-                    "name",
-                    "favorite",
-                    "lineConnect",
-                    "lineNotify",
-                    "permission",
-                    "registeredDate",
-                    "inviter",
-                    "invite",
-                    "mylist",
-                    "apiKey"
-                  ],
-                  "properties": {
-                    "userID": {
-                      "type": "number",
-                      "description": "ユーザー通し番号"
-                    },
-                    "displayID": {
-                      "type": "string",
-                      "minLength": 1,
-                      "description": "表示ID(英数字のみ)"
-                    },
-                    "name": {
-                      "type": "string",
-                      "minLength": 1,
-                      "description": "ユーザー名(日本語可)"
-                    },
-                    "favorite": {
-                      "type": "number",
-                      "description": "推しキャラのID"
-                    },
-                    "lineConnect": {
-                      "type": "boolean",
-                      "description": "LINEログイン連携済かどうか"
-                    },
-                    "lineNotify": {
-                      "type": "boolean",
-                      "description": "LINENotifyに連携済かどうか"
-                    },
-                    "oneSignalNotify": {
-                      "type": "boolean",
-                      "description": "OneSignal設定済みかどうか"
-                    },
-                    "permission": {
-                      "type": "number",
-                      "description": "権限レベル 0:一般 5:Admin 9:SysOp"
-                    },
-                    "registeredDate": {
-                      "type": "string",
-                      "minLength": 1,
-                      "description": "登録日時(datetime)"
-                    },
-                    "inviter": {
-                      "type": "object",
-                      "required": [
-                        "id",
-                        "name"
-                      ],
-                      "description": "招待者の情報",
-                      "properties": {
-                        "id": {
-                          "type": "number",
-                          "description": "招待者のユーザー通し番号"
-                        },
-                        "name": {
-                          "type": "string",
-                          "minLength": 1,
-                          "description": "招待者の名前"
-                        }
-                      }
-                    },
-                    "invite": {
-                      "type": "object",
-                      "required": [
-                        "id",
-                        "code",
-                        "invited",
-                        "enabled"
-                      ],
-                      "description": "招待情報",
-                      "properties": {
-                        "id": {
-                          "type": "integer",
-                          "description": "招待通し番号"
-                        },
-                        "code": {
-                          "type": "string",
-                          "description": "招待コード(shortuuid)",
-                          "minLength": 6,
-                          "maxLength": 12
-                        },
-                        "invited": {
-                          "type": "number",
-                          "description": "招待した人数の累計(誰を招待したかは表示されない)"
-                        },
-                        "enabled": {
-                          "type": "boolean",
-                          "description": "招待可能な状態か否か"
-                        }
-                      }
-                    },
-                    "mylist": {
-                      "type": "object",
-                      "required": [
-                        "id"
-                      ],
-                      "description": "マイリスト情報",
-                      "properties": {
-                        "id": {
-                          "type": "number",
-                          "description": "自分のマイリストID"
-                        }
-                      }
-                    },
-                    "apiKey": {
-                      "type": "string",
-                      "minLength": 1,
-                      "description": "ログインに使用したAPIキー"
-                    }
-                  }
-                }
-              }
-            },
-            "examples": {
-              "success-user": {
-                "value": {
-                  "status": 200,
-                  "message": "ok",
-                  "data": {
-                    "userID": 3,
-                    "displayID": "test_user",
-                    "name": "Test",
-                    "favorite": 42,
-                    "lineConnect": true,
-                    "lineNotify": true,
-                    "oneSignalNotify": true,
-                    "permission": 0,
-                    "registeredDate": "2021-01-07 12:48:42",
-                    "inviter": {
-                      "id": 1,
-                      "name": "ドマオー"
-                    },
-                    "invite": {
-                      "id": 1,
-                      "code": "DISABLED",
-                      "invited": 0,
-                      "enabled": false
-                    },
-                    "mylist": {
-                      "id": 3
-                    },
-                    "apiKey": "DUMMY_API_KEY"
-                  }
-                }
-              },
-              "success-admin": {
-                "value": {
-                  "status": 200,
-                  "message": "ok",
-                  "data": {
-                    "userID": 4,
-                    "displayID": "test_admin",
-                    "name": "Admin",
-                    "favorite": 43,
-                    "lineConnect": true,
-                    "lineNotify": true,
-                    "oneSignalNotify": true,
-                    "permission": 9,
-                    "registeredDate": "2021-01-07 12:48:42",
-                    "inviter": {
-                      "id": 1,
-                      "name": "ドマオー"
-                    },
-                    "invite": {
-                      "id": 1,
-                      "code": "DISABLED",
-                      "invited": 0,
-                      "enabled": false
-                    },
-                    "mylist": {
-                      "id": 4
-                    },
-                    "apiKey": "DUMMY_API_KEY"
-                  }
-                }
-              },
-              "failed": {
-                "value": {
-                  "status": 500,
-                  "message": "Server exploded"
-                }
-              }
-            }
-          }
-        }
-      },
-      "LoginWithFormResponse": {
-        "description": "Example response",
-        "content": {
-          "application/json": {
-            "schema": {
-              "description": "",
-              "type": "object",
-              "properties": {
-                "status": {
-                  "type": "number"
-                },
-                "message": {
-                  "type": "string",
-                  "minLength": 1
-                },
-                "apiKey": {
-                  "type": "string",
-                  "minLength": 1
-                }
-              },
-              "required": [
-                "status",
-                "message"
-              ]
-            },
-            "examples": {
-              "login-success": {
-                "value": {
-                  "status": 200,
-                  "message": "welcome back",
-                  "apiKey": "DUMMY_API_KEY"
-                }
-              },
-              "login-failed": {
-                "value": {
-                  "status": 404,
-                  "message": "account not found"
-                }
-              }
-            }
-          }
-        }
-      },
-      "LoginWithLineResponse": {
-        "description": "Example response",
-        "content": {
-          "application/json": {
-            "schema": {
-              "properties": {
-                "id": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        }
-      },
-      "CreateArtistResponse": {
-        "description": "Example response",
-        "content": {
-          "application/json": {
-            "schema": {
-              "properties": {
-                "id": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        }
-      },
-      "GetArtistResponse": {
-        "description": "Example response",
-        "content": {
-          "application/json": {
-            "schema": {
-              "description": "",
-              "type": "object",
-              "properties": {
-                "status": {
-                  "type": "number",
-                  "description": "処理結果のHTTPステータスコード"
-                },
-                "message": {
-                  "type": "string",
-                  "description": "ok もしくはエラー内容"
-                },
-                "data": {
-                  "type": "object",
-                  "description": "取得に成功していれば結果が入る\n(なければキー自体がない)",
-                  "properties": {
-                    "id": {
-                      "type": "number",
-                      "description": "絵師のID"
-                    },
-                    "userID": {
-                      "description": "絵師情報を登録したユーザーのID",
-                      "type": "integer"
-                    },
-                    "name": {
-                      "type": "string",
-                      "minLength": 1,
-                      "description": "絵師の名前(ペンネーム正式名)",
-                      "example": "彩電"
-                    },
-                    "description": {
-                      "type": "string",
-                      "example": "ごちうさなどのきらら系中心に、オリジナルなどのサークルやってます",
-                      "description": "絵師を説明する文章(1行分)"
-                    },
-                    "group": {
-                      "type": "string",
-                      "example": "こねこぼたん",
-                      "description": "サークル名"
-                    },
-                    "pixivID": {
-                      "type": "string",
-                      "example": "40436",
-                      "description": "PixivのユーザーID(数字)"
-                    },
-                    "twitterID": {
-                      "type": "string",
-                      "example": "harufcs",
-                      "description": "Twitterの表示ID(英数字+)"
-                    },
-                    "mastodon": {
-                      "type": "string",
-                      "example": "https://pawoo.net/@saiden",
-                      "format": "uri-reference",
-                      "description": "マストドンアカウントのURL"
-                    },
-                    "homepage": {
-                      "type": "string",
-                      "example": "http://konebota.x0.com/PAGE/",
-                      "description": "HPのURL",
-                      "format": "uri-reference"
-                    }
-                  },
-                  "required": [
-                    "id",
-                    "userID",
-                    "name",
-                    "description",
-                    "group",
-                    "pixivID",
-                    "twitterID",
-                    "mastodon",
-                    "homepage"
-                  ]
-                }
-              },
-              "required": [
-                "status",
-                "message"
-              ]
-            },
-            "examples": {
-              "success-default": {
-                "value": {
-                  "status": 200,
-                  "message": "ok",
-                  "data": {
-                    "id": 1,
-                    "userID": 0,
-                    "name": "彩電",
-                    "description": "",
-                    "group": "",
-                    "pixivID": "",
-                    "twitterID": "",
-                    "mastodon": "",
-                    "homepage": ""
-                  }
-                }
-              },
-              "success-fulfilled": {
-                "value": {
-                  "status": 200,
-                  "message": "ok",
-                  "data": {
-                    "id": 1,
-                    "userID": 1,
-                    "name": "彩電",
-                    "description": "ごちうさなどのきらら系中心に、オリジナルなど",
-                    "group": "こねこぼたん",
-                    "pixivID": "40436",
-                    "twitterID": "harufcs",
-                    "mastodon": "https://pawoo.net/@saiden",
-                    "homepage": "http://konebota.x0.com/PAGE/"
-                  }
-                }
-              },
-              "not-found": {
-                "value": {
-                  "status": 404,
-                  "message": "Specified artist was not found"
-                }
-              }
-            }
-          }
-        }
-      },
-      "PutArtistResponse": {
-        "description": "Example response",
-        "content": {
-          "application/json": {
-            "schema": {
-              "properties": {
-                "id": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        }
-      },
-      "DeleteArtistResponse": {
-        "description": "絵師削除結果",
-        "content": {
-          "application/json": {
-            "schema": {
-              "description": "",
-              "type": "object",
-              "properties": {
-                "status": {
-                  "type": "number"
-                },
-                "message": {
-                  "type": "string",
-                  "minLength": 1
-                }
-              },
-              "required": [
-                "status",
-                "message"
-              ]
-            },
-            "examples": {
-              "example": {
-                "value": {
-                  "status": 200,
-                  "message": "ok"
-                }
-              }
-            }
-          }
-        }
-      }
-    }
+    "responses": {}
   },
   "security": [
     {
