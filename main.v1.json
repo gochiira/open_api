@@ -2597,7 +2597,14 @@
         "operationId": "replaceArt",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReplaceArtResponse"
+                }
+              }
+            }
           }
         },
         "tags": [
@@ -2608,8 +2615,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "properties": {}
+                "$ref": "#/components/schemas/ReplaceArtRequest"
               }
             }
           }
@@ -2624,7 +2630,14 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetArtTagsResponse"
+                }
+              }
+            }
           }
         },
         "operationId": "getArtTags",
@@ -2646,28 +2659,60 @@
         "operationId": "editArtTags",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PutArtTagsResponse"
+                }
+              }
+            }
           }
         },
         "description": "指定したイラストのタグ一覧に、与えられたIDのタグを追加します\n(イラスト本体の編集時に付けられたタグ名から\n自動的にタグIDを引き出し追加/削除を行う処理が追加されたため\nこちらのエンドポイントを使用する必要はありません)",
         "deprecated": true,
         "tags": [
           "arts"
-        ]
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PutArtTagsRequest"
+              }
+            }
+          }
+        }
       },
       "delete": {
         "summary": "Delete art tag",
         "operationId": "deleteArtTags",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteArtTagsResponse"
+                }
+              }
+            }
           }
         },
         "description": "指定したイラストのタグ一覧から、与えられたIDのタグを削除します\n(イラスト本体の編集時に付けられたタグ名から\n自動的にタグIDを引き出し追加/削除を行う処理が追加されたため\nこちらのエンドポイントを使用する必要はありません)",
         "deprecated": true,
         "tags": [
           "arts"
-        ]
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteArtTagsRequest"
+              }
+            }
+          }
+        }
       }
     },
     "/arts/{illustID}/characters": {
@@ -2678,7 +2723,14 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetArtChractersResponse"
+                }
+              }
+            }
           }
         },
         "operationId": "getArtCharacters",
@@ -2700,28 +2752,60 @@
         "operationId": "editArtCharacters",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PutArtCharactersResponse"
+                }
+              }
+            }
           }
         },
         "description": "指定したイラストのキャラクター一覧に、与えられたIDのキャラクターを追加します\n(イラスト本体の編集時に付けられたキャラクター名から\n自動的にキャラクターIDを引き出し追加/削除を行う処理が追加されたため\nこちらのエンドポイントを使用する必要はありません)",
         "deprecated": true,
         "tags": [
           "arts"
-        ]
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PutArtChractersRequest"
+              }
+            }
+          }
+        }
       },
       "delete": {
         "summary": "Delete art character",
         "operationId": "deleteArtCharacters",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteArtCharactersResponse"
+                }
+              }
+            }
           }
         },
         "description": "指定したイラストのキャラクター一覧から、与えられたIDのキャラクターを削除します\n(イラスト本体の編集時に付けられたキャラクター名から\n自動的にキャラクターIDを引き出し追加/削除を行う処理が追加されたため\nこちらのエンドポイントを使用する必要はありません)",
         "deprecated": true,
         "tags": [
           "arts"
-        ]
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteArtCharactersRequest"
+              }
+            }
+          }
+        }
       }
     },
     "/arts/{illustID}/likes": {
@@ -5114,6 +5198,280 @@
           "failed-not-found": {
             "status": 404,
             "message": "The art don't have any tag."
+          }
+        }
+      },
+      "GetArtChractersResponse": {
+        "title": "GetArtCharactersResponse",
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 999,
+            "example": 200
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TagStruct"
+            }
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ],
+        "x-examples": {
+          "success": {
+            "status": 200,
+            "message": "ok",
+            "data": [
+              {
+                "id": 1,
+                "name": "香風智乃",
+                "nsfw": false
+              }
+            ]
+          },
+          "failed-not-found": {
+            "status": 404,
+            "message": "The art don't have any tag."
+          }
+        }
+      },
+      "PutArtTagsRequest": {
+        "title": "PutArtTagsRequest",
+        "type": "object",
+        "properties": {
+          "tagID": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          }
+        },
+        "x-examples": {
+          "example-1": {
+            "tagID": [
+              1,
+              2,
+              3
+            ]
+          }
+        }
+      },
+      "PutArtTagsResponse": {
+        "title": "PutArtTagsResponse",
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 999,
+            "example": 200
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "x-examples": {
+          "success": {
+            "status": 200,
+            "message": "Add succeed."
+          },
+          "failed-not-satisfied": {
+            "status": 400,
+            "message": "Request parameters are not satisfied."
+          },
+          "failed-invalid-id": {
+            "status": 400,
+            "message": "tagID is invalid, or not specified."
+          },
+          "failed-already-exists": {
+            "status": 400,
+            "message": "The tag is already registered to the art."
+          },
+          "failed-internal-error": {
+            "status": 500,
+            "message": "Server bombed."
+          }
+        }
+      },
+      "DeleteArtTagsRequest": {
+        "title": "DeleteArtTagsRequest",
+        "type": "object",
+        "properties": {
+          "tagID": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          }
+        },
+        "x-examples": {
+          "example-1": {
+            "tagID": [
+              1,
+              2,
+              3
+            ]
+          }
+        }
+      },
+      "DeleteArtTagsResponse": {
+        "title": "DeleteArtTagsResponse",
+        "type": "object",
+        "x-examples": {
+          "success": {
+            "status": 200,
+            "message": "Remove succeed."
+          },
+          "failed-not-satisfied": {
+            "status": 400,
+            "message": "Request parameters are not satisfied."
+          },
+          "failed-invalid-tags": {
+            "status": 400,
+            "message": "tagID is invalid, or not specified."
+          },
+          "failed-not-registered": {
+            "status": 400,
+            "message": "The tag is not registered to the art."
+          },
+          "failed-internal-error": {
+            "status": 500,
+            "message": "Server bombed."
+          }
+        },
+        "properties": {
+          "status": {
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 999,
+            "example": 200
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "PutArtChractersRequest": {
+        "title": "PutArtCharactersRequest",
+        "type": "object",
+        "properties": {
+          "tagID": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          }
+        },
+        "x-examples": {
+          "example-1": {
+            "tagID": [
+              1,
+              2,
+              3
+            ]
+          }
+        }
+      },
+      "PutArtCharactersResponse": {
+        "title": "PutArtCharactersResponse",
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 999,
+            "example": 200
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "x-examples": {
+          "success": {
+            "status": 200,
+            "message": "Add succeed."
+          },
+          "failed-not-satisfied": {
+            "status": 400,
+            "message": "Request parameters are not satisfied."
+          },
+          "failed-invalid-id": {
+            "status": 400,
+            "message": "tagID is invalid, or not specified."
+          },
+          "failed-already-exists": {
+            "status": 400,
+            "message": "The tag is already registered to the art."
+          },
+          "failed-internal-error": {
+            "status": 500,
+            "message": "Server bombed."
+          }
+        }
+      },
+      "DeleteArtCharactersRequest": {
+        "title": "DeleteArtCharactersRequest",
+        "type": "object",
+        "properties": {
+          "tagID": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          }
+        },
+        "x-examples": {
+          "example-1": {
+            "tagID": [
+              1,
+              2,
+              3
+            ]
+          }
+        }
+      },
+      "DeleteArtCharactersResponse": {
+        "title": "DeleteArtCharactersResponse",
+        "type": "object",
+        "x-examples": {
+          "success": {
+            "status": 200,
+            "message": "Remove succeed."
+          },
+          "failed-not-satisfied": {
+            "status": 400,
+            "message": "Request parameters are not satisfied."
+          },
+          "failed-invalid-tags": {
+            "status": 400,
+            "message": "tagID is invalid, or not specified."
+          },
+          "failed-not-registered": {
+            "status": 400,
+            "message": "The tag is not registered to the art."
+          },
+          "failed-internal-error": {
+            "status": 500,
+            "message": "Server bombed."
+          }
+        },
+        "properties": {
+          "status": {
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 999,
+            "example": 200
+          },
+          "message": {
+            "type": "string"
           }
         }
       }
