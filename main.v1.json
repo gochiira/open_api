@@ -5036,7 +5036,8 @@
         "required": [
           "illustID",
           "status"
-        ]
+        ],
+        "description": ""
       },
       "ReplaceArtResponse": {
         "description": "",
@@ -5055,19 +5056,19 @@
           "message"
         ],
         "x-examples": {
-          "example-1": {
+          "success": {
             "status": 200,
             "message": "Replace succeed"
           },
-          "example-2": {
+          "failed-not-satisfied": {
             "status": 400,
             "message": "Request parameters are not satisfied."
           },
-          "example-3": {
+          "failed-not-found": {
             "status": 404,
             "message": "The art data was not found."
           },
-          "example-4": {
+          "failed-internal-error": {
             "status": 500,
             "message": "Server bombed."
           }
