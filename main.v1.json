@@ -3162,7 +3162,8 @@
               }
             }
           }
-        }
+        },
+        "parameters": []
       }
     },
     "/accounts/{accountID}/connect/line": {
@@ -3181,13 +3182,29 @@
         "operationId": "connectLineAccount",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostConnectLineResponse"
+                }
+              }
+            }
           }
         },
         "description": "LINEアカウントにアカウントを連携する際にコールバックするエンドポイント\n(サイト内以外からこちらにリクエストすることはできません)",
         "tags": [
           "accounts"
-        ]
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostConnectLineRequest"
+              }
+            }
+          }
+        }
       }
     },
     "/accounts/{accountID}/connect/telegram": {
@@ -3206,13 +3223,37 @@
         "operationId": "connectTelegramAccount",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginWithTelegramResponse"
+                },
+                "examples": {
+                  "not-implemented": {
+                    "value": {
+                      "status": 501,
+                      "message": "Not implemented"
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         "description": "Telegramアカウントにアカウントを連携する際にコールバックするエンドポイント\n(サイト内以外からこちらにリクエストすることはできません)",
         "tags": [
           "accounts"
-        ]
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginWithTelegramRequest"
+              }
+            }
+          }
+        }
       }
     },
     "/accounts/{accountID}/connect/line_notify": {
@@ -3231,13 +3272,29 @@
         "operationId": "connectLineNotify",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostConnectLineNotifyResponse"
+                }
+              }
+            }
           }
         },
         "description": "Line Notifyにアカウントを連携する際にコールバックするエンドポイント\n(サイト内以外からこちらにリクエストすることはできません)",
         "tags": [
           "accounts"
-        ]
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostConnectLineNotifyRequest"
+              }
+            }
+          }
+        }
       }
     },
     "/search/uploaders": {
@@ -5053,6 +5110,14 @@
           "failed-no-match": {
             "status": 404,
             "message": "The account was not found."
+          },
+          "failed-params": {
+            "status": 403,
+            "message": "Direct access is not allowed."
+          },
+          "failed-internal-error": {
+            "status": 500,
+            "message": "Server bombed."
           }
         },
         "properties": {
@@ -6163,6 +6228,174 @@
         "x-examples": {
           "example": {
             "code": "SOMETHING_LINE_AUTH_STRING"
+          }
+        }
+      },
+      "PostConnectLineRequest": {
+        "description": "",
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "code"
+        ],
+        "x-examples": {
+          "example": {
+            "code": "SOMETHING_LINE_AUTH_STRING"
+          }
+        }
+      },
+      "PostConnectLineResponse": {
+        "description": "",
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "number"
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ],
+        "x-examples": {
+          "success": {
+            "status": 200,
+            "message": "Connect succeed."
+          },
+          "failed-auth": {
+            "status": 401,
+            "message": "Line authorization failed."
+          },
+          "failed-params": {
+            "status": 403,
+            "message": "Direct access is not allowed."
+          },
+          "failed-internal-error": {
+            "status": 500,
+            "message": "Server bombed."
+          }
+        }
+      },
+      "PostConnectLineNotifyRequest": {
+        "description": "",
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "code"
+        ],
+        "x-examples": {
+          "example": {
+            "code": "SOMETHING_LINE_NOTIFY_AUTH_STRING"
+          }
+        }
+      },
+      "PostConnectLineNotifyResponse": {
+        "description": "",
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "number"
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ],
+        "x-examples": {
+          "success": {
+            "status": 200,
+            "message": "Connect succeed."
+          },
+          "failed-auth": {
+            "status": 401,
+            "message": "Line notify authorization failed."
+          },
+          "failed-params": {
+            "status": 403,
+            "message": "Direct access is not allowed."
+          },
+          "failed-internal-error": {
+            "status": 500,
+            "message": "Server bombed."
+          }
+        }
+      },
+      "LoginWithTelegramRequest": {
+        "title": "LoginWithTelegramRequest",
+        "type": "object",
+        "properties": {
+          "hash": {
+            "type": "string"
+          },
+          "resp": {
+            "type": "string"
+          }
+        },
+        "x-examples": {
+          "example": {
+            "hash": "SOME_RESP_HASH",
+            "resp": "SOME_JSON_DATA"
+          }
+        }
+      },
+      "LoginWithTelegramResponse": {
+        "description": "",
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "number"
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          },
+          "apiKey": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ],
+        "x-examples": {
+          "success": {
+            "status": 200,
+            "message": "welcome back",
+            "apiKey": "DUMMY_API_KEY"
+          },
+          "failed-params": {
+            "status": 400,
+            "message": "Request parameters are not satisfied."
+          },
+          "failed-auth": {
+            "status": 401,
+            "message": "Hash mismatch"
+          },
+          "failed-permission": {
+            "status": 403,
+            "message": "You don't have enough permissions."
+          },
+          "failed-internal-error": {
+            "status": 500,
+            "message": "Server bombed."
           }
         }
       }
