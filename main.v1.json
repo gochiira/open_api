@@ -235,168 +235,9 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "description": "",
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "number"
-                    },
-                    "message": {
-                      "type": "string",
-                      "minLength": 1
-                    },
-                    "data": {
-                      "type": "object",
-                      "properties": {
-                        "title": {
-                          "type": "string",
-                          "minLength": 1
-                        },
-                        "count": {
-                          "type": "number"
-                        },
-                        "current": {
-                          "type": "number"
-                        },
-                        "pages": {
-                          "type": "number"
-                        },
-                        "contents": {
-                          "type": "array",
-                          "uniqueItems": true,
-                          "minItems": 1,
-                          "items": {
-                            "required": [
-                              "id",
-                              "name",
-                              "endpoint",
-                              "count",
-                              "lcount"
-                            ],
-                            "properties": {
-                              "id": {
-                                "type": "number"
-                              },
-                              "name": {
-                                "type": "string",
-                                "minLength": 1
-                              },
-                              "description": {},
-                              "group": {},
-                              "pixivID": {},
-                              "twitterID": {},
-                              "mastodon": {},
-                              "homepage": {},
-                              "endpoint": {
-                                "type": "string",
-                                "minLength": 1
-                              },
-                              "count": {
-                                "type": "number"
-                              },
-                              "lcount": {
-                                "type": "number"
-                              }
-                            }
-                          }
-                        }
-                      },
-                      "required": [
-                        "title",
-                        "count",
-                        "current",
-                        "pages",
-                        "contents"
-                      ]
-                    }
-                  },
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ]
+                  "$ref": "#/components/schemas/GetCatalogArtistResponse"
                 },
-                "examples": {
-                  "example": {
-                    "value": {
-                      "status": 200,
-                      "message": "found",
-                      "data": {
-                        "title": "絵師",
-                        "count": 5,
-                        "current": 1,
-                        "pages": 1,
-                        "contents": [
-                          {
-                            "id": 5,
-                            "name": "CHI CHEN",
-                            "description": null,
-                            "group": null,
-                            "pixivID": null,
-                            "twitterID": null,
-                            "mastodon": null,
-                            "homepage": null,
-                            "endpoint": "https://example.com",
-                            "count": 1,
-                            "lcount": 1
-                          },
-                          {
-                            "id": 4,
-                            "name": "Manki Kim",
-                            "description": null,
-                            "group": null,
-                            "pixivID": null,
-                            "twitterID": null,
-                            "mastodon": null,
-                            "homepage": null,
-                            "endpoint": "https://example.com",
-                            "count": 1,
-                            "lcount": 1
-                          },
-                          {
-                            "id": 3,
-                            "name": "Andy Falconer",
-                            "description": null,
-                            "group": null,
-                            "pixivID": null,
-                            "twitterID": null,
-                            "mastodon": null,
-                            "homepage": null,
-                            "endpoint": "https://example.com",
-                            "count": 1,
-                            "lcount": 1
-                          },
-                          {
-                            "id": 2,
-                            "name": "Nathan Dumlao",
-                            "description": null,
-                            "group": null,
-                            "pixivID": null,
-                            "twitterID": null,
-                            "mastodon": null,
-                            "homepage": null,
-                            "endpoint": "https://example.com",
-                            "count": 1,
-                            "lcount": 1
-                          },
-                          {
-                            "id": 1,
-                            "name": "みふね",
-                            "description": null,
-                            "group": null,
-                            "pixivID": null,
-                            "twitterID": null,
-                            "mastodon": null,
-                            "homepage": null,
-                            "endpoint": "https://example.com",
-                            "count": 4,
-                            "lcount": 57
-                          }
-                        ]
-                      }
-                    }
-                  }
-                }
+                "examples": {}
               }
             }
           }
@@ -463,279 +304,9 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "description": "",
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "number"
-                    },
-                    "message": {
-                      "type": "string",
-                      "minLength": 1
-                    },
-                    "data": {
-                      "type": "object",
-                      "required": [
-                        "title",
-                        "count",
-                        "current",
-                        "pages",
-                        "contents"
-                      ],
-                      "properties": {
-                        "title": {
-                          "type": "string",
-                          "minLength": 1
-                        },
-                        "count": {
-                          "type": "number"
-                        },
-                        "current": {
-                          "type": "number"
-                        },
-                        "pages": {
-                          "type": "number"
-                        },
-                        "contents": {
-                          "type": "array",
-                          "uniqueItems": true,
-                          "minItems": 1,
-                          "items": {
-                            "type": "object",
-                            "properties": {
-                              "id": {
-                                "type": "number"
-                              },
-                              "name": {
-                                "type": "string",
-                                "minLength": 1
-                              },
-                              "description": {},
-                              "nsfw": {
-                                "type": "number"
-                              },
-                              "endpoint": {},
-                              "count": {
-                                "type": "number"
-                              },
-                              "lcount": {
-                                "type": "number"
-                              }
-                            },
-                            "required": [
-                              "id",
-                              "name",
-                              "nsfw",
-                              "count",
-                              "lcount"
-                            ]
-                          }
-                        }
-                      }
-                    }
-                  },
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ]
+                  "$ref": "#/components/schemas/GetCatalogTagResponse"
                 },
-                "examples": {
-                  "example": {
-                    "value": {
-                      "status": 200,
-                      "message": "found",
-                      "data": {
-                        "title": "タグ",
-                        "count": 4073,
-                        "current": 1,
-                        "pages": 204,
-                        "contents": [
-                          {
-                            "id": 4175,
-                            "name": "魅惑の脚線美",
-                            "description": null,
-                            "nsfw": 0,
-                            "endpoint": null,
-                            "count": 1,
-                            "lcount": 0
-                          },
-                          {
-                            "id": 3931,
-                            "name": "2021年02月",
-                            "description": null,
-                            "nsfw": 0,
-                            "endpoint": null,
-                            "count": 574,
-                            "lcount": 172
-                          },
-                          {
-                            "id": 1230,
-                            "name": "タイツ越しのパンツ",
-                            "description": null,
-                            "nsfw": 0,
-                            "endpoint": null,
-                            "count": 4,
-                            "lcount": 10
-                          },
-                          {
-                            "id": 5,
-                            "name": "宇治松千夜",
-                            "description": "千夜さん",
-                            "nsfw": 0,
-                            "endpoint": null,
-                            "count": 909,
-                            "lcount": 925
-                          },
-                          {
-                            "id": 510,
-                            "name": "HD",
-                            "description": null,
-                            "nsfw": 0,
-                            "endpoint": null,
-                            "count": 1022,
-                            "lcount": 745
-                          },
-                          {
-                            "id": 89,
-                            "name": "パンツ",
-                            "description": null,
-                            "nsfw": 0,
-                            "endpoint": null,
-                            "count": 134,
-                            "lcount": 376
-                          },
-                          {
-                            "id": 192,
-                            "name": "ぱんつ",
-                            "description": null,
-                            "nsfw": 0,
-                            "endpoint": null,
-                            "count": 84,
-                            "lcount": 75
-                          },
-                          {
-                            "id": 422,
-                            "name": "差分",
-                            "description": null,
-                            "nsfw": 0,
-                            "endpoint": null,
-                            "count": 521,
-                            "lcount": 279
-                          },
-                          {
-                            "id": 2,
-                            "name": "保登心愛",
-                            "description": "ココアさん",
-                            "nsfw": 0,
-                            "endpoint": null,
-                            "count": 2140,
-                            "lcount": 4543
-                          },
-                          {
-                            "id": 469,
-                            "name": "FHD",
-                            "description": null,
-                            "nsfw": 0,
-                            "endpoint": null,
-                            "count": 2696,
-                            "lcount": 2818
-                          },
-                          {
-                            "id": 1,
-                            "name": "香風智乃",
-                            "description": "チノちゃん",
-                            "nsfw": 0,
-                            "endpoint": null,
-                            "count": 4366,
-                            "lcount": 12920
-                          },
-                          {
-                            "id": 414,
-                            "name": "R18",
-                            "description": null,
-                            "nsfw": 0,
-                            "endpoint": null,
-                            "count": 1869,
-                            "lcount": 681
-                          },
-                          {
-                            "id": 471,
-                            "name": "2K",
-                            "description": null,
-                            "nsfw": 0,
-                            "endpoint": null,
-                            "count": 1392,
-                            "lcount": 1639
-                          },
-                          {
-                            "id": 546,
-                            "name": "女の子",
-                            "description": null,
-                            "nsfw": 0,
-                            "endpoint": null,
-                            "count": 498,
-                            "lcount": 264
-                          },
-                          {
-                            "id": 4174,
-                            "name": "eQGMN5bqb8n",
-                            "description": null,
-                            "nsfw": 0,
-                            "endpoint": null,
-                            "count": 2,
-                            "lcount": 0
-                          },
-                          {
-                            "id": 920,
-                            "name": "めぐみ",
-                            "description": null,
-                            "nsfw": 0,
-                            "endpoint": null,
-                            "count": 69,
-                            "lcount": 6
-                          },
-                          {
-                            "id": 81,
-                            "name": "奈津恵",
-                            "description": null,
-                            "nsfw": 0,
-                            "endpoint": null,
-                            "count": 689,
-                            "lcount": 622
-                          },
-                          {
-                            "id": 4173,
-                            "name": "eTH7NS2kKk7",
-                            "description": null,
-                            "nsfw": 0,
-                            "endpoint": null,
-                            "count": 2,
-                            "lcount": 0
-                          },
-                          {
-                            "id": 2085,
-                            "name": "ほとここあ",
-                            "description": null,
-                            "nsfw": 0,
-                            "endpoint": null,
-                            "count": 3,
-                            "lcount": 0
-                          },
-                          {
-                            "id": 468,
-                            "name": "4K",
-                            "description": null,
-                            "nsfw": 0,
-                            "endpoint": null,
-                            "count": 3066,
-                            "lcount": 2723
-                          }
-                        ]
-                      }
-                    }
-                  }
-                }
+                "examples": {}
               }
             }
           }
@@ -803,105 +374,9 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "description": "",
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "number"
-                    },
-                    "message": {
-                      "type": "string",
-                      "minLength": 1
-                    },
-                    "data": {
-                      "type": "object",
-                      "properties": {
-                        "title": {
-                          "type": "string",
-                          "minLength": 1
-                        },
-                        "count": {
-                          "type": "number"
-                        },
-                        "current": {
-                          "type": "number"
-                        },
-                        "pages": {
-                          "type": "number"
-                        },
-                        "contents": {
-                          "type": "array",
-                          "uniqueItems": true,
-                          "minItems": 1,
-                          "items": {
-                            "required": [
-                              "id",
-                              "name",
-                              "nsfw",
-                              "count",
-                              "lcount"
-                            ],
-                            "properties": {
-                              "id": {
-                                "type": "number"
-                              },
-                              "name": {
-                                "type": "string",
-                                "minLength": 1
-                              },
-                              "description": {},
-                              "nsfw": {
-                                "type": "number"
-                              },
-                              "count": {
-                                "type": "number"
-                              },
-                              "lcount": {
-                                "type": "number"
-                              }
-                            }
-                          }
-                        }
-                      },
-                      "required": [
-                        "title",
-                        "count",
-                        "current",
-                        "pages",
-                        "contents"
-                      ]
-                    }
-                  },
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ]
+                  "$ref": "#/components/schemas/GetCatalogCharacterResponse"
                 },
-                "examples": {
-                  "example": {
-                    "value": {
-                      "status": 200,
-                      "message": "found",
-                      "data": {
-                        "title": "キャラ",
-                        "count": 1,
-                        "current": 1,
-                        "pages": 1,
-                        "contents": [
-                          {
-                            "id": 2,
-                            "name": "パソコン",
-                            "description": null,
-                            "nsfw": 0,
-                            "count": 1,
-                            "lcount": 53
-                          }
-                        ]
-                      }
-                    }
-                  }
-                }
+                "examples": {}
               }
             }
           }
@@ -1414,91 +889,9 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "description": "",
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "number"
-                    },
-                    "message": {
-                      "type": "string",
-                      "minLength": 1
-                    },
-                    "data": {
-                      "type": "object",
-                      "required": [
-                        "title",
-                        "count",
-                        "current",
-                        "pages",
-                        "imgs"
-                      ],
-                      "properties": {
-                        "title": {
-                          "type": "string",
-                          "minLength": 1
-                        },
-                        "count": {
-                          "type": "number"
-                        },
-                        "current": {
-                          "type": "number"
-                        },
-                        "pages": {
-                          "type": "number"
-                        },
-                        "imgs": {
-                          "type": "array",
-                          "uniqueItems": true,
-                          "minItems": 1,
-                          "items": {
-                            "$ref": "#/components/schemas/SearchResult"
-                          }
-                        }
-                      }
-                    }
-                  },
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ]
+                  "$ref": "#/components/schemas/GetMylistResponse"
                 },
-                "examples": {
-                  "example": {
-                    "value": {
-                      "status": 200,
-                      "message": "ok",
-                      "data": {
-                        "title": "Testのマイリスト",
-                        "count": 1,
-                        "current": 1,
-                        "pages": 1,
-                        "imgs": [
-                          {
-                            "illustID": 7,
-                            "artistID": 4,
-                            "title": "clear glass cup with tea near brown ceramic teapot",
-                            "caption": "",
-                            "date": "2021-01-07 15:15:28",
-                            "pages": 1,
-                            "like": 1,
-                            "mylist": 1,
-                            "mylisted": true,
-                            "originUrl": "https://unsplash.com/photos/L82-kkEBOd0?page=1",
-                            "originService": "独自",
-                            "nsfw": false,
-                            "artist": {
-                              "id": 4,
-                              "name": "Manki Kim"
-                            },
-                            "extension": "jpg"
-                          }
-                        ]
-                      }
-                    }
-                  }
-                }
+                "examples": {}
               }
             }
           }
@@ -3229,14 +2622,7 @@
                 "schema": {
                   "$ref": "#/components/schemas/LoginWithTelegramResponse"
                 },
-                "examples": {
-                  "not-implemented": {
-                    "value": {
-                      "status": 501,
-                      "message": "Not implemented"
-                    }
-                  }
-                }
+                "examples": {}
               }
             }
           }
@@ -3310,6 +2696,37 @@
         },
         "operationId": "searchArtByUploader",
         "description": "指定した投稿者のイラスト一覧を取得します"
+      }
+    },
+    "/catalog/uploaders": {
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetCatalogUploaderResponse"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "getUploaderList",
+        "description": "投稿者一覧を取得します",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/SearchQueryPage"
+          },
+          {
+            "$ref": "#/components/parameters/SearchQuerySort"
+          },
+          {
+            "$ref": "#/components/parameters/SearchQueryOrder"
+          }
+        ]
       }
     }
   },
@@ -3857,12 +3274,27 @@
           "nsfw": {
             "type": "boolean",
             "description": "アダルトコンテンツが含まれるタグか"
+          },
+          "description": {
+            "type": "string",
+            "description": "タグの説明文"
+          },
+          "count": {
+            "type": "integer",
+            "description": "タグに属する作品数"
+          },
+          "lcount": {
+            "type": "integer",
+            "description": "タグに属するいいね数"
           }
         },
         "required": [
           "id",
           "name",
-          "nsfw"
+          "nsfw",
+          "description",
+          "count",
+          "lcount"
         ]
       },
       "ReplaceStruct": {
@@ -5328,18 +4760,27 @@
             "example": "http://konebota.x0.com/PAGE/",
             "description": "HPのURL",
             "format": "uri-reference"
+          },
+          "count": {
+            "type": "integer",
+            "description": "絵師に属する作品数"
+          },
+          "lcount": {
+            "type": "integer",
+            "description": "絵師に属するいいね数"
           }
         },
         "required": [
           "id",
-          "userID",
           "name",
           "description",
           "group",
           "pixivID",
           "twitterID",
           "mastodon",
-          "homepage"
+          "homepage",
+          "count",
+          "lcount"
         ]
       },
       "ReplaceArtRequest": {
@@ -6396,6 +5837,630 @@
           "failed-internal-error": {
             "status": 500,
             "message": "Server bombed."
+          }
+        }
+      },
+      "GetCatalogArtistResponse": {
+        "description": "",
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "number"
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          },
+          "data": {
+            "type": "object",
+            "required": [
+              "title",
+              "count",
+              "current",
+              "pages",
+              "contents"
+            ],
+            "properties": {
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "count": {
+                "type": "number"
+              },
+              "current": {
+                "type": "number"
+              },
+              "pages": {
+                "type": "number"
+              },
+              "contents": {
+                "type": "array",
+                "uniqueItems": true,
+                "minItems": 1,
+                "items": {
+                  "$ref": "#/components/schemas/ArtistStruct"
+                }
+              }
+            }
+          }
+        },
+        "required": [
+          "status",
+          "message",
+          "data"
+        ],
+        "x-examples": {
+          "example-1": {
+            "status": 200,
+            "message": "found",
+            "data": {
+              "title": "絵師",
+              "count": 5,
+              "current": 1,
+              "pages": 1,
+              "contents": [
+                {
+                  "id": 5,
+                  "name": "CHI CHEN",
+                  "description": "",
+                  "group": "",
+                  "pixivID": "",
+                  "twitterID": "",
+                  "mastodon": "",
+                  "homepage": "",
+                  "endpoint": "https://example.com",
+                  "count": 1,
+                  "lcount": 1
+                },
+                {
+                  "id": 4,
+                  "name": "Manki Kim",
+                  "description": "",
+                  "group": "",
+                  "pixivID": "",
+                  "twitterID": "",
+                  "mastodon": "",
+                  "homepage": "",
+                  "endpoint": "https://example.com",
+                  "count": 1,
+                  "lcount": 1
+                },
+                {
+                  "id": 3,
+                  "name": "Andy Falconer",
+                  "description": "",
+                  "group": "",
+                  "pixivID": "",
+                  "twitterID": "",
+                  "mastodon": "",
+                  "homepage": "",
+                  "endpoint": "https://example.com",
+                  "count": 1,
+                  "lcount": 1
+                },
+                {
+                  "id": 2,
+                  "name": "Nathan Dumlao",
+                  "description": "",
+                  "group": "",
+                  "pixivID": "",
+                  "twitterID": "",
+                  "mastodon": "",
+                  "homepage": "",
+                  "endpoint": "https://example.com",
+                  "count": 1,
+                  "lcount": 1
+                },
+                {
+                  "id": 1,
+                  "name": "みふね",
+                  "description": "",
+                  "group": "",
+                  "pixivID": "",
+                  "twitterID": "",
+                  "mastodon": "",
+                  "homepage": "",
+                  "endpoint": "https://example.com",
+                  "count": 4,
+                  "lcount": 57
+                }
+              ]
+            }
+          }
+        },
+        "title": ""
+      },
+      "GetCatalogTagResponse": {
+        "description": "",
+        "type": "object",
+        "x-examples": {
+          "success": {
+            "status": 200,
+            "message": "found",
+            "data": {
+              "title": "タグ",
+              "count": 4073,
+              "current": 1,
+              "pages": 204,
+              "contents": [
+                {
+                  "id": 4175,
+                  "name": "魅惑の脚線美",
+                  "description": null,
+                  "nsfw": false,
+                  "endpoint": null,
+                  "count": 1,
+                  "lcount": 0
+                },
+                {
+                  "id": 3931,
+                  "name": "2021年02月",
+                  "description": null,
+                  "nsfw": false,
+                  "endpoint": null,
+                  "count": 574,
+                  "lcount": 172
+                },
+                {
+                  "id": 1230,
+                  "name": "タイツ越しのパンツ",
+                  "description": null,
+                  "nsfw": 0,
+                  "endpoint": null,
+                  "count": 4,
+                  "lcount": 10
+                },
+                {
+                  "id": 5,
+                  "name": "宇治松千夜",
+                  "description": "千夜さん",
+                  "nsfw": 0,
+                  "endpoint": null,
+                  "count": 909,
+                  "lcount": 925
+                },
+                {
+                  "id": 510,
+                  "name": "HD",
+                  "description": null,
+                  "nsfw": 0,
+                  "endpoint": null,
+                  "count": 1022,
+                  "lcount": 745
+                },
+                {
+                  "id": 89,
+                  "name": "パンツ",
+                  "description": null,
+                  "nsfw": 0,
+                  "endpoint": null,
+                  "count": 134,
+                  "lcount": 376
+                },
+                {
+                  "id": 192,
+                  "name": "ぱんつ",
+                  "description": null,
+                  "nsfw": 0,
+                  "endpoint": null,
+                  "count": 84,
+                  "lcount": 75
+                },
+                {
+                  "id": 422,
+                  "name": "差分",
+                  "description": null,
+                  "nsfw": 0,
+                  "endpoint": null,
+                  "count": 521,
+                  "lcount": 279
+                },
+                {
+                  "id": 2,
+                  "name": "保登心愛",
+                  "description": "ココアさん",
+                  "nsfw": 0,
+                  "endpoint": null,
+                  "count": 2140,
+                  "lcount": 4543
+                },
+                {
+                  "id": 469,
+                  "name": "FHD",
+                  "description": null,
+                  "nsfw": 0,
+                  "endpoint": null,
+                  "count": 2696,
+                  "lcount": 2818
+                },
+                {
+                  "id": 1,
+                  "name": "香風智乃",
+                  "description": "チノちゃん",
+                  "nsfw": 0,
+                  "endpoint": null,
+                  "count": 4366,
+                  "lcount": 12920
+                },
+                {
+                  "id": 414,
+                  "name": "R18",
+                  "description": null,
+                  "nsfw": 0,
+                  "endpoint": null,
+                  "count": 1869,
+                  "lcount": 681
+                },
+                {
+                  "id": 471,
+                  "name": "2K",
+                  "description": null,
+                  "nsfw": 0,
+                  "endpoint": null,
+                  "count": 1392,
+                  "lcount": 1639
+                },
+                {
+                  "id": 546,
+                  "name": "女の子",
+                  "description": null,
+                  "nsfw": 0,
+                  "endpoint": null,
+                  "count": 498,
+                  "lcount": 264
+                },
+                {
+                  "id": 4174,
+                  "name": "eQGMN5bqb8n",
+                  "description": null,
+                  "nsfw": 0,
+                  "endpoint": null,
+                  "count": 2,
+                  "lcount": 0
+                },
+                {
+                  "id": 920,
+                  "name": "めぐみ",
+                  "description": null,
+                  "nsfw": 0,
+                  "endpoint": null,
+                  "count": 69,
+                  "lcount": 6
+                },
+                {
+                  "id": 81,
+                  "name": "奈津恵",
+                  "description": null,
+                  "nsfw": 0,
+                  "endpoint": null,
+                  "count": 689,
+                  "lcount": 622
+                },
+                {
+                  "id": 4173,
+                  "name": "eTH7NS2kKk7",
+                  "description": null,
+                  "nsfw": 0,
+                  "endpoint": null,
+                  "count": 2,
+                  "lcount": 0
+                },
+                {
+                  "id": 2085,
+                  "name": "ほとここあ",
+                  "description": null,
+                  "nsfw": 0,
+                  "endpoint": null,
+                  "count": 3,
+                  "lcount": 0
+                },
+                {
+                  "id": 468,
+                  "name": "4K",
+                  "description": null,
+                  "nsfw": 0,
+                  "endpoint": null,
+                  "count": 3066,
+                  "lcount": 2723
+                }
+              ]
+            }
+          }
+        },
+        "properties": {
+          "status": {
+            "type": "number"
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          },
+          "data": {
+            "type": "object",
+            "required": [
+              "title",
+              "count",
+              "current",
+              "pages",
+              "contents"
+            ],
+            "properties": {
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "count": {
+                "type": "number"
+              },
+              "current": {
+                "type": "number"
+              },
+              "pages": {
+                "type": "number"
+              },
+              "contents": {
+                "type": "array",
+                "uniqueItems": true,
+                "minItems": 1,
+                "items": {
+                  "$ref": "#/components/schemas/TagStruct"
+                }
+              }
+            }
+          }
+        },
+        "required": [
+          "status",
+          "message",
+          "data"
+        ]
+      },
+      "GetCatalogUploaderResponse": {
+        "description": "",
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "number"
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          },
+          "data": {
+            "type": "object",
+            "required": [
+              "title",
+              "count",
+              "current",
+              "pages",
+              "contents"
+            ],
+            "properties": {
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "count": {
+                "type": "number"
+              },
+              "current": {
+                "type": "number"
+              },
+              "pages": {
+                "type": "number"
+              },
+              "contents": {
+                "type": "array",
+                "uniqueItems": true,
+                "minItems": 1,
+                "items": {
+                  "$ref": "#/components/schemas/UploaderStruct"
+                }
+              }
+            }
+          }
+        },
+        "required": [
+          "status",
+          "message",
+          "data"
+        ],
+        "x-examples": {
+          "example-1": {
+            "status": 0,
+            "message": "string",
+            "data": {
+              "title": "string",
+              "count": 0,
+              "current": 0,
+              "pages": 0,
+              "contents": [
+                {
+                  "id": 0,
+                  "name": "string",
+                  "count": 0,
+                  "lcount": 0
+                }
+              ]
+            }
+          }
+        }
+      },
+      "GetCatalogCharacterResponse": {
+        "description": "",
+        "type": "object",
+        "x-examples": {
+          "success": {
+            "status": 200,
+            "message": "found",
+            "data": {
+              "title": "キャラ",
+              "count": 1,
+              "current": 1,
+              "pages": 1,
+              "contents": [
+                {
+                  "id": 2,
+                  "name": "パソコン",
+                  "description": null,
+                  "nsfw": 0,
+                  "count": 1,
+                  "lcount": 53
+                }
+              ]
+            }
+          }
+        },
+        "properties": {
+          "status": {
+            "type": "number"
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          },
+          "data": {
+            "type": "object",
+            "required": [
+              "title",
+              "count",
+              "current",
+              "pages",
+              "contents"
+            ],
+            "properties": {
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "count": {
+                "type": "number"
+              },
+              "current": {
+                "type": "number"
+              },
+              "pages": {
+                "type": "number"
+              },
+              "contents": {
+                "type": "array",
+                "uniqueItems": true,
+                "minItems": 1,
+                "items": {
+                  "$ref": "#/components/schemas/TagStruct"
+                }
+              }
+            }
+          }
+        },
+        "required": [
+          "status",
+          "message",
+          "data"
+        ]
+      },
+      "UploaderStruct": {
+        "title": "UploaderStruct",
+        "type": "object",
+        "description": "",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "count": {
+            "type": "integer"
+          },
+          "lcount": {
+            "type": "integer"
+          }
+        }
+      },
+      "GetMylistResponse": {
+        "title": "GetMylistResponse",
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "number"
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          },
+          "data": {
+            "type": "object",
+            "required": [
+              "title",
+              "count",
+              "current",
+              "pages",
+              "imgs"
+            ],
+            "properties": {
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "count": {
+                "type": "number"
+              },
+              "current": {
+                "type": "number"
+              },
+              "pages": {
+                "type": "number"
+              },
+              "imgs": {
+                "type": "array",
+                "uniqueItems": true,
+                "minItems": 1,
+                "items": {
+                  "$ref": "#/components/schemas/SearchResult"
+                }
+              }
+            }
+          }
+        },
+        "required": [
+          "status",
+          "message",
+          "data"
+        ],
+        "description": "",
+        "x-examples": {
+          "example": {
+            "status": 200,
+            "message": "ok",
+            "data": {
+              "title": "Testのマイリスト",
+              "count": 1,
+              "current": 1,
+              "pages": 1,
+              "imgs": [
+                {
+                  "illustID": 7,
+                  "artistID": 4,
+                  "title": "clear glass cup with tea near brown ceramic teapot",
+                  "caption": "",
+                  "date": "2021-01-07 15:15:28",
+                  "pages": 1,
+                  "like": 1,
+                  "mylist": 1,
+                  "mylisted": true,
+                  "originUrl": "https://unsplash.com/photos/L82-kkEBOd0?page=1",
+                  "originService": "独自",
+                  "nsfw": false,
+                  "artist": {
+                    "id": 4,
+                    "name": "Manki Kim"
+                  },
+                  "extension": "jpg"
+                }
+              ]
+            }
           }
         }
       }
