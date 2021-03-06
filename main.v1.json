@@ -3038,20 +3038,43 @@
         "operationId": "editArtCommentById",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PutArtCommentResponse"
+                }
+              }
+            }
           }
         },
         "tags": [
           "arts"
         ],
-        "description": "指定したイラストに付けたコメントを編集します\n(ActivityPubを使用している場合、編集後の内容が再投稿されます)"
+        "description": "指定したイラストに付けたコメントを編集します\n(ActivityPubを使用している場合、編集後の内容が再投稿されます)",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PutArtCommentRequest"
+              }
+            }
+          }
+        }
       },
       "delete": {
         "summary": "Delete art comment",
         "operationId": "deleteArtCommentById",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteArtCommentesponse"
+                }
+              }
+            }
           }
         },
         "description": "指定したイラストに付けたコメントを削除します",
@@ -3064,7 +3087,14 @@
         "operationId": "getArtCommentById",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetArtCommentResponse"
+                }
+              }
+            }
           }
         },
         "description": "指定したイラストに付いている、指定されたIDのコメントを取得します",
@@ -3079,13 +3109,29 @@
         "operationId": "addArt",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostArtResponse"
+                }
+              }
+            }
           }
         },
         "tags": [
           "arts"
         ],
-        "description": "パラメータで与えられたイラストを投稿します"
+        "description": "パラメータで与えられたイラストを投稿します",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostArtRequest"
+              }
+            }
+          }
+        }
       }
     },
     "/accounts/login/line": {
@@ -3107,7 +3153,16 @@
         "description": "LINEアカウントを使ってログインする際にコールバックするエンドポイント\n(サイト内以外からこちらにリクエストすることはできません)",
         "tags": [
           "accounts"
-        ]
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginWithLineRequest"
+              }
+            }
+          }
+        }
       }
     },
     "/accounts/{accountID}/connect/line": {
@@ -4701,6 +4756,42 @@
           "message"
         ]
       },
+      "DeleteArtCommentesponse": {
+        "title": "DeleteArtCommentResponse",
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "number"
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "x-examples": {
+          "success": {
+            "status": 200,
+            "message": "ok"
+          },
+          "failed-not-yours": {
+            "status": 400,
+            "message": "The comment is not yours."
+          },
+          "failed-not-found": {
+            "status": 404,
+            "message": "The comment was not found."
+          },
+          "failed-internal-error": {
+            "status": 500,
+            "message": "Server bombed."
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ],
+        "description": "コメント削除応答"
+      },
       "GetAccountMeResponse": {
         "title": "GetAccountMeResponse",
         "type": "object",
@@ -4947,13 +5038,40 @@
         "description": ""
       },
       "LoginWithLineResponse": {
-        "title": "LoginWithLineResponse",
+        "description": "",
         "type": "object",
-        "properties": {
-          "id": {
-            "type": "string"
+        "x-examples": {
+          "success": {
+            "status": 200,
+            "message": "welcome back",
+            "apiKey": "DUMMY_API_KEY"
+          },
+          "failed-auth": {
+            "status": 401,
+            "message": "Line authorization failed."
+          },
+          "failed-no-match": {
+            "status": 404,
+            "message": "The account was not found."
           }
-        }
+        },
+        "properties": {
+          "status": {
+            "type": "number"
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          },
+          "apiKey": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ]
       },
       "CreateArtistResponse": {
         "title": "CreateArtistResponse",
@@ -5602,6 +5720,53 @@
           "message"
         ]
       },
+      "GetArtCommentResponse": {
+        "title": "GetArtCommentResponse",
+        "type": "object",
+        "x-examples": {
+          "failed-not-found": {
+            "status": 404,
+            "message": "The comment was not found."
+          },
+          "failed-internal-error": {
+            "status": 500,
+            "message": "Server bombed."
+          },
+          "success": {
+            "status": 200,
+            "message": "ok",
+            "comment": {
+              "user": {
+                "id": 1,
+                "name": "お窓"
+              },
+              "comment": {
+                "id": 1,
+                "created": "2021-03-07 03:41:40",
+                "updated": "2021-03-07 03:41:40",
+                "body": "香風智乃"
+              }
+            }
+          }
+        },
+        "properties": {
+          "status": {
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 999
+          },
+          "message": {
+            "type": "string"
+          },
+          "comment": {
+            "$ref": "#/components/schemas/CommentStruct"
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ]
+      },
       "PutArtLikesResponse": {
         "title": "PutArtLikesResponse",
         "type": "object",
@@ -5781,6 +5946,225 @@
           "status",
           "message"
         ]
+      },
+      "PutArtCommentRequest": {
+        "title": "PutArtCommentRequest",
+        "type": "object",
+        "properties": {
+          "comment": {
+            "type": "string"
+          }
+        },
+        "description": "",
+        "x-examples": {
+          "example": {
+            "comment": "香風智乃すき"
+          }
+        }
+      },
+      "PutArtCommentResponse": {
+        "description": "",
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "number"
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ],
+        "x-examples": {
+          "success": {
+            "status": 200,
+            "message": "Update comment succeed."
+          },
+          "failed-internal-error": {
+            "status": 500,
+            "message": "Server bombed."
+          },
+          "failed-not-found": {
+            "status": 404,
+            "message": "The comment was not found."
+          },
+          "failed-not-satisfied": {
+            "status": 400,
+            "message": "Request parameters are not satisfied."
+          }
+        }
+      },
+      "PostArtRequest": {
+        "description": "",
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "minLength": 1,
+            "description": "作品名"
+          },
+          "caption": {
+            "type": "string",
+            "minLength": 1,
+            "description": "作品説明文"
+          },
+          "originUrl": {
+            "type": "string",
+            "minLength": 1,
+            "description": "出典URL"
+          },
+          "originService": {
+            "type": "string",
+            "minLength": 1,
+            "description": "出典サービス名"
+          },
+          "imageUrl": {
+            "type": "string",
+            "minLength": 1,
+            "description": "ダウンロード元の画像URL(ローカルもしくはoriginUrl+?page=1)"
+          },
+          "artist": {
+            "type": "object",
+            "description": "絵師情報",
+            "required": [
+              "name"
+            ],
+            "properties": {
+              "twitterID": {
+                "type": "string",
+                "minLength": 1
+              },
+              "pixivID": {
+                "type": "string",
+                "minLength": 1
+              },
+              "name": {
+                "type": "string",
+                "minLength": 1,
+                "description": "絵師名をいれれば勝手に絵師IDが入る"
+              }
+            }
+          },
+          "tag": {
+            "type": "array",
+            "description": "タグ名配列",
+            "items": {
+              "type": "string"
+            }
+          },
+          "chara": {
+            "type": "array",
+            "description": "キャラ名配列(未登録の名称が入るとキャラとして登録)",
+            "items": {
+              "type": "string"
+            }
+          },
+          "group": {
+            "type": "array",
+            "description": "グループ名配列(未登録の名称が入るとグループとして登録)",
+            "items": {
+              "type": "string"
+            }
+          },
+          "system": {
+            "type": "array",
+            "description": "システム名配列(未登録の名称が入るとシステムとして登録)",
+            "items": {
+              "type": "string"
+            }
+          },
+          "nsfw": {
+            "type": "boolean",
+            "description": "アダルトコンテンツか否か"
+          }
+        },
+        "required": [
+          "title",
+          "caption",
+          "originUrl",
+          "originService",
+          "imageUrl",
+          "artist",
+          "tag",
+          "chara",
+          "group",
+          "system"
+        ],
+        "x-examples": {
+          "example": {
+            "title": "メグ「今日はマメ風呂だよ〜！」",
+            "caption": "",
+            "originService": "Twitter",
+            "originUrl": "https://twitter.com/syuyakustar/status/1368170402778935297?page=1",
+            "imageUrl": "https://twitter.com/syuyakustar/status/1368170402778935297?page=1",
+            "artist": {
+              "name": "みかミシェ㌠"
+            },
+            "tag": [
+              "奈津恵"
+            ],
+            "chara": [],
+            "group": [],
+            "system": [
+              "2021年03月"
+            ],
+            "nsfw": false
+          }
+        },
+        "title": ""
+      },
+      "PostArtResponse": {
+        "description": "",
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "number"
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ],
+        "x-examples": {
+          "success": {
+            "status": 202,
+            "message": "Accepted."
+          },
+          "failed-not-satisfied": {
+            "status": 400,
+            "message": "Request parameters are not satisfied."
+          },
+          "failed-invalid-artist": {
+            "status": 400,
+            "message": "Artist paramators are invalid."
+          },
+          "failed-invalid-url": {
+            "status": 400,
+            "message": "Invalid image url"
+          }
+        },
+        "title": ""
+      },
+      "LoginWithLineRequest": {
+        "title": "LoginWithLineRequest",
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          }
+        },
+        "x-examples": {
+          "example": {
+            "code": "SOMETHING_LINE_AUTH_STRING"
+          }
+        }
       }
     },
     "securitySchemes": {
