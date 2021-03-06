@@ -2987,13 +2987,29 @@
         "operationId": "addArtComment",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostArtCommentResponse"
+                }
+              }
+            }
           }
         },
         "description": "指定したイラストにコメントを追加します",
         "tags": [
           "arts"
-        ]
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostArtCommentRequest"
+              }
+            }
+          }
+        }
       }
     },
     "/arts/{illustID}/comments/{commentID}": {
@@ -4263,15 +4279,6 @@
       "PutAccountResponse": {
         "title": "PutAccountResponse",
         "type": "object",
-        "properties": {
-          "status": {
-            "type": "number"
-          },
-          "message": {
-            "type": "string",
-            "minLength": 1
-          }
-        },
         "x-examples": {
           "success": {
             "value": {
@@ -4296,6 +4303,17 @@
               "status": 400,
               "message": "Request parameters are not satisfied."
             }
+          }
+        },
+        "properties": {
+          "status": {
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 999
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
           }
         },
         "required": [
@@ -5726,6 +5744,43 @@
           }
         },
         "title": "Comment"
+      },
+      "PostArtCommentRequest": {
+        "title": "PostArtCommentRequest",
+        "type": "object",
+        "properties": {
+          "comment": {
+            "type": "string"
+          }
+        },
+        "x-examples": {
+          "example": {
+            "comment": "テストコメント"
+          }
+        }
+      },
+      "PostArtCommentResponse": {
+        "title": "PostArtCommentResponse",
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "number"
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "x-examples": {
+          "success": {
+            "status": 200,
+            "message": "ok"
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ]
       }
     },
     "securitySchemes": {
