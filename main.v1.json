@@ -2825,7 +2825,14 @@
         "operationId": "addArtLike",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PutArtLikesResponse"
+                }
+              }
+            }
           }
         },
         "tags": [
@@ -2839,7 +2846,14 @@
         "operationId": "getArtLikes",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetArtLikesResponse"
+                }
+              }
+            }
           }
         },
         "description": "指定したイラストのいいね数だけを取得します",
@@ -5474,6 +5488,77 @@
             "type": "string"
           }
         }
+      },
+      "GetArtLikesResponse": {
+        "title": "GetArtLikesResponse",
+        "type": "object",
+        "x-examples": {
+          "success": {
+            "status": 200,
+            "message": "ok",
+            "likes": 1204
+          },
+          "failed-not-found": {
+            "status": 404,
+            "message": "The art was not found."
+          },
+          "failed-internal-error": {
+            "status": 500,
+            "message": "Server bombed."
+          }
+        },
+        "properties": {
+          "status": {
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 999
+          },
+          "message": {
+            "type": "string"
+          },
+          "likes": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ]
+      },
+      "PutArtLikesResponse": {
+        "title": "PutArtLikesResponse",
+        "type": "object",
+        "x-examples": {
+          "success": {
+            "status": 200,
+            "message": "Update succeed.",
+            "likes": 1
+          },
+          "failed-internal-error": {
+            "status": 500,
+            "message": "Server bombed."
+          }
+        },
+        "properties": {
+          "status": {
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 999
+          },
+          "message": {
+            "type": "string"
+          },
+          "likes": {
+            "type": "integer",
+            "example": 1,
+            "minimum": 1
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ]
       }
     },
     "securitySchemes": {
