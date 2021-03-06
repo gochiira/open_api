@@ -2969,7 +2969,14 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetArtCommentsResponse"
+                }
+              }
+            }
           }
         },
         "operationId": "getArtComments",
@@ -5648,6 +5655,77 @@
           "status",
           "message"
         ]
+      },
+      "GetArtCommentsResponse": {
+        "title": "GetArtCommentsResponse",
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/CommentStruct"
+        }
+      },
+      "CommentStruct": {
+        "description": "コメント型",
+        "type": "object",
+        "properties": {
+          "user": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "number"
+              },
+              "name": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "id",
+              "name"
+            ]
+          },
+          "comment": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "number"
+              },
+              "created": {
+                "type": "string"
+              },
+              "updated": {
+                "type": "string"
+              },
+              "body": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "created",
+              "updated",
+              "body"
+            ]
+          }
+        },
+        "required": [
+          "user",
+          "comment"
+        ],
+        "x-examples": {
+          "example-1": {
+            "user": {
+              "id": 0,
+              "name": "string"
+            },
+            "comment": {
+              "id": 0,
+              "created": "string",
+              "updated": "string",
+              "body": "string"
+            }
+          }
+        },
+        "title": "Comment"
       }
     },
     "securitySchemes": {
