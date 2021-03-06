@@ -2914,7 +2914,14 @@
         "operationId": "addArtView",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PutArtViewsResponse"
+                }
+              }
+            }
           }
         },
         "tags": [
@@ -5594,6 +5601,44 @@
             "type": "string"
           },
           "likes": {
+            "type": "integer",
+            "example": 1,
+            "minimum": 1
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ]
+      },
+      "PutArtViewsResponse": {
+        "title": "PutArtViewsResponse",
+        "type": "object",
+        "x-examples": {
+          "success": {
+            "status": 200,
+            "message": "Update succeed.",
+            "views": 1
+          },
+          "failed-internal-error": {
+            "status": 500,
+            "message": "Server bombed."
+          },
+          "failed-already-viewed": {
+            "status": 409,
+            "message": "You can't add view for now"
+          }
+        },
+        "properties": {
+          "status": {
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 999
+          },
+          "message": {
+            "type": "string"
+          },
+          "views": {
             "type": "integer",
             "example": 1,
             "minimum": 1
