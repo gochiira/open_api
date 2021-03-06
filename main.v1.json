@@ -2603,7 +2603,17 @@
         "tags": [
           "arts"
         ],
-        "description": "パスパラメータで指定された低画質なイラストに対して\nクエリパラメータで指定されたより画質の良いイラストで統合(置き換え)処理を行います。\n画質が低い方のいいね・タグ・出典・コメントが画質が高い方のイラストに対して統合されます。\n置き換えられた画質が低い方のイラストは検索結果に表示されなくなりますが、IDを直接指定すれば閲覧できる状態で残ります。"
+        "description": "パスパラメータで指定された低画質なイラストに対して\nクエリパラメータで指定されたより画質の良いイラストで統合(置き換え)処理を行います。\n画質が低い方のいいね・タグ・出典・コメントが画質が高い方のイラストに対して統合されます。\n置き換えられた画質が低い方のイラストは検索結果に表示されなくなりますが、IDを直接指定すれば閲覧できる状態で残ります。",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            }
+          }
+        }
       }
     },
     "/arts/{illustID}/tags": {
@@ -3528,8 +3538,40 @@
         "title": "CreateArtistRequest",
         "type": "object",
         "properties": {
-          "id": {
+          "artistName": {
             "type": "string"
+          },
+          "artistDescription": {
+            "type": "string"
+          },
+          "groupName": {
+            "type": "string"
+          },
+          "pixivID": {
+            "type": "string"
+          },
+          "twitterID": {
+            "type": "string"
+          },
+          "mastodon": {
+            "type": "string"
+          },
+          "homepage": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "artistName"
+        ],
+        "x-examples": {
+          "example-1": {
+            "artistName": "string",
+            "artistDescription": "string",
+            "groupName": "string",
+            "pixivID": "string",
+            "twitterID": "string",
+            "mastodon": "string",
+            "homepage": "string"
           }
         }
       },
@@ -4490,10 +4532,8 @@
         },
         "x-examples": {
           "example-1": {
-            "value": {
-              "status": 200,
-              "message": "ok"
-            }
+            "status": 200,
+            "message": "ok"
           }
         },
         "required": [
@@ -4515,10 +4555,8 @@
         },
         "x-examples": {
           "example": {
-            "value": {
-              "status": 200,
-              "message": "ok"
-            }
+            "status": 200,
+            "message": "ok"
           }
         },
         "required": [
@@ -4729,10 +4767,8 @@
             }
           },
           "failed": {
-            "value": {
-              "status": 500,
-              "message": "Server exploded"
-            }
+            "status": 500,
+            "message": "Server exploded"
           }
         }
       },
@@ -4785,11 +4821,46 @@
       "CreateArtistResponse": {
         "title": "CreateArtistResponse",
         "type": "object",
-        "properties": {
-          "id": {
-            "type": "string"
+        "x-examples": {
+          "success-created": {
+            "status": 201,
+            "message": "Created",
+            "artistID": 1
+          },
+          "failed-bombed": {
+            "status": 500,
+            "message": "Server bombed"
+          },
+          "failed-invalid": {
+            "status": 400,
+            "message": "Request parameter is invalid."
+          },
+          "failed-exists": {
+            "status": 409,
+            "message": "The artist is already exist."
+          },
+          "failed-not-satisfied": {
+            "status": 400,
+            "message": "Request parameters are not satisfied."
           }
-        }
+        },
+        "properties": {
+          "status": {
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 999
+          },
+          "message": {
+            "type": "string"
+          },
+          "artistID": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ]
       },
       "GetArtistResponse": {
         "title": "GetArtistResponse",
@@ -4950,6 +5021,58 @@
           "mastodon",
           "homepage"
         ]
+      },
+      "ReplaceArtRequest": {
+        "title": "ReplaceArtRequest",
+        "type": "object",
+        "properties": {
+          "illustID": {
+            "type": "integer"
+          },
+          "status": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "illustID",
+          "status"
+        ]
+      },
+      "ReplaceArtResponse": {
+        "description": "",
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "number"
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ],
+        "x-examples": {
+          "example-1": {
+            "status": 200,
+            "message": "Replace succeed"
+          },
+          "example-2": {
+            "status": 400,
+            "message": "Request parameters are not satisfied."
+          },
+          "example-3": {
+            "status": 404,
+            "message": "The art data was not found."
+          },
+          "example-4": {
+            "status": 500,
+            "message": "Server bombed."
+          }
+        },
+        "title": ""
       }
     },
     "securitySchemes": {
