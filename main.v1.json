@@ -2927,7 +2927,14 @@
         "operationId": "getArtViews",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetArtViewsResponse"
+                }
+              }
+            }
           }
         },
         "description": "指定したイラストの閲覧回数のみを取得します",
@@ -5517,6 +5524,43 @@
             "type": "string"
           },
           "likes": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ]
+      },
+      "GetArtViewsResponse": {
+        "title": "GetArtViewsResponse",
+        "type": "object",
+        "x-examples": {
+          "success": {
+            "status": 200,
+            "message": "ok",
+            "views": 1204
+          },
+          "failed-not-found": {
+            "status": 404,
+            "message": "The art was not found."
+          },
+          "failed-internal-error": {
+            "status": 500,
+            "message": "Server bombed."
+          }
+        },
+        "properties": {
+          "status": {
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 999
+          },
+          "message": {
+            "type": "string"
+          },
+          "views": {
             "type": "integer",
             "minimum": 0
           }
