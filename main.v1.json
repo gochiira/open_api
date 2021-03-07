@@ -7531,7 +7531,7 @@
           "minimum": 0,
           "maximum": 1
         },
-        "description": "マイリスト情報を同時に取得するか否か"
+        "description": "マイリスト追加済みかを取得する0/1"
       }
     },
     "examples": {},
