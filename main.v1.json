@@ -2277,8 +2277,10 @@
     },
     "/catalog/uploaders": {
       "get": {
-        "summary": "Your GET endpoint",
-        "tags": [],
+        "summary": "Get uploader list",
+        "tags": [
+          "catalog"
+        ],
         "responses": {
           "200": {
             "description": "OK",
