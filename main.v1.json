@@ -779,8 +779,7 @@
           }
         },
         "operationId": "getMylists",
-        "description": "自分の作成したマイリスト一覧を取得します\n(現在1人辺り1マイリストしか作成できないのでこのエンドポイントは無意味です)",
-        "deprecated": true
+        "description": "自分の作成したマイリスト一覧を取得します\n(現在フロントエンド側に実装がありません)"
       }
     },
     "/search/tag": {
@@ -2686,13 +2685,29 @@
         "operationId": "findInMylistByIds",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostMylistFindsResponse"
+                }
+              }
+            }
           }
         },
-        "description": "指定したイラスト(単数/複数)がマイリストに含まれているかを判定します",
+        "description": "指定したイラスト(単数/複数)がマイリストに含まれているかを判定します\n検索リクエストでwith_mylisted=0としている場合、必要となる可能性があります",
         "tags": [
           "mylist"
-        ]
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostMylistFindsRequest"
+              }
+            }
+          }
+        }
       }
     }
   },
@@ -7410,7 +7425,12 @@
         "x-examples": {
           "success": {
             "status": 200,
-            "message": "ok"
+            "message": "ok",
+            "data": {
+              "1": true,
+              "2": false,
+              "3": true
+            }
           },
           "failed-not-satisfied": {
             "status": 400,
@@ -7440,7 +7460,7 @@
             "type": "object",
             "additionalProperties": {
               "type": "string",
-              "description": "リクエストで指定されたイラストIDを存在するかのboolが返される"
+              "description": "指定されたイラストIDをキーとして、それぞれ存在するかのboolean"
             }
           }
         }
