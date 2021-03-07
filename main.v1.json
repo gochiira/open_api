@@ -2452,18 +2452,29 @@
           },
           "name": "inviteID",
           "in": "path",
-          "required": true
+          "required": true,
+          "description": "招待コード"
         }
       ],
       "delete": {
-        "summary": "",
+        "summary": "Delete invitation",
         "operationId": "deleteInvitation",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteInviteResponse"
+                }
+              }
+            }
           }
         },
-        "description": "招待コードを無効化します"
+        "description": "招待コードを無効化します",
+        "tags": [
+          "invites"
+        ]
       }
     }
   },
@@ -6576,15 +6587,72 @@
       "PostInvitesResponse": {
         "title": "PostInvitesResponse",
         "type": "object",
+        "description": "",
         "properties": {
-          "id": {
+          "status": {
             "type": "integer"
           },
-          "code": {
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "description": "サイト内通し招待番号"
+              },
+              "code": {
+                "type": "string",
+                "description": "招待コード"
+              }
+            }
+          }
+        },
+        "x-examples": {
+          "success": {
+            "status": 200,
+            "message": "ok",
+            "data": {
+              "id": 1,
+              "code": "KAFUUCHINO"
+            }
+          },
+          "failed-exists": {
+            "status": 400,
+            "message": "Multiple invitation is not allowed for now."
+          },
+          "failed-conflict": {
+            "status": 409,
+            "message": "Sorry, your request conflicted. Try again later."
+          },
+          "failed-bad-request": {
+            "status": 400,
+            "message": "Bad request."
+          }
+        }
+      },
+      "DeleteInviteResponse": {
+        "title": "DeleteInviteResponse",
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "integer"
+          },
+          "message": {
             "type": "string"
           }
         },
-        "description": ""
+        "x-examples": {
+          "success": {
+            "status": 200,
+            "message": "ok"
+          },
+          "failed-internal-error": {
+            "status": 500,
+            "message": "Server bombed."
+          }
+        }
       }
     },
     "securitySchemes": {
@@ -6660,6 +6728,9 @@
     },
     {
       "name": "characters"
+    },
+    {
+      "name": "invites"
     },
     {
       "name": "mylist"
