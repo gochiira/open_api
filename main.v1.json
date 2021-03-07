@@ -2789,6 +2789,33 @@
           "news"
         ]
       }
+    },
+    "/notify/webpush/list": {
+      "get": {
+        "summary": "Get webpush config",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "operationId": "getWebPushNotify",
+        "description": "現在のユーザーが設定済みのWebpush一覧を取得する"
+      },
+      "parameters": []
+    },
+    "/notify/webpush": {
+      "post": {
+        "summary": "Register webpush",
+        "operationId": "registerWebpush",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "クライアント側で作成したパブリック/プライベートVAPIDキーを\nuserID、クライアント名、通知レベルと共にサーバーのデータベースに登録し\n1台分の設定を終える"
+      },
+      "parameters": []
     }
   },
   "components": {
