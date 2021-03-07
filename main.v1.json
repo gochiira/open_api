@@ -1335,7 +1335,15 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
           }
         },
         "operationId": "searchArtByImageUsingSaucenao",
@@ -7108,6 +7116,31 @@
                 }
               }
             }
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ]
+      },
+      "SearchByImageAtSauceNaoResponse": {
+        "title": "SearchByImageAtSauceNaoResponse",
+        "type": "object",
+        "x-examples": {
+          "example": {
+            "status": 200,
+            "message": "string"
+          }
+        },
+        "properties": {
+          "status": {
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 999,
+            "example": 200
+          },
+          "message": {
+            "type": "string"
           }
         },
         "required": [
