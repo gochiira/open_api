@@ -2793,7 +2793,9 @@
     "/notify/webpush/list": {
       "get": {
         "summary": "Get webpush config",
-        "tags": [],
+        "tags": [
+          "notify"
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -2813,9 +2815,27 @@
             "description": "OK"
           }
         },
-        "description": "クライアント側で作成したパブリック/プライベートVAPIDキーを\nuserID、クライアント名、通知レベルと共にサーバーのデータベースに登録し\n1台分の設定を終える"
+        "description": "クライアント側で作成したパブリック/プライベートVAPIDキーを\nuserID、クライアント名、通知レベルと共にサーバーのデータベースに登録し\n1台分の設定を終える",
+        "tags": [
+          "notify"
+        ]
       },
       "parameters": []
+    },
+    "/notify": {
+      "post": {
+        "summary": "Register notification",
+        "operationId": "registerNotification",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "通知してもらいたいものの種別とIDを添えてPOSTする",
+        "tags": [
+          "notify"
+        ]
+      }
     }
   },
   "components": {
@@ -7852,6 +7872,9 @@
     },
     {
       "name": "news"
+    },
+    {
+      "name": "notify"
     },
     {
       "name": "search"
