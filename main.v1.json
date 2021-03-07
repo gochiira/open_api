@@ -2815,7 +2815,7 @@
             "description": "OK"
           }
         },
-        "description": "クライアント側で作成したパブリック/プライベートVAPIDキーを\nuserID、クライアント名、通知レベルと共にサーバーのデータベースに登録し\n1台分の設定を終える",
+        "description": "クライアント側で作成したパブリック/プライベートVAPIDキーを\nuserID、クライアント名、通知レベルと共にサーバーのデータベースに登録し\n通知クライアントの1種として保存する(何個でも設定できる)",
         "tags": [
           "notify"
         ]
@@ -2836,6 +2836,19 @@
           "notify"
         ]
       }
+    },
+    "/notify/linenotify": {
+      "post": {
+        "summary": "",
+        "operationId": "registerLineNotify",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "LINENotifyのコールバックで返ってきたトークン類をリクエストして\n通知クライアントの一種として保存する。(各LINEアカウントが受け取れる場所は1箇所のみとする)"
+      },
+      "parameters": []
     }
   },
   "components": {
