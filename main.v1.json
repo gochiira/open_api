@@ -2488,20 +2488,43 @@
         "operationId": "addMute",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostMuteResponse"
+                }
+              }
+            }
           }
         },
         "tags": [
           "mutes"
         ],
-        "description": "ミュート情報を追加します"
+        "description": "ミュート情報を追加します",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostMuteRequest"
+              }
+            }
+          }
+        }
       },
       "get": {
         "summary": "Get mutes",
         "operationId": "getMutes",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetMutesResponse"
+                }
+              }
+            }
           }
         },
         "tags": [
@@ -2514,13 +2537,29 @@
         "operationId": "deleteMute",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteMuteResponse"
+                }
+              }
+            }
           }
         },
         "tags": [
           "mutes"
         ],
-        "description": "ミュート情報を削除します"
+        "description": "ミュート情報を削除します",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteMuteRequest"
+              }
+            }
+          }
+        }
       }
     }
   },
@@ -6734,6 +6773,158 @@
           "code": {
             "type": "string",
             "description": "発行したい招待コード"
+          }
+        }
+      },
+      "GetMutesResponse": {
+        "title": "GetMutesResponse",
+        "type": "object",
+        "x-examples": {
+          "success": {
+            "status": 200,
+            "message": "ok",
+            "data": {
+              "tag": [],
+              "artist": []
+            }
+          }
+        },
+        "properties": {
+          "status": {
+            "type": "integer"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "required": [
+              "tag",
+              "artist"
+            ],
+            "properties": {
+              "tag": {
+                "type": "array",
+                "description": "ミュート中のタグID配列",
+                "items": {
+                  "type": "integer"
+                }
+              },
+              "artist": {
+                "type": "array",
+                "description": "ミュート中の絵師ID配列",
+                "items": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "required": [
+          "status",
+          "message",
+          "data"
+        ]
+      },
+      "PostMuteRequest": {
+        "title": "PostMuteRequest",
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "integer",
+            "enum": [
+              1,
+              2
+            ],
+            "example": 1,
+            "minimum": 1,
+            "maximum": 2,
+            "description": "ミュート種別 1:タグ 2:絵師"
+          },
+          "id": {
+            "description": "対象のID",
+            "type": "integer"
+          }
+        }
+      },
+      "PostMuteResponse": {
+        "title": "PostMuteResponse",
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "integer"
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "x-examples": {
+          "success": {
+            "status": 200,
+            "message": "Added."
+          },
+          "failed-not-satisfied": {
+            "status": 400,
+            "message": "Request parameters are not satisfied."
+          },
+          "failed-exists": {
+            "status": 400,
+            "message": "The mute is already exists."
+          },
+          "failed-internal-error": {
+            "status": 500,
+            "message": "Server bombed."
+          }
+        }
+      },
+      "DeleteMuteRequest": {
+        "title": "DeleteMuteRequest",
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "integer",
+            "enum": [
+              1,
+              2
+            ],
+            "example": 1,
+            "minimum": 1,
+            "maximum": 2,
+            "description": "ミュート種別 1:タグ 2:絵師"
+          },
+          "id": {
+            "description": "対象のID",
+            "type": "integer"
+          }
+        }
+      },
+      "DeleteMuteResponse": {
+        "title": "DeleteMuteResponse",
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "integer"
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "x-examples": {
+          "success": {
+            "status": 200,
+            "message": "Removed."
+          },
+          "failed-not-satisfied": {
+            "status": 400,
+            "message": "Request parameters are not satisfied."
+          },
+          "failed-not-exists": {
+            "status": 400,
+            "message": "The mute was not found."
+          },
+          "failed-internal-error": {
+            "status": 500,
+            "message": "Server bombed."
           }
         }
       }
