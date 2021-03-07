@@ -822,6 +822,9 @@
             "name": "id",
             "description": "タグID",
             "required": true
+          },
+          {
+            "$ref": "#/components/parameters/SearchQueryMylist"
           }
         ]
       }
@@ -899,6 +902,9 @@
             "name": "id",
             "description": "キャラID(タグIDと同一)",
             "required": true
+          },
+          {
+            "$ref": "#/components/parameters/SearchQueryMylist"
           }
         ]
       }
@@ -1033,6 +1039,9 @@
             "name": "id",
             "description": "絵師ID",
             "required": true
+          },
+          {
+            "$ref": "#/components/parameters/SearchQueryMylist"
           }
         ]
       }
@@ -1111,6 +1120,9 @@
             "name": "keyword",
             "description": "検索対象ワード",
             "required": true
+          },
+          {
+            "$ref": "#/components/parameters/SearchQueryMylist"
           }
         ]
       }
@@ -1312,6 +1324,9 @@
           },
           {
             "$ref": "#/components/parameters/SearchQueryPage"
+          },
+          {
+            "$ref": "#/components/parameters/SearchQueryMylist"
           }
         ]
       }
@@ -1336,7 +1351,11 @@
         "tags": [
           "search"
         ],
-        "parameters": []
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/SearchQueryMylist"
+          }
+        ]
       }
     },
     "/search/image/self": {
@@ -2316,7 +2335,21 @@
           }
         },
         "operationId": "searchArtByUploader",
-        "description": "指定した投稿者のイラスト一覧を取得します"
+        "description": "指定した投稿者のイラスト一覧を取得します",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/SearchQuerySort"
+          },
+          {
+            "$ref": "#/components/parameters/SearchQueryOrder"
+          },
+          {
+            "$ref": "#/components/parameters/SearchQueryPage"
+          },
+          {
+            "$ref": "#/components/parameters/SearchQueryMylist"
+          }
+        ]
       }
     },
     "/catalog/uploaders": {
@@ -2388,7 +2421,7 @@
       "parameters": [
         {
           "schema": {
-            "type": "string"
+            "type": "integer"
           },
           "name": "charaID",
           "in": "path",
@@ -2635,6 +2668,31 @@
             }
           }
         }
+      }
+    },
+    "/mylist/{mylistID}/finds": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "integer"
+          },
+          "name": "mylistID",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "post": {
+        "summary": "Find arts registered",
+        "operationId": "findInMylistByIds",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "指定したイラスト(単数/複数)がマイリストに含まれているかを判定します",
+        "tags": [
+          "mylist"
+        ]
       }
     }
   },
@@ -7336,6 +7394,56 @@
           "createdDate",
           "updatedDate"
         ]
+      },
+      "PostMylistFindsRequest": {
+        "title": "PostMylistFindsRequest",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        }
+      },
+      "PostMylistFindsResponse": {
+        "title": "PostMylistFindsResponse",
+        "type": "object",
+        "x-examples": {
+          "success": {
+            "status": 200,
+            "message": "ok"
+          },
+          "failed-not-satisfied": {
+            "status": 400,
+            "message": "Request parameters are not satisfied."
+          },
+          "failed-not-exists": {
+            "status": 404,
+            "message": "The mylist was not exists."
+          },
+          "failed-internal-error": {
+            "status": 500,
+            "message": "Server bombed."
+          },
+          "failed-permission": {
+            "status": 400,
+            "message": "You don't have enough permission."
+          }
+        },
+        "properties": {
+          "status": {
+            "type": "integer"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string",
+              "description": "リクエストで指定されたイラストIDを存在するかのboolが返される"
+            }
+          }
+        }
       }
     },
     "securitySchemes": {
@@ -7386,6 +7494,24 @@
           "minimum": 1
         },
         "description": "ページ番号 (NOTE: 1ページ辺りの応答は20件)"
+      },
+      "SearchQueryMylist": {
+        "name": "with_mylisted",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "integer",
+          "format": "int32",
+          "default": 1,
+          "enum": [
+            1,
+            0
+          ],
+          "example": 1,
+          "minimum": 0,
+          "maximum": 1
+        },
+        "description": "マイリスト情報を同時に取得するか否か"
       }
     },
     "examples": {},
