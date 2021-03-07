@@ -2421,6 +2421,50 @@
         "description": "キャラクタータグを削除します\n(内部的にタグ情報と同じです)",
         "deprecated": true
       }
+    },
+    "/invites": {
+      "post": {
+        "summary": "Create invitation",
+        "operationId": "createInvitation",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostInvitesResponse"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "invites"
+        ],
+        "description": "招待コードを発行します\n1人につき1コードまで発行できます"
+      }
+    },
+    "/invites/{inviteID}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "inviteID",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "delete": {
+        "summary": "",
+        "operationId": "deleteInvitation",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "招待コードを無効化します"
+      }
     }
   },
   "components": {
@@ -6528,6 +6572,19 @@
           "status",
           "message"
         ]
+      },
+      "PostInvitesResponse": {
+        "title": "PostInvitesResponse",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "code": {
+            "type": "string"
+          }
+        },
+        "description": ""
       }
     },
     "securitySchemes": {
