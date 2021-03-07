@@ -661,8 +661,57 @@
             }
           }
         },
-        "operationId": "getNewsById",
+        "operationId": "getNews",
         "description": "指定したニュースの内容を取得します"
+      },
+      "delete": {
+        "summary": "Delete news",
+        "operationId": "deleteNews",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteNewsResponse"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "news"
+        ],
+        "description": "指定したニュースを削除します\n管理者のみリクエストできます"
+      },
+      "put": {
+        "summary": "Edit news",
+        "operationId": "editNews",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PutNewsResponse"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "news"
+        ],
+        "description": "指定したニュースのタイトル/本文/カラーを編集します\n管理者のみリクエストできます",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PutNewsRequest"
+              }
+            }
+          }
+        }
       }
     },
     "/mylist/{mylistID}": {
@@ -2708,6 +2757,37 @@
             }
           }
         }
+      }
+    },
+    "/news": {
+      "post": {
+        "summary": "Add news",
+        "operationId": "addNews",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostNewsResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "ニュースを追加します\n(管理者のみリクエストできます)",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostNewsRequest"
+              }
+            }
+          }
+        },
+        "tags": [
+          "news"
+        ]
       }
     }
   },
@@ -6560,7 +6640,8 @@
         },
         "required": [
           "status",
-          "message"
+          "message",
+          "data"
         ]
       },
       "GetNewsListResponse": {
@@ -7462,6 +7543,178 @@
               "type": "string",
               "description": "指定されたイラストIDをキーとして、それぞれ存在するかのboolean"
             }
+          }
+        }
+      },
+      "PostNewsRequest": {
+        "title": "PostNewsRequest",
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "ニュースのタイトル",
+            "minLength": 1,
+            "maxLength": 50
+          },
+          "body": {
+            "type": "string",
+            "description": "ニュースの本文(Markdown)",
+            "minLength": 1,
+            "maxLength": 5000
+          },
+          "color": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9,
+            "example": 1,
+            "description": "ニュースの表示カラー/種別"
+          }
+        },
+        "x-examples": {
+          "example": {
+            "title": "香風智乃がかわいい",
+            "body": "そーんなのー常識ー",
+            "color": 1
+          }
+        }
+      },
+      "PostNewsResponse": {
+        "description": "",
+        "type": "object",
+        "x-examples": {
+          "success": {
+            "status": 201,
+            "message": "Created.",
+            "articleID": 1
+          },
+          "failed-not-satisfied": {
+            "status": 400,
+            "message": "Request parameters are not satisfied."
+          },
+          "failed-params": {
+            "status": 400,
+            "message": "Request parameter is invalid."
+          },
+          "failed-permission": {
+            "status": 400,
+            "message": "You don't have enough permission."
+          }
+        },
+        "title": "PostNewsResponse",
+        "properties": {
+          "status": {
+            "type": "integer"
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          },
+          "articleID": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ]
+      },
+      "PutNewsRequest": {
+        "title": "PutNewsRequest",
+        "type": "object",
+        "x-examples": {
+          "example": {
+            "title": "香風智乃がかわいい",
+            "body": "そーんなのー常識ー",
+            "color": 1
+          }
+        },
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "ニュースのタイトル",
+            "minLength": 1,
+            "maxLength": 50
+          },
+          "body": {
+            "type": "string",
+            "description": "ニュースの本文(Markdown)",
+            "minLength": 1,
+            "maxLength": 5000
+          },
+          "color": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9,
+            "example": 1,
+            "description": "ニュースの表示カラー/種別"
+          },
+          "date": {
+            "type": "string",
+            "description": "登録日付時刻",
+            "minLength": 19,
+            "maxLength": 19
+          }
+        }
+      },
+      "PutNewsResponse": {
+        "description": "",
+        "type": "object",
+        "x-examples": {
+          "success": {
+            "status": 200,
+            "message": "Updated."
+          },
+          "failed-not-satisfied": {
+            "status": 400,
+            "message": "Request parameters are not satisfied."
+          },
+          "failed-params": {
+            "status": 400,
+            "message": "Request parameter is invalid."
+          },
+          "failed-permission": {
+            "status": 400,
+            "message": "You don't have enough permission."
+          }
+        },
+        "title": "PutNewsResponse",
+        "properties": {
+          "status": {
+            "type": "integer"
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ]
+      },
+      "DeleteNewsResponse": {
+        "title": "DeleteNewsResponse",
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "integer"
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "x-examples": {
+          "success": {
+            "status": 200,
+            "message": "ok"
+          },
+          "failed-internal-error": {
+            "status": 500,
+            "message": "Server bombed."
+          },
+          "failed-permission": {
+            "status": 400,
+            "message": "You don't have enough permission."
           }
         }
       }
