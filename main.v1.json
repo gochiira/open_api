@@ -2790,23 +2790,33 @@
         ]
       }
     },
-    "/notify/webpush/list": {
+    "/notify_config/clients": {
       "get": {
-        "summary": "Get webpush config",
+        "summary": "Get notification clients",
         "tags": [
           "notify"
         ],
+        "operationId": "getWebPushNotify",
+        "description": "現在のユーザーが設定済みの通知クライアント一覧を取得します",
         "responses": {
           "200": {
             "description": "OK"
           }
         },
-        "operationId": "getWebPushNotify",
-        "description": "現在のユーザーが設定済みのWebpush一覧を取得する"
+        "parameters": [
+          {
+            "schema": {
+              "type": "integer"
+            },
+            "in": "query",
+            "name": "type",
+            "description": "0:全て 1:LineNotify 2:WebPush"
+          }
+        ]
       },
       "parameters": []
     },
-    "/notify/webpush": {
+    "/notify_config/web_push": {
       "post": {
         "summary": "Register webpush",
         "operationId": "registerWebpush",
@@ -2837,16 +2847,19 @@
         ]
       }
     },
-    "/notify/linenotify": {
+    "/notify_config/line_notify": {
       "post": {
-        "summary": "",
+        "summary": "Register line notify",
         "operationId": "registerLineNotify",
         "responses": {
           "200": {
             "description": "OK"
           }
         },
-        "description": "LINENotifyのコールバックで返ってきたトークン類をリクエストして\n通知クライアントの一種として保存する。(各LINEアカウントが受け取れる場所は1箇所のみとする)"
+        "description": "LINENotifyのコールバックで返ってきたトークン類をリクエストして\n通知クライアントの一種として保存する。(各LINEアカウントが受け取れる場所は1箇所のみとする)",
+        "tags": [
+          "notify"
+        ]
       },
       "parameters": []
     }
