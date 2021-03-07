@@ -2307,6 +2307,107 @@
           }
         ]
       }
+    },
+    "/characters": {
+      "post": {
+        "summary": "Add character",
+        "operationId": "addCharacter",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostCharacterResponse"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "characters"
+        ],
+        "description": "キャラクタータグを作成します",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostCharacterRequest"
+              },
+              "examples": {
+                "example-1": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/characters/{charaID}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "charaID",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "Get character",
+        "tags": [
+          "characters"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetCharacterResponse"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "getCharacter",
+        "description": "キャラクタータグを取得します\n(内部的にタグ情報と同じです)"
+      },
+      "put": {
+        "summary": "Edit character",
+        "operationId": "editCharacter",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "characters"
+        ],
+        "description": "キャラクター情報を編集します\n(内部的にタグ情報と同じです)"
+      },
+      "delete": {
+        "summary": "Delete character",
+        "operationId": "deleteCharacter",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "characters"
+        ],
+        "description": "キャラクタータグを削除します\n(内部的にタグ情報と同じです)",
+        "deprecated": true
+      }
     }
   },
   "components": {
@@ -6346,6 +6447,69 @@
           "status",
           "message"
         ]
+      },
+      "PostCharacterRequest": {
+        "$ref": "#/components/schemas/CharacterStruct"
+      },
+      "PostCharacterResponse": {
+        "title": "PostCharacterResponse",
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "GetCharacterResponse": {
+        "title": "GetCharacterResponse",
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "integer"
+          },
+          "message": {
+            "type": "string"
+          },
+          "character": {
+            "$ref": "#/components/schemas/TagStruct"
+          }
+        }
+      },
+      "PutCharacterRequest": {
+        "title": "PutCharacterRequest",
+        "type": "object",
+        "properties": {
+          "charaName": {
+            "type": "string"
+          },
+          "charaDescription": {
+            "type": "string"
+          }
+        }
+      },
+      "PutCharacterResponse": {
+        "title": "PutCharacterResponse",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        }
+      },
+      "CharacterStruct": {
+        "title": "CharacterStruct",
+        "type": "object",
+        "properties": {
+          "charaName": {
+            "type": "string"
+          },
+          "charaDescription": {
+            "type": "string"
+          }
+        }
       }
     },
     "securitySchemes": {
@@ -6418,6 +6582,9 @@
     },
     {
       "name": "catalog"
+    },
+    {
+      "name": "characters"
     },
     {
       "name": "mylist"
