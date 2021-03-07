@@ -30,7 +30,7 @@
       "parameters": [
         {
           "schema": {
-            "type": "number"
+            "type": "integer"
           },
           "name": "accountID",
           "in": "path",
@@ -139,7 +139,7 @@
       "parameters": [
         {
           "schema": {
-            "type": "number"
+            "type": "integer"
           },
           "name": "accountID",
           "in": "path",
@@ -194,7 +194,7 @@
       "parameters": [
         {
           "schema": {
-            "type": "number"
+            "type": "integer"
           },
           "name": "accountID",
           "in": "path",
@@ -435,7 +435,7 @@
       "parameters": [
         {
           "schema": {
-            "type": "number"
+            "type": "integer"
           },
           "name": "illustID",
           "in": "path",
@@ -634,7 +634,7 @@
       "parameters": [
         {
           "schema": {
-            "type": "number",
+            "type": "integer",
             "minimum": 1,
             "exclusiveMinimum": true
           },
@@ -669,7 +669,7 @@
       "parameters": [
         {
           "schema": {
-            "type": "number"
+            "type": "integer"
           },
           "name": "mylistID",
           "in": "path",
@@ -1476,7 +1476,7 @@
       "parameters": [
         {
           "schema": {
-            "type": "number"
+            "type": "integer"
           },
           "name": "artistID",
           "in": "path",
@@ -1540,7 +1540,7 @@
       "parameters": [
         {
           "schema": {
-            "type": "number"
+            "type": "integer"
           },
           "name": "illustID",
           "in": "path",
@@ -1602,7 +1602,7 @@
       "parameters": [
         {
           "schema": {
-            "type": "number"
+            "type": "integer"
           },
           "name": "illustID",
           "in": "path",
@@ -1695,7 +1695,7 @@
       "parameters": [
         {
           "schema": {
-            "type": "number"
+            "type": "integer"
           },
           "name": "illustID",
           "in": "path",
@@ -1768,7 +1768,7 @@
       "parameters": [
         {
           "schema": {
-            "type": "number"
+            "type": "integer"
           },
           "name": "illustID",
           "in": "path",
@@ -1822,7 +1822,7 @@
       "parameters": [
         {
           "schema": {
-            "type": "number"
+            "type": "integer"
           },
           "name": "illustID",
           "in": "path",
@@ -1831,7 +1831,7 @@
         },
         {
           "schema": {
-            "type": "number"
+            "type": "integer"
           },
           "name": "likeType",
           "in": "path",
@@ -1857,7 +1857,7 @@
       "parameters": [
         {
           "schema": {
-            "type": "number"
+            "type": "integer"
           },
           "name": "illustID",
           "in": "path",
@@ -1910,7 +1910,7 @@
       "parameters": [
         {
           "schema": {
-            "type": "number"
+            "type": "integer"
           },
           "name": "illustID",
           "in": "path",
@@ -1972,7 +1972,7 @@
       "parameters": [
         {
           "schema": {
-            "type": "number"
+            "type": "integer"
           },
           "name": "illustID",
           "in": "path",
@@ -1981,7 +1981,7 @@
         },
         {
           "schema": {
-            "type": "number"
+            "type": "integer"
           },
           "name": "commentID",
           "in": "path",
@@ -2126,7 +2126,7 @@
       "parameters": [
         {
           "schema": {
-            "type": "number"
+            "type": "integer"
           },
           "name": "accountID",
           "in": "path",
@@ -2167,7 +2167,7 @@
       "parameters": [
         {
           "schema": {
-            "type": "number"
+            "type": "integer"
           },
           "name": "accountID",
           "in": "path",
@@ -2209,7 +2209,7 @@
       "parameters": [
         {
           "schema": {
-            "type": "number"
+            "type": "integer"
           },
           "name": "accountID",
           "in": "path",
@@ -2328,11 +2328,11 @@
         "description": "検索の応答モデル。配列で並んで返される。",
         "properties": {
           "illustID": {
-            "type": "number",
+            "type": "integer",
             "description": "イラストID"
           },
           "artistID": {
-            "type": "number",
+            "type": "integer",
             "description": "絵師ID(前との互換のために用意、非推奨)"
           },
           "title": {
@@ -2352,15 +2352,15 @@
             "description": "登録日(%Y-%m-%d %H:%M:%S)"
           },
           "pages": {
-            "type": "number",
+            "type": "integer",
             "description": "グループの場合のページ数(未使用)"
           },
           "like": {
-            "type": "number",
+            "type": "integer",
             "description": "累計いいね数"
           },
           "mylist": {
-            "type": "number",
+            "type": "integer",
             "description": "マイリスト済みのユーザー数"
           },
           "mylisted": {
@@ -2415,9 +2415,9 @@
           },
           "similarity": {
             "type": "number",
+            "description": "元画像との類似度(画像検索のみ)",
             "minimum": 0,
-            "maximum": 1,
-            "description": "元画像との類似度(画像検索のみ)"
+            "maximum": 1
           }
         },
         "required": [
@@ -2442,14 +2442,14 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "number"
+            "type": "integer"
           },
           "date": {
             "type": "string",
             "minLength": 1
           },
           "color": {
-            "type": "number"
+            "type": "integer"
           },
           "title": {
             "type": "string",
@@ -2892,7 +2892,7 @@
         "title": "Replace",
         "properties": {
           "illustID": {
-            "type": "number",
+            "type": "integer",
             "description": "サイト内イラスト通し番号"
           },
           "title": {
@@ -2920,11 +2920,11 @@
             "description": "出典URL"
           },
           "width": {
-            "type": "number",
+            "type": "integer",
             "description": "RAW画像の横幅"
           },
           "height": {
-            "type": "number",
+            "type": "integer",
             "description": "RAW画像の縦幅"
           },
           "filesize": {
@@ -3340,7 +3340,7 @@
         "type": "object",
         "properties": {
           "status": {
-            "type": "number"
+            "type": "integer"
           },
           "message": {
             "type": "string",
@@ -3371,7 +3371,7 @@
         "type": "object",
         "properties": {
           "status": {
-            "type": "number"
+            "type": "integer"
           },
           "message": {
             "type": "string",
@@ -3446,7 +3446,7 @@
         "type": "object",
         "properties": {
           "status": {
-            "type": "number",
+            "type": "integer",
             "description": "HTTPステータスコード"
           },
           "message": {
@@ -3458,7 +3458,7 @@
             "description": "ヒットした場合のみ存在する",
             "properties": {
               "illustID": {
-                "type": "number",
+                "type": "integer",
                 "description": "サイト内通しイラストID"
               },
               "title": {
@@ -3478,19 +3478,19 @@
                 "example": "2021-01-07 12:48:42"
               },
               "pages": {
-                "type": "number",
+                "type": "integer",
                 "description": "グループになっている場合の総ページ数(未使用)"
               },
               "like": {
-                "type": "number",
+                "type": "integer",
                 "description": "累計いいね数"
               },
               "view": {
-                "type": "number",
+                "type": "integer",
                 "description": "累計閲覧回数"
               },
               "mylist": {
-                "type": "number",
+                "type": "integer",
                 "description": "累計マイリスト数"
               },
               "mylisted": {
@@ -3512,7 +3512,7 @@
                 "type": "boolean"
               },
               "hash": {
-                "type": "number",
+                "type": "integer",
                 "description": "画像ハッシュ(pHash)"
               },
               "extension": {
@@ -3534,7 +3534,7 @@
                 "description": "絵師情報",
                 "properties": {
                   "id": {
-                    "type": "number",
+                    "type": "integer",
                     "description": "絵師のサイト内通し番号"
                   },
                   "name": {
@@ -3557,7 +3557,7 @@
                 ],
                 "properties": {
                   "id": {
-                    "type": "number",
+                    "type": "integer",
                     "description": "投稿したユーザーのサイト内通し番号"
                   },
                   "name": {
@@ -3568,16 +3568,16 @@
                 }
               },
               "status": {
-                "type": "number",
+                "type": "integer",
                 "description": "公開/非公開等の表示状態 0:公開 1:置換済み 2:削除(ユーザー) 3:削除(管理者)",
                 "example": 0
               },
               "width": {
-                "type": "number",
+                "type": "integer",
                 "description": "RAW画像の横方向のピクセル数"
               },
               "height": {
-                "type": "number",
+                "type": "integer",
                 "description": "RAW画像の縦方向のピクセル数"
               },
               "filesize": {
@@ -3635,16 +3635,16 @@
                 ],
                 "properties": {
                   "yellow": {
-                    "type": "number"
+                    "type": "integer"
                   },
                   "green": {
-                    "type": "number"
+                    "type": "integer"
                   },
                   "red": {
-                    "type": "number"
+                    "type": "integer"
                   },
                   "blue": {
-                    "type": "number"
+                    "type": "integer"
                   }
                 }
               }
@@ -3780,7 +3780,7 @@
         "type": "object",
         "properties": {
           "status": {
-            "type": "number"
+            "type": "integer"
           },
           "message": {
             "type": "string",
@@ -3803,7 +3803,7 @@
         "type": "object",
         "properties": {
           "status": {
-            "type": "number"
+            "type": "integer"
           },
           "message": {
             "type": "string",
@@ -3826,7 +3826,7 @@
         "type": "object",
         "properties": {
           "status": {
-            "type": "number"
+            "type": "integer"
           },
           "message": {
             "type": "string",
@@ -3862,7 +3862,7 @@
         "type": "object",
         "properties": {
           "status": {
-            "type": "number",
+            "type": "integer",
             "description": "HTTPステータスコード"
           },
           "message": {
@@ -3888,7 +3888,7 @@
             ],
             "properties": {
               "userID": {
-                "type": "number",
+                "type": "integer",
                 "description": "ユーザー通し番号"
               },
               "displayID": {
@@ -3902,7 +3902,7 @@
                 "description": "ユーザー名(日本語可)"
               },
               "favorite": {
-                "type": "number",
+                "type": "integer",
                 "description": "推しキャラのID"
               },
               "lineConnect": {
@@ -3918,7 +3918,7 @@
                 "description": "OneSignal設定済みかどうか"
               },
               "permission": {
-                "type": "number",
+                "type": "integer",
                 "description": "権限レベル 0:一般 5:Admin 9:SysOp"
               },
               "registeredDate": {
@@ -3935,7 +3935,7 @@
                 "description": "招待者の情報",
                 "properties": {
                   "id": {
-                    "type": "number",
+                    "type": "integer",
                     "description": "招待者のユーザー通し番号"
                   },
                   "name": {
@@ -3966,7 +3966,7 @@
                     "maxLength": 12
                   },
                   "invited": {
-                    "type": "number",
+                    "type": "integer",
                     "description": "招待した人数の累計(誰を招待したかは表示されない)"
                   },
                   "enabled": {
@@ -3983,7 +3983,7 @@
                 "description": "マイリスト情報",
                 "properties": {
                   "id": {
-                    "type": "number",
+                    "type": "integer",
                     "description": "自分のマイリストID"
                   }
                 }
@@ -4070,7 +4070,7 @@
         "type": "object",
         "properties": {
           "status": {
-            "type": "number"
+            "type": "integer"
           },
           "message": {
             "type": "string",
@@ -4130,7 +4130,7 @@
         },
         "properties": {
           "status": {
-            "type": "number"
+            "type": "integer"
           },
           "message": {
             "type": "string",
@@ -4237,7 +4237,7 @@
         },
         "properties": {
           "status": {
-            "type": "number",
+            "type": "integer",
             "description": "処理結果のHTTPステータスコード"
           },
           "message": {
@@ -4267,7 +4267,7 @@
         "type": "object",
         "properties": {
           "status": {
-            "type": "number"
+            "type": "integer"
           },
           "message": {
             "type": "string",
@@ -4292,7 +4292,7 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "number",
+            "type": "integer",
             "description": "絵師のID"
           },
           "userID": {
@@ -4381,7 +4381,7 @@
         "type": "object",
         "properties": {
           "status": {
-            "type": "number"
+            "type": "integer"
           },
           "message": {
             "type": "string",
@@ -4936,7 +4936,7 @@
             "type": "object",
             "properties": {
               "id": {
-                "type": "number"
+                "type": "integer"
               },
               "name": {
                 "type": "string",
@@ -4952,7 +4952,7 @@
             "type": "object",
             "properties": {
               "id": {
-                "type": "number"
+                "type": "integer"
               },
               "created": {
                 "type": "string"
@@ -5011,7 +5011,7 @@
         "type": "object",
         "properties": {
           "status": {
-            "type": "number"
+            "type": "integer"
           },
           "message": {
             "type": "string",
@@ -5049,7 +5049,7 @@
         "type": "object",
         "properties": {
           "status": {
-            "type": "number"
+            "type": "integer"
           },
           "message": {
             "type": "string",
@@ -5203,7 +5203,7 @@
         "type": "object",
         "properties": {
           "status": {
-            "type": "number"
+            "type": "integer"
           },
           "message": {
             "type": "string",
@@ -5271,7 +5271,7 @@
         "type": "object",
         "properties": {
           "status": {
-            "type": "number"
+            "type": "integer"
           },
           "message": {
             "type": "string",
@@ -5324,7 +5324,7 @@
         "type": "object",
         "properties": {
           "status": {
-            "type": "number"
+            "type": "integer"
           },
           "message": {
             "type": "string",
@@ -5377,7 +5377,7 @@
         "type": "object",
         "properties": {
           "status": {
-            "type": "number"
+            "type": "integer"
           },
           "message": {
             "type": "string",
@@ -5421,7 +5421,7 @@
         "type": "object",
         "properties": {
           "status": {
-            "type": "number"
+            "type": "integer"
           },
           "message": {
             "type": "string",
@@ -5442,13 +5442,13 @@
                 "minLength": 1
               },
               "count": {
-                "type": "number"
+                "type": "integer"
               },
               "current": {
-                "type": "number"
+                "type": "integer"
               },
               "pages": {
-                "type": "number"
+                "type": "integer"
               },
               "contents": {
                 "type": "array",
@@ -5746,7 +5746,7 @@
         },
         "properties": {
           "status": {
-            "type": "number"
+            "type": "integer"
           },
           "message": {
             "type": "string",
@@ -5767,13 +5767,13 @@
                 "minLength": 1
               },
               "count": {
-                "type": "number"
+                "type": "integer"
               },
               "current": {
-                "type": "number"
+                "type": "integer"
               },
               "pages": {
-                "type": "number"
+                "type": "integer"
               },
               "contents": {
                 "type": "array",
@@ -5797,7 +5797,7 @@
         "type": "object",
         "properties": {
           "status": {
-            "type": "number"
+            "type": "integer"
           },
           "message": {
             "type": "string",
@@ -5818,13 +5818,13 @@
                 "minLength": 1
               },
               "count": {
-                "type": "number"
+                "type": "integer"
               },
               "current": {
-                "type": "number"
+                "type": "integer"
               },
               "pages": {
-                "type": "number"
+                "type": "integer"
               },
               "contents": {
                 "type": "array",
@@ -5890,7 +5890,7 @@
         },
         "properties": {
           "status": {
-            "type": "number"
+            "type": "integer"
           },
           "message": {
             "type": "string",
@@ -5911,13 +5911,13 @@
                 "minLength": 1
               },
               "count": {
-                "type": "number"
+                "type": "integer"
               },
               "current": {
-                "type": "number"
+                "type": "integer"
               },
               "pages": {
-                "type": "number"
+                "type": "integer"
               },
               "contents": {
                 "type": "array",
@@ -5960,7 +5960,7 @@
         "type": "object",
         "properties": {
           "status": {
-            "type": "number"
+            "type": "integer"
           },
           "message": {
             "type": "string",
@@ -5981,13 +5981,13 @@
                 "minLength": 1
               },
               "count": {
-                "type": "number"
+                "type": "integer"
               },
               "current": {
-                "type": "number"
+                "type": "integer"
               },
               "pages": {
-                "type": "number"
+                "type": "integer"
               },
               "imgs": {
                 "type": "array",
@@ -6079,7 +6079,7 @@
         "description": "",
         "properties": {
           "status": {
-            "type": "number"
+            "type": "integer"
           },
           "data": {
             "type": "array",
@@ -6137,7 +6137,7 @@
         "description": "",
         "properties": {
           "status": {
-            "type": "number"
+            "type": "integer"
           },
           "data": {
             "type": "array",
@@ -6253,7 +6253,7 @@
         "description": "",
         "properties": {
           "status": {
-            "type": "number"
+            "type": "integer"
           },
           "data": {
             "type": "array",
@@ -6352,7 +6352,7 @@
         "type": "object",
         "properties": {
           "status": {
-            "type": "number"
+            "type": "integer"
           },
           "message": {
             "type": "string",
@@ -6373,13 +6373,13 @@
                 "minLength": 1
               },
               "count": {
-                "type": "number"
+                "type": "integer"
               },
               "current": {
-                "type": "number"
+                "type": "integer"
               },
               "pages": {
-                "type": "number"
+                "type": "integer"
               },
               "imgs": {
                 "type": "array",
@@ -6456,7 +6456,7 @@
         "type": "object",
         "properties": {
           "status": {
-            "type": "number"
+            "type": "integer"
           },
           "message": {
             "type": "string",
@@ -6477,13 +6477,13 @@
                 "minLength": 1
               },
               "count": {
-                "type": "number"
+                "type": "integer"
               },
               "current": {
-                "type": "number"
+                "type": "integer"
               },
               "pages": {
-                "type": "number"
+                "type": "integer"
               },
               "imgs": {
                 "type": "array",
@@ -6560,7 +6560,7 @@
         "type": "object",
         "properties": {
           "status": {
-            "type": "number"
+            "type": "integer"
           },
           "message": {
             "type": "string",
@@ -6581,13 +6581,13 @@
                 "minLength": 1
               },
               "count": {
-                "type": "number"
+                "type": "integer"
               },
               "current": {
-                "type": "number"
+                "type": "integer"
               },
               "pages": {
-                "type": "number"
+                "type": "integer"
               },
               "imgs": {
                 "type": "array",
@@ -6664,7 +6664,7 @@
         "type": "object",
         "properties": {
           "status": {
-            "type": "number"
+            "type": "integer"
           },
           "message": {
             "type": "string",
@@ -6685,13 +6685,13 @@
                 "minLength": 1
               },
               "count": {
-                "type": "number"
+                "type": "integer"
               },
               "current": {
-                "type": "number"
+                "type": "integer"
               },
               "pages": {
-                "type": "number"
+                "type": "integer"
               },
               "imgs": {
                 "type": "array",
@@ -6768,7 +6768,7 @@
         "type": "object",
         "properties": {
           "status": {
-            "type": "number"
+            "type": "integer"
           },
           "message": {
             "type": "string",
@@ -6789,13 +6789,13 @@
                 "minLength": 1
               },
               "count": {
-                "type": "number"
+                "type": "integer"
               },
               "current": {
-                "type": "number"
+                "type": "integer"
               },
               "pages": {
-                "type": "number"
+                "type": "integer"
               },
               "imgs": {
                 "type": "array",
@@ -6872,7 +6872,7 @@
         "type": "object",
         "properties": {
           "status": {
-            "type": "number"
+            "type": "integer"
           },
           "message": {
             "type": "string",
@@ -6893,13 +6893,13 @@
                 "minLength": 1
               },
               "count": {
-                "type": "number"
+                "type": "integer"
               },
               "current": {
-                "type": "number"
+                "type": "integer"
               },
               "pages": {
-                "type": "number"
+                "type": "integer"
               },
               "imgs": {
                 "type": "array",
@@ -6976,7 +6976,7 @@
         "type": "object",
         "properties": {
           "status": {
-            "type": "number"
+            "type": "integer"
           },
           "message": {
             "type": "string",
@@ -6997,13 +6997,13 @@
                 "minLength": 1
               },
               "count": {
-                "type": "number"
+                "type": "integer"
               },
               "current": {
-                "type": "number"
+                "type": "integer"
               },
               "pages": {
-                "type": "number"
+                "type": "integer"
               },
               "imgs": {
                 "type": "array",
