@@ -2442,20 +2442,7 @@
           "invites"
         ],
         "description": "招待コードを発行します\n1人につき1コードまで発行できます"
-      }
-    },
-    "/invites/{inviteID}": {
-      "parameters": [
-        {
-          "schema": {
-            "type": "string"
-          },
-          "name": "inviteID",
-          "in": "path",
-          "required": true,
-          "description": "招待コード"
-        }
-      ],
+      },
       "delete": {
         "summary": "Delete invitation",
         "operationId": "deleteInvitation",
@@ -2475,6 +2462,47 @@
         "tags": [
           "invites"
         ]
+      }
+    },
+    "/mutes": {
+      "post": {
+        "summary": "Add mute",
+        "operationId": "addMute",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "mutes"
+        ],
+        "description": "ミュート情報を追加します"
+      },
+      "get": {
+        "summary": "Get mutes",
+        "operationId": "getMutes",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "mutes"
+        ],
+        "description": "ミュート中の絵師/タグ情報一覧を取得します"
+      },
+      "delete": {
+        "summary": "Remove mute",
+        "operationId": "deleteMute",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "mutes"
+        ],
+        "description": "ミュート情報を削除します"
       }
     }
   },
@@ -6731,6 +6759,9 @@
     },
     {
       "name": "invites"
+    },
+    {
+      "name": "mutes"
     },
     {
       "name": "mylist"
