@@ -527,7 +527,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GetNavigationCharacterResponse"
+                  "$ref": "#/components/schemas/GetNavigationGeneralResponse"
                 },
                 "examples": {}
               }
@@ -550,7 +550,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GetNavigationArtistResponse"
+                  "$ref": "#/components/schemas/GetNavigationGeneralResponse"
                 },
                 "examples": {}
               }
@@ -573,7 +573,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GetNavigationTagResponse"
+                  "$ref": "#/components/schemas/GetNavigationGeneralResponse"
                 },
                 "examples": {}
               }
@@ -596,7 +596,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GetNavigationUploaderResponse"
+                  "$ref": "#/components/schemas/GetNavigationGeneralResponse"
                 },
                 "examples": {}
               }
@@ -751,7 +751,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/SearchByTagResponse"
+                  "$ref": "#/components/schemas/SearchGeneralResponse"
                 },
                 "examples": {}
               }
@@ -794,7 +794,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/SearchByCharacterResponse"
+                  "$ref": "#/components/schemas/SearchGeneralResponse"
                 },
                 "examples": {
                   "example": {
@@ -871,7 +871,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/SearchByArtistResponse"
+                  "$ref": "#/components/schemas/SearchGeneralResponse"
                 },
                 "examples": {
                   "example": {
@@ -1005,7 +1005,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/SearchByKeywordResponse"
+                  "$ref": "#/components/schemas/SearchGeneralResponse"
                 },
                 "examples": {
                   "example": {
@@ -1083,7 +1083,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/SearchByAllResponse"
+                  "$ref": "#/components/schemas/SearchGeneralResponse"
                 },
                 "examples": {
                   "example": {
@@ -1281,7 +1281,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/SearchByRandomResponse"
+                  "$ref": "#/components/schemas/SearchGeneralResponse"
                 }
               }
             }
@@ -2265,7 +2265,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/SearchByUploaderResponse"
+                  "$ref": "#/components/schemas/SearchGeneralResponse"
                 }
               }
             }
@@ -5382,23 +5382,6 @@
       "LoginWithTelegramResponse": {
         "description": "",
         "type": "object",
-        "properties": {
-          "status": {
-            "type": "integer"
-          },
-          "message": {
-            "type": "string",
-            "minLength": 1
-          },
-          "apiKey": {
-            "type": "string",
-            "minLength": 1
-          }
-        },
-        "required": [
-          "status",
-          "message"
-        ],
         "x-examples": {
           "success": {
             "status": 200,
@@ -5421,7 +5404,20 @@
             "status": 500,
             "message": "Server bombed."
           }
-        }
+        },
+        "properties": {
+          "status": {
+            "type": "integer"
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ]
       },
       "GetCatalogArtistResponse": {
         "description": "",
@@ -6047,66 +6043,8 @@
           }
         }
       },
-      "GetNavigationCharacterResponse": {
-        "title": "GetNavigationCharacterResponse",
-        "type": "object",
-        "x-examples": {
-          "success": {
-            "status": 200,
-            "message": "ok",
-            "data": [
-              {
-                "name": "香風智乃",
-                "id": 1,
-                "count": 4366
-              },
-              {
-                "name": "保登心愛",
-                "id": 2,
-                "count": 2140
-              },
-              {
-                "name": "桐間紗路",
-                "id": 4,
-                "count": 1183
-              },
-              {
-                "name": "天々座理世",
-                "id": 3,
-                "count": 1140
-              },
-              {
-                "name": "宇治松千夜",
-                "id": 5,
-                "count": 909
-              }
-            ]
-          }
-        },
-        "description": "",
-        "properties": {
-          "status": {
-            "type": "integer"
-          },
-          "data": {
-            "type": "array",
-            "uniqueItems": true,
-            "minItems": 1,
-            "items": {
-              "$ref": "#/components/schemas/NavigationResult"
-            }
-          },
-          "message": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "status",
-          "message"
-        ]
-      },
-      "GetNavigationArtistResponse": {
-        "title": "GetNavigationCharacterResponse",
+      "GetNavigationGeneralResponse": {
+        "title": "GetNavigationGeneralResponse",
         "type": "object",
         "x-examples": {
           "success": {
@@ -6137,122 +6075,6 @@
                 "name": "きよ蔵",
                 "id": 71,
                 "count": 80
-              }
-            ]
-          }
-        },
-        "description": "",
-        "properties": {
-          "status": {
-            "type": "integer"
-          },
-          "data": {
-            "type": "array",
-            "uniqueItems": true,
-            "minItems": 1,
-            "items": {
-              "$ref": "#/components/schemas/NavigationResult"
-            }
-          },
-          "message": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "status",
-          "message"
-        ]
-      },
-      "GetNavigationTagResponse": {
-        "title": "GetNavigationCharacterResponse",
-        "type": "object",
-        "x-examples": {
-          "success": {
-            "status": 200,
-            "message": "ok",
-            "data": [
-              {
-                "name": "2020年12月",
-                "id": 2973,
-                "count": 1580
-              },
-              {
-                "name": "2020年10月",
-                "id": 1793,
-                "count": 1536
-              },
-              {
-                "name": "2020年11月",
-                "id": 2429,
-                "count": 1324
-              },
-              {
-                "name": "2021年01月",
-                "id": 3529,
-                "count": 874
-              },
-              {
-                "name": "2021年02月",
-                "id": 3931,
-                "count": 574
-              }
-            ]
-          }
-        },
-        "description": "",
-        "properties": {
-          "status": {
-            "type": "integer"
-          },
-          "data": {
-            "type": "array",
-            "uniqueItems": true,
-            "minItems": 1,
-            "items": {
-              "$ref": "#/components/schemas/NavigationResult"
-            }
-          },
-          "message": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "status",
-          "message"
-        ]
-      },
-      "GetNavigationUploaderResponse": {
-        "title": "GetNavigationUploaderResponse",
-        "type": "object",
-        "x-examples": {
-          "success": {
-            "status": 200,
-            "message": "ok",
-            "data": [
-              {
-                "name": "2020年12月",
-                "id": 2973,
-                "count": 1580
-              },
-              {
-                "name": "2020年10月",
-                "id": 1793,
-                "count": 1536
-              },
-              {
-                "name": "2020年11月",
-                "id": 2429,
-                "count": 1324
-              },
-              {
-                "name": "2021年01月",
-                "id": 3529,
-                "count": 874
-              },
-              {
-                "name": "2021年02月",
-                "id": 3931,
-                "count": 574
               }
             ]
           }
@@ -6354,631 +6176,7 @@
           "message"
         ]
       },
-      "SearchByTagResponse": {
-        "description": "",
-        "type": "object",
-        "properties": {
-          "status": {
-            "type": "integer"
-          },
-          "message": {
-            "type": "string",
-            "minLength": 1
-          },
-          "data": {
-            "type": "object",
-            "required": [
-              "title",
-              "count",
-              "current",
-              "pages",
-              "imgs"
-            ],
-            "properties": {
-              "title": {
-                "type": "string",
-                "minLength": 1
-              },
-              "count": {
-                "type": "integer"
-              },
-              "current": {
-                "type": "integer"
-              },
-              "pages": {
-                "type": "integer"
-              },
-              "imgs": {
-                "type": "array",
-                "uniqueItems": true,
-                "minItems": 1,
-                "items": {
-                  "$ref": "#/components/schemas/SearchResult"
-                }
-              }
-            }
-          }
-        },
-        "required": [
-          "status",
-          "message",
-          "data"
-        ],
-        "title": "",
-        "x-examples": {
-          "example": {
-            "status": 200,
-            "message": "found",
-            "data": {
-              "title": "ティーカップ",
-              "count": 2,
-              "current": 1,
-              "pages": 1,
-              "imgs": [
-                {
-                  "illustID": 8,
-                  "artistID": 5,
-                  "title": "tea pours into white teacup photo",
-                  "caption": "",
-                  "date": "2021-01-07 15:16:58",
-                  "pages": 1,
-                  "like": 1,
-                  "mylist": 0,
-                  "mylisted": false,
-                  "originUrl": "https://unsplash.com/photos/oBoELXgJR1w?page=1",
-                  "originService": "独自",
-                  "nsfw": false,
-                  "artist": {
-                    "id": 5,
-                    "name": "CHI CHEN"
-                  },
-                  "extension": "jpg"
-                },
-                {
-                  "illustID": 7,
-                  "artistID": 4,
-                  "title": "clear glass cup with tea near brown ceramic teapot",
-                  "caption": "",
-                  "date": "2021-01-07 15:15:28",
-                  "pages": 1,
-                  "like": 1,
-                  "mylist": 1,
-                  "mylisted": true,
-                  "originUrl": "https://unsplash.com/photos/L82-kkEBOd0?page=1",
-                  "originService": "独自",
-                  "nsfw": false,
-                  "artist": {
-                    "id": 4,
-                    "name": "Manki Kim"
-                  },
-                  "extension": "jpg"
-                }
-              ]
-            }
-          }
-        }
-      },
-      "SearchByCharacterResponse": {
-        "description": "",
-        "type": "object",
-        "properties": {
-          "status": {
-            "type": "integer"
-          },
-          "message": {
-            "type": "string",
-            "minLength": 1
-          },
-          "data": {
-            "type": "object",
-            "required": [
-              "title",
-              "count",
-              "current",
-              "pages",
-              "imgs"
-            ],
-            "properties": {
-              "title": {
-                "type": "string",
-                "minLength": 1
-              },
-              "count": {
-                "type": "integer"
-              },
-              "current": {
-                "type": "integer"
-              },
-              "pages": {
-                "type": "integer"
-              },
-              "imgs": {
-                "type": "array",
-                "uniqueItems": true,
-                "minItems": 1,
-                "items": {
-                  "$ref": "#/components/schemas/SearchResult"
-                }
-              }
-            }
-          }
-        },
-        "required": [
-          "status",
-          "message",
-          "data"
-        ],
-        "title": "",
-        "x-examples": {
-          "example": {
-            "status": 200,
-            "message": "found",
-            "data": {
-              "title": "ティーカップ",
-              "count": 2,
-              "current": 1,
-              "pages": 1,
-              "imgs": [
-                {
-                  "illustID": 8,
-                  "artistID": 5,
-                  "title": "tea pours into white teacup photo",
-                  "caption": "",
-                  "date": "2021-01-07 15:16:58",
-                  "pages": 1,
-                  "like": 1,
-                  "mylist": 0,
-                  "mylisted": false,
-                  "originUrl": "https://unsplash.com/photos/oBoELXgJR1w?page=1",
-                  "originService": "独自",
-                  "nsfw": false,
-                  "artist": {
-                    "id": 5,
-                    "name": "CHI CHEN"
-                  },
-                  "extension": "jpg"
-                },
-                {
-                  "illustID": 7,
-                  "artistID": 4,
-                  "title": "clear glass cup with tea near brown ceramic teapot",
-                  "caption": "",
-                  "date": "2021-01-07 15:15:28",
-                  "pages": 1,
-                  "like": 1,
-                  "mylist": 1,
-                  "mylisted": true,
-                  "originUrl": "https://unsplash.com/photos/L82-kkEBOd0?page=1",
-                  "originService": "独自",
-                  "nsfw": false,
-                  "artist": {
-                    "id": 4,
-                    "name": "Manki Kim"
-                  },
-                  "extension": "jpg"
-                }
-              ]
-            }
-          }
-        }
-      },
-      "SearchByArtistResponse": {
-        "description": "",
-        "type": "object",
-        "properties": {
-          "status": {
-            "type": "integer"
-          },
-          "message": {
-            "type": "string",
-            "minLength": 1
-          },
-          "data": {
-            "type": "object",
-            "required": [
-              "title",
-              "count",
-              "current",
-              "pages",
-              "imgs"
-            ],
-            "properties": {
-              "title": {
-                "type": "string",
-                "minLength": 1
-              },
-              "count": {
-                "type": "integer"
-              },
-              "current": {
-                "type": "integer"
-              },
-              "pages": {
-                "type": "integer"
-              },
-              "imgs": {
-                "type": "array",
-                "uniqueItems": true,
-                "minItems": 1,
-                "items": {
-                  "$ref": "#/components/schemas/SearchResult"
-                }
-              }
-            }
-          }
-        },
-        "required": [
-          "status",
-          "message",
-          "data"
-        ],
-        "title": "",
-        "x-examples": {
-          "example": {
-            "status": 200,
-            "message": "found",
-            "data": {
-              "title": "ティーカップ",
-              "count": 2,
-              "current": 1,
-              "pages": 1,
-              "imgs": [
-                {
-                  "illustID": 8,
-                  "artistID": 5,
-                  "title": "tea pours into white teacup photo",
-                  "caption": "",
-                  "date": "2021-01-07 15:16:58",
-                  "pages": 1,
-                  "like": 1,
-                  "mylist": 0,
-                  "mylisted": false,
-                  "originUrl": "https://unsplash.com/photos/oBoELXgJR1w?page=1",
-                  "originService": "独自",
-                  "nsfw": false,
-                  "artist": {
-                    "id": 5,
-                    "name": "CHI CHEN"
-                  },
-                  "extension": "jpg"
-                },
-                {
-                  "illustID": 7,
-                  "artistID": 4,
-                  "title": "clear glass cup with tea near brown ceramic teapot",
-                  "caption": "",
-                  "date": "2021-01-07 15:15:28",
-                  "pages": 1,
-                  "like": 1,
-                  "mylist": 1,
-                  "mylisted": true,
-                  "originUrl": "https://unsplash.com/photos/L82-kkEBOd0?page=1",
-                  "originService": "独自",
-                  "nsfw": false,
-                  "artist": {
-                    "id": 4,
-                    "name": "Manki Kim"
-                  },
-                  "extension": "jpg"
-                }
-              ]
-            }
-          }
-        }
-      },
-      "SearchByKeywordResponse": {
-        "description": "",
-        "type": "object",
-        "properties": {
-          "status": {
-            "type": "integer"
-          },
-          "message": {
-            "type": "string",
-            "minLength": 1
-          },
-          "data": {
-            "type": "object",
-            "required": [
-              "title",
-              "count",
-              "current",
-              "pages",
-              "imgs"
-            ],
-            "properties": {
-              "title": {
-                "type": "string",
-                "minLength": 1
-              },
-              "count": {
-                "type": "integer"
-              },
-              "current": {
-                "type": "integer"
-              },
-              "pages": {
-                "type": "integer"
-              },
-              "imgs": {
-                "type": "array",
-                "uniqueItems": true,
-                "minItems": 1,
-                "items": {
-                  "$ref": "#/components/schemas/SearchResult"
-                }
-              }
-            }
-          }
-        },
-        "required": [
-          "status",
-          "message",
-          "data"
-        ],
-        "title": "",
-        "x-examples": {
-          "example": {
-            "status": 200,
-            "message": "found",
-            "data": {
-              "title": "ティーカップ",
-              "count": 2,
-              "current": 1,
-              "pages": 1,
-              "imgs": [
-                {
-                  "illustID": 8,
-                  "artistID": 5,
-                  "title": "tea pours into white teacup photo",
-                  "caption": "",
-                  "date": "2021-01-07 15:16:58",
-                  "pages": 1,
-                  "like": 1,
-                  "mylist": 0,
-                  "mylisted": false,
-                  "originUrl": "https://unsplash.com/photos/oBoELXgJR1w?page=1",
-                  "originService": "独自",
-                  "nsfw": false,
-                  "artist": {
-                    "id": 5,
-                    "name": "CHI CHEN"
-                  },
-                  "extension": "jpg"
-                },
-                {
-                  "illustID": 7,
-                  "artistID": 4,
-                  "title": "clear glass cup with tea near brown ceramic teapot",
-                  "caption": "",
-                  "date": "2021-01-07 15:15:28",
-                  "pages": 1,
-                  "like": 1,
-                  "mylist": 1,
-                  "mylisted": true,
-                  "originUrl": "https://unsplash.com/photos/L82-kkEBOd0?page=1",
-                  "originService": "独自",
-                  "nsfw": false,
-                  "artist": {
-                    "id": 4,
-                    "name": "Manki Kim"
-                  },
-                  "extension": "jpg"
-                }
-              ]
-            }
-          }
-        }
-      },
-      "SearchByAllResponse": {
-        "description": "",
-        "type": "object",
-        "properties": {
-          "status": {
-            "type": "integer"
-          },
-          "message": {
-            "type": "string",
-            "minLength": 1
-          },
-          "data": {
-            "type": "object",
-            "required": [
-              "title",
-              "count",
-              "current",
-              "pages",
-              "imgs"
-            ],
-            "properties": {
-              "title": {
-                "type": "string",
-                "minLength": 1
-              },
-              "count": {
-                "type": "integer"
-              },
-              "current": {
-                "type": "integer"
-              },
-              "pages": {
-                "type": "integer"
-              },
-              "imgs": {
-                "type": "array",
-                "uniqueItems": true,
-                "minItems": 1,
-                "items": {
-                  "$ref": "#/components/schemas/SearchResult"
-                }
-              }
-            }
-          }
-        },
-        "required": [
-          "status",
-          "message",
-          "data"
-        ],
-        "title": "",
-        "x-examples": {
-          "example": {
-            "status": 200,
-            "message": "found",
-            "data": {
-              "title": "ティーカップ",
-              "count": 2,
-              "current": 1,
-              "pages": 1,
-              "imgs": [
-                {
-                  "illustID": 8,
-                  "artistID": 5,
-                  "title": "tea pours into white teacup photo",
-                  "caption": "",
-                  "date": "2021-01-07 15:16:58",
-                  "pages": 1,
-                  "like": 1,
-                  "mylist": 0,
-                  "mylisted": false,
-                  "originUrl": "https://unsplash.com/photos/oBoELXgJR1w?page=1",
-                  "originService": "独自",
-                  "nsfw": false,
-                  "artist": {
-                    "id": 5,
-                    "name": "CHI CHEN"
-                  },
-                  "extension": "jpg"
-                },
-                {
-                  "illustID": 7,
-                  "artistID": 4,
-                  "title": "clear glass cup with tea near brown ceramic teapot",
-                  "caption": "",
-                  "date": "2021-01-07 15:15:28",
-                  "pages": 1,
-                  "like": 1,
-                  "mylist": 1,
-                  "mylisted": true,
-                  "originUrl": "https://unsplash.com/photos/L82-kkEBOd0?page=1",
-                  "originService": "独自",
-                  "nsfw": false,
-                  "artist": {
-                    "id": 4,
-                    "name": "Manki Kim"
-                  },
-                  "extension": "jpg"
-                }
-              ]
-            }
-          }
-        }
-      },
-      "SearchByRandomResponse": {
-        "description": "",
-        "type": "object",
-        "properties": {
-          "status": {
-            "type": "integer"
-          },
-          "message": {
-            "type": "string",
-            "minLength": 1
-          },
-          "data": {
-            "type": "object",
-            "required": [
-              "title",
-              "count",
-              "current",
-              "pages",
-              "imgs"
-            ],
-            "properties": {
-              "title": {
-                "type": "string",
-                "minLength": 1
-              },
-              "count": {
-                "type": "integer"
-              },
-              "current": {
-                "type": "integer"
-              },
-              "pages": {
-                "type": "integer"
-              },
-              "imgs": {
-                "type": "array",
-                "uniqueItems": true,
-                "minItems": 1,
-                "items": {
-                  "$ref": "#/components/schemas/SearchResult"
-                }
-              }
-            }
-          }
-        },
-        "required": [
-          "status",
-          "message",
-          "data"
-        ],
-        "title": "",
-        "x-examples": {
-          "example": {
-            "status": 200,
-            "message": "found",
-            "data": {
-              "title": "ティーカップ",
-              "count": 2,
-              "current": 1,
-              "pages": 1,
-              "imgs": [
-                {
-                  "illustID": 8,
-                  "artistID": 5,
-                  "title": "tea pours into white teacup photo",
-                  "caption": "",
-                  "date": "2021-01-07 15:16:58",
-                  "pages": 1,
-                  "like": 1,
-                  "mylist": 0,
-                  "mylisted": false,
-                  "originUrl": "https://unsplash.com/photos/oBoELXgJR1w?page=1",
-                  "originService": "独自",
-                  "nsfw": false,
-                  "artist": {
-                    "id": 5,
-                    "name": "CHI CHEN"
-                  },
-                  "extension": "jpg"
-                },
-                {
-                  "illustID": 7,
-                  "artistID": 4,
-                  "title": "clear glass cup with tea near brown ceramic teapot",
-                  "caption": "",
-                  "date": "2021-01-07 15:15:28",
-                  "pages": 1,
-                  "like": 1,
-                  "mylist": 1,
-                  "mylisted": true,
-                  "originUrl": "https://unsplash.com/photos/L82-kkEBOd0?page=1",
-                  "originService": "独自",
-                  "nsfw": false,
-                  "artist": {
-                    "id": 4,
-                    "name": "Manki Kim"
-                  },
-                  "extension": "jpg"
-                }
-              ]
-            }
-          }
-        }
-      },
-      "SearchByUploaderResponse": {
+      "SearchGeneralResponse": {
         "description": "",
         "type": "object",
         "properties": {
