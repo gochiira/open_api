@@ -2432,7 +2432,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PostInvitesResponse"
+                  "$ref": "#/components/schemas/PostInviteResponse"
                 }
               }
             }
@@ -2441,7 +2441,16 @@
         "tags": [
           "invites"
         ],
-        "description": "招待コードを発行します\n1人につき1コードまで発行できます"
+        "description": "招待コードを発行します、一般ユーザーは1人につき1コードまで作成できます。\n管理者はcode/countを指定すると任意のコードを指定数作成できます。",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostInviteRequest"
+              }
+            }
+          }
+        }
       },
       "delete": {
         "summary": "Delete invitation",
@@ -2461,7 +2470,16 @@
         "description": "招待コードを無効化します",
         "tags": [
           "invites"
-        ]
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteInviteRequest"
+              }
+            }
+          }
+        }
       }
     },
     "/mutes": {
@@ -6612,8 +6630,8 @@
           "message"
         ]
       },
-      "PostInvitesResponse": {
-        "title": "PostInvitesResponse",
+      "PostInviteResponse": {
+        "title": "PostInviteResponse",
         "type": "object",
         "description": "",
         "properties": {
@@ -6679,6 +6697,43 @@
           "failed-internal-error": {
             "status": 500,
             "message": "Server bombed."
+          }
+        }
+      },
+      "DeleteInviteRequest": {
+        "title": "DeleteInviteRequest",
+        "type": "object",
+        "description": "",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "管理者の場合は招待コードを指定することで一括で無効化できます"
+          }
+        },
+        "x-examples": {
+          "example": {
+            "code": "KAFUUCHINO"
+          }
+        }
+      },
+      "PostInviteRequest": {
+        "title": "PostInviteRequest",
+        "type": "object",
+        "description": "",
+        "x-examples": {
+          "example": {
+            "code": "KAFUUCHINO",
+            "count": 10
+          }
+        },
+        "properties": {
+          "count": {
+            "type": "integer",
+            "description": "作成するコード数"
+          },
+          "code": {
+            "type": "string",
+            "description": "発行したい招待コード"
           }
         }
       }
