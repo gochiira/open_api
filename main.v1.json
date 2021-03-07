@@ -2332,11 +2332,9 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/PostCharacterRequest"
+                "$ref": "#/components/schemas/CharacterStruct"
               },
-              "examples": {
-                "example-1": {}
-              }
+              "examples": {}
             }
           }
         }
@@ -2382,8 +2380,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {}
+                  "$ref": "#/components/schemas/PutCharacterResponse"
                 }
               }
             }
@@ -2392,14 +2389,30 @@
         "tags": [
           "characters"
         ],
-        "description": "キャラクター情報を編集します\n(内部的にタグ情報と同じです)"
+        "description": "キャラクター情報を編集します\n(内部的にタグ情報と同じです)",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CharacterStruct"
+              }
+            }
+          }
+        }
       },
       "delete": {
         "summary": "Delete character",
         "operationId": "deleteCharacter",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteCharacterResponse"
+                }
+              }
+            }
           }
         },
         "tags": [
@@ -6448,9 +6461,6 @@
           "message"
         ]
       },
-      "PostCharacterRequest": {
-        "$ref": "#/components/schemas/CharacterStruct"
-      },
       "PostCharacterResponse": {
         "title": "PostCharacterResponse",
         "type": "object",
@@ -6478,23 +6488,14 @@
           }
         }
       },
-      "PutCharacterRequest": {
-        "title": "PutCharacterRequest",
-        "type": "object",
-        "properties": {
-          "charaName": {
-            "type": "string"
-          },
-          "charaDescription": {
-            "type": "string"
-          }
-        }
-      },
       "PutCharacterResponse": {
         "title": "PutCharacterResponse",
         "type": "object",
         "properties": {
-          "id": {
+          "status": {
+            "type": "integer"
+          },
+          "message": {
             "type": "string"
           }
         }
@@ -6510,6 +6511,23 @@
             "type": "string"
           }
         }
+      },
+      "DeleteCharacterResponse": {
+        "description": "",
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "number"
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ]
       }
     },
     "securitySchemes": {
