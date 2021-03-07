@@ -1303,11 +1303,27 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SearchByImageResponse"
+                }
+              }
+            }
           }
         },
         "operationId": "searchArtByImage",
-        "description": "画像からごちイラ内に登録されたイラストを検索します"
+        "description": "画像からごちイラ内に登録されたイラストを検索します",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SearchByImageRequest"
+              }
+            }
+          }
+        }
       },
       "parameters": []
     },
@@ -1323,7 +1339,16 @@
           }
         },
         "operationId": "searchArtByImageUsingSaucenao",
-        "description": "画像からSauceNAOに登録されたイラストを検索します"
+        "description": "画像からSauceNAOに登録されたイラストを検索します",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SearchByImageRequest"
+              }
+            }
+          }
+        }
       }
     },
     "/accounts/me": {
@@ -2358,11 +2383,11 @@
           },
           "artist": {
             "type": "object",
+            "description": "絵師情報",
             "required": [
               "name",
               "id"
             ],
-            "description": "絵師情報",
             "properties": {
               "name": {
                 "type": "string",
@@ -2387,6 +2412,12 @@
               "mp4"
             ],
             "example": "png"
+          },
+          "similarity": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1,
+            "description": "元画像との類似度(画像検索のみ)"
           }
         },
         "required": [
@@ -6164,7 +6195,7 @@
         "description": "",
         "properties": {
           "status": {
-            "type": "number"
+            "type": "integer"
           },
           "data": {
             "type": "array",
@@ -7043,6 +7074,46 @@
             }
           }
         }
+      },
+      "SearchByImageRequest": {
+        "title": "SearchByImageRequest",
+        "type": "object",
+        "properties": {
+          "file": {
+            "type": "string",
+            "format": "binary"
+          }
+        }
+      },
+      "SearchByImageResponse": {
+        "title": "SearchByImageResponse",
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "integer"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "hash": {
+                "type": "string"
+              },
+              "illusts": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/SearchResult"
+                }
+              }
+            }
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ]
       }
     },
     "securitySchemes": {
