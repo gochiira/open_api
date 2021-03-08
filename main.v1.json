@@ -2634,7 +2634,7 @@
         ]
       }
     },
-    "/notify_config/clients": {
+    "/notify/clients": {
       "get": {
         "summary": "Get notification clients",
         "tags": [
@@ -2667,10 +2667,10 @@
       },
       "parameters": []
     },
-    "/notify_config/web_push": {
+    "/notify/clients/web": {
       "post": {
-        "summary": "Register webpush",
-        "operationId": "registerWebpush",
+        "summary": "Register webpush notify client",
+        "operationId": "registerWebNotifyClient",
         "responses": {
           "200": {
             "description": "OK",
@@ -2700,25 +2700,62 @@
       },
       "parameters": []
     },
-    "/notify": {
+    "/notify/conditions": {
       "post": {
-        "summary": "Register notification",
-        "operationId": "registerNotification",
+        "summary": "Register notify condition",
+        "operationId": "registerNotifyCondition",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostNotifyConditionResponse"
+                }
+              }
+            }
           }
         },
-        "description": "通知してもらいたいものの種別とIDを添えてPOSTする",
+        "description": "通知条件を追加します",
+        "tags": [
+          "notify"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostNotifyConditionRequest"
+              }
+            }
+          }
+        }
+      },
+      "parameters": [],
+      "get": {
+        "summary": "Get notify conditions",
+        "operationId": "getNotifyConditions",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetNotifyConditionsResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "通知条件一覧を取得します",
         "tags": [
           "notify"
         ]
       }
     },
-    "/notify_config/line_notify": {
+    "/notify/clients/line": {
       "post": {
-        "summary": "Register line notify",
-        "operationId": "registerLineNotify",
+        "summary": "Register line notify client",
+        "operationId": "registerLineNotifyClient",
         "responses": {
           "200": {
             "description": "OK",
@@ -2747,7 +2784,7 @@
       },
       "parameters": []
     },
-    "/notify_client/clients/{clientID}": {
+    "/notify/clients/{clientID}": {
       "parameters": [
         {
           "schema": {
@@ -2826,6 +2863,87 @@
         "tags": [
           "notify"
         ]
+      }
+    },
+    "/notify/conditions/{conditionID}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "integer"
+          },
+          "name": "conditionID",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "Get notify condition",
+        "tags": [
+          "notify"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetNotifyConditionResponse"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "getNotifyCondition",
+        "description": "通知条件を取得します"
+      },
+      "put": {
+        "summary": "Edit notify condition",
+        "operationId": "editNotifyCondition",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PutNotifyConditionResponse"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "notify"
+        ],
+        "description": "通知条件を編集します",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PutNotifyConditionRequest"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete notify condition",
+        "operationId": "deleteNotifyCondition",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteNotifyConditionResponse"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "notify"
+        ],
+        "description": "通知条件を削除します"
       }
     }
   },
@@ -5605,7 +5723,8 @@
         },
         "properties": {
           "name": {
-            "type": "string"
+            "type": "string",
+            "description": "クライアント名"
           },
           "level": {
             "type": "integer",
@@ -7882,6 +8001,87 @@
           "status",
           "message"
         ]
+      },
+      "GetNotifyConditionsResponse": {
+        "title": "GetNotifyConditionsResponse",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        }
+      },
+      "PostNotifyConditionRequest": {
+        "title": "PostNotifyConditionRequest",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        }
+      },
+      "PostNotifyConditionResponse": {
+        "title": "PostNotifyConditionResponse",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        }
+      },
+      "GetNotifyConditionResponse": {
+        "title": "GetNotifyConditionResponse",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        }
+      },
+      "PutNotifyConditionRequest": {
+        "title": "PutNotifyConditionRequest",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        }
+      },
+      "PutNotifyConditionResponse": {
+        "title": "PutNotifyConditionResponse",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        }
+      },
+      "DeleteNotifyConditionResponse": {
+        "title": "DeleteNotifyConditionResponse",
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "integer",
+            "description": "通知クライアントIDを指定"
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "x-examples": {
+          "success": {
+            "status": 200,
+            "message": "ok"
+          },
+          "failed-not-found": {
+            "status": 404,
+            "message": "The notify client was not found."
+          },
+          "failed-permission": {
+            "status": 400,
+            "message": "You don't have enough permission."
+          }
+        }
       }
     },
     "securitySchemes": {
