@@ -2919,7 +2919,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/PutNotifyConditionRequest"
+                "$ref": "#/components/schemas/NotifyConditionStruct"
               }
             }
           }
@@ -7802,7 +7802,8 @@
           "name",
           "type",
           "level"
-        ]
+        ],
+        "description": ""
       },
       "RegisterWebPushRequest": {
         "title": "RegisterWebPushRequest",
@@ -8005,9 +8006,63 @@
       "GetNotifyConditionsResponse": {
         "title": "GetNotifyConditionsResponse",
         "type": "object",
+        "x-examples": {
+          "success": {
+            "status": 200,
+            "message": "ok",
+            "condition": {
+              "type": 1,
+              "id": 1,
+              "method": 1
+            }
+          },
+          "failed-not-found": {
+            "status": 400,
+            "message": "The notify condition was not found."
+          },
+          "failed-permission": {
+            "status": 400,
+            "message": "You don't have enough permission."
+          }
+        },
         "properties": {
-          "id": {
+          "status": {
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 999,
+            "example": 200,
+            "default": 200
+          },
+          "message": {
             "type": "string"
+          },
+          "conditions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/NotifyConditionStruct"
+            }
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ]
+      },
+      "NotifyConditionStruct": {
+        "title": "NotifyConditionStruct",
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "integer",
+            "description": "条件種別 0:全通知 1:タグ 2:絵師"
+          },
+          "id": {
+            "type": "integer",
+            "description": "条件ID 全通知なら0/タグID/絵師ID"
+          },
+          "method": {
+            "type": "integer",
+            "description": "通知方法 0:両方 1:Web 2:Line"
           }
         }
       },
@@ -8015,44 +8070,104 @@
         "title": "PostNotifyConditionRequest",
         "type": "object",
         "properties": {
+          "type": {
+            "type": "integer",
+            "description": "条件種別 0:全通知 1:タグ 2:絵師"
+          },
           "id": {
-            "type": "string"
+            "type": "integer",
+            "description": "全てなら0/対象タグID/対象絵師ID"
+          },
+          "method": {
+            "type": "integer",
+            "description": "通知方法 0:両方 1:Web 2:Line"
           }
-        }
+        },
+        "required": [
+          "type",
+          "id",
+          "method"
+        ]
       },
       "PostNotifyConditionResponse": {
         "title": "PostNotifyConditionResponse",
         "type": "object",
-        "properties": {
-          "id": {
-            "type": "string"
+        "x-examples": {
+          "success": {
+            "status": 200,
+            "message": "ok",
+            "id": 1
+          },
+          "failed-params": {
+            "status": 400,
+            "message": "Request parameters are not satisfied."
+          },
+          "failed-internal-error": {
+            "status": 500,
+            "message": "Server bombed."
+          },
+          "failed-too-many": {
+            "status": 400,
+            "message": "You have too many notify conditions. Remove one, and try again."
           }
-        }
-      },
-      "GetNotifyConditionResponse": {
-        "title": "GetNotifyConditionResponse",
-        "type": "object",
+        },
         "properties": {
-          "id": {
+          "status": {
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 999,
+            "example": 200,
+            "default": 200
+          },
+          "message": {
             "type": "string"
-          }
-        }
-      },
-      "PutNotifyConditionRequest": {
-        "title": "PutNotifyConditionRequest",
-        "type": "object",
-        "properties": {
+          },
           "id": {
-            "type": "string"
+            "type": "integer",
+            "description": "通知条件ID"
           }
-        }
+        },
+        "required": [
+          "status",
+          "message"
+        ]
       },
       "PutNotifyConditionResponse": {
         "title": "PutNotifyConditionResponse",
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string"
+          "status": {
+            "type": "integer"
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ],
+        "x-examples": {
+          "success": {
+            "status": 200,
+            "message": "Updated."
+          },
+          "failed-internal-error": {
+            "status": 500,
+            "message": "Server bombed."
+          },
+          "failed-not-found": {
+            "status": 404,
+            "message": "The notify condition was not found."
+          },
+          "failed-not-satisfied": {
+            "status": 400,
+            "message": "Request parameters are not satisfied."
+          },
+          "failed-permission": {
+            "status": 400,
+            "message": "You don't have enough permission."
           }
         }
       },
@@ -8075,13 +8190,55 @@
           },
           "failed-not-found": {
             "status": 404,
-            "message": "The notify client was not found."
+            "message": "The notify condition was not found."
           },
           "failed-permission": {
             "status": 400,
             "message": "You don't have enough permission."
           }
         }
+      },
+      "GetNotifyConditionResponse": {
+        "title": "GetNotifyConditionResponse",
+        "type": "object",
+        "x-examples": {
+          "success": {
+            "status": 200,
+            "message": "ok",
+            "condition": {
+              "type": 1,
+              "id": 1,
+              "method": 1
+            }
+          },
+          "failed-not-found": {
+            "status": 400,
+            "message": "The notify condition was not found."
+          },
+          "failed-permission": {
+            "status": 400,
+            "message": "You don't have enough permission."
+          }
+        },
+        "properties": {
+          "status": {
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 999,
+            "example": 200,
+            "default": 200
+          },
+          "message": {
+            "type": "string"
+          },
+          "condition": {
+            "$ref": "#/components/schemas/NotifyConditionStruct"
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ]
       }
     },
     "securitySchemes": {
