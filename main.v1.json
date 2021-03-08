@@ -872,7 +872,7 @@
             "required": true
           },
           {
-            "$ref": "#/components/parameters/SearchQueryMylist"
+            "$ref": "#/components/parameters/SearchQueryMylistAllow"
           }
         ]
       }
@@ -952,7 +952,7 @@
             "required": true
           },
           {
-            "$ref": "#/components/parameters/SearchQueryMylist"
+            "$ref": "#/components/parameters/SearchQueryMylistAllow"
           }
         ]
       }
@@ -1089,7 +1089,7 @@
             "required": true
           },
           {
-            "$ref": "#/components/parameters/SearchQueryMylist"
+            "$ref": "#/components/parameters/SearchQueryMylistAllow"
           }
         ]
       }
@@ -1170,7 +1170,7 @@
             "required": true
           },
           {
-            "$ref": "#/components/parameters/SearchQueryMylist"
+            "$ref": "#/components/parameters/SearchQueryMylistAllow"
           }
         ]
       }
@@ -1374,7 +1374,7 @@
             "$ref": "#/components/parameters/SearchQueryPage"
           },
           {
-            "$ref": "#/components/parameters/SearchQueryMylist"
+            "$ref": "#/components/parameters/SearchQueryMylistAllow"
           }
         ]
       }
@@ -1401,7 +1401,7 @@
         ],
         "parameters": [
           {
-            "$ref": "#/components/parameters/SearchQueryMylist"
+            "$ref": "#/components/parameters/SearchQueryMylistAllow"
           }
         ]
       }
@@ -2239,7 +2239,7 @@
             "$ref": "#/components/parameters/SearchQueryPage"
           },
           {
-            "$ref": "#/components/parameters/SearchQueryMylist"
+            "$ref": "#/components/parameters/SearchQueryMylistAllow"
           }
         ]
       }
@@ -2636,7 +2636,7 @@
     },
     "/notify/clients": {
       "get": {
-        "summary": "Get notification clients",
+        "summary": "Get notify clients",
         "tags": [
           "notify"
         ],
@@ -2944,6 +2944,204 @@
           "notify"
         ],
         "description": "通知条件を削除します"
+      }
+    },
+    "/ranking/yearly/views": {
+      "get": {
+        "summary": "Get yearly views ranking",
+        "tags": [
+          "ranking"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SearchGeneralResponse"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "getYearlyViewsRanking",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/SearchQueryPage"
+          },
+          {
+            "$ref": "#/components/parameters/SearchQueryOrder"
+          },
+          {
+            "$ref": "#/components/parameters/SearchQueryMylistDeny"
+          }
+        ],
+        "description": "年間閲覧数ランキングを取得します"
+      }
+    },
+    "/ranking/yearly/likes": {
+      "get": {
+        "summary": "Get yearly likes ranking",
+        "tags": [
+          "ranking"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SearchGeneralResponse"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "getYearlyLikesRanking",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/SearchQueryPage"
+          },
+          {
+            "$ref": "#/components/parameters/SearchQueryOrder"
+          },
+          {
+            "$ref": "#/components/parameters/SearchQueryMylistDeny"
+          }
+        ],
+        "description": "年間いいね数ランキングを取得します"
+      }
+    },
+    "/ranking/monthly/views": {
+      "get": {
+        "summary": "Get monthly views ranking",
+        "tags": [
+          "ranking"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SearchGeneralResponse"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "getMonthlyViewsRanking",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/SearchQueryPage"
+          },
+          {
+            "$ref": "#/components/parameters/SearchQueryOrder"
+          },
+          {
+            "$ref": "#/components/parameters/SearchQueryMylistDeny"
+          }
+        ],
+        "description": "月間閲覧数ランキングを取得します"
+      }
+    },
+    "/ranking/monthly/likes": {
+      "get": {
+        "summary": "Get monthly likes ranking",
+        "tags": [
+          "ranking"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SearchGeneralResponse"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "getMonthlyLikesRanking",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/SearchQueryPage"
+          },
+          {
+            "$ref": "#/components/parameters/SearchQueryOrder"
+          },
+          {
+            "$ref": "#/components/parameters/SearchQueryMylistDeny"
+          }
+        ],
+        "description": "月間いいね数ランキングを取得します"
+      }
+    },
+    "/ranking/weekly/views": {
+      "get": {
+        "summary": "Get weekly views ranking",
+        "tags": [
+          "ranking"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SearchGeneralResponse"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "getWeeklyViewsRanking",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/SearchQueryPage"
+          },
+          {
+            "$ref": "#/components/parameters/SearchQueryOrder"
+          },
+          {
+            "$ref": "#/components/parameters/SearchQueryMylistDeny"
+          }
+        ],
+        "description": "週間閲覧数ランキングを取得します"
+      }
+    },
+    "/ranking/weekly/likes": {
+      "get": {
+        "summary": "Get weekly likes ranking",
+        "tags": [
+          "ranking"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SearchGeneralResponse"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "getWeeklyLikesRanking",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/SearchQueryPage"
+          },
+          {
+            "$ref": "#/components/parameters/SearchQueryOrder"
+          },
+          {
+            "$ref": "#/components/parameters/SearchQueryMylistDeny"
+          }
+        ],
+        "description": "週間いいね数ランキングを取得します"
       }
     }
   },
@@ -8290,7 +8488,7 @@
         },
         "description": "ページ番号 (NOTE: 1ページ辺りの応答は20件)"
       },
-      "SearchQueryMylist": {
+      "SearchQueryMylistAllow": {
         "name": "with_mylisted",
         "in": "query",
         "required": false,
@@ -8306,7 +8504,23 @@
           "minimum": 0,
           "maximum": 1
         },
-        "description": "マイリスト追加済みかを取得する0/1"
+        "description": "マイリスト追加済みかを取得する0/1 (デフォルト1)"
+      },
+      "SearchQueryMylistDeny": {
+        "name": "with_mylisted",
+        "in": "query",
+        "schema": {
+          "type": "integer",
+          "enum": [
+            0,
+            1
+          ],
+          "example": 0,
+          "default": 0,
+          "minimum": 0,
+          "maximum": 1
+        },
+        "description": "マイリスト追加済みかを取得する0/1 (デフォルト0)"
       }
     },
     "examples": {},
@@ -8350,6 +8564,9 @@
     },
     {
       "name": "notify"
+    },
+    {
+      "name": "ranking"
     },
     {
       "name": "search"
