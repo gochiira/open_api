@@ -3143,6 +3143,170 @@
         ],
         "description": "週間いいね数ランキングを取得します"
       }
+    },
+    "/report/arts/{illustID}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "integer"
+          },
+          "name": "illustID",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "post": {
+        "summary": "Report art",
+        "tags": [
+          "report"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReportGeneralResponse"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "reportArt",
+        "description": "指定したイラストを運営に通報します\nむやみに利用するとアカウントが停止される可能性があります",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReportGeneralRequest"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/report/tags/{tagID}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "integer"
+          },
+          "name": "tagID",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "post": {
+        "summary": "Report tag",
+        "tags": [
+          "report"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReportGeneralResponse"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "reportTag",
+        "description": "指定したタグを運営に通報します\nむやみに利用するとアカウントが停止される可能性があります",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReportGeneralRequest"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/report/user/{userID}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "integer"
+          },
+          "name": "userID",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "post": {
+        "summary": "Report user",
+        "tags": [
+          "report"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReportGeneralResponse"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "reportUser",
+        "description": "指定したイラストを運営に通報します\nむやみに利用するとアカウントが停止される可能性があります",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReportGeneralRequest"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/report/wiki/{articleID}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "integer"
+          },
+          "name": "articleID",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "post": {
+        "summary": "Report article",
+        "tags": [
+          "report"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReportGeneralResponse"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "reportArticle",
+        "description": "指定した記事を運営に通報します\nむやみに利用するとアカウントが停止される可能性があります",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReportGeneralRequest"
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -8437,6 +8601,78 @@
           "status",
           "message"
         ]
+      },
+      "ReportGeneralResponse": {
+        "title": "ReportGeneralResponse",
+        "type": "object",
+        "x-examples": {
+          "success": {
+            "status": 200,
+            "message": "Report succeed."
+          },
+          "failed-already-reported": {
+            "status": 400,
+            "message": "You already reported."
+          },
+          "failed-not-found": {
+            "status": 404,
+            "message": "The target was not found."
+          },
+          "failed-permission": {
+            "status": 400,
+            "message": "You don't have enough permission."
+          }
+        },
+        "properties": {
+          "status": {
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 999,
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "ReportGeneralRequest": {
+        "title": "ReportGeneralRequest",
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "integer",
+            "description": "通報種別 1:不適切名称 2:不適切年齢 3:規約違反 4:法律違反",
+            "minimum": 1,
+            "maximum": 9,
+            "format": "int32"
+          },
+          "msg": {
+            "type": "string",
+            "description": "通報本文"
+          }
+        },
+        "required": [
+          "type",
+          "msg"
+        ],
+        "x-examples": {
+          "example-1": {
+            "type": 1,
+            "msg": "XSSしようとしてる人が居るみたいです、なんとかしてください"
+          },
+          "example-2": {
+            "type": 2,
+            "msg": "どうみてもエッチですあーいけません!"
+          },
+          "example-3": {
+            "type": 3,
+            "msg": "完全に同一の画像を上げ続け、運営を妨害している人が居ます"
+          },
+          "example-4": {
+            "type": 4,
+            "msg": "DMCA Request"
+          }
+        }
       }
     },
     "securitySchemes": {
@@ -8567,6 +8803,9 @@
     },
     {
       "name": "ranking"
+    },
+    {
+      "name": "report"
     },
     {
       "name": "search"
