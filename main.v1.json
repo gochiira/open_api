@@ -3307,6 +3307,17 @@
           }
         }
       }
+    },
+    "/scrape": {
+      "post": {
+        "summary": "Scrape",
+        "operationId": "post-scrape",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -8671,6 +8682,26 @@
           "example-4": {
             "type": 4,
             "msg": "DMCA Request"
+          }
+        }
+      },
+      "ScrapeRequest": {
+        "title": "ScrapeRequest",
+        "type": "object",
+        "description": "",
+        "properties": {
+          "url": {
+            "type": "string",
+            "description": "スクレイピングするURL"
+          }
+        }
+      },
+      "ScrapeResponse": {
+        "title": "ScrapeResponse",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
           }
         }
       }
