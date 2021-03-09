@@ -3612,6 +3612,55 @@
         ],
         "description": "キーワードからタグを検索します"
       }
+    },
+    "/timeline/follow": {
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {},
+        "operationId": "get-timeline-follow"
+      }
+    },
+    "/timeline/unfollow": {
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {},
+        "operationId": "get-timeline-unfollow"
+      }
+    },
+    "/timeline": {
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../main.v1.json#/components/schemas/SearchGeneralResponse"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-timeline",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/SearchQuerySort"
+          },
+          {
+            "$ref": "#/components/parameters/SearchQueryOrder"
+          },
+          {
+            "$ref": "#/components/parameters/SearchQueryPage"
+          },
+          {
+            "$ref": "../main.v1.json#/components/parameters/SearchQueryMylistAllow"
+          }
+        ]
+      }
     }
   },
   "components": {
