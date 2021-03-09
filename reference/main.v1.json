@@ -3614,38 +3614,55 @@
       }
     },
     "/timeline/follow": {
-      "get": {
-        "summary": "Your GET endpoint",
-        "tags": [],
-        "responses": {},
-        "operationId": "get-timeline-follow"
-      }
+      "post": {
+        "summary": "Follow artist",
+        "operationId": "followArtist",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "絵師をフォローします",
+        "tags": [
+          "timeline"
+        ]
+      },
+      "parameters": []
     },
     "/timeline/unfollow": {
-      "get": {
-        "summary": "Your GET endpoint",
-        "tags": [],
-        "responses": {},
-        "operationId": "get-timeline-unfollow"
+      "post": {
+        "summary": "Unfollow artist",
+        "operationId": "unfollowArtist",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "絵師のフォローを解除します",
+        "tags": [
+          "timeline"
+        ]
       }
     },
     "/timeline": {
       "get": {
-        "summary": "Your GET endpoint",
-        "tags": [],
+        "summary": "Get timeline",
+        "tags": [
+          "timeline"
+        ],
         "responses": {
           "200": {
             "description": "OK",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "../main.v1.json#/components/schemas/SearchGeneralResponse"
+                  "$ref": "#/components/schemas/GetNavigationGeneralResponse"
                 }
               }
             }
           }
         },
-        "operationId": "get-timeline",
+        "operationId": "getTimeline",
         "parameters": [
           {
             "$ref": "#/components/parameters/SearchQuerySort"
@@ -3655,11 +3672,9 @@
           },
           {
             "$ref": "#/components/parameters/SearchQueryPage"
-          },
-          {
-            "$ref": "../main.v1.json#/components/parameters/SearchQueryMylistAllow"
           }
-        ]
+        ],
+        "description": "タイムラインを取得します"
       }
     }
   },
@@ -10317,6 +10332,9 @@
     },
     {
       "name": "tags"
+    },
+    {
+      "name": "timeline"
     },
     {
       "name": "upload"
