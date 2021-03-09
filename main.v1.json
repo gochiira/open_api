@@ -8739,12 +8739,191 @@
       "ScrapeResultStruct": {
         "title": "ScrapeResultStruct",
         "type": "object",
+        "description": "スクレイピング結果",
         "properties": {
-          "sourceType": {
-            "type": "string"
+          "illust": {
+            "type": "object",
+            "description": "投稿に必須となるデータ",
+            "properties": {
+              "type": {
+                "type": "string",
+                "description": "スクレイプ元のサイト名(英語で短く表現)"
+              },
+              "id": {
+                "description": "外部サイト内でのイラストID",
+                "type": "integer"
+              },
+              "title": {
+                "type": "string",
+                "description": "作品タイトル"
+              },
+              "caption": {
+                "type": "string",
+                "description": "作品説明文"
+              },
+              "imgs": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "width": {
+                      "description": "画像の横幅(取得できる場合)",
+                      "type": "integer"
+                    },
+                    "height": {
+                      "type": "integer",
+                      "description": "縦幅(取得できる場合)"
+                    },
+                    "large_src": {
+                      "type": "string",
+                      "description": "実際に保存される画像へのURL(取得できる場合)",
+                      "format": "uri-reference",
+                      "example": "https://example.com/hoge"
+                    },
+                    "thumb_src": {
+                      "type": "string",
+                      "description": "サムネイル画像へのURL"
+                    }
+                  },
+                  "required": [
+                    "thumb_src"
+                  ]
+                }
+              },
+              "tags": {
+                "type": "array",
+                "description": "取得したサイト内で指定されていたタグ",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "source": {
+                "type": "string",
+                "description": "取得したURLの正規URL"
+              },
+              "artist": {
+                "type": "string",
+                "description": "絵師の名前"
+              },
+              "R18": {
+                "type": "boolean",
+                "description": "アダルトコンテンツか否か"
+              }
+            },
+            "required": [
+              "type",
+              "id",
+              "title",
+              "caption",
+              "imgs",
+              "tags",
+              "source",
+              "artist"
+            ]
           },
-          "": {
-            "type": "string"
+          "extra": {
+            "type": "object",
+            "description": "投稿に必須ではない追加データ(他で再利用できるように)",
+            "properties": {
+              "booth_shop": {
+                "type": "object",
+                "description": "Boothのショップ型",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "link": {
+                    "type": "string"
+                  }
+                }
+              },
+              "twitter_user": {
+                "type": "object",
+                "description": "Twitterのユーザー型",
+                "properties": {
+                  "id": {
+                    "type": "integer"
+                  },
+                  "screen_name": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "profile_image": {
+                    "type": "string"
+                  },
+                  "banner_image": {
+                    "type": "string"
+                  }
+                }
+              },
+              "danbooru_user": {
+                "type": "object",
+                "description": "Danbooruのユーザー型",
+                "properties": {
+                  "id": {
+                    "type": "integer",
+                    "description": "ユーザーID"
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "ユーザー名"
+                  }
+                }
+              },
+              "pixiv_user": {
+                "type": "object",
+                "description": "Pixivのユーザー型",
+                "properties": {
+                  "id": {
+                    "type": "integer",
+                    "description": "ユーザーID(整数値)"
+                  },
+                  "screen_name": {
+                    "type": "string",
+                    "description": "ユーザーID(英数字)"
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "ユーザー名"
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "説明文"
+                  },
+                  "profile_image": {
+                    "type": "string",
+                    "description": "アバター画像"
+                  },
+                  "banner_image": {
+                    "type": "string",
+                    "description": "バナー画像"
+                  }
+                }
+              },
+              "nicoseiga_user": {
+                "type": "object",
+                "description": "ニコニコ静画のユーザー型",
+                "properties": {
+                  "id": {
+                    "type": "integer",
+                    "description": "ユーザーID"
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "ユーザー名"
+                  },
+                  "profile_image": {
+                    "type": "string",
+                    "description": "プロフィール画像"
+                  }
+                }
+              }
+            }
           }
         }
       },
