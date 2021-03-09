@@ -3445,6 +3445,28 @@
         ]
       },
       "parameters": []
+    },
+    "/garbage_collect": {
+      "post": {
+        "summary": "Garbage collect",
+        "operationId": "garbageCollect",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostGarbageCollectResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "参照されていない 絵師情報/タグ情報を削除します\n(cron等でやってもいいかもしれないですが 現在は手動)",
+        "tags": [
+          "garbage_collect"
+        ]
+      }
     }
   },
   "components": {
@@ -9589,6 +9611,36 @@
           "status",
           "message"
         ]
+      },
+      "PostGarbageCollectResponse": {
+        "title": "PostGarbageCollectResponse",
+        "type": "object",
+        "x-examples": {
+          "success": {
+            "status": 200,
+            "message": "ok"
+          },
+          "failed": {
+            "status": 400,
+            "message": "Bad request."
+          }
+        },
+        "properties": {
+          "status": {
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 999,
+            "example": 200,
+            "default": 200
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ]
       }
     },
     "securitySchemes": {
@@ -9698,6 +9750,9 @@
     },
     {
       "name": "characters"
+    },
+    {
+      "name": "garbage_collect"
     },
     {
       "name": "invites"
