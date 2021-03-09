@@ -8956,59 +8956,6 @@
                 "banner_image": "https://pbs.twimg.com/profile_banners/1176867370238799872/1611142275"
               }
             }
-          },
-          "pixiv": {
-            "illust": {
-              "type": "string",
-              "id": 0,
-              "title": "string",
-              "caption": "string",
-              "imgs": [
-                {
-                  "width": 0,
-                  "height": 0,
-                  "large_src": "https://example.com/hoge",
-                  "thumb_src": "string"
-                }
-              ],
-              "tags": [
-                "string"
-              ],
-              "source": "string",
-              "artist": "string",
-              "R18": true
-            },
-            "extra": {
-              "booth_shop": {
-                "name": "string",
-                "link": "string"
-              },
-              "twitter_user": {
-                "id": 0,
-                "screen_name": "string",
-                "name": "string",
-                "description": "string",
-                "profile_image": "string",
-                "banner_image": "string"
-              },
-              "danbooru_user": {
-                "id": 0,
-                "name": "string"
-              },
-              "pixiv_user": {
-                "id": 0,
-                "screen_name": "string",
-                "name": "string",
-                "description": "string",
-                "profile_image": "string",
-                "banner_image": "string"
-              },
-              "nicoseiga_user": {
-                "id": 0,
-                "name": "string",
-                "profile_image": "string"
-              }
-            }
           }
         }
       },
