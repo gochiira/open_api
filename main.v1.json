@@ -3355,7 +3355,7 @@
             }
           }
         },
-        "description": "画像や動画を投稿します\nむやみに利用するとアカウントが停止される可能性があります",
+        "description": "画像や動画を投稿するエンドポイントです\nむやみに利用するとアカウントが停止される可能性があります",
         "tags": [
           "upload"
         ],
@@ -3373,21 +3373,22 @@
     "/search/image/ascii2d": {
       "get": {
         "summary": "Search by image at ascii2d",
-        "tags": [],
+        "tags": [
+          "search"
+        ],
         "responses": {
           "200": {
             "description": "OK",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {}
+                  "$ref": "#/components/schemas/SearchByImageAtAscii2dResponse"
                 }
               }
             }
           }
         },
-        "operationId": "get-search-image-ascii2d",
+        "operationId": "searchArtByImageUsingAscii2d",
         "requestBody": {
           "content": {
             "application/json": {
@@ -3399,6 +3400,51 @@
         },
         "description": "画像からAscii2dに登録されたイラストを検索します"
       }
+    },
+    "/search/tag/multiple": {
+      "get": {
+        "summary": "Search by multiple tag",
+        "tags": [
+          "search"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SearchGeneralResponse"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "searchArtByMultipleTag",
+        "description": "複数のタグを指定してイラストを検索します\nアカウントのレベルによって指定できる数は変動します(予定)",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/SearchQuerySort"
+          },
+          {
+            "$ref": "#/components/parameters/SearchQueryOrder"
+          },
+          {
+            "$ref": "#/components/parameters/SearchQueryPage"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "id",
+            "description": "タグIDをカンマ区切りで複数指定します"
+          },
+          {
+            "$ref": "#/components/parameters/SearchQueryMylistAllow"
+          }
+        ]
+      },
+      "parameters": []
     }
   },
   "components": {
@@ -9299,11 +9345,17 @@
       "PostUploadRequest": {
         "title": "PostUploadRequest",
         "type": "object",
+        "description": "",
         "properties": {
-          "id": {
-            "type": "string"
+          "file": {
+            "type": "string",
+            "description": "投稿するファイル本体",
+            "format": "binary"
           }
-        }
+        },
+        "required": [
+          "file"
+        ]
       },
       "PostUploadResponse": {
         "title": "PostUploadResponse",
@@ -9312,7 +9364,7 @@
           "success": {
             "status": 200,
             "message": "ok",
-            "url": "https://example.com"
+            "url": "https://example.com/hogehoge.jpg"
           },
           "failed-bad-request": {
             "status": 400,
