@@ -3369,6 +3369,14 @@
           }
         }
       }
+    },
+    "/search/image/ascii2d": {
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {},
+        "operationId": "get-search-image-ascii2d"
+      }
     }
   },
   "components": {
@@ -7379,23 +7387,298 @@
         ]
       },
       "SearchByImageAtSauceNaoResponse": {
-        "title": "SearchByImageAtSauceNaoResponse",
+        "description": "",
         "type": "object",
         "x-examples": {
-          "example": {
+          "example-1": {
             "status": 200,
-            "message": "string"
+            "message": "ok",
+            "data": {
+              "result": [
+                {
+                  "header": {
+                    "similarity": "77.83",
+                    "thumbnail": "https://img3.saucenao.com/booru/3/a/3ab0ed13bd3ec3a8622382a240db3b74_1.jpg?auth=Tu4qnVHPxVwiXxVzMoJhWw&exp=1615921200",
+                    "index_id": 12,
+                    "index_name": "Index #12: Yande.re - 3ab0ed13bd3ec3a8622382a240db3b74_1.jpg",
+                    "dupes": 0
+                  },
+                  "data": {
+                    "ext_urls": [
+                      "https://yande.re/post/show/647138"
+                    ],
+                    "yandere_id": 647138,
+                    "creator": "azumi kazuki",
+                    "material": "",
+                    "characters": "",
+                    "source": "(C98) [Come Through (Adumi Kazuki)] Honey Sweet"
+                  }
+                },
+                {
+                  "header": {
+                    "similarity": "95.17",
+                    "thumbnail": "https://img3.saucenao.com/booru/b/c/bca7ec8627098a725c1ec1c33effc352_0.jpg?auth=r3KiiJle_Y6fdX2Bhh268Q&exp=1615921200",
+                    "index_id": 9,
+                    "index_name": "Index #9: Danbooru - bca7ec8627098a725c1ec1c33effc352_0.jpg",
+                    "dupes": 1
+                  },
+                  "data": {
+                    "ext_urls": [
+                      "https://danbooru.donmai.us/post/show/3890236",
+                      "https://gelbooru.com/index.php?page=post&s=view&id=5273065"
+                    ],
+                    "danbooru_id": 3890236,
+                    "gelbooru_id": 5273065,
+                    "creator": "azumi kazuki",
+                    "material": "clockwork rabbit, gochuumon wa usagi desu ka?",
+                    "characters": "kafuu chino, tippy (gochiusa)",
+                    "source": "https://twitter.com/kazukiadumi/status/1256528892409470976"
+                  }
+                },
+                {
+                  "header": {
+                    "similarity": "77.99",
+                    "thumbnail": "https://img3.saucenao.com/ehentai/35/5a/355a28ea90722d3152d2b77da5ad73160ca7f41c.jpg?auth=oewNFWX4UIC3tRM2Z3m2lQ&exp=1615921200",
+                    "index_id": 38,
+                    "index_name": "Index #38: H-Misc (E-Hentai) - 355a28ea90722d3152d2b77da5ad73160ca7f41c.jpg",
+                    "dupes": 1
+                  },
+                  "data": {
+                    "source": "Honey Sweet",
+                    "creator": [
+                      "adumi kazuki",
+                      "come through"
+                    ],
+                    "eng_name": "[Come Through (Adumi Kazuki)] Honey Sweet",
+                    "jp_name": "[Come Through (あづみ一樹)] Honey Sweet"
+                  }
+                },
+                {
+                  "header": {
+                    "similarity": "51.24",
+                    "thumbnail": "https://img1.saucenao.com/res/pixiv/8571/manga/85711213_p2.jpg?auth=8Acmlg43E4OKbzO1ulq-nw&exp=1615921200",
+                    "index_id": 5,
+                    "index_name": "Index #5: Pixiv Images - 85711213_p2.jpg",
+                    "dupes": 0
+                  },
+                  "data": {
+                    "ext_urls": [
+                      "https://www.pixiv.net/member_illust.php?mode=medium&illust_id=85711213"
+                    ],
+                    "title": "まとめ",
+                    "pixiv_id": 85711213,
+                    "member_name": "みずみず子",
+                    "member_id": 7955474
+                  }
+                },
+                {
+                  "header": {
+                    "similarity": "50.74",
+                    "thumbnail": "https://img1.saucenao.com/res/nhentai/32697%20%28142225%29%20--%20%5BHirose%20Miho%5D%20Oneesan%20to%20Issho/119.jpg?auth=ez1hhJY60BbS-3Ge7xl4CQ&exp=1615921200",
+                    "index_id": 18,
+                    "index_name": "Index #18: H-Misc (nhentai) - 119.jpg",
+                    "dupes": 1
+                  },
+                  "data": {
+                    "source": "Oneesan to Issho",
+                    "creator": [
+                      "hidiri rei",
+                      "hirose miho"
+                    ],
+                    "eng_name": "[Hirose Miho] Oneesan to Issho",
+                    "jp_name": "[ひろせみほ] おねえさんといっしょ"
+                  }
+                },
+                {
+                  "header": {
+                    "similarity": "50.6",
+                    "thumbnail": "https://img3.saucenao.com/furaffinity/1336/13361739.jpg?auth=QGLqamng93PFvd-UPObysw&exp=1615921200",
+                    "index_id": 40,
+                    "index_name": "Index #40: FurAffinity - 13361739.jpg",
+                    "dupes": 0
+                  },
+                  "data": {
+                    "ext_urls": [
+                      "https://www.furaffinity.net/view/13361739"
+                    ],
+                    "title": "Nurse Aras to the Rescue",
+                    "fa_id": 13361739,
+                    "author_name": "KuroiNekoMiko",
+                    "author_url": "https://www.furaffinity.net/user/kuroinekomiko"
+                  }
+                },
+                {
+                  "header": {
+                    "similarity": "50.48",
+                    "thumbnail": "https://img1.saucenao.com/res/mangadex/824/824357/R15.jpg?auth=RFr2ldvSaiFIIxiII821-A&exp=1615921200",
+                    "index_id": 37,
+                    "index_name": "Index #37: MangaDex - R15.jpg",
+                    "dupes": 0
+                  },
+                  "data": {
+                    "ext_urls": [
+                      "https://mangadex.org/chapter/824357/",
+                      "https://www.mangaupdates.com/series.html?id=371",
+                      "https://myanimelist.net/manga/1439/"
+                    ],
+                    "md_id": 824357,
+                    "mu_id": 371,
+                    "mal_id": 1439,
+                    "source": "Sex Pistols",
+                    "part": " - Chapter 30",
+                    "artist": "KOTOBUKI Tarako",
+                    "author": "KOTOBUKI Tarako"
+                  }
+                },
+                {
+                  "header": {
+                    "similarity": "50.2",
+                    "thumbnail": "https://img1.saucenao.com/res/pixiv/7858/manga/78582114_p9.jpg?auth=NxnkYsm8LdvXpgqcC08qbQ&exp=1615921200",
+                    "index_id": 5,
+                    "index_name": "Index #5: Pixiv Images - 78582114_p9.jpg",
+                    "dupes": 0
+                  },
+                  "data": {
+                    "ext_urls": [
+                      "https://www.pixiv.net/member_illust.php?mode=medium&illust_id=78582114"
+                    ],
+                    "title": "期間限定Web投稿（12/31まで）",
+                    "pixiv_id": 78582114,
+                    "member_name": "長谷川",
+                    "member_id": 7961579
+                  }
+                },
+                {
+                  "header": {
+                    "similarity": "49.70",
+                    "thumbnail": "https://img1.saucenao.com/res/pixiv/2030/manga/20309973_p2.jpg?auth=goBwjyvoTMaPAvGy3KNmqQ&exp=1615921200",
+                    "index_id": 5,
+                    "index_name": "Index #5: Pixiv Images - 20309973_p2.jpg",
+                    "dupes": 0
+                  },
+                  "data": {
+                    "ext_urls": [
+                      "https://www.pixiv.net/member_illust.php?mode=medium&illust_id=20309973"
+                    ],
+                    "title": "忍者じゃなイカ？　～多勢に無勢～",
+                    "pixiv_id": 20309973,
+                    "member_name": "shen",
+                    "member_id": 1172007
+                  }
+                },
+                {
+                  "header": {
+                    "similarity": "49.68",
+                    "thumbnail": "https://img1.saucenao.com/res/pixiv/5400/manga/54003307_p5.jpg?auth=eBHYI20wET5PE8fNw8ftPw&exp=1615921200",
+                    "index_id": 5,
+                    "index_name": "Index #5: Pixiv Images - 54003307_p5.jpg",
+                    "dupes": 0
+                  },
+                  "data": {
+                    "ext_urls": [
+                      "https://www.pixiv.net/member_illust.php?mode=medium&illust_id=54003307"
+                    ],
+                    "title": "出轟+αまとめ3/再販のお知らせ",
+                    "pixiv_id": 54003307,
+                    "member_name": "くろい",
+                    "member_id": 3807881
+                  }
+                }
+              ]
+            }
           }
         },
         "properties": {
           "status": {
             "type": "integer",
-            "minimum": 100,
-            "maximum": 999,
-            "example": 200
+            "example": 200,
+            "default": 200
           },
           "message": {
-            "type": "string"
+            "type": "string",
+            "minLength": 1
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "result": {
+                "type": "array",
+                "uniqueItems": true,
+                "minItems": 1,
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "header": {
+                      "type": "object",
+                      "properties": {
+                        "similarity": {
+                          "type": "string",
+                          "minLength": 1,
+                          "description": "類似度(100.00~0.00までのfloatを文字列にしたもの)"
+                        },
+                        "thumbnail": {
+                          "type": "string",
+                          "minLength": 1,
+                          "description": "サムネイル画像(直アクセス可能)"
+                        },
+                        "index_id": {
+                          "type": "integer",
+                          "description": "参照したデータベースID"
+                        },
+                        "index_name": {
+                          "type": "string",
+                          "minLength": 1,
+                          "description": "参照したデータベース名"
+                        },
+                        "dupes": {
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "similarity",
+                        "thumbnail",
+                        "index_id",
+                        "index_name",
+                        "dupes"
+                      ]
+                    },
+                    "data": {
+                      "type": "object",
+                      "description": "参照したDBによる異なる追加データ",
+                      "properties": {
+                        "ext_urls": {
+                          "type": "array",
+                          "description": "出典URL(出せる場合)",
+                          "items": {
+                            "type": "object"
+                          }
+                        },
+                        "yandere_id": {
+                          "type": "integer"
+                        },
+                        "creator": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "material": {
+                          "type": "string"
+                        },
+                        "characters": {
+                          "type": "string"
+                        },
+                        "source": {
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
           }
         },
         "required": [
