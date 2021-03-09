@@ -3613,7 +3613,7 @@
         "description": "キーワードからタグを検索します"
       }
     },
-    "/timeline/follow": {
+    "/timeline/artist/follow": {
       "post": {
         "summary": "Follow artist",
         "operationId": "followArtist",
@@ -3629,7 +3629,7 @@
       },
       "parameters": []
     },
-    "/timeline/unfollow": {
+    "/timeline/artist/unfollow": {
       "post": {
         "summary": "Unfollow artist",
         "operationId": "unfollowArtist",
@@ -3642,7 +3642,8 @@
         "tags": [
           "timeline"
         ]
-      }
+      },
+      "parameters": []
     },
     "/timeline": {
       "get": {
@@ -3676,6 +3677,27 @@
         ],
         "description": "タイムラインを取得します"
       }
+    },
+    "/timeline/artist": {
+      "get": {
+        "summary": "Get following artists",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetFollowingArtistsResponse"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "getFollowingArtists",
+        "description": "フォロー中の絵師/タグ一覧を取得します"
+      },
+      "parameters": []
     }
   },
   "components": {
@@ -10187,6 +10209,40 @@
             "data": []
           }
         }
+      },
+      "GetFollowingArtistsResponse": {
+        "title": "GetFollowingArtists",
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 999,
+            "example": 200,
+            "default": 200
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "name": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ]
       }
     },
     "securitySchemes": {
