@@ -8925,6 +8925,91 @@
               }
             }
           }
+        },
+        "x-examples": {
+          "twitter": {
+            "illust": {
+              "type": "twitter",
+              "id": 1368965591470547000,
+              "title": "ラ〇ッドハウスの店員さん ",
+              "caption": "ラ〇ッドハウスの店員さん ",
+              "imgs": [
+                {
+                  "width": 1159,
+                  "height": 1577,
+                  "large_src": "https://pbs.twimg.com/media/Ev-K11BVoAktP3d.jpg?format=jpg&name=orig",
+                  "thumb_src": "https://pbs.twimg.com/media/Ev-K11BVoAktP3d.jpg?format=jpg&name=thumb"
+                }
+              ],
+              "tags": [],
+              "source": "https://twitter.com/PURA1192/status/1368965591470546949",
+              "artist": "きゅーぷら",
+              "R18": false
+            },
+            "extra": {
+              "twitter_user": {
+                "id": 1176867370238800000,
+                "screen_name": "PURA1192",
+                "name": "きゅーぷら",
+                "description": "オメガウェポン\n\nhttps://t.co/sffwGeETPk",
+                "profile_image": "https://pbs.twimg.com/profile_images/1362206358922092549/uWD9eZId_normal.jpg",
+                "banner_image": "https://pbs.twimg.com/profile_banners/1176867370238799872/1611142275"
+              }
+            }
+          },
+          "pixiv": {
+            "illust": {
+              "type": "string",
+              "id": 0,
+              "title": "string",
+              "caption": "string",
+              "imgs": [
+                {
+                  "width": 0,
+                  "height": 0,
+                  "large_src": "https://example.com/hoge",
+                  "thumb_src": "string"
+                }
+              ],
+              "tags": [
+                "string"
+              ],
+              "source": "string",
+              "artist": "string",
+              "R18": true
+            },
+            "extra": {
+              "booth_shop": {
+                "name": "string",
+                "link": "string"
+              },
+              "twitter_user": {
+                "id": 0,
+                "screen_name": "string",
+                "name": "string",
+                "description": "string",
+                "profile_image": "string",
+                "banner_image": "string"
+              },
+              "danbooru_user": {
+                "id": 0,
+                "name": "string"
+              },
+              "pixiv_user": {
+                "id": 0,
+                "screen_name": "string",
+                "name": "string",
+                "description": "string",
+                "profile_image": "string",
+                "banner_image": "string"
+              },
+              "nicoseiga_user": {
+                "id": 0,
+                "name": "string",
+                "profile_image": "string"
+              }
+            }
+          }
         }
       },
       "PostScrapeRequest": {
