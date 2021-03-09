@@ -3255,7 +3255,7 @@
           }
         },
         "operationId": "reportUser",
-        "description": "指定したイラストを運営に通報します\nむやみに利用するとアカウントが停止される可能性があります",
+        "description": "指定したユーザーを運営に通報します\nむやみに利用するとアカウントが停止される可能性があります",
         "requestBody": {
           "content": {
             "application/json": {
@@ -3310,11 +3310,62 @@
     },
     "/scrape": {
       "post": {
-        "summary": "Scrape",
-        "operationId": "post-scrape",
+        "summary": "Scrape content",
+        "operationId": "scrapeContent",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostScrapeResponse"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "scrape"
+        ],
+        "description": "渡されたURLのページ情報をスクレイピングします\nむやみに利用するとアカウントが停止される可能性があります",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostScrapeRequest"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/upload": {
+      "post": {
+        "summary": "Upload content",
+        "operationId": "uploadContent",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostUploadResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "画像や動画を投稿します\nむやみに利用するとアカウントが停止される可能性があります",
+        "tags": [
+          "upload"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostUploadRequest"
+              }
+            }
           }
         }
       }
@@ -8685,10 +8736,21 @@
           }
         }
       },
-      "ScrapeRequest": {
-        "title": "ScrapeRequest",
+      "ScrapeResultStruct": {
+        "title": "ScrapeResultStruct",
         "type": "object",
-        "description": "",
+        "properties": {
+          "sourceType": {
+            "type": "string"
+          },
+          "": {
+            "type": "string"
+          }
+        }
+      },
+      "PostScrapeRequest": {
+        "title": "PostScrapeRequest",
+        "type": "object",
         "properties": {
           "url": {
             "type": "string",
@@ -8696,14 +8758,70 @@
           }
         }
       },
-      "ScrapeResponse": {
-        "title": "ScrapeResponse",
+      "PostScrapeResponse": {
+        "title": "PostScrapeResponse",
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 999,
+            "example": 200
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/ScrapeResultStruct"
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ]
+      },
+      "PostUploadRequest": {
+        "title": "PostUploadRequest",
         "type": "object",
         "properties": {
           "id": {
             "type": "string"
           }
         }
+      },
+      "PostUploadResponse": {
+        "title": "PostUploadResponse",
+        "type": "object",
+        "x-examples": {
+          "success": {
+            "status": 200,
+            "message": "ok",
+            "url": "https://example.com"
+          },
+          "failed-bad-request": {
+            "status": 400,
+            "message": "Bad request."
+          }
+        },
+        "properties": {
+          "status": {
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 999,
+            "example": 200
+          },
+          "message": {
+            "type": "string"
+          },
+          "url": {
+            "description": "投稿したファイルのURL(有効期限は1時間とする)",
+            "type": "string"
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ]
       }
     },
     "securitySchemes": {
@@ -8839,7 +8957,13 @@
       "name": "report"
     },
     {
+      "name": "scrape"
+    },
+    {
       "name": "search"
+    },
+    {
+      "name": "upload"
     }
   ]
 }
