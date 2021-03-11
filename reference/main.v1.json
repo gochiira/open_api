@@ -3738,13 +3738,29 @@
         "operationId": "addWikiArticle",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostWikiArticleResponse"
+                }
+              }
+            }
           }
         },
         "description": "Wikiの記事を作成します",
         "tags": [
           "wiki"
-        ]
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostWikiArticleRequest"
+              }
+            }
+          }
+        }
       }
     },
     "/wiki/{articleID}": {
@@ -3765,7 +3781,14 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetWikiArticleResponse"
+                }
+              }
+            }
           }
         },
         "operationId": "getWikiArticle",
@@ -3776,20 +3799,43 @@
         "operationId": "editWikiArticle",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PutWikiArticleResponse"
+                }
+              }
+            }
           }
         },
         "description": "Wikiの記事を編集します",
         "tags": [
           "wiki"
-        ]
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PutWikiArticleRequest"
+              }
+            }
+          }
+        }
       },
       "delete": {
         "summary": "Delete wiki article",
         "operationId": "deleteWikiArticle",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteWikiArticleResponse"
+                }
+              }
+            }
           }
         },
         "tags": [
@@ -3806,11 +3852,36 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetFindWikiArticleResponse"
+                }
+              }
+            }
           }
         },
         "operationId": "findWikiArticle",
-        "description": "Wikiの記事が存在するかを確認します"
+        "description": "Wikiの記事が存在するかを確認します",
+        "parameters": [
+          {
+            "schema": {
+              "type": "integer"
+            },
+            "in": "query",
+            "name": "type",
+            "description": "対象の記事種別 0:ユーザー 1:タグ 2:絵師"
+          },
+          {
+            "schema": {
+              "type": "integer"
+            },
+            "in": "query",
+            "name": "id",
+            "description": "対象の記事ID"
+          }
+        ]
       }
     }
   },
@@ -6537,7 +6608,7 @@
           }
         }
       },
-      "PutArtCommentResponse": {
+      "PutWikiArticleResponse": {
         "description": "",
         "type": "object",
         "properties": {
@@ -6571,6 +6642,42 @@
             "message": "Request parameters are not satisfied."
           }
         }
+      },
+      "PutArtCommentResponse": {
+        "description": "",
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "integer"
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ],
+        "x-examples": {
+          "success": {
+            "status": 200,
+            "message": "Update article succeed."
+          },
+          "failed-internal-error": {
+            "status": 500,
+            "message": "Server bombed."
+          },
+          "failed-not-found": {
+            "status": 404,
+            "message": "The article was not found."
+          },
+          "failed-not-satisfied": {
+            "status": 400,
+            "message": "Request parameters are not satisfied."
+          }
+        },
+        "title": "PutWikiArticleResponse"
       },
       "PutNotifyClientRequest": {
         "title": "PutNotifyClientRequest",
@@ -8204,6 +8311,48 @@
             "message": "The specified tag already exists."
           }
         }
+      },
+      "PostWikiArticleResponse": {
+        "title": "PostWikiArticleResponse",
+        "type": "object",
+        "x-examples": {
+          "success": {
+            "status": 200,
+            "message": "ok",
+            "articleID": 1
+          },
+          "failed-not-satisfied": {
+            "status": 400,
+            "message": "The parameters were not satisfied."
+          },
+          "failed-bad-request": {
+            "status": 400,
+            "message": "Bad request."
+          },
+          "failed-conflict": {
+            "status": 409,
+            "message": "The specified article already exists."
+          }
+        },
+        "properties": {
+          "status": {
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 999,
+            "example": 200,
+            "default": 200
+          },
+          "message": {
+            "type": "string"
+          },
+          "articleID": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ]
       },
       "GetCharacterResponse": {
         "title": "GetCharacterResponse",
@@ -10442,21 +10591,40 @@
         }
       },
       "PostWikiArticleRequest": {
-        "title": "PostArticleRequest",
+        "title": "PostWikiArticleRequest",
         "type": "object",
         "properties": {
           "type": {
             "type": "integer",
-            "description": "記事種別"
+            "description": "対象の記事種別 0:ユーザー 1:タグ 2:絵師",
+            "enum": [
+              0,
+              1,
+              2
+            ],
+            "example": 0,
+            "default": 0,
+            "minimum": 0,
+            "maximum": 2,
+            "format": "int32"
           },
           "id": {
-            "type": "integer"
+            "type": "integer",
+            "description": "対象のユーザー/タグ/絵師ID",
+            "minimum": 1,
+            "format": "int32"
           },
           "title": {
-            "type": "string"
+            "type": "string",
+            "description": "記事タイトル",
+            "minLength": 1,
+            "maxLength": 50
           },
           "body": {
-            "type": "string"
+            "type": "string",
+            "description": "記事本文",
+            "maxLength": 3000,
+            "minLength": 1
           }
         },
         "required": [
@@ -10465,6 +10633,168 @@
           "title",
           "body"
         ]
+      },
+      "GetWikiArticleResponse": {
+        "title": "GetWikiArticleResponse",
+        "type": "object",
+        "x-examples": {
+          "success": {
+            "status": 200,
+            "message": "ok",
+            "data": {
+              "type": 0,
+              "id": 1,
+              "title": "お窓",
+              "body": "管理者/開発者。すごい。"
+            }
+          }
+        },
+        "properties": {
+          "status": {
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 999,
+            "example": 200,
+            "default": 200
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "integer",
+                "description": "対象の記事種別 0:ユーザー 1:タグ 2:絵師",
+                "enum": [
+                  0,
+                  1,
+                  2
+                ],
+                "example": 0,
+                "default": 0,
+                "minimum": 0,
+                "maximum": 2,
+                "format": "int32"
+              },
+              "id": {
+                "type": "integer",
+                "description": "対象のユーザー/タグ/絵師ID",
+                "minimum": 1,
+                "format": "int32"
+              },
+              "title": {
+                "type": "string",
+                "description": "記事タイトル",
+                "minLength": 1,
+                "maxLength": 50
+              },
+              "body": {
+                "type": "string",
+                "description": "記事本文",
+                "maxLength": 3000,
+                "minLength": 1
+              },
+              "createdDate": {
+                "type": "string",
+                "description": "記事の作成日"
+              },
+              "revision": {
+                "type": "integer",
+                "description": "更新回数"
+              }
+            }
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ]
+      },
+      "PutWikiArticleRequest": {
+        "title": "PutWikiArticleRequest",
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "記事タイトル",
+            "minLength": 1,
+            "maxLength": 50
+          },
+          "body": {
+            "type": "string",
+            "description": "記事本文",
+            "maxLength": 3000,
+            "minLength": 1
+          }
+        },
+        "required": [
+          "title",
+          "body"
+        ]
+      },
+      "DeleteWikiArticleResponse": {
+        "description": "",
+        "type": "object",
+        "x-examples": {
+          "success": {
+            "status": 200,
+            "message": "Deleted."
+          },
+          "failed-not-found": {
+            "status": 404,
+            "message": "The article was not found."
+          },
+          "failed-permission": {
+            "status": 400,
+            "message": "You don't have enough permission."
+          }
+        },
+        "properties": {
+          "status": {
+            "type": "number",
+            "minimum": 100,
+            "maximum": 999,
+            "example": 200,
+            "default": 200
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ],
+        "title": "DeleteWikiArticleResponse"
+      },
+      "GetFindWikiArticleResponse": {
+        "title": "GetFindWikiArticleResponse",
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 999,
+            "example": 200,
+            "default": 200,
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "x-examples": {
+          "success": {
+            "status": 200,
+            "message": "Found."
+          },
+          "failed-not-found": {
+            "status": 404,
+            "message": "Not found."
+          }
+        }
       }
     },
     "securitySchemes": {
