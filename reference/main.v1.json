@@ -3613,35 +3613,67 @@
         "description": "キーワードからタグを検索します"
       }
     },
-    "/timeline/artist/follow": {
+    "/timeline/follow": {
       "post": {
         "summary": "Follow artist",
         "operationId": "followArtist",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostTimelineFollowResponse"
+                }
+              }
+            }
           }
         },
         "description": "絵師をフォローします",
         "tags": [
           "timeline"
-        ]
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostTimelineGeneralRequest"
+              }
+            }
+          }
+        }
       },
       "parameters": []
     },
-    "/timeline/artist/unfollow": {
+    "/timeline/unfollow": {
       "post": {
         "summary": "Unfollow artist",
         "operationId": "unfollowArtist",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostTimelineUnfollowResponse"
+                }
+              }
+            }
           }
         },
         "description": "絵師のフォローを解除します",
         "tags": [
           "timeline"
-        ]
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostTimelineGeneralRequest"
+              }
+            }
+          }
+        }
       },
       "parameters": []
     },
@@ -3657,7 +3689,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GetNavigationGeneralResponse"
+                  "$ref": "#/components/schemas/SearchGeneralResponse"
                 }
               }
             }
@@ -3678,9 +3710,9 @@
         "description": "タイムラインを取得します"
       }
     },
-    "/timeline/artist": {
+    "/timeline/following": {
       "get": {
-        "summary": "Get following artists",
+        "summary": "Get followings",
         "tags": [],
         "responses": {
           "200": {
@@ -3688,16 +3720,15 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GetFollowingArtistsResponse"
+                  "$ref": "#/components/schemas/GetTimelineFollowingResponse"
                 }
               }
             }
           }
         },
-        "operationId": "getFollowingArtists",
-        "description": "フォロー中の絵師/タグ一覧を取得します"
-      },
-      "parameters": []
+        "operationId": "getFollowing",
+        "description": "フォロー中の絵師ID一覧を取得します"
+      }
     }
   },
   "components": {
@@ -10210,8 +10241,21 @@
           }
         }
       },
-      "GetFollowingArtistsResponse": {
-        "title": "GetFollowingArtists",
+      "PostTimelineGeneralRequest": {
+        "title": "PostTimelineGeneralRequest",
+        "type": "object",
+        "properties": {
+          "artistID": {
+            "type": "integer",
+            "description": "絵師ID"
+          }
+        },
+        "required": [
+          "artistID"
+        ]
+      },
+      "GetTimelineFollowingResponse": {
+        "title": "GetTimelineFollowingResponse",
         "type": "object",
         "properties": {
           "status": {
@@ -10243,6 +10287,76 @@
           "status",
           "message"
         ]
+      },
+      "PostTimelineFollowResponse": {
+        "title": "PostTimelineFollowResponse",
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 999,
+            "example": 200,
+            "default": 200,
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ],
+        "x-examples": {
+          "success": {
+            "status": 200,
+            "message": "Followed."
+          },
+          "failed-bad-request": {
+            "status": 400,
+            "message": "Bad request."
+          },
+          "failed-conflict": {
+            "status": 409,
+            "message": "You already followed the artist."
+          }
+        }
+      },
+      "PostTimelineUnfollowResponse": {
+        "title": "PostTimelineUnfollowResponse",
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 999,
+            "example": 200,
+            "default": 200,
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ],
+        "x-examples": {
+          "success": {
+            "status": 200,
+            "message": "Unfollowed."
+          },
+          "failed-bad-request": {
+            "status": 400,
+            "message": "Bad request."
+          },
+          "failed-conflict": {
+            "status": 409,
+            "message": "You already unfollowed the artist."
+          }
+        }
       }
     },
     "securitySchemes": {
