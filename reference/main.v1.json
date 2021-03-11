@@ -3713,7 +3713,9 @@
     "/timeline/following": {
       "get": {
         "summary": "Get followings",
-        "tags": [],
+        "tags": [
+          "timeline"
+        ],
         "responses": {
           "200": {
             "description": "OK",
