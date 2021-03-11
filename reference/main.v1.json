@@ -3731,6 +3731,87 @@
         "operationId": "getFollowing",
         "description": "フォロー中の絵師ID一覧を取得します"
       }
+    },
+    "/wiki": {
+      "post": {
+        "summary": "Add wiki article",
+        "operationId": "addWikiArticle",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "Wikiの記事を作成します",
+        "tags": [
+          "wiki"
+        ]
+      }
+    },
+    "/wiki/{articleID}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "articleID",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "Get wiki article",
+        "tags": [
+          "wiki"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "operationId": "getWikiArticle",
+        "description": "Wikiの記事を取得します"
+      },
+      "put": {
+        "summary": "Edit wiki article",
+        "operationId": "editWikiArticle",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "Wikiの記事を編集します",
+        "tags": [
+          "wiki"
+        ]
+      },
+      "delete": {
+        "summary": "Delete wiki article",
+        "operationId": "deleteWikiArticle",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "wiki"
+        ],
+        "description": "Wikiの記事を削除します"
+      }
+    },
+    "/wiki/find": {
+      "get": {
+        "summary": "Find wiki article",
+        "tags": [
+          "wiki"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "operationId": "findWikiArticle",
+        "description": "Wikiの記事が存在するかを確認します"
+      }
     }
   },
   "components": {
@@ -10359,6 +10440,15 @@
             "message": "You already unfollowed the artist."
           }
         }
+      },
+      "PostWikiArticleRequest": {
+        "title": "PostArticleRequest",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        }
       }
     },
     "securitySchemes": {
@@ -10510,6 +10600,9 @@
     },
     {
       "name": "upload"
+    },
+    {
+      "name": "wiki"
     }
   ]
 }
