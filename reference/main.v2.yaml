@@ -2589,24 +2589,15 @@ paths:
           in: query
           name: id
           description: 対象の記事ID
-  '/activitypub/{displayID}/inbox':
-    get:
-      summary: Get activitypub inbox
-      tags:
-        - activitypub
-      responses:
-        '200':
-          description: OK
-      operationId: getActivityPubInbox
-      description: ユーザー自身がタイムラインを取得するときにGETする
+  '/activitypub/uploader/{userID}/inbox':
     parameters:
       - schema:
-          type: string
-        name: displayID
+          type: integer
+        name: userID
         in: path
         required: true
     post:
-      summary: Post activitypub inbox
+      summary: Recieve federation to user message
       operationId: postActivityPubInbox
       responses:
         '200':
@@ -2614,9 +2605,18 @@ paths:
       description: 他のサーバーがこのユーザーに向けてメッセージを送るときにPOSTされる
       tags:
         - activitypub
-  '/activitypub/{displayID}/outbox':
     get:
-      summary: Get activitypub outbox
+      summary: Check federation user message
+      operationId: get-activitypub-uploader-displayID-inbox
+      responses:
+        '200':
+          description: OK
+      description: このユーザーが自分自身に来ている通知などを取得する際にGETされる
+      tags:
+        - activitypub
+  '/activitypub/uploader/{userID}/outbox':
+    get:
+      summary: Provide federation user message
       tags:
         - activitypub
       responses:
@@ -2626,12 +2626,12 @@ paths:
       description: 他のサーバーがこのユーザーのメッセージを受け取るときにGETされる
     parameters:
       - schema:
-          type: string
-        name: displayID
+          type: integer
+        name: userID
         in: path
         required: true
     post:
-      summary: Post activitypub inbox
+      summary: Send federation user message
       operationId: postActivityPubOutbox
       responses:
         '200':
@@ -2639,11 +2639,11 @@ paths:
       description: このユーザーが他のサーバーに向けてメッセージを送るときにPOSTされる
       tags:
         - activitypub
-  '/activitypub/{displayID}':
+  '/activitypub/artist/{artistID}':
     parameters:
       - schema:
           type: string
-        name: displayID
+        name: artistID
         in: path
         required: true
     get:
@@ -2653,15 +2653,20 @@ paths:
       responses:
         '200':
           description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties: {}
       operationId: get-activitypub-displayID
       description: |-
-        ActivityPubのユーザー情報を返す
+        ActivityPubのユーザー情報(絵師)を返す
         (実際使うときは https://example.com/user/{displayID} からリダイレクト?)
+  /activitypub/server:
+    get:
+      summary: Get activitypub server base
+      tags:
+        - activitypub
+      responses:
+        '200':
+          description: OK
+      operationId: get-activitypub-server
+      description: サーバー同士でやり取りするデータ
 components:
   schemas:
     SearchResult:
@@ -7800,6 +7805,87 @@ components:
         failed-not-found:
           status: 404
           message: Not found.
+    ActivityPubActorStruct:
+      description: 'https://argrath.github.io/activitypub/#actor-objects'
+      type: object
+      x-examples:
+        example-1:
+          '@context':
+            - 'https://www.w3.org/ns/activitystreams'
+            - '@language': ja
+          type: Person
+          id: 'https://kenzoishii.example.com/'
+          following: 'https://kenzoishii.example.com/following.json'
+          followers: 'https://kenzoishii.example.com/followers.json'
+          liked: 'https://kenzoishii.example.com/liked.json'
+          inbox: 'https://kenzoishii.example.com/inbox.json'
+          outbox: 'https://kenzoishii.example.com/feed.json'
+          preferredUsername: kenzoishii
+          name: 石井健蔵
+          summary: この方はただの例です
+          icon:
+            - 'https://kenzoishii.example.com/image/165987aklre4'
+      title: ''
+      properties:
+        '@context':
+          type: array
+          items:
+            type: object
+            properties:
+              '1':
+                type: object
+                properties:
+                  '@language':
+                    type: string
+                    minLength: 1
+                required:
+                  - '@language'
+        type:
+          type: string
+          minLength: 1
+        id:
+          type: string
+          minLength: 1
+        following:
+          type: string
+          minLength: 1
+        followers:
+          type: string
+          minLength: 1
+        liked:
+          type: string
+          minLength: 1
+        inbox:
+          type: string
+          minLength: 1
+        outbox:
+          type: string
+          minLength: 1
+        preferredUsername:
+          type: string
+          minLength: 1
+        name:
+          type: string
+          minLength: 1
+        summary:
+          type: string
+          minLength: 1
+        icon:
+          type: array
+          items:
+            type: object
+      required:
+        - type
+        - id
+        - following
+        - followers
+        - liked
+        - inbox
+        - outbox
+        - preferredUsername
+        - name
+        - summary
+        - icon
   securitySchemes:
     Authorization:
       type: http
