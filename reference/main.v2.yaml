@@ -2589,26 +2589,6 @@ paths:
           in: query
           name: id
           description: 対象の記事ID
-  '/activitypub/uploader/{userID}/inbox':
-    parameters:
-      - schema:
-          type: integer
-        name: userID
-        in: path
-        required: true
-    get:
-      summary: Check federation user message
-      operationId: get-activitypub-uploader-displayID-inbox
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GetActivityPubInboxResponse'
-      description: このユーザーが自分自身に来ている通知などを取得する際にGETされる
-      tags:
-        - activitypub
   '/activitypub/uploader/{userID}/outbox':
     get:
       summary: Provide federation user message
@@ -2625,26 +2605,6 @@ paths:
         name: userID
         in: path
         required: true
-  '/activitypub/artist/{artistID}/inbox':
-    parameters:
-      - schema:
-          type: integer
-        name: artistID
-        in: path
-        required: true
-    get:
-      summary: Check federation artist message
-      operationId: getActivityPubArtistInbox
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GetActivityPubInboxResponse'
-      description: このユーザーが自分自身に来ている通知などを取得する際にGETされる
-      tags:
-        - activitypub
   '/activitypub/artist/{artistID}/outbox':
     get:
       summary: Provide federation artist message
@@ -2653,6 +2613,10 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetActivityPubGeneralResponse'
       operationId: getActivityPubArtistOutbox
       description: 他のサーバーがこのユーザーのメッセージを受け取るときにGETされる
     parameters:
@@ -2666,8 +2630,8 @@ paths:
       summary: Recieve federation to server message
       operationId: postActivityPubServerInbox
       responses:
-        '200':
-          description: OK
+        '201':
+          description: Created
       description: 他のサーバーがこのサーバーに向けてメッセージを送るときにPOSTされる
       tags:
         - activitypub
@@ -2675,7 +2639,7 @@ paths:
         content:
           application/activity+json:
             schema:
-              $ref: '#/components/schemas/PostActvityPubInboxRequest'
+              $ref: '#/components/schemas/PostActivityPubGeneralRequest'
     get:
       summary: Check federation server message
       operationId: getActivityPubServerinbox
@@ -2685,7 +2649,7 @@ paths:
           content:
             application/activity+json:
               schema:
-                $ref: '#/components/schemas/GetActivityPubInboxResponse'
+                $ref: '#/components/schemas/GetActivityPubGeneralResponse'
       description: このサーバーが自分自身に来ている通知などを取得する際にGETされる
       tags:
         - activitypub
@@ -2697,17 +2661,26 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetActivityPubGeneralResponse'
       operationId: getActivityPubServerOutbox
       description: 他のサーバーがこのサーバーのメッセージを受け取るときにGETされる
     post:
       summary: Send federation server message
       operationId: postActivityPubServerOutbox
       responses:
-        '200':
-          description: OK
+        '201':
+          description: Created
       description: このサーバーが他のサーバーに向けてメッセージを送るときにPOSTされる
       tags:
         - activitypub
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostActivityPubGeneralRequest'
   '/activitypub/artist/{artistID}':
     parameters:
       - schema:
@@ -7982,7 +7955,7 @@ components:
         - name
         - summary
         - icon
-    GetActivityPubInboxResponse:
+    GetActivityPubGeneralResponse:
       description: ''
       type: object
       properties:
@@ -8029,7 +8002,8 @@ components:
               name: A Simple Note
             - type: Note
               name: Another Simple Note
-    PostActvityPubInboxRequest:
+      title: GetActivityPubGeneralResponse
+    PostActivityPubGeneralRequest:
       description: ''
       type: object
       properties:
@@ -8083,6 +8057,7 @@ components:
           object:
             type: Note
             name: A Note
+      title: PostActivityPubGeneralRequest
   securitySchemes:
     Authorization:
       type: http
