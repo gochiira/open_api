@@ -2596,21 +2596,16 @@ paths:
         name: userID
         in: path
         required: true
-    post:
-      summary: Recieve federation to user message
-      operationId: postActivityPubInbox
-      responses:
-        '200':
-          description: OK
-      description: 他のサーバーがこのユーザーに向けてメッセージを送るときにPOSTされる
-      tags:
-        - activitypub
     get:
       summary: Check federation user message
       operationId: get-activitypub-uploader-displayID-inbox
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetActivityPubInboxResponse'
       description: このユーザーが自分自身に来ている通知などを取得する際にGETされる
       tags:
         - activitypub
@@ -2630,13 +2625,87 @@ paths:
         name: userID
         in: path
         required: true
-    post:
-      summary: Send federation user message
-      operationId: postActivityPubOutbox
+  '/activitypub/artist/{artistID}/inbox':
+    parameters:
+      - schema:
+          type: integer
+        name: artistID
+        in: path
+        required: true
+    get:
+      summary: Check federation artist message
+      operationId: getActivityPubArtistInbox
       responses:
         '200':
           description: OK
-      description: このユーザーが他のサーバーに向けてメッセージを送るときにPOSTされる
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetActivityPubInboxResponse'
+      description: このユーザーが自分自身に来ている通知などを取得する際にGETされる
+      tags:
+        - activitypub
+  '/activitypub/artist/{artistID}/outbox':
+    get:
+      summary: Provide federation artist message
+      tags:
+        - activitypub
+      responses:
+        '200':
+          description: OK
+      operationId: getActivityPubArtistOutbox
+      description: 他のサーバーがこのユーザーのメッセージを受け取るときにGETされる
+    parameters:
+      - schema:
+          type: integer
+        name: artistID
+        in: path
+        required: true
+  /activitypub/server/inbox:
+    post:
+      summary: Recieve federation to server message
+      operationId: postActivityPubServerInbox
+      responses:
+        '200':
+          description: OK
+      description: 他のサーバーがこのサーバーに向けてメッセージを送るときにPOSTされる
+      tags:
+        - activitypub
+      requestBody:
+        content:
+          application/activity+json:
+            schema:
+              $ref: '#/components/schemas/PostActvityPubInboxRequest'
+    get:
+      summary: Check federation server message
+      operationId: getActivityPubServerinbox
+      responses:
+        '200':
+          description: OK
+          content:
+            application/activity+json:
+              schema:
+                $ref: '#/components/schemas/GetActivityPubInboxResponse'
+      description: このサーバーが自分自身に来ている通知などを取得する際にGETされる
+      tags:
+        - activitypub
+  /activitypub/server/outbox:
+    get:
+      summary: Provide federation server message
+      tags:
+        - activitypub
+      responses:
+        '200':
+          description: OK
+      operationId: getActivityPubServerOutbox
+      description: 他のサーバーがこのサーバーのメッセージを受け取るときにGETされる
+    post:
+      summary: Send federation server message
+      operationId: postActivityPubServerOutbox
+      responses:
+        '200':
+          description: OK
+      description: このサーバーが他のサーバーに向けてメッセージを送るときにPOSTされる
       tags:
         - activitypub
   '/activitypub/artist/{artistID}':
@@ -2647,16 +2716,42 @@ paths:
         in: path
         required: true
     get:
-      summary: Get activitypub user
+      summary: Get activitypub artist actor
       tags:
         - activitypub
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActivityPubActorStruct'
       operationId: get-activitypub-displayID
       description: |-
         ActivityPubのユーザー情報(絵師)を返す
-        (実際使うときは https://example.com/user/{displayID} からリダイレクト?)
+        (実際使うときは https://example.com/artist/{displayID} からリダイレクト?)
+  '/activitypub/uploader/{userID}':
+    parameters:
+      - schema:
+          type: string
+        name: userID
+        in: path
+        required: true
+    get:
+      summary: Get activitypub uploader actor
+      tags:
+        - activitypub
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActivityPubActorStruct'
+      operationId: get-activitypub-uploader-ID
+      description: |-
+        ActivityPubのユーザー情報(投稿者)を返す
+        (実際使うときは https://example.com/uploader/{displayID} からリダイレクト?)
   /activitypub/server:
     get:
       summary: Get activitypub server base
@@ -2665,8 +2760,12 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActivityPubActorStruct'
       operationId: get-activitypub-server
-      description: サーバー同士でやり取りするデータ
+      description: ActivityPubのユーザー情報(サーバー)を返す
 components:
   schemas:
     SearchResult:
@@ -7877,15 +7976,113 @@ components:
       required:
         - type
         - id
-        - following
-        - followers
-        - liked
         - inbox
         - outbox
         - preferredUsername
         - name
         - summary
         - icon
+    GetActivityPubInboxResponse:
+      description: ''
+      type: object
+      properties:
+        '@context':
+          type: string
+          minLength: 1
+        summary:
+          type: string
+          minLength: 1
+        type:
+          type: string
+          minLength: 1
+        totalItems:
+          type: number
+        orderedItems:
+          type: array
+          uniqueItems: true
+          minItems: 1
+          items:
+            required:
+              - type
+              - name
+            properties:
+              type:
+                type: string
+                minLength: 1
+              name:
+                type: string
+                minLength: 1
+      required:
+        - '@context'
+        - summary
+        - type
+        - totalItems
+        - orderedItems
+      x-examples:
+        example:
+          '@context': 'https://www.w3.org/ns/activitystreams'
+          summary: Sally's notes
+          type: OrderedCollection
+          totalItems: 2
+          orderedItems:
+            - type: Note
+              name: A Simple Note
+            - type: Note
+              name: Another Simple Note
+    PostActvityPubInboxRequest:
+      description: ''
+      type: object
+      properties:
+        '@context':
+          type: string
+          minLength: 1
+        type:
+          type: string
+          minLength: 1
+        summary:
+          type: string
+          minLength: 1
+        actor:
+          type: object
+          properties:
+            type:
+              type: string
+              minLength: 1
+            name:
+              type: string
+              minLength: 1
+          required:
+            - type
+            - name
+        object:
+          type: object
+          properties:
+            type:
+              type: string
+              minLength: 1
+            name:
+              type: string
+              minLength: 1
+          required:
+            - type
+            - name
+      required:
+        - '@context'
+        - type
+        - summary
+        - actor
+        - object
+      x-examples:
+        example-1:
+          '@context': 'https://www.w3.org/ns/activitystreams'
+          type: Activity
+          summary: Sally did something to a note
+          actor:
+            type: Person
+            name: Sally
+          object:
+            type: Note
+            name: A Note
   securitySchemes:
     Authorization:
       type: http
