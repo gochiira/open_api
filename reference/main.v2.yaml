@@ -3628,21 +3628,25 @@ components:
     PostReissueTokenResponse:
       title: PostReissueTokenResponse
       type: object
+      x-examples:
+        example:
+          status: 200
+          message: ok
+          api_key: DUMMY_API_KEY
       properties:
         status:
           type: integer
+          minimum: 100
+          maximum: 999
+          example: 200
+          default: 200
+          format: int32
         message:
           type: string
           minLength: 1
         api_key:
           type: string
           minLength: 1
-      x-examples:
-        example:
-          value:
-            status: 200
-            message: ok
-            api_key: DUMMY_API_KEY
       required:
         - status
         - message
@@ -4913,25 +4917,36 @@ components:
     PostArtCommentRequest:
       title: PostArtCommentRequest
       type: object
-      properties:
-        comment:
-          type: string
       x-examples:
         example:
           comment: テストコメント
+      properties:
+        comment:
+          type: string
+          description: コメント本文
+      required:
+        - comment
     PostArtCommentResponse:
       title: PostArtCommentResponse
       type: object
-      properties:
-        status:
-          type: integer
-        message:
-          type: string
-          minLength: 1
       x-examples:
         success:
           status: 200
           message: ok
+        failed:
+          status: 400
+          message: You don't have enough permission.
+      properties:
+        status:
+          type: integer
+          minimum: 100
+          maximum: 999
+          example: 200
+          default: 200
+          format: int32
+        message:
+          type: string
+          minLength: 1
       required:
         - status
         - message
@@ -5143,15 +5158,6 @@ components:
     PostArtResponse:
       description: ''
       type: object
-      properties:
-        status:
-          type: integer
-        message:
-          type: string
-          minLength: 1
-      required:
-        - status
-        - message
       x-examples:
         success:
           status: 202
@@ -5166,6 +5172,20 @@ components:
           status: 400
           message: Invalid image url
       title: ''
+      properties:
+        status:
+          type: integer
+          format: int32
+          default: 200
+          example: 200
+          minimum: 100
+          maximum: 999
+        message:
+          type: string
+          minLength: 1
+      required:
+        - status
+        - message
     GetCatalogArtistResponse:
       description: ''
       type: object
@@ -6252,20 +6272,6 @@ components:
     PostCharacterResponse:
       title: PostCharacterResponse
       type: object
-      properties:
-        status:
-          type: integer
-          minimum: 100
-          maximum: 999
-          example: 200
-          default: 200
-        message:
-          type: string
-        tagID:
-          type: integer
-      required:
-        - status
-        - message
       x-examples:
         success:
           status: 200
@@ -6280,23 +6286,25 @@ components:
         failed-conflict:
           status: 409
           message: The specified tag already exists.
+      properties:
+        status:
+          type: integer
+          minimum: 100
+          maximum: 999
+          example: 200
+          default: 200
+          format: int32
+        message:
+          type: string
+          minLength: 1
+        tagID:
+          type: integer
+      required:
+        - status
+        - message
     PostTagResponse:
       title: PostTagResponse
       type: object
-      properties:
-        status:
-          type: integer
-          minimum: 100
-          maximum: 999
-          example: 200
-          default: 200
-        message:
-          type: string
-        tagID:
-          type: integer
-      required:
-        - status
-        - message
       x-examples:
         success:
           status: 200
@@ -6311,6 +6319,22 @@ components:
         failed-conflict:
           status: 409
           message: The specified tag already exists.
+      properties:
+        status:
+          type: integer
+          minimum: 100
+          maximum: 999
+          example: 200
+          default: 200
+          format: int32
+        message:
+          type: string
+          minLength: 1
+        tagID:
+          type: integer
+      required:
+        - status
+        - message
     PostWikiArticleResponse:
       title: PostWikiArticleResponse
       type: object
@@ -6470,20 +6494,6 @@ components:
       title: PostInviteResponse
       type: object
       description: ''
-      properties:
-        status:
-          type: integer
-        message:
-          type: string
-        data:
-          type: object
-          properties:
-            id:
-              type: integer
-              description: サイト内通し招待番号
-            code:
-              type: string
-              description: 招待コード
       x-examples:
         success:
           status: 200
@@ -6500,6 +6510,29 @@ components:
         failed-bad-request:
           status: 400
           message: Bad request.
+      properties:
+        status:
+          type: integer
+          minimum: 100
+          maximum: 999
+          example: 200
+          default: 200
+          format: int32
+        message:
+          type: string
+          minLength: 1
+        data:
+          type: object
+          properties:
+            id:
+              type: integer
+              description: サイト内通し招待番号
+            code:
+              type: string
+              description: 招待コード
+      required:
+        - status
+        - message
     DeleteInviteResponse:
       title: DeleteInviteResponse
       type: object
@@ -6541,7 +6574,7 @@ components:
     PostInviteRequest:
       title: PostInviteRequest
       type: object
-      description: ''
+      description: (管理者のみ利用可能)
       x-examples:
         example:
           code: KAFUUCHINO
@@ -6625,11 +6658,6 @@ components:
     PostMuteResponse:
       title: PostMuteResponse
       type: object
-      properties:
-        status:
-          type: integer
-        message:
-          type: string
       x-examples:
         success:
           status: 200
@@ -6643,6 +6671,20 @@ components:
         failed-internal-error:
           status: 500
           message: Server bombed.
+      properties:
+        status:
+          type: integer
+          minimum: 100
+          maximum: 999
+          example: 200
+          default: 200
+          format: int32
+        message:
+          type: string
+          minLength: 1
+      required:
+        - status
+        - message
     DeleteMuteRequest:
       title: DeleteMuteRequest
       type: object
@@ -6872,7 +6914,16 @@ components:
       type: object
       properties:
         id:
-          type: string
+          description: 探したいイラストID
+          type: array
+          items:
+            type: integer
+      x-examples:
+        example-1:
+          id:
+            - 1
+            - 2
+            - 3
     PostMylistFindsResponse:
       title: PostMylistFindsResponse
       type: object
@@ -6899,16 +6950,30 @@ components:
       properties:
         status:
           type: integer
+          minimum: 100
+          maximum: 999
+          example: 200
+          default: 200
+          format: int32
         message:
           type: string
+          minLength: 1
         data:
           type: object
           additionalProperties:
             type: string
             description: 指定されたイラストIDをキーとして、それぞれ存在するかのboolean
+      required:
+        - status
+        - message
     PostNewsRequest:
       title: PostNewsRequest
       type: object
+      x-examples:
+        example:
+          title: 香風智乃がかわいい
+          body: そーんなのー常識ー
+          color: 1
       properties:
         title:
           type: string
@@ -6926,11 +6991,10 @@ components:
           maximum: 9
           example: 1
           description: ニュースの表示カラー/種別
-      x-examples:
-        example:
-          title: 香風智乃がかわいい
-          body: そーんなのー常識ー
-          color: 1
+      required:
+        - title
+        - body
+        - color
     PostNewsResponse:
       description: ''
       type: object
@@ -6938,7 +7002,7 @@ components:
         success:
           status: 201
           message: Created.
-          articleID: 1
+          newsID: 1
         failed-not-satisfied:
           status: 400
           message: Request parameters are not satisfied.
@@ -6952,10 +7016,15 @@ components:
       properties:
         status:
           type: integer
+          minimum: 100
+          maximum: 999
+          example: 200
+          default: 200
+          format: int32
         message:
           type: string
           minLength: 1
-        articleID:
+        newsID:
           type: integer
       required:
         - status
@@ -7358,8 +7427,10 @@ components:
           maximum: 999
           example: 200
           default: 200
+          format: int32
         message:
           type: string
+          minLength: 1
         id:
           type: integer
           description: 通知条件ID
@@ -7689,8 +7760,11 @@ components:
           minimum: 100
           maximum: 999
           example: 200
+          format: int32
+          default: 200
         message:
           type: string
+          minLength: 1
         data:
           $ref: '#/components/schemas/ScrapeResultStruct'
       required:
@@ -7893,8 +7967,10 @@ components:
           maximum: 999
           example: 200
           default: 200
+          format: int32
         message:
           type: string
+          minLength: 1
       required:
         - status
         - message
