@@ -3183,6 +3183,16 @@ components:
           minimum: 1
           format: int32
           description: サイト内通しタグ番号
+        user:
+          type: object
+          description: ユーザー情報
+          properties:
+            id:
+              type: integer
+              description: ユーザーID
+            name:
+              type: string
+              description: ユーザー名
         name:
           type: string
           minLength: 1
@@ -3191,6 +3201,7 @@ components:
         nsfw:
           type: boolean
           description: アダルトコンテンツが含まれるタグか
+          default: false
         description:
           type: string
           description: タグの説明文
@@ -5623,7 +5634,7 @@ components:
       type: object
       description: ''
       x-examples:
-        example:
+        success:
           status: 200
           message: ok
           data:
@@ -5648,6 +5659,15 @@ components:
                   id: 4
                   name: Manki Kim
                 extension: jpg
+        success-no-data:
+          status: 200
+          message: ok
+          data:
+            title: マイリスト
+            count: 0
+            current: 1
+            pages: 1
+            imgs: []
       properties:
         status:
           type: integer
@@ -5673,10 +5693,19 @@ components:
               minLength: 1
             count:
               type: integer
+              minimum: 0
+              default: 0
+              example: 0
             current:
               type: integer
+              minimum: 1
+              example: 1
+              default: 1
             pages:
               type: integer
+              minimum: 1
+              default: 1
+              example: 1
             imgs:
               type: array
               uniqueItems: true
@@ -5714,14 +5743,20 @@ components:
       properties:
         status:
           type: integer
+          minimum: 100
+          maximum: 999
+          example: 200
+          default: 200
+          format: int32
+        message:
+          type: string
+          minLength: 1
         data:
           type: array
           uniqueItems: true
           minItems: 1
           items:
             $ref: '#/components/schemas/NavigationResult'
-        message:
-          type: string
       required:
         - status
         - message
@@ -5738,14 +5773,21 @@ components:
             color: 0
             title: 記載中の画像について / About these arts
             body: これらの画像は素材配布としての意図はなく、サイトの機能検証の
+        failed-not-found:
+          status: 404
+          message: The news was not found.
       description: ''
       properties:
         status:
           type: integer
           minimum: 100
           maximum: 999
+          example: 200
+          format: int32
+          default: 200
         message:
           type: string
+          minLength: 1
         data:
           $ref: '#/components/schemas/NewsStruct'
       required:
@@ -5765,14 +5807,22 @@ components:
               color: 0
               title: 記載中の画像について / About these arts
               body: これらの画像は素材配布としての意図はなく、サイトの機能検証の
+        success-no-data:
+          status: 200
+          message: ok
+          data: []
       description: ''
       properties:
         status:
           type: integer
           minimum: 100
           maximum: 999
+          example: 200
+          format: int32
+          default: 200
         message:
           type: string
+          minLength: 1
         data:
           type: array
           items:
@@ -5928,6 +5978,7 @@ components:
               type: integer
               example: 1
               default: 1
+              minimum: 1
             current:
               type: integer
               default: 1
@@ -6651,6 +6702,10 @@ components:
       title: CreateMylistRequest
       type: object
       description: ''
+      x-examples:
+        example:
+          name: 外出香風智乃
+          description: ラビハ以外で活躍するアクティブな香風智乃まとめ
       properties:
         name:
           type: string
@@ -6658,10 +6713,14 @@ components:
         description:
           type: string
           description: マイリスト説明文
-      x-examples:
-        example:
-          name: 外出香風智乃
-          description: ラビハ以外で活躍するアクティブな香風智乃まとめ
+        private:
+          type: boolean
+          description: 公開か非公開か
+          default: true
+      required:
+        - name
+        - description
+        - private
     CreateMylistResponse:
       title: CreateMylistResponse
       type: object
@@ -6704,6 +6763,13 @@ components:
     PutMylistRequest:
       title: PutMylistRequest
       type: object
+      description: ''
+      x-examples:
+        example:
+          title: 外出香風智乃
+          description: 外で活躍する香風智乃まとめ
+          action: add
+          illustID: 1
       properties:
         title:
           type: string
@@ -6722,13 +6788,9 @@ components:
         illustID:
           type: integer
           description: 追加または削除したいイラストID
-      description: ''
-      x-examples:
-        example:
-          title: 外出香風智乃
-          description: 外で活躍する香風智乃まとめ
-          action: add
-          illustID: 1
+        private:
+          type: boolean
+          description: 公開/非公開
     PutMylistResponse:
       title: PutMylistResponse
       type: object
@@ -6988,18 +7050,6 @@ components:
     GetNotifyClientsResponse:
       title: GetNotifyClientsResponse
       type: object
-      properties:
-        status:
-          type: integer
-        message:
-          type: string
-        clients:
-          type: array
-          items:
-            $ref: '#/components/schemas/NotifyClientStruct'
-      required:
-        - status
-        - message
       x-examples:
         success-exists:
           status: 200
@@ -7015,6 +7065,24 @@ components:
           status: 200
           message: ok
           clients: []
+      properties:
+        status:
+          type: integer
+          minimum: 100
+          maximum: 999
+          example: 200
+          default: 200
+          format: int32
+        message:
+          type: string
+          minLength: 1
+        clients:
+          type: array
+          items:
+            $ref: '#/components/schemas/NotifyClientStruct'
+      required:
+        - status
+        - message
     NotifyClientStruct:
       title: NotifyClientStruct
       type: object
@@ -7142,8 +7210,12 @@ components:
           type: integer
           minimum: 100
           maximum: 999
+          format: int32
+          default: 200
+          example: 200
         message:
           type: string
+          minLength: 1
         client:
           $ref: '#/components/schemas/NotifyClientStruct'
       required:
@@ -7207,16 +7279,14 @@ components:
         success:
           status: 200
           message: ok
-          condition:
-            type: 1
-            id: 1
-            method: 1
-        failed-not-found:
-          status: 400
-          message: The notify condition was not found.
-        failed-permission:
-          status: 400
-          message: You don't have enough permission.
+          conditions:
+            - type: 1
+              id: 1
+              method: 1
+        success-no-data:
+          status: 200
+          message: ok
+          conditions: []
       properties:
         status:
           type: integer
@@ -7224,8 +7294,10 @@ components:
           maximum: 999
           example: 200
           default: 200
+          format: int32
         message:
           type: string
+          minLength: 1
         conditions:
           type: array
           items:
@@ -7375,8 +7447,10 @@ components:
           maximum: 999
           example: 200
           default: 200
+          format: int32
         message:
           type: string
+          minLength: 1
         condition:
           $ref: '#/components/schemas/NotifyConditionStruct'
       required:
@@ -7846,47 +7920,16 @@ components:
       properties:
         status:
           type: integer
+          minimum: 100
+          maximum: 999
+          example: 200
+          default: 200
+          format: int32
         message:
           type: string
+          minLength: 1
         data:
-          type: object
-          properties:
-            id:
-              type: integer
-              description: タグID
-              format: int32
-              minimum: 0
-              example: 1
-            user:
-              type: integer
-              description: タグの作成者
-              minimum: 0
-              example: 1
-            type:
-              type: integer
-              description: 'タグ種別 0:一般 1:キャラ2:グループ 3:システム 4:絵師(予定)'
-              minimum: 0
-              maximum: 9
-              enum:
-                - 0
-                - 1
-                - 2
-                - 3
-                - 4
-              example: 0
-              default: 0
-            name:
-              type: string
-              description: タグ表示名
-              example: 香風智乃
-            description:
-              type: string
-              description: タグの説明文(未使用)
-              example: かわいい女の子
-            nsfw:
-              type: boolean
-              description: アダルトコンテンツか否か
-              default: false
+          $ref: '#/components/schemas/TagStruct'
       required:
         - status
         - message
