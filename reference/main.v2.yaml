@@ -6279,13 +6279,36 @@ components:
     GetCharacterResponse:
       title: GetCharacterResponse
       type: object
+      x-examples:
+        success:
+          status: 200
+          message: ok
+          character:
+            id: 1
+            name: 香風智乃
+            nsfw: false
+            description: かわいい女の子
+            count: 1
+            lcount: 1204
+        failed-not-found:
+          status: 404
+          message: The character was not found.
       properties:
         status:
           type: integer
+          minimum: 100
+          maximum: 999
+          example: 200
+          format: int32
+          default: 200
         message:
           type: string
+          minLength: 1
         character:
           $ref: '#/components/schemas/TagStruct'
+      required:
+        - status
+        - message
     PutCharacterResponse:
       title: PutCharacterResponse
       type: object
