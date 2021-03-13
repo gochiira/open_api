@@ -3810,6 +3810,9 @@ components:
             artist:
               type: object
               description: 絵師情報
+              required:
+                - id
+                - name
               properties:
                 id:
                   type: integer
@@ -3818,9 +3821,6 @@ components:
                   type: string
                   minLength: 1
                   description: 絵師名
-              required:
-                - id
-                - name
             user:
               type: object
               description: 投稿者情報
@@ -3910,6 +3910,7 @@ components:
             - nsfw
             - hash
             - extension
+            - artist
             - user
             - status
             - width
@@ -4398,21 +4399,6 @@ components:
     GetArtTagsResponse:
       title: GetArtTagsResponse
       type: object
-      properties:
-        status:
-          type: integer
-          minimum: 100
-          maximum: 999
-          example: 200
-        message:
-          type: string
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/TagStruct'
-      required:
-        - status
-        - message
       x-examples:
         success:
           status: 200
@@ -4424,6 +4410,24 @@ components:
         failed-not-found:
           status: 404
           message: The art don't have any tag.
+      properties:
+        status:
+          type: integer
+          minimum: 100
+          maximum: 999
+          example: 200
+          default: 200
+          format: int32
+        message:
+          type: string
+          minLength: 1
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/TagStruct'
+      required:
+        - status
+        - message
     GetArtChractersResponse:
       title: GetArtCharactersResponse
       type: object
@@ -4686,8 +4690,12 @@ components:
           type: integer
           minimum: 100
           maximum: 999
+          example: 200
+          format: int32
+          default: 200
         message:
           type: string
+          minLength: 1
         views:
           type: integer
           minimum: 0
@@ -5139,42 +5147,8 @@ components:
     GetCatalogArtistResponse:
       description: ''
       type: object
-      properties:
-        status:
-          type: integer
-        message:
-          type: string
-          minLength: 1
-        data:
-          type: object
-          required:
-            - title
-            - count
-            - current
-            - pages
-            - contents
-          properties:
-            title:
-              type: string
-              minLength: 1
-            count:
-              type: integer
-            current:
-              type: integer
-            pages:
-              type: integer
-            contents:
-              type: array
-              uniqueItems: true
-              minItems: 1
-              items:
-                $ref: '#/components/schemas/ArtistStruct'
-      required:
-        - status
-        - message
-        - data
       x-examples:
-        example-1:
+        success:
           status: 200
           message: found
           data:
@@ -5238,7 +5212,55 @@ components:
                 endpoint: 'https://example.com'
                 count: 4
                 lcount: 57
+        success-no-data:
+          status: 200
+          message: found
+          data:
+            title: 絵師
+            count: 0
+            current: 1
+            pages: 1
+            contents: []
       title: ''
+      properties:
+        status:
+          type: integer
+          minimum: 100
+          maximum: 999
+          example: 200
+          default: 200
+          format: int32
+        message:
+          type: string
+          minLength: 1
+        data:
+          type: object
+          required:
+            - title
+            - count
+            - current
+            - pages
+            - contents
+          properties:
+            title:
+              type: string
+              minLength: 1
+            count:
+              type: integer
+            current:
+              type: integer
+            pages:
+              type: integer
+            contents:
+              type: array
+              uniqueItems: true
+              minItems: 1
+              items:
+                $ref: '#/components/schemas/ArtistStruct'
+      required:
+        - status
+        - message
+        - data
     GetCatalogTagResponse:
       description: ''
       type: object
@@ -5392,9 +5414,23 @@ components:
                 endpoint: null
                 count: 3066
                 lcount: 2723
+        success-no-data:
+          status: 200
+          message: found
+          data:
+            title: タグ
+            count: 0
+            current: 1
+            pages: 1
+            contents: []
       properties:
         status:
           type: integer
+          minimum: 100
+          maximum: 999
+          example: 200
+          default: 200
+          format: int32
         message:
           type: string
           minLength: 1
@@ -5429,9 +5465,37 @@ components:
     GetCatalogUploaderResponse:
       description: ''
       type: object
+      x-examples:
+        success:
+          status: 200
+          message: found
+          data:
+            title: 投稿者
+            count: 1
+            current: 1
+            pages: 1
+            contents:
+              - id: 1
+                name: お窓
+                count: 1
+                lcount: 1204
+        success-no-data:
+          status: 200
+          message: found
+          data:
+            title: 投稿者
+            count: 0
+            current: 1
+            pages: 1
+            contents: []
       properties:
         status:
           type: integer
+          minimum: 100
+          maximum: 999
+          example: 200
+          default: 200
+          format: int32
         message:
           type: string
           minLength: 1
@@ -5463,20 +5527,6 @@ components:
         - status
         - message
         - data
-      x-examples:
-        example-1:
-          status: 0
-          message: string
-          data:
-            title: string
-            count: 0
-            current: 0
-            pages: 0
-            contents:
-              - id: 0
-                name: string
-                count: 0
-                lcount: 0
     GetCatalogCharacterResponse:
       description: ''
       type: object
@@ -5496,9 +5546,23 @@ components:
                 nsfw: 0
                 count: 1
                 lcount: 53
+        success-no-data:
+          status: 200
+          message: found
+          data:
+            title: キャラ
+            count: 0
+            current: 1
+            pages: 1
+            contents: []
       properties:
         status:
           type: integer
+          minimum: 100
+          maximum: 999
+          example: 200
+          default: 200
+          format: int32
         message:
           type: string
           minLength: 1
