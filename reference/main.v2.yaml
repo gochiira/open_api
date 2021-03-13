@@ -3528,6 +3528,18 @@ components:
     GetAccountResponse:
       title: GetAccountResponse
       type: object
+      x-examples:
+        success:
+          status: 200
+          message: ok
+          data:
+            userID: 3
+            displayID: omado
+            name: お窓
+            favorite: 1
+        failed:
+          status: 404
+          message: The account data was not found.
       properties:
         status:
           type: integer
@@ -3535,6 +3547,8 @@ components:
           format: int32
           minimum: 100
           maximum: 999
+          default: 200
+          example: 200
         message:
           type: string
           minLength: 1
@@ -3542,11 +3556,6 @@ components:
         data:
           type: object
           description: 応答本体はdataに入ります(共通) 存在しなければキー自体がありません
-          required:
-            - userID
-            - displayID
-            - name
-            - favorite
           properties:
             userID:
               type: integer
@@ -3569,18 +3578,11 @@ components:
               example: 1
               minimum: 1
               description: 推しているキャラクターのID
-      x-examples:
-        success:
-          status: 200
-          message: ok
-          data:
-            userID: 3
-            displayID: omado
-            name: お窓
-            favorite: 1
-        failed:
-          status: 404
-          message: The account data was not found.
+          required:
+            - userID
+            - displayID
+            - name
+            - favorite
       required:
         - status
         - message
@@ -3663,13 +3665,83 @@ components:
     GetArtResponse:
       title: GetArtResposnse
       type: object
+      x-examples:
+        success:
+          status: 200
+          message: ok
+          data:
+            illustID: 8
+            title: tea pours into white teacup photo
+            caption: ''
+            date: '2021-01-07 15:16:58'
+            pages: 1
+            like: 1
+            view: 2
+            mylist: 0
+            mylisted: false
+            originUrl: 'https://unsplash.com/photos/oBoELXgJR1w?page=1'
+            originService: 独自
+            nsfw: false
+            hash: 12743176166585612000
+            extension: jpg
+            artist:
+              id: 5
+              name: CHI CHEN
+            user:
+              id: 2
+              name: ドマオーさん
+            status: 0
+            width: 3333
+            height: 4391
+            filesize: 491K
+            tag:
+              - id: 21
+                name: ティーカップ
+                nsfw: false
+              - id: 20
+                name: 紅茶
+                nsfw: false
+              - id: 18
+                name: カフェ
+                nsfw: false
+            chara:
+              - id: 20
+                name: サンプル
+                nsfw: false
+            group:
+              - id: 20
+                name: サンプル
+                nsfw: false
+            system:
+              - id: 4
+                name: 2021年01月
+                nsfw: false
+              - id: 17
+                name: 4K
+                nsfw: false
+            replace: []
+            star:
+              yellow: 1
+              green: 0
+              blue: 0
+              red: 0
+        failed:
+          status: 404
+          message: The art data was not found.
+      description: ''
       properties:
         status:
           type: integer
           description: HTTPステータスコード
+          minimum: 100
+          maximum: 999
+          example: 200
+          format: int32
+          default: 200
         message:
           type: string
           description: ok もしくは エラー内容
+          minLength: 1
         data:
           type: object
           description: ヒットした場合のみ存在する
@@ -3849,71 +3921,6 @@ components:
             - system
             - replace
             - star
-      x-examples:
-        success:
-          value:
-            status: 200
-            message: ok
-            data:
-              illustID: 8
-              title: tea pours into white teacup photo
-              caption: ''
-              date: '2021-01-07 15:16:58'
-              pages: 1
-              like: 1
-              view: 2
-              mylist: 0
-              mylisted: false
-              originUrl: 'https://unsplash.com/photos/oBoELXgJR1w?page=1'
-              originService: 独自
-              nsfw: false
-              hash: 12743176166585612000
-              extension: jpg
-              artist:
-                id: 5
-                name: CHI CHEN
-              user:
-                id: 2
-                name: ドマオーさん
-              status: 0
-              width: 3333
-              height: 4391
-              filesize: 491K
-              tag:
-                - id: 21
-                  name: ティーカップ
-                  nsfw: false
-                - id: 20
-                  name: 紅茶
-                  nsfw: false
-                - id: 18
-                  name: カフェ
-                  nsfw: false
-              chara:
-                - id: 20
-                  name: サンプル
-                  nsfw: false
-              group:
-                - id: 20
-                  name: サンプル
-                  nsfw: false
-              system:
-                - id: 4
-                  name: 2021年01月
-                  nsfw: false
-                - id: 17
-                  name: 4K
-                  nsfw: false
-              replace: []
-              star:
-                yellow: 1
-                green: 0
-                blue: 0
-                red: 0
-        failed:
-          value:
-            status: 404
-            message: The art data was not found.
       required:
         - status
         - message
@@ -3994,29 +4001,73 @@ components:
     GetAccountMeResponse:
       title: GetAccountMeResponse
       type: object
+      x-examples:
+        success-user:
+          status: 200
+          message: ok
+          data:
+            userID: 3
+            displayID: test_user
+            name: Test
+            favorite: 42
+            lineConnect: true
+            lineNotify: true
+            oneSignalNotify: true
+            permission: 0
+            registeredDate: '2021-01-07 12:48:42'
+            inviter:
+              id: 1
+              name: ドマオー
+            invite:
+              id: 1
+              code: DISABLED
+              invited: 0
+              enabled: false
+            mylist:
+              id: 3
+            apiKey: DUMMY_API_KEY
+        success-admin:
+          status: 200
+          message: ok
+          data:
+            userID: 4
+            displayID: test_admin
+            name: Admin
+            favorite: 43
+            lineConnect: true
+            lineNotify: true
+            oneSignalNotify: true
+            permission: 9
+            registeredDate: '2021-01-07 12:48:42'
+            inviter:
+              id: 1
+              name: ドマオー
+            invite:
+              id: 1
+              code: DISABLED
+              invited: 0
+              enabled: false
+            mylist:
+              id: 4
+            apiKey: DUMMY_API_KEY
+        failed:
+          status: 500
+          message: Server exploded
       properties:
         status:
           type: integer
           description: HTTPステータスコード
+          format: int32
+          minimum: 100
+          maximum: 999
+          example: 200
+          default: 200
         message:
           type: string
           minLength: 1
           description: ok もしくはエラー内容
         data:
           type: object
-          required:
-            - userID
-            - displayID
-            - name
-            - favorite
-            - lineConnect
-            - lineNotify
-            - permission
-            - registeredDate
-            - inviter
-            - invite
-            - mylist
-            - apiKey
           properties:
             userID:
               type: integer
@@ -4032,15 +4083,9 @@ components:
             favorite:
               type: integer
               description: 推しキャラのID
-            lineConnect:
-              type: boolean
-              description: LINEログイン連携済かどうか
             lineNotify:
               type: boolean
               description: LINENotifyに連携済かどうか
-            oneSignalNotify:
-              type: boolean
-              description: OneSignal設定済みかどうか
             permission:
               type: integer
               description: '権限レベル 0:一般 5:Admin 9:SysOp'
@@ -4050,10 +4095,10 @@ components:
               description: 登録日時(datetime)
             inviter:
               type: object
+              description: 招待者の情報
               required:
                 - id
                 - name
-              description: 招待者の情報
               properties:
                 id:
                   type: integer
@@ -4064,12 +4109,12 @@ components:
                   description: 招待者の名前
             invite:
               type: object
+              description: 招待情報
               required:
                 - id
                 - code
                 - invited
                 - enabled
-              description: 招待情報
               properties:
                 id:
                   type: integer
@@ -4085,73 +4130,24 @@ components:
                 enabled:
                   type: boolean
                   description: 招待可能な状態か否か
-            mylist:
-              type: object
-              required:
-                - id
-              description: マイリスト情報
-              properties:
-                id:
-                  type: integer
-                  description: 自分のマイリストID
             apiKey:
               type: string
               minLength: 1
               description: ログインに使用したAPIキー
-      x-examples:
-        success-user:
-          value:
-            status: 200
-            message: ok
-            data:
-              userID: 3
-              displayID: test_user
-              name: Test
-              favorite: 42
-              lineConnect: true
-              lineNotify: true
-              oneSignalNotify: true
-              permission: 0
-              registeredDate: '2021-01-07 12:48:42'
-              inviter:
-                id: 1
-                name: ドマオー
-              invite:
-                id: 1
-                code: DISABLED
-                invited: 0
-                enabled: false
-              mylist:
-                id: 3
-              apiKey: DUMMY_API_KEY
-        success-admin:
-          value:
-            status: 200
-            message: ok
-            data:
-              userID: 4
-              displayID: test_admin
-              name: Admin
-              favorite: 43
-              lineConnect: true
-              lineNotify: true
-              oneSignalNotify: true
-              permission: 9
-              registeredDate: '2021-01-07 12:48:42'
-              inviter:
-                id: 1
-                name: ドマオー
-              invite:
-                id: 1
-                code: DISABLED
-                invited: 0
-                enabled: false
-              mylist:
-                id: 4
-              apiKey: DUMMY_API_KEY
-        failed:
-          status: 500
-          message: Server exploded
+          required:
+            - userID
+            - displayID
+            - name
+            - favorite
+            - lineNotify
+            - permission
+            - registeredDate
+            - inviter
+            - invite
+            - apiKey
+      required:
+        - status
+        - message
     LoginWithFormResponse:
       title: LoginWithFormResponse
       type: object
@@ -4224,7 +4220,7 @@ components:
             message: ok
             data:
               id: 1
-              userID: 0
+              userID: 1
               name: 彩電
               description: ''
               group: ''
@@ -4247,16 +4243,21 @@ components:
               mastodon: 'https://pawoo.net/@saiden'
               homepage: 'http://konebota.x0.com/PAGE/'
         not-found:
-          value:
-            status: 404
-            message: Specified artist was not found
+          status: 404
+          message: Specified artist was not found
       properties:
         status:
           type: integer
           description: 処理結果のHTTPステータスコード
+          minimum: 100
+          maximum: 999
+          example: 200
+          default: 200
+          format: int32
         message:
           type: string
           description: ok もしくはエラー内容
+          minLength: 1
         data:
           $ref: '#/components/schemas/ArtistStruct'
       required:
@@ -4426,21 +4427,6 @@ components:
     GetArtChractersResponse:
       title: GetArtCharactersResponse
       type: object
-      properties:
-        status:
-          type: integer
-          minimum: 100
-          maximum: 999
-          example: 200
-        message:
-          type: string
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/TagStruct'
-      required:
-        - status
-        - message
       x-examples:
         success:
           status: 200
@@ -4452,6 +4438,24 @@ components:
         failed-not-found:
           status: 404
           message: The art don't have any tag.
+      properties:
+        status:
+          type: integer
+          minimum: 100
+          maximum: 999
+          example: 200
+          format: int32
+          default: 200
+        message:
+          type: string
+          minLength: 1
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/TagStruct'
+      required:
+        - status
+        - message
     PutArtTagsRequest:
       title: PutArtTagsRequest
       type: object
@@ -4651,8 +4655,12 @@ components:
           type: integer
           minimum: 100
           maximum: 999
+          example: 200
+          default: 200
+          format: int32
         message:
           type: string
+          minLength: 1
         likes:
           type: integer
           minimum: 0
@@ -4713,6 +4721,9 @@ components:
           type: integer
           minimum: 100
           maximum: 999
+          format: int32
+          example: 200
+          default: 200
         message:
           type: string
         comment:
@@ -4775,9 +4786,38 @@ components:
         - message
     GetArtCommentsResponse:
       title: GetArtCommentsResponse
-      type: array
-      items:
-        $ref: '#/components/schemas/CommentStruct'
+      type: object
+      x-examples:
+        success:
+          status: 200
+          message: ok
+          comments:
+            - user:
+                id: 1
+                name: Omado
+              comment:
+                created: '2021/03/13 11:29:24'
+                updated: '2021/03/13 11:29:24'
+                body: string
+                id: 1
+      properties:
+        status:
+          type: integer
+          minimum: 100
+          maximum: 999
+          format: int32
+          default: 200
+          example: 200
+        message:
+          type: string
+          minLength: 1
+        comments:
+          type: array
+          items:
+            $ref: '#/components/schemas/CommentStruct'
+      required:
+        - status
+        - message
     CommentStruct:
       description: コメント型
       type: object
@@ -6247,17 +6287,19 @@ components:
           message: Deleted.
         failed-not-found:
           status: 404
-          message: The character was not found.
+          message: The tag was not found.
         failed-locked:
           status: 409
           message: The tag is referenced by art.
+      title: DeleteTagResponse
       properties:
         status:
-          type: number
-          minimum: 100
-          maximum: 999
+          type: integer
           example: 200
           default: 200
+          format: int32
+          minimum: 100
+          maximum: 999
         message:
           type: string
           minLength: 1
@@ -6924,7 +6966,7 @@ components:
       properties:
         status:
           type: integer
-          description: 通知クライアントIDを指定
+          description: ''
           minimum: 100
           maximum: 999
           example: 200
@@ -7140,12 +7182,6 @@ components:
     DeleteNotifyConditionResponse:
       title: DeleteNotifyConditionResponse
       type: object
-      properties:
-        status:
-          type: integer
-          description: 通知クライアントIDを指定
-        message:
-          type: string
       x-examples:
         success:
           status: 200
@@ -7156,6 +7192,15 @@ components:
         failed-permission:
           status: 400
           message: You don't have enough permission.
+      properties:
+        status:
+          type: integer
+          description: ''
+        message:
+          type: string
+      required:
+        - status
+        - message
     GetNotifyConditionResponse:
       title: GetNotifyConditionResponse
       type: object
@@ -7744,6 +7789,17 @@ components:
     FindTagsResponse:
       title: FindTagsResponse
       type: object
+      x-examples:
+        success:
+          status: 200
+          message: ok
+          data:
+            - id: 1
+              name: 香風智乃
+        failed-not-found:
+          status: 200
+          message: ok
+          data: []
       properties:
         status:
           type: integer
@@ -7760,22 +7816,13 @@ components:
             properties:
               id:
                 type: integer
+                description: タグID
               name:
                 type: string
+                description: タグ名称
       required:
         - status
         - message
-      x-examples:
-        success:
-          status: 200
-          message: ok
-          data:
-            - id: 1
-              name: 香風智乃
-        failed-not-found:
-          status: 200
-          message: ok
-          data: []
     PostTimelineGeneralRequest:
       title: PostTimelineGeneralRequest
       type: object
@@ -7987,20 +8034,21 @@ components:
         failed-permission:
           status: 400
           message: You don't have enough permission.
+      title: DeleteWikiArticleResponse
       properties:
         status:
-          type: number
-          minimum: 100
-          maximum: 999
+          type: integer
           example: 200
           default: 200
+          minimum: 100
+          maximum: 999
+          format: int32
         message:
           type: string
           minLength: 1
       required:
         - status
         - message
-      title: DeleteWikiArticleResponse
     GetFindWikiArticleResponse:
       title: GetFindWikiArticleResponse
       type: object
