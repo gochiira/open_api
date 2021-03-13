@@ -3125,7 +3125,7 @@ components:
       title: CreateArtistRequest
       type: object
       x-examples:
-        example-1:
+        example:
           artistName: string
           artistDescription: string
           groupName: string
@@ -3323,16 +3323,21 @@ components:
     DeleteMylistResponse:
       title: DeleteMylistArtResponse
       type: object
-      properties:
-        status:
-          type: integer
-        message:
-          type: string
-          minLength: 1
       x-examples:
         example:
           status: 200
           message: ok
+      properties:
+        status:
+          type: integer
+          minimum: 100
+          maximum: 999
+          example: 200
+          default: 200
+          format: int32
+        message:
+          type: string
+          minLength: 1
       required:
         - status
         - message
@@ -3934,25 +3939,30 @@ components:
       properties:
         status:
           type: integer
+          minimum: 100
+          maximum: 999
+          example: 200
+          default: 200
+          format: int32
         message:
           type: string
           minLength: 1
       x-examples:
-        example:
+        success:
           status: 200
           message: ok
+        failed-not-found:
+          status: 404
+          message: The art was not found.
+        failed-permission:
+          status: 400
+          message: You don't have enougth permission.
       required:
         - status
         - message
     DeleteArtCommentResponse:
       title: DeleteArtCommentResponse
       type: object
-      properties:
-        status:
-          type: integer
-        message:
-          type: string
-          minLength: 1
       x-examples:
         success:
           status: 200
@@ -3966,10 +3976,21 @@ components:
         failed-internal-error:
           status: 500
           message: Server bombed.
+      description: コメント削除応答
+      properties:
+        status:
+          type: integer
+          minimum: 100
+          maximum: 999
+          example: 200
+          default: 200
+          format: int32
+        message:
+          type: string
+          minLength: 1
       required:
         - status
         - message
-      description: コメント削除応答
     GetAccountMeResponse:
       title: GetAccountMeResponse
       type: object
@@ -4183,10 +4204,13 @@ components:
           minimum: 100
           maximum: 999
           format: int32
+          example: 200
+          default: 200
         message:
           type: string
         artistID:
           type: integer
+          description: 作成に成功した場合入る絵師ID
       required:
         - status
         - message
@@ -4247,17 +4271,30 @@ components:
     DeleteArtistResponse:
       title: DeleteArtistResponse
       type: object
+      x-examples:
+        success:
+          status: 200
+          message: ok
+        failed-not-found:
+          status: 404
+          message: The artist was not found.
+        failed-permission:
+          status: 400
+          message: You don't have enougth permission.
+        failed-locked:
+          status: 409
+          message: The artist is referenced by art.
       properties:
         status:
           type: integer
+          minimum: 100
+          maximum: 999
+          example: 200
+          default: 200
+          format: int32
         message:
           type: string
           minLength: 1
-      x-examples:
-        example:
-          value:
-            status: 200
-            message: ok
       required:
         - status
         - message
@@ -4459,17 +4496,20 @@ components:
     DeleteArtTagsRequest:
       title: DeleteArtTagsRequest
       type: object
-      properties:
-        tagID:
-          type: array
-          items:
-            type: integer
       x-examples:
         example-1:
           tagID:
             - 1
             - 2
             - 3
+      properties:
+        tagID:
+          type: array
+          description: イラストから削除したいタグ配列
+          items:
+            type: integer
+      required:
+        - tagID
     DeleteArtTagsResponse:
       title: DeleteArtTagsResponse
       type: object
@@ -4495,8 +4535,13 @@ components:
           minimum: 100
           maximum: 999
           example: 200
+          format: int32
+          default: 200
         message:
           type: string
+      required:
+        - status
+        - message
     PutArtChractersRequest:
       title: PutArtCharactersRequest
       type: object
@@ -4737,7 +4782,7 @@ components:
       description: コメント型
       type: object
       x-examples:
-        example-1:
+        example:
           user:
             id: 0
             name: string
@@ -6256,11 +6301,6 @@ components:
     DeleteInviteResponse:
       title: DeleteInviteResponse
       type: object
-      properties:
-        status:
-          type: integer
-        message:
-          type: string
       x-examples:
         success:
           status: 200
@@ -6268,6 +6308,23 @@ components:
         failed-internal-error:
           status: 500
           message: Server bombed.
+        failed-permission:
+          status: 400
+          message: You don't have enough permission.
+      properties:
+        status:
+          type: integer
+          minimum: 100
+          maximum: 999
+          example: 200
+          default: 200
+          format: int32
+        message:
+          type: string
+          minLength: 1
+      required:
+        - status
+        - message
     DeleteInviteRequest:
       title: DeleteInviteRequest
       type: object
@@ -6369,6 +6426,10 @@ components:
     DeleteMuteRequest:
       title: DeleteMuteRequest
       type: object
+      x-examples:
+        example:
+          type: 1
+          id: 1
       properties:
         type:
           type: integer
@@ -6380,16 +6441,15 @@ components:
           maximum: 2
           description: 'ミュート種別 1:タグ 2:絵師'
         id:
-          description: 対象のID
           type: integer
+          description: 対象のID
+          minimum: 1
+      required:
+        - type
+        - id
     DeleteMuteResponse:
       title: DeleteMuteResponse
       type: object
-      properties:
-        status:
-          type: integer
-        message:
-          type: string
       x-examples:
         success:
           status: 200
@@ -6403,6 +6463,20 @@ components:
         failed-internal-error:
           status: 500
           message: Server bombed.
+      properties:
+        status:
+          type: integer
+          minimum: 100
+          maximum: 999
+          example: 200
+          default: 200
+          format: int32
+        message:
+          type: string
+          minLength: 1
+      required:
+        - status
+        - message
     CreateMylistRequest:
       title: CreateMylistRequest
       type: object
@@ -6446,10 +6520,14 @@ components:
           type: integer
           minimum: 100
           maximum: 999
+          default: 200
+          example: 200
+          format: int32
         message:
           type: string
         mylistID:
           type: integer
+          description: 作成に成功した場合はいるマイリストID
       required:
         - status
         - message
@@ -6697,11 +6775,6 @@ components:
     DeleteNewsResponse:
       title: DeleteNewsResponse
       type: object
-      properties:
-        status:
-          type: integer
-        message:
-          type: string
       x-examples:
         success:
           status: 200
@@ -6712,6 +6785,20 @@ components:
         failed-permission:
           status: 400
           message: You don't have enough permission.
+      properties:
+        status:
+          type: integer
+          minimum: 100
+          maximum: 999
+          example: 200
+          default: 200
+          format: int32
+        message:
+          type: string
+          minLength: 1
+      required:
+        - status
+        - message
     GetNotifyClientsResponse:
       title: GetNotifyClientsResponse
       type: object
@@ -6824,12 +6911,6 @@ components:
     DeleteNotifyClientResponse:
       title: DeleteNotifyClientResponse
       type: object
-      properties:
-        status:
-          type: integer
-          description: 通知クライアントIDを指定
-        message:
-          type: string
       x-examples:
         success:
           status: 200
@@ -6840,6 +6921,21 @@ components:
         failed-permission:
           status: 400
           message: You don't have enough permission.
+      properties:
+        status:
+          type: integer
+          description: 通知クライアントIDを指定
+          minimum: 100
+          maximum: 999
+          example: 200
+          default: 200
+          format: int32
+        message:
+          type: string
+          minLength: 1
+      required:
+        - status
+        - message
     GetNotifyClientResponse:
       title: GetNotifyClientResponse
       type: object
