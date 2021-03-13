@@ -5793,7 +5793,6 @@ components:
       required:
         - status
         - message
-        - data
     GetNewsListResponse:
       title: GetNewsListResponse
       type: object
