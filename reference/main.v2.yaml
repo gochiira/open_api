@@ -3551,18 +3551,16 @@ components:
               description: 推しているキャラクターのID
       x-examples:
         success:
-          value:
-            status: 200
-            message: ok
-            data:
-              userID: 3
-              displayID: omado
-              name: お窓
-              favorite: 1
+          status: 200
+          message: ok
+          data:
+            userID: 3
+            displayID: omado
+            name: お窓
+            favorite: 1
         failed:
-          value:
-            status: 404
-            message: The account data was not found.
+          status: 404
+          message: The account data was not found.
       required:
         - status
         - message
