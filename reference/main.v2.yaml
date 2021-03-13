@@ -574,9 +574,7 @@ paths:
                 $ref: '#/components/schemas/GetMylistListResponse'
               examples: {}
       operationId: getMylists
-      description: |-
-        自分の作成したマイリスト一覧を取得します
-        (現在フロントエンド側に実装がありません)
+      description: 自分の作成したマイリスト一覧を取得します
   /search/tag:
     get:
       summary: Search by tag
@@ -3324,9 +3322,15 @@ components:
       title: DeleteMylistArtResponse
       type: object
       x-examples:
-        example:
+        success:
           status: 200
           message: ok
+        failed-not-found:
+          status: 404
+          message: The mylist was not found.
+        failed-permission:
+          status: 400
+          message: You don't have enough permission.
       properties:
         status:
           type: integer
@@ -3727,7 +3731,7 @@ components:
               red: 0
         failed:
           status: 404
-          message: The art data was not found.
+          message: The art was not found.
       description: ''
       properties:
         status:
@@ -3975,9 +3979,9 @@ components:
         success:
           status: 200
           message: ok
-        failed-not-yours:
+        failed-permission:
           status: 400
-          message: The comment is not yours.
+          message: You don't have enough permission.
         failed-not-found:
           status: 404
           message: The comment was not found.
@@ -4216,33 +4220,31 @@ components:
       type: object
       x-examples:
         success-default:
-          value:
-            status: 200
-            message: ok
-            data:
-              id: 1
-              userID: 1
-              name: 彩電
-              description: ''
-              group: ''
-              pixivID: ''
-              twitterID: ''
-              mastodon: ''
-              homepage: ''
+          status: 200
+          message: ok
+          data:
+            id: 1
+            userID: 1
+            name: 彩電
+            description: ''
+            group: ''
+            pixivID: ''
+            twitterID: ''
+            mastodon: ''
+            homepage: ''
         success-fulfilled:
-          value:
-            status: 200
-            message: ok
-            data:
-              id: 1
-              userID: 1
-              name: 彩電
-              description: ごちうさなどのきらら系中心に、オリジナルなど
-              group: こねこぼたん
-              pixivID: '40436'
-              twitterID: harufcs
-              mastodon: 'https://pawoo.net/@saiden'
-              homepage: 'http://konebota.x0.com/PAGE/'
+          status: 200
+          message: ok
+          data:
+            id: 1
+            userID: 1
+            name: 彩電
+            description: ごちうさなどのきらら系中心に、オリジナルなど
+            group: こねこぼたん
+            pixivID: '40436'
+            twitterID: harufcs
+            mastodon: 'https://pawoo.net/@saiden'
+            homepage: 'http://konebota.x0.com/PAGE/'
         not-found:
           status: 404
           message: Specified artist was not found
@@ -4738,6 +4740,7 @@ components:
           default: 200
         message:
           type: string
+          minLength: 1
         comment:
           $ref: '#/components/schemas/CommentStruct'
       required:
@@ -4812,6 +4815,10 @@ components:
                 updated: '2021/03/13 11:29:24'
                 body: string
                 id: 1
+        success-no-data:
+          status: 200
+          message: ok
+          comments: []
       properties:
         status:
           type: integer
@@ -5614,9 +5621,41 @@ components:
     GetMylistResponse:
       title: GetMylistResponse
       type: object
+      description: ''
+      x-examples:
+        example:
+          status: 200
+          message: ok
+          data:
+            title: Testのマイリスト
+            count: 1
+            current: 1
+            pages: 1
+            imgs:
+              - illustID: 7
+                artistID: 4
+                title: clear glass cup with tea near brown ceramic teapot
+                caption: ''
+                date: '2021-01-07 15:15:28'
+                pages: 1
+                like: 1
+                mylist: 1
+                mylisted: true
+                originUrl: 'https://unsplash.com/photos/L82-kkEBOd0?page=1'
+                originService: 独自
+                nsfw: false
+                artist:
+                  id: 4
+                  name: Manki Kim
+                extension: jpg
       properties:
         status:
           type: integer
+          minimum: 100
+          maximum: 999
+          example: 200
+          default: 200
+          format: int32
         message:
           type: string
           minLength: 1
@@ -5648,33 +5687,6 @@ components:
         - status
         - message
         - data
-      description: ''
-      x-examples:
-        example:
-          status: 200
-          message: ok
-          data:
-            title: Testのマイリスト
-            count: 1
-            current: 1
-            pages: 1
-            imgs:
-              - illustID: 7
-                artistID: 4
-                title: clear glass cup with tea near brown ceramic teapot
-                caption: ''
-                date: '2021-01-07 15:15:28'
-                pages: 1
-                like: 1
-                mylist: 1
-                mylisted: true
-                originUrl: 'https://unsplash.com/photos/L82-kkEBOd0?page=1'
-                originService: 独自
-                nsfw: false
-                artist:
-                  id: 4
-                  name: Manki Kim
-                extension: jpg
     GetNavigationGeneralResponse:
       title: GetNavigationGeneralResponse
       type: object
@@ -5853,50 +5865,50 @@ components:
       type: object
       title: GetMylistListResponse
       x-examples:
-        example:
+        success-default:
           status: 200
-          message: found
+          message: ok
           data:
-            title: ティーカップ
+            title: マイリスト一覧
             count: 2
             current: 1
             pages: 1
-            imgs:
-              - illustID: 8
-                artistID: 5
-                title: tea pours into white teacup photo
-                caption: ''
-                date: '2021-01-07 15:16:58'
-                pages: 1
-                like: 1
-                mylist: 0
-                mylisted: false
-                originUrl: 'https://unsplash.com/photos/oBoELXgJR1w?page=1'
-                originService: 独自
-                nsfw: false
-                artist:
-                  id: 5
-                  name: CHI CHEN
-                extension: jpg
-              - illustID: 7
-                artistID: 4
-                title: clear glass cup with tea near brown ceramic teapot
-                caption: ''
-                date: '2021-01-07 15:15:28'
-                pages: 1
-                like: 1
-                mylist: 1
-                mylisted: true
-                originUrl: 'https://unsplash.com/photos/L82-kkEBOd0?page=1'
-                originService: 独自
-                nsfw: false
-                artist:
-                  id: 4
-                  name: Manki Kim
-                extension: jpg
+            contents:
+              - id: 1
+                name: お窓のマイリスト
+                description: ユーザーデフォルトマイリスト
+                createdDate: '2021/03/14 02:16:03'
+                updatedDate: '2021/03/14 02:16:03'
+                private: true
+        success-multiple:
+          status: 200
+          message: ok
+          data:
+            title: マイリスト一覧
+            count: 2
+            current: 1
+            pages: 1
+            contents:
+              - id: 1
+                name: お窓のマイリスト
+                description: ユーザーデフォルトマイリスト
+                createdDate: '2021/03/14 02:16:03'
+                updatedDate: '2021/03/14 02:16:03'
+                private: true
+              - id: 2
+                name: お窓のチノリスト
+                description: だいすき香風智乃
+                createdDate: '2021/03/14 02:16:03'
+                updatedDate: '2021/03/14 02:16:03'
+                private: false
       properties:
         status:
           type: integer
+          minimum: 100
+          maximum: 999
+          example: 200
+          default: 200
+          format: int32
         message:
           type: string
           minLength: 1
@@ -6355,6 +6367,9 @@ components:
         failed-locked:
           status: 409
           message: The tag is referenced by art.
+        failed-permission:
+          status: 400
+          message: You don't have enough permission.
       title: DeleteTagResponse
       properties:
         status:
@@ -6383,6 +6398,9 @@ components:
         failed-locked:
           status: 409
           message: The tag is referenced by art.
+        failed-permission:
+          status: 400
+          message: You don't have enough permisison.
       title: DeleteTagResponse
       properties:
         status:
@@ -6493,13 +6511,31 @@ components:
           status: 200
           message: ok
           data:
+            tag:
+              - 1
+              - 2
+              - 3
+            artist:
+              - 1
+              - 2
+              - 3
+        success-no-data:
+          status: 200
+          message: ok
+          data:
             tag: []
             artist: []
       properties:
         status:
           type: integer
+          minimum: 100
+          maximum: 999
+          format: int32
+          example: 200
+          default: 200
         message:
           type: string
+          minLength: 1
         data:
           type: object
           required:
@@ -6731,6 +6767,14 @@ components:
     MylistStruct:
       title: MylistStruct
       type: object
+      x-examples:
+        example:
+          id: 1
+          name: お窓のマイリスト
+          description: ユーザーデフォルトマイリスト
+          createdDate: '2021/03/14 02:16:03'
+          updatedDate: '2021/03/14 02:16:03'
+          private: true
       properties:
         id:
           type: integer
@@ -6751,12 +6795,17 @@ components:
           description: マイリスト更新日時
           minLength: 19
           maxLength: 19
+        private:
+          type: boolean
+          description: 公開/非公開
+          default: true
       required:
         - id
         - name
         - description
         - createdDate
         - updatedDate
+        - private
     PostMylistFindsRequest:
       title: PostMylistFindsRequest
       type: object
@@ -6919,6 +6968,9 @@ components:
         failed-permission:
           status: 400
           message: You don't have enough permission.
+        failed-not-found:
+          status: 404
+          message: The news was not found.
       properties:
         status:
           type: integer
@@ -7288,8 +7340,14 @@ components:
         status:
           type: integer
           description: ''
+          minimum: 100
+          maximum: 999
+          example: 200
+          default: 200
+          format: int32
         message:
           type: string
+          minLength: 1
       required:
         - status
         - message
@@ -7899,8 +7957,10 @@ components:
           maximum: 999
           default: 200
           example: 200
+          format: int32
         message:
           type: string
+          minLength: 1
         data:
           type: array
           items:
@@ -8144,6 +8204,13 @@ components:
     GetFindWikiArticleResponse:
       title: GetFindWikiArticleResponse
       type: object
+      x-examples:
+        success:
+          status: 200
+          message: Found.
+        failed-not-found:
+          status: 404
+          message: Not found.
       properties:
         status:
           type: integer
@@ -8154,13 +8221,10 @@ components:
           format: int32
         message:
           type: string
-      x-examples:
-        success:
-          status: 200
-          message: Found.
-        failed-not-found:
-          status: 404
-          message: Not found.
+          minLength: 1
+      required:
+        - status
+        - message
     ActivityPubActorStruct:
       description: 'https://argrath.github.io/activitypub/#actor-objects'
       type: object
