@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "Gochiira Backend API",
+    "title": "Gochiira Backend v1 API",
     "version": "1.0",
     "contact": {
       "name": "Omado",
