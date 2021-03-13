@@ -4537,6 +4537,9 @@ components:
         failed-internal-error:
           status: 500
           message: Server bombed.
+        failed-permission:
+          status: 400
+          message: You don't have enough permission.
       properties:
         status:
           type: integer
@@ -4547,6 +4550,7 @@ components:
           default: 200
         message:
           type: string
+          minLength: 1
       required:
         - status
         - message
@@ -6351,20 +6355,21 @@ components:
         failed-locked:
           status: 409
           message: The tag is referenced by art.
+      title: DeleteTagResponse
       properties:
         status:
-          type: number
-          minimum: 100
-          maximum: 999
+          type: integer
           example: 200
           default: 200
+          minimum: 100
+          maximum: 999
+          format: int32
         message:
           type: string
           minLength: 1
       required:
         - status
         - message
-      title: DeleteTagResponse
     DeleteTagResponse:
       description: ''
       type: object
