@@ -2597,6 +2597,10 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/activity+json:
+              schema:
+                $ref: '#/components/schemas/GetActivityPubGeneralResponse'
       operationId: getActivityPubOutbox
       description: 他のサーバーがこのユーザーのメッセージを受け取るときにGETされる
     parameters:
@@ -2614,7 +2618,7 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/activity+json:
               schema:
                 $ref: '#/components/schemas/GetActivityPubGeneralResponse'
       operationId: getActivityPubArtistOutbox
@@ -2662,7 +2666,7 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/activity+json:
               schema:
                 $ref: '#/components/schemas/GetActivityPubGeneralResponse'
       operationId: getActivityPubServerOutbox
@@ -2696,7 +2700,7 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/activity+json:
               schema:
                 $ref: '#/components/schemas/ActivityPubActorStruct'
       operationId: get-activitypub-displayID
@@ -2718,7 +2722,7 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/activity+json:
               schema:
                 $ref: '#/components/schemas/ActivityPubActorStruct'
       operationId: get-activitypub-uploader-ID
@@ -2734,7 +2738,7 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/activity+json:
               schema:
                 $ref: '#/components/schemas/ActivityPubActorStruct'
       operationId: get-activitypub-server
