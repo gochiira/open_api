@@ -2741,6 +2741,25 @@ paths:
                 $ref: '#/components/schemas/ActivityPubActorStruct'
       operationId: get-activitypub-server
       description: ActivityPubのユーザー情報(サーバー)を返す
+  /accounts:
+    post:
+      summary: Create account
+      operationId: createAccount
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: ''
+      tags:
+        - accounts
+      description: 新しいアカウントを作成します
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostAccountRequest'
 components:
   schemas:
     SearchResult:
@@ -2906,20 +2925,93 @@ components:
         - name
         - id
         - count
+    PostAccountRequest:
+      title: PostAccountRequest
+      type: object
+      x-examples:
+        example:
+          displayID: omado
+          name: お窓
+          password: kafuuch1n0
+          favorite: 1
+          theme: 0
+          permission: 0
+          lineID: dosugamea
+          twitterID: shallow_omado
+      description: アカウントの編集に使うリクエスト
+      properties:
+        displayID:
+          type: string
+          description: (Twitterのような)表示IDを指定します。ここで指定したIDがログインに使用されます。英数字のみ入力できます。
+          example: omado
+          maxLength: 20
+          minLength: 3
+        name:
+          type: string
+          description: 他のユーザーに表示されるユーザー名/投稿者名
+          example: お窓
+          maxLength: 20
+          minLength: 1
+        password:
+          type: string
+          description: 新しいパスワードを入力します
+          example: kafuuch1n0
+          format: password
+          maxLength: 50
+          minLength: 8
+        favorite:
+          type: integer
+          description: ユーザーの推しキャラのIDを選択します
+          example: 1
+          format: int32
+          maximum: 100
+          minimum: 0
+        theme:
+          type: integer
+          description: サイト内のテーマ色(もしくはレイアウト?)が変更できることを想定して仮に置かれたものです(未使用)
+          example: 0
+          exclusiveMinimum: false
+          minimum: 0
+          maximum: 9
+          format: int32
+        permission:
+          type: integer
+          description: |-
+            ユーザーが持つ権限を指定します、SysOpのみ変更できます。
+            0:User 5:Admin 9:Sysop になっています
+            (変更されたユーザーは再ログインが必要です)
+          example: 0
+          enum:
+            - 0
+            - 5
+            - 9
+          format: int32
+          minimum: 0
+          maximum: 9
+        lineID:
+          type: string
+          description: LINEと連携している場合にユーザーページに表示されることを想定して仮に置かれたものです(未使用)
+          example: dosugamea
+          maxLength: 30
+        twitterID:
+          type: string
+          description: Twitterと連携している場合にユーザーページに表示されることを想定して仮に置かれたものです(未使用)
+          example: shallow_omado
+          maxLength: 30
     PutAccountRequest:
       title: PutAccountRequest
       type: object
       x-examples:
         example:
-          userDisplayID: omado
-          userName: お窓
-          userPassword: kafuuch1n0
-          userOldPassword: h0t0c0c0a
-          userFavorite: 1
-          userTheme: 0
-          userPermission: 0
-          userLineID: dosugamea
-          userTwitterID: shallow_omado
+          displayID: omado
+          name: お窓
+          password: kafuuch1n0
+          oldPassword: h0t0c0c0a
+          favorite: 1
+          theme: 0
+          permission: 0
+          lineID: dosugamea
+          twitterID: shallow_omado
       description: アカウントの編集に使うリクエスト
       properties:
         displayID:
@@ -3690,6 +3782,39 @@ components:
         message:
           type: string
           minLength: 1
+      required:
+        - status
+        - message
+    PostAccountResponse:
+      title: PostAccountResponse
+      type: object
+      x-examples:
+        success:
+          status: 201
+          message: Created
+          api_key: DUMMY_API_KEY
+        server-error:
+          status: 500
+          message: Server bombed.
+        password-mismatch:
+          status: 400
+          message: Bad request.
+        not-satisfied-params:
+          status: 400
+          message: Request parameters are not satisfied.
+      properties:
+        status:
+          type: integer
+          minimum: 100
+          maximum: 999
+          example: 200
+          default: 200
+          format: int32
+        message:
+          type: string
+          minLength: 1
+        apiKey:
+          type: string
       required:
         - status
         - message
