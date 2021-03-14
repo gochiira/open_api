@@ -2751,7 +2751,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: ''
+                $ref: '#/components/schemas/PostAccountResponse'
       tags:
         - accounts
       description: 新しいアカウントを作成します
