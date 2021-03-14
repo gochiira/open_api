@@ -7947,44 +7947,29 @@ components:
           data:
             illust:
               type: nicoseiga
-              id: 0
-              title: string
-              caption: string
+              id: 10677929
+              title: ナースチノちゃん
+              caption: ''
               imgs:
-                - width: 0
-                  height: 0
-                  large_src: 'https://example.com/hoge'
-                  thumb_src: string
+                - width: 1750
+                  height: 1684
+                  large_src: 'https://lohas.nicoseiga.jp/priv/a9db9d0eb330004b69875ed94dcc3db96fadb6a0/1615764084/10677929'
+                  thumb_src: 'https://lohas.nicoseiga.jp//thumb/10677929uz?1610798673'
               tags:
-                - string
-              source: string
-              artist: string
-              R18: true
+                - アニメ
+                - ご注文はうさぎですか?
+                - 香風智乃
+              source: 'https://seiga.nicovideo.jp/seiga/im10677929'
+              artist:
+                name: Azel司令官
+                id: '12038745'
+                source: 'https://seiga.nicovideo.jp/user/illust/12038745'
+              R18: false
             extra:
-              booth_shop:
-                name: string
-                link: string
-              twitter_user:
-                id: 0
-                screen_name: string
-                name: string
-                description: string
-                profile_image: string
-                banner_image: string
-              danbooru_user:
-                id: 0
-                name: string
-              pixiv_user:
-                id: 0
-                screen_name: string
-                name: string
-                description: string
-                profile_image: string
-                banner_image: string
               nicoseiga_user:
-                id: 0
-                name: string
-                profile_image: string
+                id: 12038745
+                name: Azel司令官
+                profile_image: 'https://secure-dcdn.cdn.nimg.jp/nicoaccount/usericon/1203/12038745.jpg?1572444258'
         success-booth:
           status: 200
           message: string
