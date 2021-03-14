@@ -7419,7 +7419,7 @@ components:
         success:
           status: 200
           message: ok
-          id: 1
+          conditionID: 1
         failed-params:
           status: 400
           message: Request parameters are not satisfied.
@@ -7440,7 +7440,7 @@ components:
         message:
           type: string
           minLength: 1
-        id:
+        conditionID:
           type: integer
           description: 通知条件ID
       required:
@@ -7760,6 +7760,21 @@ components:
         url:
           type: string
           description: スクレイピングするURL
+      required:
+        - url
+      x-examples:
+        twitter:
+          url: 'https://twitter.com/mozukun43/status/1369660632409153537'
+        pixiv:
+          url: 'https://www.pixiv.net/artworks/87348005'
+        danbooru:
+          url: 'https://danbooru.donmai.us/posts/4359777'
+        nicoseiga:
+          url: 'https://seiga.nicovideo.jp/seiga/im10677929'
+        booth:
+          url: 'https://booth.pm/ja/items/2500039'
+        booth2:
+          url: 'https://picupdoll.booth.pm/items/2500039'
     PostScrapeResponse:
       title: PostScrapeResponse
       type: object
@@ -7779,6 +7794,216 @@ components:
       required:
         - status
         - message
+      x-examples:
+        success-twitter:
+          status: 200
+          message: ok
+          data:
+            illust:
+              type: twitter
+              id: 0
+              title: string
+              caption: string
+              imgs:
+                - width: 0
+                  height: 0
+                  large_src: 'https://example.com/hoge'
+                  thumb_src: string
+              tags:
+                - string
+              source: string
+              artist: string
+              R18: true
+            extra:
+              twitter_user:
+                id: 0
+                screen_name: string
+                name: string
+                description: string
+                profile_image: string
+                banner_image: string
+        success-pixiv:
+          status: 200
+          message: string
+          data:
+            illust:
+              type: string
+              id: 0
+              title: string
+              caption: string
+              imgs:
+                - width: 0
+                  height: 0
+                  large_src: 'https://example.com/hoge'
+                  thumb_src: string
+              tags:
+                - string
+              source: string
+              artist: string
+              R18: true
+            extra:
+              booth_shop:
+                name: string
+                link: string
+              twitter_user:
+                id: 0
+                screen_name: string
+                name: string
+                description: string
+                profile_image: string
+                banner_image: string
+              danbooru_user:
+                id: 0
+                name: string
+              pixiv_user:
+                id: 0
+                screen_name: string
+                name: string
+                description: string
+                profile_image: string
+                banner_image: string
+              nicoseiga_user:
+                id: 0
+                name: string
+                profile_image: string
+        success-danbooru:
+          status: 200
+          message: string
+          data:
+            illust:
+              type: string
+              id: 0
+              title: string
+              caption: string
+              imgs:
+                - width: 0
+                  height: 0
+                  large_src: 'https://example.com/hoge'
+                  thumb_src: string
+              tags:
+                - string
+              source: string
+              artist: string
+              R18: true
+            extra:
+              booth_shop:
+                name: string
+                link: string
+              twitter_user:
+                id: 0
+                screen_name: string
+                name: string
+                description: string
+                profile_image: string
+                banner_image: string
+              danbooru_user:
+                id: 0
+                name: string
+              pixiv_user:
+                id: 0
+                screen_name: string
+                name: string
+                description: string
+                profile_image: string
+                banner_image: string
+              nicoseiga_user:
+                id: 0
+                name: string
+                profile_image: string
+        success-nicoseiga:
+          status: 200
+          message: string
+          data:
+            illust:
+              type: string
+              id: 0
+              title: string
+              caption: string
+              imgs:
+                - width: 0
+                  height: 0
+                  large_src: 'https://example.com/hoge'
+                  thumb_src: string
+              tags:
+                - string
+              source: string
+              artist: string
+              R18: true
+            extra:
+              booth_shop:
+                name: string
+                link: string
+              twitter_user:
+                id: 0
+                screen_name: string
+                name: string
+                description: string
+                profile_image: string
+                banner_image: string
+              danbooru_user:
+                id: 0
+                name: string
+              pixiv_user:
+                id: 0
+                screen_name: string
+                name: string
+                description: string
+                profile_image: string
+                banner_image: string
+              nicoseiga_user:
+                id: 0
+                name: string
+                profile_image: string
+        success-booth:
+          status: 200
+          message: string
+          data:
+            illust:
+              type: string
+              id: 0
+              title: string
+              caption: string
+              imgs:
+                - width: 0
+                  height: 0
+                  large_src: 'https://example.com/hoge'
+                  thumb_src: string
+              tags:
+                - string
+              source: string
+              artist: string
+              R18: true
+            extra:
+              booth_shop:
+                name: string
+                link: string
+              twitter_user:
+                id: 0
+                screen_name: string
+                name: string
+                description: string
+                profile_image: string
+                banner_image: string
+              danbooru_user:
+                id: 0
+                name: string
+              pixiv_user:
+                id: 0
+                screen_name: string
+                name: string
+                description: string
+                profile_image: string
+                banner_image: string
+              nicoseiga_user:
+                id: 0
+                name: string
+                profile_image: string
+        failed-not-found:
+          status: 404
+          message: Specified page was not found.
+        failed-unsupported:
+          status: 412
+          message: Specified address is not supported.
     PostUploadRequest:
       title: PostUploadRequest
       type: object
