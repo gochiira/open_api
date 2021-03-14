@@ -2922,26 +2922,26 @@ components:
           userTwitterID: shallow_omado
       description: アカウントの編集に使うリクエスト
       properties:
-        userDisplayID:
+        displayID:
           type: string
           description: (Twitterのような)表示IDを指定します。ここで指定したIDがログインに使用されます。英数字のみ入力できます。
           example: omado
           maxLength: 20
           minLength: 3
-        userName:
+        name:
           type: string
           description: 他のユーザーに表示されるユーザー名/投稿者名
           example: お窓
           maxLength: 20
           minLength: 1
-        userPassword:
+        password:
           type: string
           description: 新しいパスワードを入力します
           example: kafuuch1n0
           format: password
           maxLength: 50
           minLength: 8
-        userOldPassword:
+        oldPassword:
           type: string
           description: |-
             現時点のパスワードを入力します。
@@ -2950,14 +2950,14 @@ components:
           format: password
           maxLength: 50
           minLength: 8
-        userFavorite:
+        favorite:
           type: integer
           description: ユーザーの推しキャラのIDを選択します
           example: 1
           format: int32
           maximum: 100
           minimum: 0
-        userTheme:
+        theme:
           type: integer
           description: サイト内のテーマ色(もしくはレイアウト?)が変更できることを想定して仮に置かれたものです(未使用)
           example: 0
@@ -2965,7 +2965,7 @@ components:
           minimum: 0
           maximum: 9
           format: int32
-        userPermission:
+        permission:
           type: integer
           description: |-
             ユーザーが持つ権限を指定します、SysOpのみ変更できます。
@@ -2979,12 +2979,12 @@ components:
           format: int32
           minimum: 0
           maximum: 9
-        userLineID:
+        lineID:
           type: string
           description: LINEと連携している場合にユーザーページに表示されることを想定して仮に置かれたものです(未使用)
           example: dosugamea
           maxLength: 30
-        userTwitterID:
+        twitterID:
           type: string
           description: Twitterと連携している場合にユーザーページに表示されることを想定して仮に置かれたものです(未使用)
           example: shallow_omado
@@ -3684,6 +3684,9 @@ components:
           type: integer
           minimum: 100
           maximum: 999
+          example: 200
+          default: 200
+          format: int32
         message:
           type: string
           minLength: 1
@@ -6368,8 +6371,10 @@ components:
           maximum: 999
           example: 200
           default: 200
+          format: int32
         message:
           type: string
+          minLength: 1
         articleID:
           type: integer
       required:
@@ -8128,8 +8133,11 @@ components:
           minimum: 100
           maximum: 999
           example: 200
+          format: int32
+          default: 200
         message:
           type: string
+          minLength: 1
         url:
           description: 投稿したファイルのURL(有効期限は1時間とする)
           type: string
@@ -8463,19 +8471,6 @@ components:
     PostTimelineFollowResponse:
       title: PostTimelineFollowResponse
       type: object
-      properties:
-        status:
-          type: integer
-          minimum: 100
-          maximum: 999
-          example: 200
-          default: 200
-          format: int32
-        message:
-          type: string
-      required:
-        - status
-        - message
       x-examples:
         success:
           status: 200
@@ -8486,9 +8481,6 @@ components:
         failed-conflict:
           status: 409
           message: You already followed the artist.
-    PostTimelineUnfollowResponse:
-      title: PostTimelineUnfollowResponse
-      type: object
       properties:
         status:
           type: integer
@@ -8499,9 +8491,13 @@ components:
           format: int32
         message:
           type: string
+          minLength: 1
       required:
         - status
         - message
+    PostTimelineUnfollowResponse:
+      title: PostTimelineUnfollowResponse
+      type: object
       x-examples:
         success:
           status: 200
@@ -8512,6 +8508,20 @@ components:
         failed-conflict:
           status: 409
           message: You already unfollowed the artist.
+      properties:
+        status:
+          type: integer
+          minimum: 100
+          maximum: 999
+          example: 200
+          default: 200
+          format: int32
+        message:
+          type: string
+          minLength: 1
+      required:
+        - status
+        - message
     PostWikiArticleRequest:
       title: PostWikiArticleRequest
       type: object
@@ -8548,6 +8558,12 @@ components:
         - id
         - title
         - body
+      x-examples:
+        example-1:
+          type: 0
+          id: 1
+          title: お窓
+          body: 作者・開発者。えらいひと。
     GetWikiArticleResponse:
       title: GetWikiArticleResponse
       type: object
