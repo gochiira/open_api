@@ -4725,14 +4725,6 @@ components:
     PutArtCharactersResponse:
       title: PutArtCharactersResponse
       type: object
-      properties:
-        status:
-          type: integer
-          minimum: 100
-          maximum: 999
-          example: 200
-        message:
-          type: string
       x-examples:
         success:
           status: 200
@@ -4749,6 +4741,20 @@ components:
         failed-internal-error:
           status: 500
           message: Server bombed.
+      properties:
+        status:
+          type: integer
+          minimum: 100
+          maximum: 999
+          example: 200
+          default: 200
+          format: int32
+        message:
+          type: string
+          minLength: 1
+      required:
+        - status
+        - message
     DeleteArtCharactersRequest:
       title: DeleteArtCharactersRequest
       type: object
@@ -5090,13 +5096,15 @@ components:
     PutArtCommentRequest:
       title: PutArtCommentRequest
       type: object
-      properties:
-        comment:
-          type: string
       description: ''
       x-examples:
         example:
           comment: 香風智乃すき
+      properties:
+        comment:
+          type: string
+      required:
+        - comment
     PutWikiArticleResponse:
       description: ''
       type: object
@@ -5125,15 +5133,6 @@ components:
     PutArtCommentResponse:
       description: ''
       type: object
-      properties:
-        status:
-          type: integer
-        message:
-          type: string
-          minLength: 1
-      required:
-        - status
-        - message
       x-examples:
         success:
           status: 200
@@ -5148,6 +5147,20 @@ components:
           status: 400
           message: Request parameters are not satisfied.
       title: PutWikiArticleResponse
+      properties:
+        status:
+          type: integer
+          minimum: 100
+          maximum: 999
+          example: 200
+          default: 200
+          format: int32
+        message:
+          type: string
+          minLength: 1
+      required:
+        - status
+        - message
     PutNotifyClientRequest:
       title: PutNotifyClientRequest
       type: object
