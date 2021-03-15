@@ -1078,7 +1078,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CreateArtistResponse'
+                $ref: '#/components/schemas/PostArtistResponse'
       description: |-
         新しい絵師を生成します(イラスト投稿時に存在しなければ自動で作成されるため
         直接操作する必要はありません)
@@ -1089,7 +1089,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreateArtistRequest'
+              $ref: '#/components/schemas/PostArtistRequest'
   '/artists/{artistID}':
     get:
       summary: Get artist
@@ -3275,8 +3275,8 @@ components:
           value:
             id: test_admin
             password: this_is_only_for_test
-    CreateArtistRequest:
-      title: CreateArtistRequest
+    PostArtistRequest:
+      title: PostArtistRequest
       type: object
       x-examples:
         example:
@@ -4254,8 +4254,8 @@ components:
         - status
         - message
       description: ''
-    CreateArtistResponse:
-      title: CreateArtistResponse
+    PostArtistResponse:
+      title: PostArtistResponse
       type: object
       x-examples:
         success-created:
