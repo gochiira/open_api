@@ -3268,9 +3268,45 @@ components:
     PutArtistRequest:
       title: PutArtistRequest
       type: object
+      x-examples:
+        example:
+          artistName: string
+          artistDescription: string
+          groupName: string
+          pixivID: string
+          twitterID: string
+          mastodon: string
+          homepage: string
       properties:
-        id:
+        artistName:
           type: string
+          description: 絵師名
+        artistDescription:
+          type: string
+          description: 絵師の説明(未使用)
+        groupName:
+          type: string
+          description: サークル名
+        pixivID:
+          description: pixivID(内部ID)配列
+          type: array
+          items:
+            type: integer
+        twitterID:
+          type: array
+          description: twitterID(内部ID)配列
+          items:
+            type: integer
+        mastodon:
+          description: マストドンのユーザーページアドレス(配列)
+          type: array
+          items:
+            type: string
+        homepage:
+          type: array
+          description: 関連サイトアドレス(配列)
+          items:
+            type: string
     TagStruct:
       title: Tag
       type: object
@@ -4084,16 +4120,27 @@ components:
     PutArtResponse:
       title: PutArtResponse
       type: object
+      x-examples:
+        success:
+          status: 200
+          message: Updated.
+        failed-permission:
+          status: 400
+          message: You don't have enough permission
+        failed-bad-request:
+          status: 400
+          message: Bad request.
       properties:
         status:
           type: integer
+          format: int32
+          default: 200
+          example: 200
+          minimum: 100
+          maximum: 999
         message:
           type: string
           minLength: 1
-      x-examples:
-        example-1:
-          status: 200
-          message: ok
       required:
         - status
         - message
@@ -4421,9 +4468,33 @@ components:
     PutArtistResponse:
       title: PutArtistResponse
       type: object
+      x-examples:
+        success:
+          status: 200
+          message: Updated.
+        failed-not-satisfied:
+          status: 400
+          message: Request parameters are not satisfied.
+        failed-already-exists:
+          status: 400
+          message: The artist name is already taken.
+        failed-internal-error:
+          status: 500
+          message: Server bombed.
       properties:
-        id:
+        status:
+          type: integer
+          minimum: 100
+          maximum: 999
+          example: 200
+          default: 200
+          format: int32
+        message:
           type: string
+          minLength: 1
+      required:
+        - status
+        - message
     DeleteArtistResponse:
       title: DeleteArtistResponse
       type: object
@@ -4915,13 +4986,20 @@ components:
         failed-internal-error:
           status: 500
           message: Server bombed.
+        failed-too-many:
+          status: 400
+          message: You can't add star anymore today.
       properties:
         status:
           type: integer
           minimum: 100
           maximum: 999
+          example: 200
+          format: int32
+          default: 200
         message:
           type: string
+          minLength: 1
         likes:
           type: integer
           example: 1
@@ -4942,14 +5020,18 @@ components:
           message: Server bombed.
         failed-already-viewed:
           status: 409
-          message: You can't add view for now
+          message: You can't add view anymore today.
       properties:
         status:
           type: integer
           minimum: 100
           maximum: 999
+          example: 200
+          default: 200
+          format: int32
         message:
           type: string
+          minLength: 1
         views:
           type: integer
           example: 1
@@ -6554,15 +6636,6 @@ components:
     PutCharacterResponse:
       title: PutCharacterResponse
       type: object
-      properties:
-        status:
-          type: integer
-          minimum: 100
-          maximum: 999
-          example: 200
-          default: 200
-        message:
-          type: string
       x-examples:
         success:
           status: 200
@@ -6570,6 +6643,20 @@ components:
         failed-already-exists:
           status: 200
           message: The specifed name already exists.
+      properties:
+        status:
+          type: integer
+          minimum: 100
+          maximum: 999
+          example: 200
+          default: 200
+          format: int32
+        message:
+          type: string
+          minLength: 1
+      required:
+        - status
+        - message
     CharacterStruct:
       title: CharacterStruct
       type: object
@@ -7014,8 +7101,12 @@ components:
           type: integer
           minimum: 100
           maximum: 999
+          example: 200
+          default: 200
+          format: int32
         message:
           type: string
+          minLength: 1
       required:
         - status
         - message
