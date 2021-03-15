@@ -3310,7 +3310,7 @@ components:
           type: array
           description: twitterID(内部ID)配列
           items:
-            type: integer
+            type: string
         mastodon:
           description: マストドンのユーザーページアドレス(配列)
           type: array
@@ -3321,8 +3321,6 @@ components:
           description: 関連サイトアドレス(配列)
           items:
             type: string
-      required:
-        - artistName
     PutArtistRequest:
       title: PutArtistRequest
       type: object
@@ -3354,7 +3352,7 @@ components:
           type: array
           description: twitterID(内部ID)配列
           items:
-            type: integer
+            type: string
         mastodon:
           description: マストドンのユーザーページアドレス(配列)
           type: array
@@ -4401,23 +4399,29 @@ components:
           example: こねこぼたん
           description: サークル名
         pixivID:
-          type: string
+          type: array
           example: '40436'
           description: PixivのユーザーID(数字)
+          items:
+            type: integer
         twitterID:
-          type: string
+          type: array
           example: harufcs
           description: Twitterの表示ID(英数字+)
+          items:
+            type: string
         mastodon:
-          type: string
+          type: array
           example: 'https://pawoo.net/@saiden'
           format: uri-reference
           description: マストドンアカウントのURL
+          items:
+            type: string
         homepage:
-          type: string
-          example: 'http://konebota.x0.com/PAGE/'
           description: HPのURL
-          format: uri-reference
+          type: array
+          items:
+            type: string
         count:
           type: integer
           description: 絵師に属する作品数
@@ -4432,7 +4436,6 @@ components:
         - pixivID
         - twitterID
         - mastodon
-        - homepage
         - count
         - lcount
     PostReplaceArtRequest:
