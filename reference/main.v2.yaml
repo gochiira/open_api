@@ -1774,17 +1774,16 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CreateMylistResponse'
+                $ref: '#/components/schemas/PostMylistResponse'
       description: |-
         マイリストを作成します
-        (現在フロントエンド側に実装がありません)
       tags:
         - mylist
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreateMylistRequest'
+              $ref: '#/components/schemas/PostMylistRequest'
   '/mylist/{mylistID}/finds':
     parameters:
       - schema:
@@ -7048,8 +7047,8 @@ components:
       required:
         - status
         - message
-    CreateMylistRequest:
-      title: CreateMylistRequest
+    PostMylistRequest:
+      title: PostMylistRequest
       type: object
       description: ''
       x-examples:
@@ -7071,7 +7070,7 @@ components:
         - name
         - description
         - private
-    CreateMylistResponse:
+    PostMylistResponse:
       title: CreateMylistResponse
       type: object
       x-examples:
