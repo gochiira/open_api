@@ -60,7 +60,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PutAccountRequest'
+              $ref: '#/components/schemas/AccountStruct'
             examples:
               example:
                 value:
@@ -3026,8 +3026,8 @@ components:
           description: Twitterと連携している場合にユーザーページに表示されることを想定して仮に置かれたものです(未使用)
           example: shallow_omado
           maxLength: 30
-    PutAccountRequest:
-      title: PutAccountRequest
+    AccountStruct:
+      title: AccountStruct
       type: object
       x-examples:
         example:
@@ -3040,7 +3040,7 @@ components:
           permission: 0
           lineID: dosugamea
           twitterID: shallow_omado
-      description: アカウントの編集に使うリクエスト
+      description: アカウントの取得/編集に使うリクエスト
       properties:
         displayID:
           type: string
@@ -3109,6 +3109,10 @@ components:
           description: Twitterと連携している場合にユーザーページに表示されることを想定して仮に置かれたものです(未使用)
           example: shallow_omado
           maxLength: 30
+        totpEnabled:
+          type: boolean
+          default: false
+          description: TOTPを使用するか否か
     DeleteAccountRequest:
       title: DeleteAccountRequest
       type: object
@@ -3253,16 +3257,6 @@ components:
     PostLoginWithFormRequest:
       title: PostLoginWithFormRequest
       type: object
-      properties:
-        id:
-          type: string
-          minLength: 1
-        password:
-          type: string
-          minLength: 1
-      required:
-        - id
-        - password
       description: ''
       x-examples:
         user:
@@ -3273,6 +3267,18 @@ components:
           value:
             id: test_admin
             password: this_is_only_for_test
+      properties:
+        id:
+          type: string
+          minLength: 1
+        password:
+          type: string
+          minLength: 1
+        totp_code:
+          type: string
+      required:
+        - id
+        - password
     PostArtistRequest:
       title: PostArtistRequest
       type: object
@@ -3758,35 +3764,7 @@ components:
           minLength: 1
           description: ok もしくは エラー内容
         data:
-          type: object
-          description: 応答本体はdataに入ります(共通) 存在しなければキー自体がありません
-          properties:
-            userID:
-              type: integer
-              description: ユーザーID(累計何番目のアカウントか)
-              format: int32
-              example: 1
-            displayID:
-              type: string
-              minLength: 1
-              description: 表示ID/ログインID 英数字(ユーザーページで使われる想定)
-              example: omado
-            name:
-              type: string
-              description: ユーザー表示名
-              example: お窓
-              minLength: 1
-            favorite:
-              type: integer
-              format: int32
-              example: 1
-              minimum: 1
-              description: 推しているキャラクターのID
-          required:
-            - userID
-            - displayID
-            - name
-            - favorite
+          $ref: '#/components/schemas/AccountStruct'
       required:
         - status
         - message
