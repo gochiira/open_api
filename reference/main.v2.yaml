@@ -586,7 +586,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SearchGeneralResponse'
+                $ref: '#/components/schemas/GetSearchGeneralResponse'
               examples: {}
       operationId: searchArtByTag
       description: 指定したタグを持つイラスト一覧を取得します
@@ -612,7 +612,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SearchGeneralResponse'
+                $ref: '#/components/schemas/GetSearchGeneralResponse'
               examples:
                 example:
                   value:
@@ -665,7 +665,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SearchGeneralResponse'
+                $ref: '#/components/schemas/GetSearchGeneralResponse'
               examples:
                 example:
                   value:
@@ -766,7 +766,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SearchGeneralResponse'
+                $ref: '#/components/schemas/GetSearchGeneralResponse'
               examples:
                 example:
                   value:
@@ -819,7 +819,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SearchGeneralResponse'
+                $ref: '#/components/schemas/GetSearchGeneralResponse'
               examples:
                 example:
                   value:
@@ -976,7 +976,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SearchGeneralResponse'
+                $ref: '#/components/schemas/GetSearchGeneralResponse'
       operationId: searchArtByRandom
       description: ランダムなイラストを取得します
       tags:
@@ -994,14 +994,14 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SearchByImageResponse'
+                $ref: '#/components/schemas/PostSearchByImageResponse'
       operationId: searchArtByImage
       description: 画像からごちイラ内に登録されたイラストを検索します
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SearchByImageRequest'
+              $ref: '#/components/schemas/PostSearchByImageRequest'
     parameters: []
   /search/image/saucenao:
     post:
@@ -1014,14 +1014,14 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SearchByImageAtSauceNaoResponse'
+                $ref: '#/components/schemas/PostSearchByImageAtSauceNaoResponse'
       operationId: searchArtByImageUsingSaucenao
       description: 画像からSauceNAOに登録されたイラストを検索します
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SearchByImageRequest'
+              $ref: '#/components/schemas/PostSearchByImageRequest'
   /accounts/me:
     get:
       summary: Get user info (self)
@@ -1571,7 +1571,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SearchGeneralResponse'
+                $ref: '#/components/schemas/GetSearchGeneralResponse'
       operationId: searchArtByUploader
       description: 指定した投稿者のイラスト一覧を取得します
       parameters:
@@ -2042,7 +2042,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SearchGeneralResponse'
+                $ref: '#/components/schemas/GetSearchGeneralResponse'
       operationId: getYearlyViewsRanking
       parameters:
         - $ref: '#/components/parameters/SearchQueryPage'
@@ -2060,7 +2060,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SearchGeneralResponse'
+                $ref: '#/components/schemas/GetSearchGeneralResponse'
       operationId: getYearlyLikesRanking
       parameters:
         - $ref: '#/components/parameters/SearchQueryPage'
@@ -2078,7 +2078,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SearchGeneralResponse'
+                $ref: '#/components/schemas/GetSearchGeneralResponse'
       operationId: getMonthlyViewsRanking
       parameters:
         - $ref: '#/components/parameters/SearchQueryPage'
@@ -2096,7 +2096,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SearchGeneralResponse'
+                $ref: '#/components/schemas/GetSearchGeneralResponse'
       operationId: getMonthlyLikesRanking
       parameters:
         - $ref: '#/components/parameters/SearchQueryPage'
@@ -2114,7 +2114,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SearchGeneralResponse'
+                $ref: '#/components/schemas/GetSearchGeneralResponse'
       operationId: getWeeklyViewsRanking
       parameters:
         - $ref: '#/components/parameters/SearchQueryPage'
@@ -2132,7 +2132,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SearchGeneralResponse'
+                $ref: '#/components/schemas/GetSearchGeneralResponse'
       operationId: getWeeklyLikesRanking
       parameters:
         - $ref: '#/components/parameters/SearchQueryPage'
@@ -2300,13 +2300,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SearchByImageAtAscii2dResponse'
+                $ref: '#/components/schemas/PostSearchByImageAtAscii2dResponse'
       operationId: searchArtByImageUsingAscii2d
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SearchByImageRequest'
+              $ref: '#/components/schemas/PostSearchByImageRequest'
       description: 画像からAscii2dに登録されたイラストを検索します
   /search/tag/multiple:
     get:
@@ -2319,7 +2319,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SearchGeneralResponse'
+                $ref: '#/components/schemas/GetSearchGeneralResponse'
       operationId: searchArtByMultipleTag
       description: |-
         複数のタグを指定してイラストを検索します
@@ -2499,7 +2499,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SearchGeneralResponse'
+                $ref: '#/components/schemas/GetSearchGeneralResponse'
       operationId: getTimeline
       parameters:
         - $ref: '#/components/parameters/SearchQuerySort'
@@ -2790,8 +2790,8 @@ paths:
               $ref: '#/components/schemas/PostAccountRequest'
 components:
   schemas:
-    SearchResult:
-      title: SearchResult
+    SearchResultStruct:
+      title: SearchResultStruct
       type: object
       x-examples:
         example-1:
@@ -5980,7 +5980,7 @@ components:
               uniqueItems: true
               minItems: 1
               items:
-                $ref: '#/components/schemas/SearchResult'
+                $ref: '#/components/schemas/SearchResultStruct'
       required:
         - status
         - message
@@ -6098,7 +6098,7 @@ components:
       required:
         - status
         - message
-    SearchGeneralResponse:
+    GetSearchGeneralResponse:
       description: ''
       type: object
       title: ''
@@ -6178,7 +6178,7 @@ components:
               uniqueItems: true
               minItems: 1
               items:
-                $ref: '#/components/schemas/SearchResult'
+                $ref: '#/components/schemas/SearchResultStruct'
       required:
         - status
         - message
@@ -6278,7 +6278,7 @@ components:
         - status
         - message
         - data
-    SearchByImageRequest:
+    PostSearchByImageRequest:
       title: SearchByImageRequest
       type: object
       properties:
@@ -6288,7 +6288,7 @@ components:
           description: 画像ファイル(binary)
       required:
         - file
-    SearchByImageResponse:
+    PostSearchByImageResponse:
       title: SearchByImageResponse
       type: object
       x-examples:
@@ -6343,12 +6343,12 @@ components:
             illusts:
               type: array
               items:
-                $ref: '#/components/schemas/SearchResult'
+                $ref: '#/components/schemas/SearchResultStruct'
       required:
         - status
         - message
         - data
-    SearchByImageAtSauceNaoResponse:
+    PostSearchByImageAtSauceNaoResponse:
       description: ''
       type: object
       x-examples:
@@ -8464,7 +8464,7 @@ components:
       required:
         - status
         - message
-    SearchByImageAtAscii2dResponse:
+    PostSearchByImageAtAscii2dResponse:
       description: ''
       type: object
       x-examples:
