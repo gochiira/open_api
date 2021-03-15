@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "Gochiira Backend v2 API",
+    "title": "Accounts API",
     "version": "1.0",
     "contact": {
       "name": "Omado",
@@ -337,6 +337,103 @@
           "status",
           "message"
         ]
+      },
+      "AccountStruct": {
+        "title": "AccountStruct",
+        "type": "object",
+        "x-examples": {
+          "example": {
+            "displayID": "omado",
+            "name": "お窓",
+            "password": "kafuuch1n0",
+            "oldPassword": "h0t0c0c0a",
+            "favorite": 1,
+            "theme": 0,
+            "permission": 0,
+            "lineID": "dosugamea",
+            "twitterID": "shallow_omado"
+          }
+        },
+        "description": "アカウントの取得/編集に使うリクエスト",
+        "properties": {
+          "displayID": {
+            "type": "string",
+            "description": "(Twitterのような)表示IDを指定します。ここで指定したIDがログインに使用されます。英数字のみ入力できます。",
+            "example": "omado",
+            "maxLength": 20,
+            "minLength": 3
+          },
+          "name": {
+            "type": "string",
+            "description": "他のユーザーに表示されるユーザー名/投稿者名",
+            "example": "お窓",
+            "maxLength": 20,
+            "minLength": 1
+          },
+          "password": {
+            "type": "string",
+            "description": "新しいパスワードを入力します",
+            "example": "kafuuch1n0",
+            "format": "password",
+            "maxLength": 50,
+            "minLength": 8
+          },
+          "oldPassword": {
+            "type": "string",
+            "description": "現時点のパスワードを入力します。\nuserPasswordを変更する場合に必要となります。",
+            "example": "h0t0c0c0a",
+            "format": "password",
+            "maxLength": 50,
+            "minLength": 8
+          },
+          "favorite": {
+            "type": "integer",
+            "description": "ユーザーの推しキャラのIDを選択します",
+            "example": 1,
+            "format": "int32",
+            "maximum": 100,
+            "minimum": 0
+          },
+          "theme": {
+            "type": "integer",
+            "description": "サイト内のテーマ色(もしくはレイアウト?)が変更できることを想定して仮に置かれたものです(未使用)",
+            "example": 0,
+            "exclusiveMinimum": false,
+            "minimum": 0,
+            "maximum": 9,
+            "format": "int32"
+          },
+          "permission": {
+            "type": "integer",
+            "description": "ユーザーが持つ権限を指定します、SysOpのみ変更できます。\n0:User 5:Admin 9:Sysop になっています\n(変更されたユーザーは再ログインが必要です)",
+            "example": 0,
+            "enum": [
+              0,
+              5,
+              9
+            ],
+            "format": "int32",
+            "minimum": 0,
+            "maximum": 9
+          },
+          "lineID": {
+            "type": "string",
+            "description": "LINEと連携している場合にユーザーページに表示されることを想定して仮に置かれたものです(未使用)",
+            "example": "dosugamea",
+            "maxLength": 30
+          },
+          "twitterID": {
+            "type": "string",
+            "description": "Twitterと連携している場合にユーザーページに表示されることを想定して仮に置かれたものです(未使用)",
+            "example": "shallow_omado",
+            "maxLength": 30
+          },
+          "totpEnabled": {
+            "type": "boolean",
+            "default": false,
+            "description": "TOTPを使用するか否か"
+          }
+        }
       },
       "PutAccountResponse": {
         "title": "PutAccountResponse",

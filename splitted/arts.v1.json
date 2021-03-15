@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "Gochiira Backend v2 API",
+    "title": "Arts API",
     "version": "1.0",
     "contact": {
       "name": "Omado",
@@ -9,7 +9,7 @@
       "email": "dsgamer777@gmail.com"
     },
     "termsOfService": "https://illust.gochiusa.team/terms",
-    "description": "ごちイラ内でメインに使用されているAPI。\n現在Bot、ガチャ、フロントエンド の 3箇所で使用中。",
+    "description": "イラストの投稿・編集・取得に関するAPI",
     "license": {
       "name": "GPLv3",
       "url": "https://www.gnu.org/licenses/gpl-3.0.ja.html"
@@ -2049,6 +2049,223 @@
         "required": [
           "status",
           "message"
+        ]
+      },
+      "ReplaceStruct": {
+        "description": "イラストを置き換えた情報のモデル(簡易型イラストモデル)",
+        "type": "object",
+        "x-examples": {
+          "example": {
+            "illustID": 1,
+            "title": "チノちゃん",
+            "caption": "",
+            "date": "2021-03-05 01:27:22",
+            "originService": "Pixiv",
+            "originUrl": "https://www.pixiv.net/artworks/88062684",
+            "width": 750,
+            "height": 1200,
+            "filesize": "2M"
+          }
+        },
+        "title": "ReplaceStruct",
+        "properties": {
+          "illustID": {
+            "type": "integer",
+            "description": "サイト内イラスト通し番号"
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1,
+            "description": "作品名"
+          },
+          "caption": {
+            "type": "string",
+            "minLength": 1,
+            "description": "作品の説明文"
+          },
+          "date": {
+            "type": "string",
+            "description": "投稿日付"
+          },
+          "originService": {
+            "type": "string",
+            "minLength": 1,
+            "description": "出典サービス名"
+          },
+          "originUrl": {
+            "type": "string",
+            "minLength": 1,
+            "description": "出典URL"
+          },
+          "width": {
+            "type": "integer",
+            "description": "RAW画像の横幅"
+          },
+          "height": {
+            "type": "integer",
+            "description": "RAW画像の縦幅"
+          },
+          "filesize": {
+            "type": "string",
+            "minLength": 1,
+            "description": "ファイルサイズに単位を付けた人間が読めるもの"
+          }
+        },
+        "required": [
+          "illustID",
+          "title",
+          "caption",
+          "date",
+          "originService",
+          "originUrl",
+          "width",
+          "height",
+          "filesize"
+        ]
+      },
+      "TagStruct": {
+        "title": "TagStruct",
+        "type": "object",
+        "x-examples": {
+          "example-1": {
+            "id": 1,
+            "name": "香風智乃"
+          }
+        },
+        "description": "タグデータモデル",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "minimum": 1,
+            "format": "int32",
+            "description": "サイト内通しタグ番号"
+          },
+          "user": {
+            "type": "object",
+            "description": "ユーザー情報",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "description": "ユーザーID"
+              },
+              "name": {
+                "type": "string",
+                "description": "ユーザー名"
+              }
+            }
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 20,
+            "description": "タグの名称"
+          },
+          "nsfw": {
+            "type": "boolean",
+            "description": "アダルトコンテンツが含まれるタグか",
+            "default": false
+          },
+          "description": {
+            "type": "string",
+            "description": "タグの説明文"
+          },
+          "count": {
+            "type": "integer",
+            "description": "タグに属する作品数"
+          },
+          "lcount": {
+            "type": "integer",
+            "description": "タグに属するいいね数"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "nsfw",
+          "description",
+          "count",
+          "lcount"
+        ]
+      },
+      "CommentStruct": {
+        "description": "コメント型",
+        "type": "object",
+        "x-examples": {
+          "example": {
+            "user": {
+              "id": 0,
+              "name": "string"
+            },
+            "comment": {
+              "id": 0,
+              "created": "string",
+              "updated": "string",
+              "body": "string"
+            }
+          }
+        },
+        "title": "Comment",
+        "properties": {
+          "user": {
+            "type": "object",
+            "required": [
+              "id",
+              "name"
+            ],
+            "description": "投稿ユーザー情報",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "description": "ユーザーID"
+              },
+              "name": {
+                "type": "string",
+                "minLength": 1,
+                "description": "ユーザー名"
+              }
+            }
+          },
+          "comment": {
+            "type": "object",
+            "required": [
+              "created",
+              "updated",
+              "body",
+              "id"
+            ],
+            "description": "コメント情報",
+            "properties": {
+              "created": {
+                "type": "string",
+                "description": "投稿時刻(datetime)",
+                "minLength": 19,
+                "maxLength": 19,
+                "example": "2021/03/13 11:29:24"
+              },
+              "updated": {
+                "type": "string",
+                "description": "更新時刻(datetime)",
+                "minLength": 19,
+                "maxLength": 19,
+                "example": "2021/03/13 11:29:24"
+              },
+              "body": {
+                "type": "string",
+                "description": "コメント本文",
+                "maxLength": 500
+              },
+              "id": {
+                "type": "integer",
+                "description": "\"作品別\" コメントID",
+                "minimum": 1,
+                "format": "int32"
+              }
+            }
+          }
+        },
+        "required": [
+          "user",
+          "comment"
         ]
       }
     },
