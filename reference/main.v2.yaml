@@ -1195,7 +1195,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ReplaceArtSimulateResponse'
+                $ref: '#/components/schemas/PostReplaceArtSimulateResponse'
       tags:
         - arts
       description: |-
@@ -2156,7 +2156,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ReportGeneralResponse'
+                $ref: '#/components/schemas/PostReportGeneralResponse'
       operationId: reportArt
       description: |-
         指定したイラストを運営に通報します
@@ -2165,7 +2165,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ReportGeneralRequest'
+              $ref: '#/components/schemas/PostReportGeneralRequest'
   '/report/tags/{tagID}':
     parameters:
       - schema:
@@ -2183,7 +2183,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ReportGeneralResponse'
+                $ref: '#/components/schemas/PostReportGeneralResponse'
       operationId: reportTag
       description: |-
         指定したタグを運営に通報します
@@ -2192,7 +2192,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ReportGeneralRequest'
+              $ref: '#/components/schemas/PostReportGeneralRequest'
   '/report/user/{userID}':
     parameters:
       - schema:
@@ -2210,7 +2210,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ReportGeneralResponse'
+                $ref: '#/components/schemas/PostReportGeneralResponse'
       operationId: reportUser
       description: |-
         指定したユーザーを運営に通報します
@@ -2219,7 +2219,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ReportGeneralRequest'
+              $ref: '#/components/schemas/PostReportGeneralRequest'
   '/report/wiki/{articleID}':
     parameters:
       - schema:
@@ -2237,7 +2237,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ReportGeneralResponse'
+                $ref: '#/components/schemas/PostReportGeneralResponse'
       operationId: reportArticle
       description: |-
         指定した記事を運営に通報します
@@ -2246,7 +2246,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ReportGeneralRequest'
+              $ref: '#/components/schemas/PostReportGeneralRequest'
   /scrape:
     post:
       summary: Scrape content
@@ -4499,7 +4499,7 @@ components:
       required:
         - status
         - message
-    ReplaceArtSimulateResponse:
+    PostReplaceArtSimulateResponse:
       description: ''
       type: object
       x-examples:
@@ -4606,7 +4606,7 @@ components:
                 green: 0
                 red: 0
                 blue: 0
-      title: ReplaceArtSimulateResponse
+      title: PostReplaceArtSimulateResponse
       properties:
         status:
           type: integer
@@ -7854,7 +7854,7 @@ components:
       required:
         - status
         - message
-    ReportGeneralResponse:
+    PostReportGeneralResponse:
       title: ReportGeneralResponse
       type: object
       x-examples:
@@ -7884,7 +7884,7 @@ components:
       required:
         - status
         - message
-    ReportGeneralRequest:
+    PostReportGeneralRequest:
       title: ReportGeneralRequest
       type: object
       x-examples:
