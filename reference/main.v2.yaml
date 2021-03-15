@@ -7590,8 +7590,11 @@ components:
           minimum: 100
           maximum: 999
           example: 200
+          default: 200
+          format: int32
         message:
           type: string
+          minLength: 1
         id:
           type: integer
           description: クライアントID
