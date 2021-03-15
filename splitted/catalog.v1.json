@@ -1,0 +1,948 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Catalog API",
+    "version": "1.0",
+    "contact": {
+      "name": "Omado",
+      "url": "https://twitter.com/shallow_omado",
+      "email": "dsgamer777@gmail.com"
+    },
+    "termsOfService": "https://illust.gochiusa.team/terms",
+    "description": "ごちイラ内でメインに使用されているAPI。\n現在Bot、ガチャ、フロントエンド の 3箇所で使用中。",
+    "license": {
+      "name": "GPLv3",
+      "url": "https://www.gnu.org/licenses/gpl-3.0.ja.html"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://api.gochiusa.team",
+      "description": "Prod"
+    },
+    {
+      "url": "http://127.0.0.1:8080",
+      "description": "Dev"
+    }
+  ],
+  "paths": {
+    "/catalog/artists": {
+      "get": {
+        "summary": "Get artist list",
+        "tags": [
+          "catalog"
+        ],
+        "responses": {
+          "200": {
+            "description": "ヒットしたデータが応答のdata->contentsに配列で返却されます",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetCatalogArtistResponse"
+                },
+                "examples": {}
+              }
+            }
+          }
+        },
+        "operationId": "getArtistList",
+        "description": "絵師一覧を取得します",
+        "parameters": [
+          {
+            "schema": {
+              "type": "integer",
+              "default": 1,
+              "minimum": 1
+            },
+            "in": "query",
+            "name": "page",
+            "description": "ページ番号"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "default": "c",
+              "enum": [
+                "d",
+                "l",
+                "c",
+                "n"
+              ],
+              "minLength": 1,
+              "maxLength": 1
+            },
+            "in": "query",
+            "name": "sort",
+            "description": "ソート方法 c:ヒット数 d:最終更新 l:いいね数 n:名前"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "d",
+                "a"
+              ],
+              "default": "d",
+              "example": "d",
+              "minLength": 1,
+              "maxLength": 1
+            },
+            "in": "query",
+            "name": "order",
+            "description": "ソート方向 最大が先頭: \"d\"esc, 最小が先頭:\"a\"sc"
+          }
+        ]
+      },
+      "parameters": []
+    },
+    "/catalog/tags": {
+      "get": {
+        "summary": "Get tag list",
+        "tags": [
+          "catalog"
+        ],
+        "responses": {
+          "200": {
+            "description": "ヒットしたデータが応答のdata->contentsに配列で返却されます",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetCatalogTagResponse"
+                },
+                "examples": {}
+              }
+            }
+          }
+        },
+        "operationId": "getTagList",
+        "description": "タグ一覧を取得します",
+        "parameters": [
+          {
+            "schema": {
+              "type": "integer",
+              "exclusiveMinimum": true,
+              "minimum": 1,
+              "default": 1
+            },
+            "in": "query",
+            "name": "page",
+            "description": "ページ番号"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "c",
+                "d",
+                "l",
+                "n"
+              ],
+              "default": "c",
+              "minLength": 1,
+              "maxLength": 1
+            },
+            "in": "query",
+            "name": "sort",
+            "description": "ソート方法 c:ヒット数 d:最終更新 l:いいね数 n:名前"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "d",
+                "a"
+              ],
+              "default": "d",
+              "example": "d",
+              "maxLength": 1,
+              "minLength": 1
+            },
+            "in": "query",
+            "name": "order",
+            "description": "ソート方向 最大が先頭: \"d\"esc, 最小が先頭:\"a\"sc"
+          }
+        ]
+      },
+      "parameters": []
+    },
+    "/catalog/characters": {
+      "get": {
+        "summary": "Get character list",
+        "tags": [
+          "catalog"
+        ],
+        "responses": {
+          "200": {
+            "description": "ヒットしたデータが応答のdata->contentsに配列で返却されます",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetCatalogCharacterResponse"
+                },
+                "examples": {}
+              }
+            }
+          }
+        },
+        "operationId": "getCharacterList",
+        "description": "キャラクター一覧を取得します",
+        "parameters": [
+          {
+            "schema": {
+              "type": "integer",
+              "default": 1,
+              "minimum": 1,
+              "exclusiveMinimum": true
+            },
+            "in": "query",
+            "name": "page",
+            "description": "ページ番号"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "c",
+                "d",
+                "l",
+                "n"
+              ],
+              "default": "c",
+              "minLength": 1,
+              "maxLength": 1
+            },
+            "in": "query",
+            "name": "sort",
+            "description": "ソート方法 c:ヒット数 d:最終更新 l:いいね数 n:名前"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "default": "d",
+              "enum": [
+                "d",
+                "a"
+              ],
+              "example": "d",
+              "minLength": 1,
+              "maxLength": 1
+            },
+            "in": "query",
+            "name": "order",
+            "description": "ソート方向 最大が先頭: \"d\"esc, 最小が先頭:\"a\"sc"
+          }
+        ]
+      }
+    },
+    "/catalog/uploaders": {
+      "get": {
+        "summary": "Get uploader list",
+        "tags": [
+          "catalog"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetCatalogUploaderResponse"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "getUploaderList",
+        "description": "投稿者一覧を取得します",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/SearchQueryPage"
+          },
+          {
+            "$ref": "#/components/parameters/SearchQuerySort"
+          },
+          {
+            "$ref": "#/components/parameters/SearchQueryOrder"
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "UploaderStruct": {"title": "UploaderStruct", "type": "object", "description": "", "properties": {"id": {"type": "integer"}, "name": {"type": "string"}, "count": {"type": "integer"}, "lcount": {"type": "integer"}}},
+      "ArtistStruct": {"title": "ArtistStruct", "type": "object", "properties": {"id": {"type": "integer", "description": "絵師のID"}, "userID": {"description": "絵師情報を登録したユーザーのID", "type": "integer"}, "name": {"type": "string", "minLength": 1, "description": "絵師の名前(ペンネーム正式名)", "example": "彩電"}, "description": {"type": "string", "example": "ごちうさなどの きらら系中心に、オリジナルなどのサークルやってます", "description": "絵師を説明する文章(1行分)"}, "group": {"type": "string", "example": "こねこぼたん", "description": "サークル名"}, "pixivID": {"type": "array", "description": "PixivのユーザーID(数字)", "items": {"type": "integer", "example": 40436}}, "twitterID": {"type": "array", "description": "Twitterの表示ID(英数字+)", "items": {"type": "string", "example": "harufcs"}}, "mastodon": {"type": "array", "format": "uri-reference", "description": "マストドンアカウントのURL", "items": {"type": "string", "example": "https://pawoo.net/@saiden"}}, "homepage": {"description": "HPのURL", "type": "array", "items": {"type": "string"}}, "count": {"type": "integer", "description": "絵師に属する作品数"}, "lcount": {"type": "integer", "description": "絵師に属するいいね数"}}, "required": ["id", "name", "description", "group", "pixivID", "twitterID", "mastodon", "count", "lcount"]},
+      "TagStruct": {"title": "TagStruct", "type": "object", "x-examples": {"example-1": {"id": 1, "name": "香風智乃"}}, "description": "タグデータモデル", "properties": {"id": {"type": "integer", "minimum": 1, "format": "int32", "description": "サイト内通しタグ番号"}, "user": {"type": "object", "description": "ユーザー情報", "properties": {"id": {"type": "integer", "description": "ユーザーID"}, "name": {"type": "string", "description": "ユーザー名"}}}, "name": {"type": "string", "minLength": 1, "maxLength": 20, "description": "タグの名称"}, "nsfw": {"type": "boolean", "description": "アダルトコンテンツが含まれるタグか", "default": false}, "description": {"type": "string", "description": "タグの説明文"}, "count": {"type": "integer", "description": "タグに属する作品数"}, "lcount": {"type": "integer", "description": "タグに属するいいね数"}}, "required": ["id", "name", "nsfw", "description", "count", "lcount"]},
+      "GetCatalogArtistResponse": {
+        "description": "",
+        "type": "object",
+        "x-examples": {
+          "success": {
+            "status": 200,
+            "message": "found",
+            "data": {
+              "title": "絵師",
+              "count": 5,
+              "current": 1,
+              "pages": 1,
+              "contents": [
+                {
+                  "id": 5,
+                  "name": "CHI CHEN",
+                  "description": "",
+                  "group": "",
+                  "pixivID": "",
+                  "twitterID": "",
+                  "mastodon": "",
+                  "homepage": "",
+                  "endpoint": "https://example.com",
+                  "count": 1,
+                  "lcount": 1
+                },
+                {
+                  "id": 4,
+                  "name": "Manki Kim",
+                  "description": "",
+                  "group": "",
+                  "pixivID": "",
+                  "twitterID": "",
+                  "mastodon": "",
+                  "homepage": "",
+                  "endpoint": "https://example.com",
+                  "count": 1,
+                  "lcount": 1
+                },
+                {
+                  "id": 3,
+                  "name": "Andy Falconer",
+                  "description": "",
+                  "group": "",
+                  "pixivID": "",
+                  "twitterID": "",
+                  "mastodon": "",
+                  "homepage": "",
+                  "endpoint": "https://example.com",
+                  "count": 1,
+                  "lcount": 1
+                },
+                {
+                  "id": 2,
+                  "name": "Nathan Dumlao",
+                  "description": "",
+                  "group": "",
+                  "pixivID": "",
+                  "twitterID": "",
+                  "mastodon": "",
+                  "homepage": "",
+                  "endpoint": "https://example.com",
+                  "count": 1,
+                  "lcount": 1
+                },
+                {
+                  "id": 1,
+                  "name": "みふね",
+                  "description": "",
+                  "group": "",
+                  "pixivID": "",
+                  "twitterID": "",
+                  "mastodon": "",
+                  "homepage": "",
+                  "endpoint": "https://example.com",
+                  "count": 4,
+                  "lcount": 57
+                }
+              ]
+            }
+          },
+          "success-no-data": {
+            "status": 200,
+            "message": "found",
+            "data": {
+              "title": "絵師",
+              "count": 0,
+              "current": 1,
+              "pages": 1,
+              "contents": []
+            }
+          }
+        },
+        "title": "GetCatalogArtistResponse",
+        "properties": {
+          "status": {
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 999,
+            "example": 200,
+            "default": 200,
+            "format": "int32"
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          },
+          "data": {
+            "type": "object",
+            "required": [
+              "title",
+              "count",
+              "current",
+              "pages",
+              "contents"
+            ],
+            "properties": {
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "count": {
+                "type": "integer"
+              },
+              "current": {
+                "type": "integer"
+              },
+              "pages": {
+                "type": "integer"
+              },
+              "contents": {
+                "type": "array",
+                "uniqueItems": true,
+                "minItems": 1,
+                "items": {
+                  "$ref": "#/components/schemas/ArtistStruct"
+                }
+              }
+            }
+          }
+        },
+        "required": [
+          "status",
+          "message",
+          "data"
+        ]
+      },
+      "GetCatalogTagResponse": {
+        "description": "",
+        "type": "object",
+        "x-examples": {
+          "success": {
+            "status": 200,
+            "message": "found",
+            "data": {
+              "title": "タグ",
+              "count": 4073,
+              "current": 1,
+              "pages": 204,
+              "contents": [
+                {
+                  "id": 4175,
+                  "name": "魅惑の脚線美",
+                  "description": null,
+                  "nsfw": false,
+                  "endpoint": null,
+                  "count": 1,
+                  "lcount": 0
+                },
+                {
+                  "id": 3931,
+                  "name": "2021年02月",
+                  "description": null,
+                  "nsfw": false,
+                  "endpoint": null,
+                  "count": 574,
+                  "lcount": 172
+                },
+                {
+                  "id": 1230,
+                  "name": "タイツ越しのパンツ",
+                  "description": null,
+                  "nsfw": 0,
+                  "endpoint": null,
+                  "count": 4,
+                  "lcount": 10
+                },
+                {
+                  "id": 5,
+                  "name": "宇治松千夜",
+                  "description": "千夜さん",
+                  "nsfw": 0,
+                  "endpoint": null,
+                  "count": 909,
+                  "lcount": 925
+                },
+                {
+                  "id": 510,
+                  "name": "HD",
+                  "description": null,
+                  "nsfw": 0,
+                  "endpoint": null,
+                  "count": 1022,
+                  "lcount": 745
+                },
+                {
+                  "id": 89,
+                  "name": "パンツ",
+                  "description": null,
+                  "nsfw": 0,
+                  "endpoint": null,
+                  "count": 134,
+                  "lcount": 376
+                },
+                {
+                  "id": 192,
+                  "name": "ぱんつ",
+                  "description": null,
+                  "nsfw": 0,
+                  "endpoint": null,
+                  "count": 84,
+                  "lcount": 75
+                },
+                {
+                  "id": 422,
+                  "name": "差分",
+                  "description": null,
+                  "nsfw": 0,
+                  "endpoint": null,
+                  "count": 521,
+                  "lcount": 279
+                },
+                {
+                  "id": 2,
+                  "name": "保登心愛",
+                  "description": "ココアさん",
+                  "nsfw": 0,
+                  "endpoint": null,
+                  "count": 2140,
+                  "lcount": 4543
+                },
+                {
+                  "id": 469,
+                  "name": "FHD",
+                  "description": null,
+                  "nsfw": 0,
+                  "endpoint": null,
+                  "count": 2696,
+                  "lcount": 2818
+                },
+                {
+                  "id": 1,
+                  "name": "香風智乃",
+                  "description": "チノちゃん",
+                  "nsfw": 0,
+                  "endpoint": null,
+                  "count": 4366,
+                  "lcount": 12920
+                },
+                {
+                  "id": 414,
+                  "name": "R18",
+                  "description": null,
+                  "nsfw": 0,
+                  "endpoint": null,
+                  "count": 1869,
+                  "lcount": 681
+                },
+                {
+                  "id": 471,
+                  "name": "2K",
+                  "description": null,
+                  "nsfw": 0,
+                  "endpoint": null,
+                  "count": 1392,
+                  "lcount": 1639
+                },
+                {
+                  "id": 546,
+                  "name": "女の子",
+                  "description": null,
+                  "nsfw": 0,
+                  "endpoint": null,
+                  "count": 498,
+                  "lcount": 264
+                },
+                {
+                  "id": 4174,
+                  "name": "eQGMN5bqb8n",
+                  "description": null,
+                  "nsfw": 0,
+                  "endpoint": null,
+                  "count": 2,
+                  "lcount": 0
+                },
+                {
+                  "id": 920,
+                  "name": "めぐみ",
+                  "description": null,
+                  "nsfw": 0,
+                  "endpoint": null,
+                  "count": 69,
+                  "lcount": 6
+                },
+                {
+                  "id": 81,
+                  "name": "奈津恵",
+                  "description": null,
+                  "nsfw": 0,
+                  "endpoint": null,
+                  "count": 689,
+                  "lcount": 622
+                },
+                {
+                  "id": 4173,
+                  "name": "eTH7NS2kKk7",
+                  "description": null,
+                  "nsfw": 0,
+                  "endpoint": null,
+                  "count": 2,
+                  "lcount": 0
+                },
+                {
+                  "id": 2085,
+                  "name": "ほとここあ",
+                  "description": null,
+                  "nsfw": 0,
+                  "endpoint": null,
+                  "count": 3,
+                  "lcount": 0
+                },
+                {
+                  "id": 468,
+                  "name": "4K",
+                  "description": null,
+                  "nsfw": 0,
+                  "endpoint": null,
+                  "count": 3066,
+                  "lcount": 2723
+                }
+              ]
+            }
+          },
+          "success-no-data": {
+            "status": 200,
+            "message": "found",
+            "data": {
+              "title": "タグ",
+              "count": 0,
+              "current": 1,
+              "pages": 1,
+              "contents": []
+            }
+          }
+        },
+        "properties": {
+          "status": {
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 999,
+            "example": 200,
+            "default": 200,
+            "format": "int32"
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          },
+          "data": {
+            "type": "object",
+            "required": [
+              "title",
+              "count",
+              "current",
+              "pages",
+              "contents"
+            ],
+            "properties": {
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "count": {
+                "type": "integer"
+              },
+              "current": {
+                "type": "integer"
+              },
+              "pages": {
+                "type": "integer"
+              },
+              "contents": {
+                "type": "array",
+                "uniqueItems": true,
+                "minItems": 1,
+                "items": {
+                  "$ref": "#/components/schemas/TagStruct"
+                }
+              }
+            }
+          }
+        },
+        "required": [
+          "status",
+          "message",
+          "data"
+        ],
+        "title": "GetCatalogTagResponse"
+      },
+      "GetCatalogCharacterResponse": {
+        "description": "",
+        "type": "object",
+        "x-examples": {
+          "success": {
+            "status": 200,
+            "message": "found",
+            "data": {
+              "title": "キャラ",
+              "count": 1,
+              "current": 1,
+              "pages": 1,
+              "contents": [
+                {
+                  "id": 2,
+                  "name": "パソコン",
+                  "description": null,
+                  "nsfw": 0,
+                  "count": 1,
+                  "lcount": 53
+                }
+              ]
+            }
+          },
+          "success-no-data": {
+            "status": 200,
+            "message": "found",
+            "data": {
+              "title": "キャラ",
+              "count": 0,
+              "current": 1,
+              "pages": 1,
+              "contents": []
+            }
+          }
+        },
+        "properties": {
+          "status": {
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 999,
+            "example": 200,
+            "default": 200,
+            "format": "int32"
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          },
+          "data": {
+            "type": "object",
+            "required": [
+              "title",
+              "count",
+              "current",
+              "pages",
+              "contents"
+            ],
+            "properties": {
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "count": {
+                "type": "integer"
+              },
+              "current": {
+                "type": "integer"
+              },
+              "pages": {
+                "type": "integer"
+              },
+              "contents": {
+                "type": "array",
+                "uniqueItems": true,
+                "minItems": 1,
+                "items": {
+                  "$ref": "#/components/schemas/TagStruct"
+                }
+              }
+            }
+          }
+        },
+        "required": [
+          "status",
+          "message",
+          "data"
+        ],
+        "title": "GetCatalogCharacterResponse"
+      },
+      "GetCatalogUploaderResponse": {
+        "description": "",
+        "type": "object",
+        "x-examples": {
+          "success": {
+            "status": 200,
+            "message": "found",
+            "data": {
+              "title": "投稿者",
+              "count": 1,
+              "current": 1,
+              "pages": 1,
+              "contents": [
+                {
+                  "id": 1,
+                  "name": "お窓",
+                  "count": 1,
+                  "lcount": 1204
+                }
+              ]
+            }
+          },
+          "success-no-data": {
+            "status": 200,
+            "message": "found",
+            "data": {
+              "title": "投稿者",
+              "count": 0,
+              "current": 1,
+              "pages": 1,
+              "contents": []
+            }
+          }
+        },
+        "properties": {
+          "status": {
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 999,
+            "example": 200,
+            "default": 200,
+            "format": "int32"
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          },
+          "data": {
+            "type": "object",
+            "required": [
+              "title",
+              "count",
+              "current",
+              "pages",
+              "contents"
+            ],
+            "properties": {
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "count": {
+                "type": "integer"
+              },
+              "current": {
+                "type": "integer"
+              },
+              "pages": {
+                "type": "integer"
+              },
+              "contents": {
+                "type": "array",
+                "uniqueItems": true,
+                "minItems": 1,
+                "items": {
+                  "$ref": "#/components/schemas/UploaderStruct"
+                }
+              }
+            }
+          }
+        },
+        "required": [
+          "status",
+          "message",
+          "data"
+        ],
+        "title": "GetCatalogUploaderResponse"
+      }
+    },
+    "parameters": {
+      "SearchQuerySort": {
+        "name": "sort",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "enum": [
+            "l",
+            "d"
+          ],
+          "example": "d",
+          "default": "d"
+        },
+        "description": "ソート方法 l:いいね数順 d:投稿日順"
+      },
+      "SearchQueryOrder": {
+        "name": "order",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "enum": [
+            "d",
+            "a"
+          ],
+          "default": "d",
+          "example": "d",
+          "minLength": 1,
+          "maxLength": 1
+        },
+        "description": "ソート方向 d:降順(大→小) a:昇順(小→大)"
+      },
+      "SearchQueryPage": {
+        "name": "page",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "description": "ページ番号 (NOTE: 1ページ辺りの応答は20件)"
+      },
+      "SearchQueryMylistAllow": {
+        "name": "with_mylisted",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "integer",
+          "format": "int32",
+          "default": 1,
+          "enum": [
+            1,
+            0
+          ],
+          "example": 1,
+          "minimum": 0,
+          "maximum": 1
+        },
+        "description": "マイリスト追加済みかを取得する0/1 (デフォルト1)"
+      },
+      "SearchQueryMylistDeny": {
+        "name": "with_mylisted",
+        "in": "query",
+        "schema": {
+          "type": "integer",
+          "enum": [
+            0,
+            1
+          ],
+          "example": 0,
+          "default": 0,
+          "minimum": 0,
+          "maximum": 1
+        },
+        "description": "マイリスト追加済みかを取得する0/1 (デフォルト0)"
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "catalog"
+    }
+  ]
+}
