@@ -342,7 +342,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PutArtRequest'
+              $ref: '#/components/schemas/ArtStruct'
         description: ''
     delete:
       summary: Delete art
@@ -1171,6 +1171,36 @@ paths:
       description: |-
         パスパラメータで指定された低画質なイラストに対して
         クエリパラメータで指定されたより画質の良いイラストで統合(置き換え)処理を行います。
+        画質が低い方のいいね・タグ・出典・コメントが画質が高い方のイラストに対して統合されます。
+        置き換えられた画質が低い方のイラストは検索結果に表示されなくなりますが、IDを直接指定すれば閲覧できる状態で残ります。
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReplaceArtRequest'
+  '/arts/{illustID}/replace_simulate':
+    parameters:
+      - schema:
+          type: integer
+        name: illustID
+        in: path
+        required: true
+        description: 置き換えしたい(画質が低い方の)イラストID
+    put:
+      summary: Combine art info(simulate)
+      operationId: replaceArtSimulate
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReplaceArtSimulateResponse'
+      tags:
+        - arts
+      description: |-
+        パスパラメータで指定された低画質なイラストに対して
+        クエリパラメータで指定されたより画質の良いイラストで統合(置き換え)処理の検証を行います。
         画質が低い方のいいね・タグ・出典・コメントが画質が高い方のイラストに対して統合されます。
         置き換えられた画質が低い方のイラストは検索結果に表示されなくなりますが、IDを直接指定すれば閲覧できる状態で残ります。
       requestBody:
@@ -3095,10 +3125,10 @@ components:
       x-examples:
         example:
           password: kafuuch1n0
-    PutArtRequest:
+    ArtStruct:
       description: イラスト編集リクエスト
       type: object
-      title: PutArtRequest
+      title: ArtStruct
       x-examples: {}
       properties:
         title:
@@ -3164,6 +3194,9 @@ components:
             id:
               type: integer
               description: 投稿者のユーザーID
+            name:
+              type: string
+              description: 投稿したユーザーのユーザー名
         status:
           type: integer
           minimum: 0
@@ -3198,6 +3231,27 @@ components:
         filesize:
           type: integer
           description: ファイルサイズをbytesで入力
+        replace:
+          type: array
+          description: 置き換え履歴データ
+          items:
+            $ref: '#/components/schemas/ReplaceStruct'
+        star:
+          type: object
+          description: スター情報
+          properties:
+            yellow:
+              type: integer
+              description: イエロースター数
+            green:
+              type: integer
+              description: グリーンスター数
+            red:
+              type: integer
+              description: レッドスター数
+            blue:
+              type: integer
+              description: ブルースター数
     LoginWithFormRequest:
       title: LoginWithFormRequest
       type: object
@@ -3935,185 +3989,7 @@ components:
           description: ok もしくは エラー内容
           minLength: 1
         data:
-          type: object
-          description: ヒットした場合のみ存在する
-          properties:
-            illustID:
-              type: integer
-              description: サイト内通しイラストID
-            title:
-              type: string
-              minLength: 1
-              description: |-
-                イラスト(作品)名
-                NOTE: 連番の場合は (2) (3)のような番号が入る
-            caption:
-              type: string
-              description: |-
-                説明文
-                NOTE: 通常出典に記載されていた内容そのままが入る
-            date:
-              type: string
-              description: '登録日時(%Y-%m-%d %H:%M:%S)'
-              minLength: 19
-              maxLength: 19
-              example: '2021-01-07 12:48:42'
-            pages:
-              type: integer
-              description: グループになっている場合の総ページ数(未使用)
-            like:
-              type: integer
-              description: 累計いいね数
-            view:
-              type: integer
-              description: 累計閲覧回数
-            mylist:
-              type: integer
-              description: 累計マイリスト数
-            mylisted:
-              type: boolean
-              description: リクエストしたユーザーがマイリストしているか
-            originUrl:
-              type: string
-              minLength: 1
-              description: 出典URL
-            originService:
-              type: string
-              minLength: 1
-              description: 出典サービス名
-            nsfw:
-              description: アダルトコンテンツかどうか
-              type: boolean
-            hash:
-              type: integer
-              description: 画像ハッシュ(pHash)
-            extension:
-              type: string
-              minLength: 1
-              description: 拡張子(通常、jpgもしくはpng)
-              enum:
-                - jpg
-                - png
-                - jpeg
-                - gif
-                - mp4
-                - webp
-              example: png
-            artist:
-              type: object
-              description: 絵師情報
-              required:
-                - id
-                - name
-              properties:
-                id:
-                  type: integer
-                  description: 絵師のサイト内通し番号
-                name:
-                  type: string
-                  minLength: 1
-                  description: 絵師名
-            user:
-              type: object
-              description: 投稿者情報
-              required:
-                - id
-                - name
-              properties:
-                id:
-                  type: integer
-                  description: 投稿したユーザーのサイト内通し番号
-                name:
-                  type: string
-                  minLength: 1
-                  description: 投稿したユーザーの名前
-            status:
-              type: integer
-              description: '公開/非公開等の表示状態 0:公開 1:置換済み 2:削除(ユーザー) 3:削除(管理者)'
-              example: 0
-            width:
-              type: integer
-              description: RAW画像の横方向のピクセル数
-            height:
-              type: integer
-              description: RAW画像の縦方向のピクセル数
-            filesize:
-              type: string
-              minLength: 1
-              description: RAW画像のファイルサイズに単位を付けたもの
-            tag:
-              type: array
-              uniqueItems: true
-              description: 一般タグ情報
-              items:
-                $ref: '#/components/schemas/TagStruct'
-            chara:
-              type: array
-              description: キャラクタータグ情報
-              uniqueItems: true
-              items:
-                $ref: '#/components/schemas/TagStruct'
-            group:
-              type: array
-              description: グループタグ情報
-              uniqueItems: true
-              items:
-                $ref: '#/components/schemas/TagStruct'
-            system:
-              type: array
-              uniqueItems: true
-              description: システムタグ情報
-              items:
-                $ref: '#/components/schemas/TagStruct'
-            replace:
-              type: array
-              description: 置き換えたイラスト情報
-              items:
-                $ref: '#/components/schemas/ReplaceStruct'
-            star:
-              type: object
-              description: スター(いいね)情報
-              required:
-                - yellow
-                - green
-                - red
-                - blue
-              properties:
-                yellow:
-                  type: integer
-                green:
-                  type: integer
-                red:
-                  type: integer
-                blue:
-                  type: integer
-          required:
-            - illustID
-            - title
-            - caption
-            - date
-            - pages
-            - like
-            - view
-            - mylist
-            - mylisted
-            - originUrl
-            - originService
-            - nsfw
-            - hash
-            - extension
-            - artist
-            - user
-            - status
-            - width
-            - height
-            - filesize
-            - tag
-            - chara
-            - group
-            - system
-            - replace
-            - star
+          $ref: '#/components/schemas/ArtStruct'
       required:
         - status
         - message
@@ -4586,31 +4462,21 @@ components:
     ReplaceArtRequest:
       title: ReplaceArtRequest
       type: object
+      description: ''
       properties:
         illustID:
           type: integer
-        status:
-          type: integer
+          description: より画質が高いイラストのID
+          minimum: 1
       required:
         - illustID
-        - status
-      description: ''
     ReplaceArtResponse:
       description: ''
       type: object
-      properties:
-        status:
-          type: integer
-        message:
-          type: string
-          minLength: 1
-      required:
-        - status
-        - message
       x-examples:
         success:
           status: 200
-          message: Replace succeed
+          message: Replace succeed.
         failed-not-satisfied:
           status: 400
           message: Request parameters are not satisfied.
@@ -4620,7 +4486,150 @@ components:
         failed-internal-error:
           status: 500
           message: Server bombed.
-      title: ''
+      title: ReplaceArtResponse
+      properties:
+        status:
+          type: integer
+          minimum: 100
+          maximum: 999
+          example: 200
+          default: 200
+          format: int32
+        message:
+          type: string
+          minLength: 1
+      required:
+        - status
+        - message
+    ReplaceArtSimulateResponse:
+      description: ''
+      type: object
+      x-examples:
+        failed-not-satisfied:
+          status: 400
+          message: Request parameters are not satisfied.
+        failed-not-found:
+          status: 404
+          message: The art data was not found.
+        failed-internal-error:
+          status: 500
+          message: Server bombed.
+        success:
+          status: 200
+          message: ok
+          data:
+            to:
+              title: string
+              caption: string
+              date: stringstringstrings
+              pages: 0
+              like: 0
+              view: 0
+              originUrl: string
+              originService: string
+              nsfw: true
+              hash: string
+              extension: jpg
+              artist:
+                name: string
+                id: 0
+              user:
+                id: 0
+                name: string
+              status: 0
+              width: 0
+              height: 0
+              tag:
+                - string
+              chara:
+                - string
+              group:
+                - string
+              system:
+                - string
+              filesize: 0
+              replace:
+                - illustID: 0
+                  title: string
+                  caption: string
+                  date: string
+                  originService: string
+                  originUrl: string
+                  width: 0
+                  height: 0
+                  filesize: string
+              star:
+                yellow: 0
+                green: 0
+                red: 0
+                blue: 0
+            from:
+              title: string
+              caption: string
+              date: stringstringstrings
+              pages: 0
+              like: 0
+              view: 0
+              originUrl: string
+              originService: string
+              nsfw: true
+              hash: string
+              extension: jpg
+              artist:
+                name: string
+                id: 0
+              user:
+                id: 0
+                name: string
+              status: 0
+              width: 0
+              height: 0
+              tag:
+                - string
+              chara:
+                - string
+              group:
+                - string
+              system:
+                - string
+              filesize: 0
+              replace:
+                - illustID: 0
+                  title: string
+                  caption: string
+                  date: string
+                  originService: string
+                  originUrl: string
+                  width: 0
+                  height: 0
+                  filesize: string
+              star:
+                yellow: 0
+                green: 0
+                red: 0
+                blue: 0
+      title: ReplaceArtSimulateResponse
+      properties:
+        status:
+          type: integer
+          minimum: 100
+          maximum: 999
+          example: 200
+          default: 200
+          format: int32
+        message:
+          type: string
+          minLength: 1
+        data:
+          type: object
+          properties:
+            to:
+              $ref: '#/components/schemas/ArtStruct'
+            from:
+              $ref: '#/components/schemas/ArtStruct'
+      required:
+        - status
+        - message
     GetArtTagsResponse:
       title: GetArtTagsResponse
       type: object
@@ -6094,43 +6103,9 @@ components:
     SearchGeneralResponse:
       description: ''
       type: object
-      properties:
-        status:
-          type: integer
-        message:
-          type: string
-          minLength: 1
-        data:
-          type: object
-          required:
-            - title
-            - count
-            - current
-            - pages
-            - imgs
-          properties:
-            title:
-              type: string
-              minLength: 1
-            count:
-              type: integer
-            current:
-              type: integer
-            pages:
-              type: integer
-            imgs:
-              type: array
-              uniqueItems: true
-              minItems: 1
-              items:
-                $ref: '#/components/schemas/SearchResult'
-      required:
-        - status
-        - message
-        - data
       title: ''
       x-examples:
-        example:
+        success:
           status: 200
           message: found
           data:
@@ -6171,6 +6146,45 @@ components:
                   id: 4
                   name: Manki Kim
                 extension: jpg
+      properties:
+        status:
+          type: integer
+          format: int32
+          default: 200
+          example: 200
+          minimum: 100
+          maximum: 999
+        message:
+          type: string
+          minLength: 1
+        data:
+          type: object
+          required:
+            - title
+            - count
+            - current
+            - pages
+            - imgs
+          properties:
+            title:
+              type: string
+              minLength: 1
+            count:
+              type: integer
+            current:
+              type: integer
+            pages:
+              type: integer
+            imgs:
+              type: array
+              uniqueItems: true
+              minItems: 1
+              items:
+                $ref: '#/components/schemas/SearchResult'
+      required:
+        - status
+        - message
+        - data
     GetMylistListResponse:
       description: ''
       type: object
@@ -6273,16 +6287,58 @@ components:
         file:
           type: string
           format: binary
+          description: 画像ファイル(binary)
+      required:
+        - file
     SearchByImageResponse:
       title: SearchByImageResponse
       type: object
+      x-examples:
+        success:
+          status: 200
+          message: ok
+          data:
+            hash: string
+            illusts:
+              - illustID: 0
+                artistID: 0
+                title: string
+                caption: string
+                date: '2021-01-07 12:48:42'
+                pages: 0
+                like: 0
+                mylist: 0
+                mylisted: true
+                originUrl: string
+                originService: string
+                nsfw: true
+                artist:
+                  name: string
+                  id: 0
+                extension: png
+                similarity: 0
+        success-no-data:
+          status: 200
+          message: ok
+          data:
+            hash: string
+            illusts: []
       properties:
         status:
           type: integer
+          minimum: 100
+          maximum: 999
+          example: 200
+          format: int32
+          default: 200
         message:
           type: string
+          minLength: 1
         data:
           type: object
+          required:
+            - hash
+            - illusts
           properties:
             hash:
               type: string
@@ -6293,6 +6349,7 @@ components:
       required:
         - status
         - message
+        - data
     SearchByImageAtSauceNaoResponse:
       description: ''
       type: object
@@ -6446,6 +6503,9 @@ components:
           type: integer
           example: 200
           default: 200
+          maximum: 999
+          minimum: 200
+          format: int32
         message:
           type: string
           minLength: 1
@@ -7480,8 +7540,11 @@ components:
           minimum: 100
           maximum: 999
           example: 200
+          default: 200
+          format: int32
         message:
           type: string
+          minLength: 1
         id:
           type: integer
           description: クライアントID
@@ -7815,24 +7878,17 @@ components:
           minimum: 100
           maximum: 999
           format: int32
+          example: 200
+          default: 200
         message:
           type: string
+          minLength: 1
+      required:
+        - status
+        - message
     ReportGeneralRequest:
       title: ReportGeneralRequest
       type: object
-      properties:
-        type:
-          type: integer
-          description: '通報種別 1:不適切名称 2:不適切年齢 3:規約違反 4:法律違反'
-          minimum: 1
-          maximum: 9
-          format: int32
-        msg:
-          type: string
-          description: 通報本文
-      required:
-        - type
-        - msg
       x-examples:
         example-1:
           type: 1
@@ -7846,6 +7902,22 @@ components:
         example-4:
           type: 4
           msg: DMCA Request
+      properties:
+        type:
+          type: integer
+          description: '通報種別 1:不適切名称 2:不適切年齢 3:規約違反 4:法律違反'
+          minimum: 1
+          maximum: 9
+          format: int32
+          example: 1
+          default: 1
+        msg:
+          type: string
+          description: 通報本文
+          minLength: 1
+      required:
+        - type
+        - msg
     ScrapeResultStruct:
       title: ScrapeResultStruct
       type: object
@@ -7998,9 +8070,6 @@ components:
                 id:
                   type: integer
                   description: ユーザーID(整数値)
-                screen_name:
-                  type: string
-                  description: ユーザーID(英数字)
                 name:
                   type: string
                   description: ユーザー名
@@ -8485,15 +8554,17 @@ components:
             result: []
       properties:
         status:
-          type: number
+          type: integer
+          example: 200
+          format: int32
+          minimum: 100
+          maximum: 999
+          default: 200
         message:
           type: string
           minLength: 1
         data:
           type: object
-          required:
-            - url
-            - result
           properties:
             url:
               type: string
@@ -8538,6 +8609,9 @@ components:
                   - thumbnail
                   - title
                   - artist
+          required:
+            - url
+            - result
       required:
         - status
         - message
