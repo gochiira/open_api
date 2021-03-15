@@ -1,0 +1,2139 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Gochiira Backend v2 API",
+    "version": "1.0",
+    "contact": {
+      "name": "Omado",
+      "url": "https://twitter.com/shallow_omado",
+      "email": "dsgamer777@gmail.com"
+    },
+    "termsOfService": "https://illust.gochiusa.team/terms",
+    "description": "ごちイラ内でメインに使用されているAPI。\n現在Bot、ガチャ、フロントエンド の 3箇所で使用中。",
+    "license": {
+      "name": "GPLv3",
+      "url": "https://www.gnu.org/licenses/gpl-3.0.ja.html"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://api.gochiusa.team",
+      "description": "Prod"
+    },
+    {
+      "url": "http://127.0.0.1:8080",
+      "description": "Dev"
+    }
+  ],
+  "paths": {
+    "/arts/{illustID}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "integer"
+          },
+          "name": "illustID",
+          "in": "path",
+          "required": true,
+          "description": "取得したいイラストのID"
+        }
+      ],
+      "get": {
+        "summary": "Get art info",
+        "tags": [
+          "arts"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetArtResponse"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "getArt",
+        "description": "指定したイラストを取得します"
+      },
+      "put": {
+        "summary": "Edit art",
+        "operationId": "put-arts-illustID",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PutArtResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "指定したイラストの情報を編集します\nパラメータで与えられたデータに応じて柔軟に\n絵師名・タグ・キャラクター等を同時に書き換えます",
+        "tags": [
+          "arts"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ArtStruct"
+              }
+            }
+          },
+          "description": ""
+        }
+      },
+      "delete": {
+        "summary": "Delete art",
+        "operationId": "delete-arts-illustID",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteArtResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "指定したイラストを削除します\n削除してほしくないため非推奨とします\n(このエンドポイントから削除したイラストは\n参照が不可能になるだけであり一定日数サーバー上に残されます)",
+        "deprecated": true,
+        "tags": [
+          "arts"
+        ]
+      }
+    },
+    "/arts/{illustID}/replace": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "integer"
+          },
+          "name": "illustID",
+          "in": "path",
+          "required": true,
+          "description": "置き換えしたい(画質が低い方の)イラストID"
+        }
+      ],
+      "put": {
+        "summary": "Combine art info",
+        "operationId": "replaceArt",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostReplaceArtResponse"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "arts"
+        ],
+        "description": "パスパラメータで指定された低画質なイラストに対して\nクエリパラメータで指定されたより画質の良いイラストで統合(置き換え)処理を行います。\n画質が低い方のいいね・タグ・出典・コメントが画質が高い方のイラストに対して統合されます。\n置き換えられた画質が低い方のイラストは検索結果に表示されなくなりますが、IDを直接指定すれば閲覧できる状態で残ります。",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostReplaceArtRequest"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/arts/{illustID}/replace_simulate": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "integer"
+          },
+          "name": "illustID",
+          "in": "path",
+          "required": true,
+          "description": "置き換えしたい(画質が低い方の)イラストID"
+        }
+      ],
+      "put": {
+        "summary": "Combine art info(simulate)",
+        "operationId": "replaceArtSimulate",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostReplaceArtSimulateResponse"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "arts"
+        ],
+        "description": "パスパラメータで指定された低画質なイラストに対して\nクエリパラメータで指定されたより画質の良いイラストで統合(置き換え)処理の検証を行います。\n画質が低い方のいいね・タグ・出典・コメントが画質が高い方のイラストに対して統合されます。\n置き換えられた画質が低い方のイラストは検索結果に表示されなくなりますが、IDを直接指定すれば閲覧できる状態で残ります。",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostReplaceArtRequest"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/arts/{illustID}/tags": {
+      "get": {
+        "summary": "Get art tags",
+        "tags": [
+          "arts"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetArtTagsResponse"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "getArtTags",
+        "description": "指定したイラストに付いているタグのみを一覧で取得します"
+      },
+      "parameters": [
+        {
+          "schema": {
+            "type": "integer"
+          },
+          "name": "illustID",
+          "in": "path",
+          "required": true,
+          "description": "対象のイラストID"
+        }
+      ],
+      "put": {
+        "summary": "Edit art tags",
+        "operationId": "editArtTags",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PutArtTagsResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "指定したイラストのタグ一覧に、与えられたIDのタグを追加します\n(イラスト本体の編集時に付けられたタグ名から\n自動的にタグIDを引き出し追加/削除を行う処理が追加されたため\nこちらのエンドポイントを使用する必要はありません)",
+        "deprecated": true,
+        "tags": [
+          "arts"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PutArtTagsRequest"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete art tag",
+        "operationId": "deleteArtTags",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteArtTagsResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "指定したイラストのタグ一覧から、与えられたIDのタグを削除します\n(イラスト本体の編集時に付けられたタグ名から\n自動的にタグIDを引き出し追加/削除を行う処理が追加されたため\nこちらのエンドポイントを使用する必要はありません)",
+        "deprecated": true,
+        "tags": [
+          "arts"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteArtTagsRequest"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/arts/{illustID}/characters": {
+      "get": {
+        "summary": "Get art characters",
+        "tags": [
+          "arts"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetArtChractersResponse"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "getArtCharacters",
+        "description": "指定したイラストに付いているキャラクターのみを一覧で取得します"
+      },
+      "parameters": [
+        {
+          "schema": {
+            "type": "integer"
+          },
+          "name": "illustID",
+          "in": "path",
+          "required": true,
+          "description": "対象のイラストID"
+        }
+      ],
+      "put": {
+        "summary": "Edit art characters",
+        "operationId": "editArtCharacters",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PutArtCharactersResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "指定したイラストのキャラクター一覧に、与えられたIDのキャラクターを追加します\n(イラスト本体の編集時に付けられたキャラクター名から\n自動的にキャラクターIDを引き出し追加/削除を行う処理が追加されたため\nこちらのエンドポイントを使用する必要はありません)",
+        "deprecated": true,
+        "tags": [
+          "arts"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PutArtChractersRequest"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete art character",
+        "operationId": "deleteArtCharacters",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteArtCharactersResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "指定したイラストのキャラクター一覧から、与えられたIDのキャラクターを削除します\n(イラスト本体の編集時に付けられたキャラクター名から\n自動的にキャラクターIDを引き出し追加/削除を行う処理が追加されたため\nこちらのエンドポイントを使用する必要はありません)",
+        "deprecated": true,
+        "tags": [
+          "arts"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteArtCharactersRequest"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/arts/{illustID}/likes": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "integer"
+          },
+          "name": "illustID",
+          "in": "path",
+          "required": true,
+          "description": "いいねしたいイラストのID"
+        }
+      ],
+      "put": {
+        "summary": "Plus art like",
+        "operationId": "addArtLike",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PutArtLikesResponse"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "arts"
+        ],
+        "description": "指定したイラストのいいね数を1増加させます\n(いいねの種別を選択できる仕様となったため、このエンドポイントは現在非推奨ですが\n種別を指定するいいねよりも応答が速いため残っています)",
+        "deprecated": true
+      },
+      "get": {
+        "summary": "Get art likes",
+        "operationId": "getArtLikes",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetArtLikesResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "指定したイラストのいいね数だけを取得します",
+        "tags": [
+          "arts"
+        ]
+      }
+    },
+    "/arts/{illustID}/likes/{likeType}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "integer"
+          },
+          "name": "illustID",
+          "in": "path",
+          "required": true,
+          "description": "いいねしたいイラストのID"
+        },
+        {
+          "schema": {
+            "type": "integer"
+          },
+          "name": "likeType",
+          "in": "path",
+          "required": true,
+          "description": "いいね種別 1:黄 2:緑 3:赤 4:青"
+        }
+      ],
+      "put": {
+        "summary": "Plus art like (with using star)",
+        "operationId": "addArtLikeByStar",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PutArtLikesResponse"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "arts"
+        ],
+        "description": "指定したイラストのいいね数を1増加させます\nいいねする都度、likeTypeに指定されたスターを消費します\n(ToyMoneyApiに問い合わせを行った上で増加処理を行うため若干時間がかかります)"
+      }
+    },
+    "/arts/{illustID}/views": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "integer"
+          },
+          "name": "illustID",
+          "in": "path",
+          "required": true,
+          "description": "閲覧したイラストのID"
+        }
+      ],
+      "put": {
+        "summary": "Plus art view",
+        "operationId": "addArtView",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PutArtViewsResponse"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "arts"
+        ],
+        "description": "指定したイラストの閲覧回数を1増加させます\n同一アカウントからのイラスト閲覧は1日1回のみカウントされます"
+      },
+      "get": {
+        "summary": "Get art views",
+        "operationId": "getArtViews",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetArtViewsResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "指定したイラストの閲覧回数のみを取得します",
+        "tags": [
+          "arts"
+        ]
+      }
+    },
+    "/arts/{illustID}/comments": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "integer"
+          },
+          "name": "illustID",
+          "in": "path",
+          "required": true,
+          "description": "対象のイラストID"
+        }
+      ],
+      "get": {
+        "summary": "Get art comments",
+        "tags": [
+          "arts"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetArtCommentsResponse"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "getArtComments",
+        "description": "指定したイラストに付いているコメントのみを一覧で取得します"
+      },
+      "post": {
+        "summary": "Add art comment",
+        "operationId": "addArtComment",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostArtCommentResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "指定したイラストにコメントを追加します",
+        "tags": [
+          "arts"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostArtCommentRequest"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/arts/{illustID}/comments/{commentID}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "integer"
+          },
+          "name": "illustID",
+          "in": "path",
+          "required": true,
+          "description": "対象のイラストID"
+        },
+        {
+          "schema": {
+            "type": "integer"
+          },
+          "name": "commentID",
+          "in": "path",
+          "required": true,
+          "description": "編集したいコメントのID"
+        }
+      ],
+      "put": {
+        "summary": "Edit art comment",
+        "operationId": "editArtCommentById",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PutArtCommentResponse"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "arts"
+        ],
+        "description": "指定したイラストに付けたコメントを編集します\n(ActivityPubを使用している場合、編集後の内容が再投稿されます)",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PutArtCommentRequest"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete art comment",
+        "operationId": "deleteArtCommentById",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteArtCommentResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "指定したイラストに付けたコメントを削除します",
+        "tags": [
+          "arts"
+        ]
+      },
+      "get": {
+        "summary": "Get art comment",
+        "operationId": "getArtCommentById",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetArtCommentResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "指定したイラストに付いている、指定されたIDのコメントを取得します",
+        "tags": [
+          "arts"
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "GetArtResponse": {
+        "title": "GetArtResposnse",
+        "type": "object",
+        "x-examples": {
+          "success": {
+            "status": 200,
+            "message": "ok",
+            "data": {
+              "illustID": 8,
+              "title": "tea pours into white teacup photo",
+              "caption": "",
+              "date": "2021-01-07 15:16:58",
+              "pages": 1,
+              "like": 1,
+              "view": 2,
+              "mylist": 0,
+              "mylisted": false,
+              "originUrl": "https://unsplash.com/photos/oBoELXgJR1w?page=1",
+              "originService": "独自",
+              "nsfw": false,
+              "hash": 12743176166585612000,
+              "extension": "jpg",
+              "artist": {
+                "id": 5,
+                "name": "CHI CHEN"
+              },
+              "user": {
+                "id": 2,
+                "name": "ドマオーさん"
+              },
+              "status": 0,
+              "width": 3333,
+              "height": 4391,
+              "filesize": "491K",
+              "tag": [
+                {
+                  "id": 21,
+                  "name": "ティーカップ",
+                  "nsfw": false
+                },
+                {
+                  "id": 20,
+                  "name": "紅茶",
+                  "nsfw": false
+                },
+                {
+                  "id": 18,
+                  "name": "カフェ",
+                  "nsfw": false
+                }
+              ],
+              "chara": [
+                {
+                  "id": 20,
+                  "name": "サンプル",
+                  "nsfw": false
+                }
+              ],
+              "group": [
+                {
+                  "id": 20,
+                  "name": "サンプル",
+                  "nsfw": false
+                }
+              ],
+              "system": [
+                {
+                  "id": 4,
+                  "name": "2021年01月",
+                  "nsfw": false
+                },
+                {
+                  "id": 17,
+                  "name": "4K",
+                  "nsfw": false
+                }
+              ],
+              "replace": [],
+              "star": {
+                "yellow": 1,
+                "green": 0,
+                "blue": 0,
+                "red": 0
+              }
+            }
+          },
+          "failed": {
+            "status": 404,
+            "message": "The art was not found."
+          }
+        },
+        "description": "",
+        "properties": {
+          "status": {
+            "type": "integer",
+            "description": "HTTPステータスコード",
+            "minimum": 100,
+            "maximum": 999,
+            "example": 200,
+            "format": "int32",
+            "default": 200
+          },
+          "message": {
+            "type": "string",
+            "description": "ok もしくは エラー内容",
+            "minLength": 1
+          },
+          "data": {
+            "$ref": "#/components/schemas/ArtStruct"
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ]
+      },
+      "ArtStruct": {
+        "description": "イラスト編集リクエスト",
+        "type": "object",
+        "title": "ArtStruct",
+        "x-examples": {},
+        "properties": {
+          "title": {
+            "type": "string",
+            "minLength": 1,
+            "description": "イラスト(作品)名 NOTE: 連番の場合は (2) (3)のような番号が入る"
+          },
+          "caption": {
+            "type": "string",
+            "minLength": 1,
+            "description": "説明文 NOTE: 通常出典に記載されていた内容そのままが入る"
+          },
+          "date": {
+            "type": "string",
+            "minLength": 19,
+            "maxLength": 19,
+            "description": "登録日時(%Y-%m-%d %H:%M:%S)"
+          },
+          "pages": {
+            "type": "integer",
+            "description": "グループになっている場合の総ページ数(未使用)"
+          },
+          "like": {
+            "type": "integer",
+            "description": "累計いいね数"
+          },
+          "view": {
+            "type": "integer",
+            "description": "累計閲覧数"
+          },
+          "originUrl": {
+            "type": "string",
+            "minLength": 1,
+            "description": "出典URL"
+          },
+          "originService": {
+            "type": "string",
+            "minLength": 1,
+            "description": "出典サービス名"
+          },
+          "nsfw": {
+            "type": "boolean",
+            "description": "アダルトコンテンツかどうか"
+          },
+          "hash": {
+            "type": "string",
+            "description": "画像ハッシュ(pHash)"
+          },
+          "extension": {
+            "type": "string",
+            "description": "拡張子(通常、jpgもしくはpng)",
+            "enum": [
+              "jpg",
+              "jpeg",
+              "png",
+              "webp",
+              "gif"
+            ],
+            "example": "jpg"
+          },
+          "artist": {
+            "type": "object",
+            "description": "絵師情報",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "絵師名(絵師IDをそのままで、他のイラストも同時に変更する時用)"
+              },
+              "id": {
+                "type": "integer",
+                "description": "絵師のサイト内通し番号(別の絵師のIDを付けたい場合用)"
+              }
+            }
+          },
+          "user": {
+            "type": "object",
+            "description": "投稿者情報",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "description": "投稿者のユーザーID"
+              },
+              "name": {
+                "type": "string",
+                "description": "投稿したユーザーのユーザー名"
+              }
+            }
+          },
+          "status": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9,
+            "description": "公開/非公開等の表示状態 0:公開 1:置換済み 2:削除(ユーザー) 3:削除(管理者)"
+          },
+          "width": {
+            "type": "integer",
+            "description": "RAW画像の横方向のピクセル数"
+          },
+          "height": {
+            "type": "integer",
+            "description": "RAW画像の縦方向のピクセル数"
+          },
+          "tag": {
+            "type": "array",
+            "description": "指定したいタグを\"名称(文字列)\"で指定する NOTE: 内部的に同じものなのでtag/chara/group/systemは全部同じ場所に入力してOK",
+            "items": {
+              "type": "string"
+            }
+          },
+          "chara": {
+            "type": "array",
+            "description": "指定したいタグを\"名称(文字列)\"で指定する NOTE: 内部的に同じものなのでtag/chara/group/systemは全部同じ場所に入力してOK",
+            "items": {
+              "type": "string"
+            }
+          },
+          "group": {
+            "type": "array",
+            "description": "指定したいタグを\"名称(文字列)\"で指定する NOTE: 内部的に同じものなのでtag/chara/group/systemは全部同じ場所に入力してOK",
+            "items": {
+              "type": "string"
+            }
+          },
+          "system": {
+            "type": "array",
+            "description": "指定したいタグを\"名称(文字列)\"で指定する NOTE: 内部的に同じものなのでtag/chara/group/systemは全部同じ場所に入力してOK",
+            "items": {
+              "type": "string"
+            }
+          },
+          "filesize": {
+            "type": "integer",
+            "description": "ファイルサイズをbytesで入力"
+          },
+          "replace": {
+            "type": "array",
+            "description": "置き換え履歴データ",
+            "items": {
+              "$ref": "#/components/schemas/ReplaceStruct"
+            }
+          },
+          "star": {
+            "type": "object",
+            "description": "スター情報",
+            "properties": {
+              "yellow": {
+                "type": "integer",
+                "description": "イエロースター数"
+              },
+              "green": {
+                "type": "integer",
+                "description": "グリーンスター数"
+              },
+              "red": {
+                "type": "integer",
+                "description": "レッドスター数"
+              },
+              "blue": {
+                "type": "integer",
+                "description": "ブルースター数"
+              }
+            }
+          }
+        }
+      },
+      "PutArtResponse": {
+        "title": "PutArtResponse",
+        "type": "object",
+        "x-examples": {
+          "success": {
+            "status": 200,
+            "message": "Updated."
+          },
+          "failed-permission": {
+            "status": 400,
+            "message": "You don't have enough permission"
+          },
+          "failed-bad-request": {
+            "status": 400,
+            "message": "Bad request."
+          }
+        },
+        "properties": {
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "default": 200,
+            "example": 200,
+            "minimum": 100,
+            "maximum": 999
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ]
+      },
+      "DeleteArtResponse": {
+        "title": "DeleteArtResponse",
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 999,
+            "example": 200,
+            "default": 200,
+            "format": "int32"
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "x-examples": {
+          "success": {
+            "status": 200,
+            "message": "ok"
+          },
+          "failed-not-found": {
+            "status": 404,
+            "message": "The art was not found."
+          },
+          "failed-permission": {
+            "status": 400,
+            "message": "You don't have enougth permission."
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ]
+      },
+      "PostReplaceArtRequest": {
+        "title": "PostReplaceArtRequest",
+        "type": "object",
+        "description": "",
+        "properties": {
+          "illustID": {
+            "type": "integer",
+            "description": "より画質が高いイラストのID",
+            "minimum": 1
+          }
+        },
+        "required": [
+          "illustID"
+        ]
+      },
+      "PostReplaceArtResponse": {
+        "description": "",
+        "type": "object",
+        "x-examples": {
+          "success": {
+            "status": 200,
+            "message": "Replace succeed."
+          },
+          "failed-not-satisfied": {
+            "status": 400,
+            "message": "Request parameters are not satisfied."
+          },
+          "failed-not-found": {
+            "status": 404,
+            "message": "The art data was not found."
+          },
+          "failed-internal-error": {
+            "status": 500,
+            "message": "Server bombed."
+          }
+        },
+        "title": "PostReplaceArtResponse",
+        "properties": {
+          "status": {
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 999,
+            "example": 200,
+            "default": 200,
+            "format": "int32"
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ]
+      },
+      "PostReplaceArtSimulateResponse": {
+        "description": "",
+        "type": "object",
+        "x-examples": {
+          "failed-not-satisfied": {
+            "status": 400,
+            "message": "Request parameters are not satisfied."
+          },
+          "failed-not-found": {
+            "status": 404,
+            "message": "The art data was not found."
+          },
+          "failed-internal-error": {
+            "status": 500,
+            "message": "Server bombed."
+          },
+          "success": {
+            "status": 200,
+            "message": "ok",
+            "data": {
+              "to": {
+                "title": "string",
+                "caption": "string",
+                "date": "stringstringstrings",
+                "pages": 0,
+                "like": 0,
+                "view": 0,
+                "originUrl": "string",
+                "originService": "string",
+                "nsfw": true,
+                "hash": "string",
+                "extension": "jpg",
+                "artist": {
+                  "name": "string",
+                  "id": 0
+                },
+                "user": {
+                  "id": 0,
+                  "name": "string"
+                },
+                "status": 0,
+                "width": 0,
+                "height": 0,
+                "tag": [
+                  "string"
+                ],
+                "chara": [
+                  "string"
+                ],
+                "group": [
+                  "string"
+                ],
+                "system": [
+                  "string"
+                ],
+                "filesize": 0,
+                "replace": [
+                  {
+                    "illustID": 0,
+                    "title": "string",
+                    "caption": "string",
+                    "date": "string",
+                    "originService": "string",
+                    "originUrl": "string",
+                    "width": 0,
+                    "height": 0,
+                    "filesize": "string"
+                  }
+                ],
+                "star": {
+                  "yellow": 0,
+                  "green": 0,
+                  "red": 0,
+                  "blue": 0
+                }
+              },
+              "from": {
+                "title": "string",
+                "caption": "string",
+                "date": "stringstringstrings",
+                "pages": 0,
+                "like": 0,
+                "view": 0,
+                "originUrl": "string",
+                "originService": "string",
+                "nsfw": true,
+                "hash": "string",
+                "extension": "jpg",
+                "artist": {
+                  "name": "string",
+                  "id": 0
+                },
+                "user": {
+                  "id": 0,
+                  "name": "string"
+                },
+                "status": 0,
+                "width": 0,
+                "height": 0,
+                "tag": [
+                  "string"
+                ],
+                "chara": [
+                  "string"
+                ],
+                "group": [
+                  "string"
+                ],
+                "system": [
+                  "string"
+                ],
+                "filesize": 0,
+                "replace": [
+                  {
+                    "illustID": 0,
+                    "title": "string",
+                    "caption": "string",
+                    "date": "string",
+                    "originService": "string",
+                    "originUrl": "string",
+                    "width": 0,
+                    "height": 0,
+                    "filesize": "string"
+                  }
+                ],
+                "star": {
+                  "yellow": 0,
+                  "green": 0,
+                  "red": 0,
+                  "blue": 0
+                }
+              }
+            }
+          }
+        },
+        "title": "PostReplaceArtSimulateResponse",
+        "properties": {
+          "status": {
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 999,
+            "example": 200,
+            "default": 200,
+            "format": "int32"
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "to": {
+                "$ref": "#/components/schemas/ArtStruct"
+              },
+              "from": {
+                "$ref": "#/components/schemas/ArtStruct"
+              }
+            }
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ]
+      },
+      "GetArtTagsResponse": {
+        "title": "GetArtTagsResponse",
+        "type": "object",
+        "x-examples": {
+          "success": {
+            "status": 200,
+            "message": "ok",
+            "data": [
+              {
+                "id": 1,
+                "name": "香風智乃",
+                "nsfw": false
+              }
+            ]
+          },
+          "failed-not-found": {
+            "status": 404,
+            "message": "The art don't have any tag."
+          }
+        },
+        "properties": {
+          "status": {
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 999,
+            "example": 200,
+            "default": 200,
+            "format": "int32"
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TagStruct"
+            }
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ]
+      },
+      "PutArtTagsRequest": {
+        "title": "PutArtTagsRequest",
+        "type": "object",
+        "properties": {
+          "tagID": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          }
+        },
+        "x-examples": {
+          "example-1": {
+            "tagID": [
+              1,
+              2,
+              3
+            ]
+          }
+        }
+      },
+      "PutArtTagsResponse": {
+        "title": "PutArtTagsResponse",
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 999,
+            "example": 200
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "x-examples": {
+          "success": {
+            "status": 200,
+            "message": "Add succeed."
+          },
+          "failed-not-satisfied": {
+            "status": 400,
+            "message": "Request parameters are not satisfied."
+          },
+          "failed-invalid-id": {
+            "status": 400,
+            "message": "tagID is invalid, or not specified."
+          },
+          "failed-already-exists": {
+            "status": 400,
+            "message": "The tag is already registered to the art."
+          },
+          "failed-internal-error": {
+            "status": 500,
+            "message": "Server bombed."
+          }
+        }
+      },
+      "DeleteArtTagsRequest": {
+        "title": "DeleteArtTagsRequest",
+        "type": "object",
+        "x-examples": {
+          "example-1": {
+            "tagID": [
+              1,
+              2,
+              3
+            ]
+          }
+        },
+        "properties": {
+          "tagID": {
+            "type": "array",
+            "description": "イラストから削除したいタグ配列",
+            "items": {
+              "type": "integer"
+            }
+          }
+        },
+        "required": [
+          "tagID"
+        ]
+      },
+      "DeleteArtTagsResponse": {
+        "title": "DeleteArtTagsResponse",
+        "type": "object",
+        "x-examples": {
+          "success": {
+            "status": 200,
+            "message": "Remove succeed."
+          },
+          "failed-not-satisfied": {
+            "status": 400,
+            "message": "Request parameters are not satisfied."
+          },
+          "failed-invalid-tags": {
+            "status": 400,
+            "message": "tagID is invalid, or not specified."
+          },
+          "failed-not-registered": {
+            "status": 400,
+            "message": "The tag is not registered to the art."
+          },
+          "failed-internal-error": {
+            "status": 500,
+            "message": "Server bombed."
+          },
+          "failed-permission": {
+            "status": 400,
+            "message": "You don't have enough permission."
+          }
+        },
+        "properties": {
+          "status": {
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 999,
+            "example": 200,
+            "format": "int32",
+            "default": 200
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ]
+      },
+      "GetArtChractersResponse": {
+        "title": "GetArtCharactersResponse",
+        "type": "object",
+        "x-examples": {
+          "success": {
+            "status": 200,
+            "message": "ok",
+            "data": [
+              {
+                "id": 1,
+                "name": "香風智乃",
+                "nsfw": false
+              }
+            ]
+          },
+          "failed-not-found": {
+            "status": 404,
+            "message": "The art don't have any tag."
+          }
+        },
+        "properties": {
+          "status": {
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 999,
+            "example": 200,
+            "format": "int32",
+            "default": 200
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TagStruct"
+            }
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ]
+      },
+      "PutArtChractersRequest": {
+        "title": "PutArtCharactersRequest",
+        "type": "object",
+        "properties": {
+          "tagID": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          }
+        },
+        "x-examples": {
+          "example-1": {
+            "tagID": [
+              1,
+              2,
+              3
+            ]
+          }
+        }
+      },
+      "PutArtCharactersResponse": {
+        "title": "PutArtCharactersResponse",
+        "type": "object",
+        "x-examples": {
+          "success": {
+            "status": 200,
+            "message": "Add succeed."
+          },
+          "failed-not-satisfied": {
+            "status": 400,
+            "message": "Request parameters are not satisfied."
+          },
+          "failed-invalid-id": {
+            "status": 400,
+            "message": "tagID is invalid, or not specified."
+          },
+          "failed-already-exists": {
+            "status": 400,
+            "message": "The tag is already registered to the art."
+          },
+          "failed-internal-error": {
+            "status": 500,
+            "message": "Server bombed."
+          }
+        },
+        "properties": {
+          "status": {
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 999,
+            "example": 200,
+            "default": 200,
+            "format": "int32"
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ]
+      },
+      "DeleteArtCharactersRequest": {
+        "title": "DeleteArtCharactersRequest",
+        "type": "object",
+        "x-examples": {
+          "example-1": {
+            "tagID": [
+              1,
+              2,
+              3
+            ]
+          }
+        },
+        "properties": {
+          "tagID": {
+            "type": "array",
+            "description": "イラストから削除したいキャラクタータグ配列",
+            "items": {
+              "type": "integer"
+            }
+          }
+        },
+        "required": [
+          "tagID"
+        ]
+      },
+      "DeleteArtCharactersResponse": {
+        "title": "DeleteArtCharactersResponse",
+        "type": "object",
+        "x-examples": {
+          "success": {
+            "status": 200,
+            "message": "Remove succeed."
+          },
+          "failed-not-satisfied": {
+            "status": 400,
+            "message": "Request parameters are not satisfied."
+          },
+          "failed-invalid-tags": {
+            "status": 400,
+            "message": "tagID is invalid, or not specified."
+          },
+          "failed-not-registered": {
+            "status": 400,
+            "message": "The tag is not registered to the art."
+          },
+          "failed-internal-error": {
+            "status": 500,
+            "message": "Server bombed."
+          }
+        },
+        "properties": {
+          "status": {
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 999,
+            "example": 200,
+            "default": 200,
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ]
+      },
+      "PutArtLikesResponse": {
+        "title": "PutArtLikesResponse",
+        "type": "object",
+        "x-examples": {
+          "success": {
+            "status": 200,
+            "message": "Update succeed.",
+            "likes": 1
+          },
+          "failed-internal-error": {
+            "status": 500,
+            "message": "Server bombed."
+          },
+          "failed-too-many": {
+            "status": 400,
+            "message": "You can't add star anymore today."
+          }
+        },
+        "properties": {
+          "status": {
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 999,
+            "example": 200,
+            "format": "int32",
+            "default": 200
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          },
+          "likes": {
+            "type": "integer",
+            "example": 1,
+            "minimum": 1
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ]
+      },
+      "GetArtLikesResponse": {
+        "title": "GetArtLikesResponse",
+        "type": "object",
+        "x-examples": {
+          "success": {
+            "status": 200,
+            "message": "ok",
+            "likes": 1204
+          },
+          "failed-not-found": {
+            "status": 404,
+            "message": "The art was not found."
+          },
+          "failed-internal-error": {
+            "status": 500,
+            "message": "Server bombed."
+          }
+        },
+        "properties": {
+          "status": {
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 999,
+            "example": 200,
+            "default": 200,
+            "format": "int32"
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          },
+          "likes": {
+            "type": "object",
+            "properties": {
+              "yellow": {
+                "type": "integer"
+              },
+              "green": {
+                "type": "integer"
+              },
+              "red": {
+                "type": "integer"
+              },
+              "blue": {
+                "type": "integer"
+              }
+            }
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ]
+      },
+      "PutArtViewsResponse": {
+        "title": "PutArtViewsResponse",
+        "type": "object",
+        "x-examples": {
+          "success": {
+            "status": 200,
+            "message": "Update succeed.",
+            "views": 1
+          },
+          "failed-internal-error": {
+            "status": 500,
+            "message": "Server bombed."
+          },
+          "failed-already-viewed": {
+            "status": 409,
+            "message": "You can't add view anymore today."
+          }
+        },
+        "properties": {
+          "status": {
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 999,
+            "example": 200,
+            "default": 200,
+            "format": "int32"
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          },
+          "views": {
+            "type": "integer",
+            "example": 1,
+            "minimum": 1
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ]
+      },
+      "GetArtViewsResponse": {
+        "title": "GetArtViewsResponse",
+        "type": "object",
+        "x-examples": {
+          "success": {
+            "status": 200,
+            "message": "ok",
+            "views": 1204
+          },
+          "failed-not-found": {
+            "status": 404,
+            "message": "The art was not found."
+          },
+          "failed-internal-error": {
+            "status": 500,
+            "message": "Server bombed."
+          }
+        },
+        "properties": {
+          "status": {
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 999,
+            "example": 200,
+            "format": "int32",
+            "default": 200
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          },
+          "views": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ]
+      },
+      "GetArtCommentsResponse": {
+        "title": "GetArtCommentsResponse",
+        "type": "object",
+        "x-examples": {
+          "success": {
+            "status": 200,
+            "message": "ok",
+            "comments": [
+              {
+                "user": {
+                  "id": 1,
+                  "name": "Omado"
+                },
+                "comment": {
+                  "created": "2021/03/13 11:29:24",
+                  "updated": "2021/03/13 11:29:24",
+                  "body": "string",
+                  "id": 1
+                }
+              }
+            ]
+          },
+          "success-no-data": {
+            "status": 200,
+            "message": "ok",
+            "comments": []
+          }
+        },
+        "properties": {
+          "status": {
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 999,
+            "format": "int32",
+            "default": 200,
+            "example": 200
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          },
+          "comments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CommentStruct"
+            }
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ]
+      },
+      "PostArtCommentRequest": {
+        "title": "PostArtCommentRequest",
+        "type": "object",
+        "x-examples": {
+          "example": {
+            "comment": "テストコメント"
+          }
+        },
+        "properties": {
+          "comment": {
+            "type": "string",
+            "description": "コメント本文"
+          }
+        },
+        "required": [
+          "comment"
+        ]
+      },
+      "PostArtCommentResponse": {
+        "title": "PostArtCommentResponse",
+        "type": "object",
+        "x-examples": {
+          "success": {
+            "status": 200,
+            "message": "ok"
+          },
+          "failed": {
+            "status": 400,
+            "message": "You don't have enough permission."
+          }
+        },
+        "properties": {
+          "status": {
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 999,
+            "example": 200,
+            "default": 200,
+            "format": "int32"
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ]
+      },
+      "PutArtCommentRequest": {
+        "title": "PutArtCommentRequest",
+        "type": "object",
+        "description": "",
+        "x-examples": {
+          "example": {
+            "comment": "香風智乃すき"
+          }
+        },
+        "properties": {
+          "comment": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "comment"
+        ]
+      },
+      "PutArtCommentResponse": {
+        "description": "",
+        "type": "object",
+        "x-examples": {
+          "success": {
+            "status": 200,
+            "message": "Update article succeed."
+          },
+          "failed-internal-error": {
+            "status": 500,
+            "message": "Server bombed."
+          },
+          "failed-not-found": {
+            "status": 404,
+            "message": "The article was not found."
+          },
+          "failed-not-satisfied": {
+            "status": 400,
+            "message": "Request parameters are not satisfied."
+          }
+        },
+        "title": "PutWikiArticleResponse",
+        "properties": {
+          "status": {
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 999,
+            "example": 200,
+            "default": 200,
+            "format": "int32"
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ]
+      },
+      "DeleteArtCommentResponse": {
+        "title": "DeleteArtCommentResponse",
+        "type": "object",
+        "x-examples": {
+          "success": {
+            "status": 200,
+            "message": "ok"
+          },
+          "failed-permission": {
+            "status": 400,
+            "message": "You don't have enough permission."
+          },
+          "failed-not-found": {
+            "status": 404,
+            "message": "The comment was not found."
+          },
+          "failed-internal-error": {
+            "status": 500,
+            "message": "Server bombed."
+          }
+        },
+        "description": "コメント削除応答",
+        "properties": {
+          "status": {
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 999,
+            "example": 200,
+            "default": 200,
+            "format": "int32"
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ]
+      },
+      "GetArtCommentResponse": {
+        "title": "GetArtCommentResponse",
+        "type": "object",
+        "x-examples": {
+          "failed-not-found": {
+            "status": 404,
+            "message": "The comment was not found."
+          },
+          "failed-internal-error": {
+            "status": 500,
+            "message": "Server bombed."
+          },
+          "success": {
+            "status": 200,
+            "message": "ok",
+            "comment": {
+              "user": {
+                "id": 1,
+                "name": "お窓"
+              },
+              "comment": {
+                "id": 1,
+                "created": "2021-03-07 03:41:40",
+                "updated": "2021-03-07 03:41:40",
+                "body": "香風智乃"
+              }
+            }
+          }
+        },
+        "properties": {
+          "status": {
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 999,
+            "format": "int32",
+            "example": 200,
+            "default": 200
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          },
+          "comment": {
+            "$ref": "#/components/schemas/CommentStruct"
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ]
+      }
+    },
+    "parameters": {
+      "SearchQuerySort": {
+        "name": "sort",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "enum": [
+            "l",
+            "d"
+          ],
+          "example": "d",
+          "default": "d"
+        },
+        "description": "ソート方法 l:いいね数順 d:投稿日順"
+      },
+      "SearchQueryOrder": {
+        "name": "order",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "enum": [
+            "d",
+            "a"
+          ],
+          "default": "d",
+          "example": "d",
+          "minLength": 1,
+          "maxLength": 1
+        },
+        "description": "ソート方向 d:降順(大→小) a:昇順(小→大)"
+      },
+      "SearchQueryPage": {
+        "name": "page",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "description": "ページ番号 (NOTE: 1ページ辺りの応答は20件)"
+      },
+      "SearchQueryMylistAllow": {
+        "name": "with_mylisted",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "integer",
+          "format": "int32",
+          "default": 1,
+          "enum": [
+            1,
+            0
+          ],
+          "example": 1,
+          "minimum": 0,
+          "maximum": 1
+        },
+        "description": "マイリスト追加済みかを取得する0/1 (デフォルト1)"
+      },
+      "SearchQueryMylistDeny": {
+        "name": "with_mylisted",
+        "in": "query",
+        "schema": {
+          "type": "integer",
+          "enum": [
+            0,
+            1
+          ],
+          "example": 0,
+          "default": 0,
+          "minimum": 0,
+          "maximum": 1
+        },
+        "description": "マイリスト追加済みかを取得する0/1 (デフォルト0)"
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "arts"
+    }
+  ]
+}
