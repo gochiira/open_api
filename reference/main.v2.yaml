@@ -5190,15 +5190,6 @@ components:
     PutWikiArticleResponse:
       description: ''
       type: object
-      properties:
-        status:
-          type: integer
-        message:
-          type: string
-          minLength: 1
-      required:
-        - status
-        - message
       x-examples:
         success:
           status: 200
@@ -5212,6 +5203,20 @@ components:
         failed-not-satisfied:
           status: 400
           message: Request parameters are not satisfied.
+      properties:
+        status:
+          type: integer
+          example: 200
+          minimum: 100
+          maximum: 999
+          default: 200
+          format: int32
+        message:
+          type: string
+          minLength: 1
+      required:
+        - status
+        - message
     PutArtCommentResponse:
       description: ''
       type: object
@@ -5273,15 +5278,6 @@ components:
     PutNotifyClientResponse:
       description: ''
       type: object
-      properties:
-        status:
-          type: integer
-        message:
-          type: string
-          minLength: 1
-      required:
-        - status
-        - message
       x-examples:
         success:
           status: 200
@@ -5296,6 +5292,20 @@ components:
           status: 400
           message: Request parameters are not satisfied.
       title: PutNotifyClientResponse
+      properties:
+        status:
+          type: integer
+          minimum: 100
+          maximum: 999
+          example: 200
+          default: 200
+          format: int32
+        message:
+          type: string
+          minLength: 1
+      required:
+        - status
+        - message
     PostArtRequest:
       description: ''
       type: object
@@ -7280,6 +7290,7 @@ components:
           title: 香風智乃がかわいい
           body: そーんなのー常識ー
           color: 1
+          date: '2020/03/15 09:11:00'
       properties:
         title:
           type: string
@@ -7322,6 +7333,11 @@ components:
       properties:
         status:
           type: integer
+          maximum: 999
+          minimum: 100
+          example: 200
+          default: 200
+          format: int32
         message:
           type: string
           minLength: 1
@@ -7683,15 +7699,6 @@ components:
     PutNotifyConditionResponse:
       title: PutNotifyConditionResponse
       type: object
-      properties:
-        status:
-          type: integer
-        message:
-          type: string
-          minLength: 1
-      required:
-        - status
-        - message
       x-examples:
         success:
           status: 200
@@ -7708,6 +7715,20 @@ components:
         failed-permission:
           status: 400
           message: You don't have enough permission.
+      properties:
+        status:
+          type: integer
+          example: 200
+          default: 200
+          format: int32
+          minimum: 100
+          maximum: 999
+        message:
+          type: string
+          minLength: 1
+      required:
+        - status
+        - message
     DeleteNotifyConditionResponse:
       title: DeleteNotifyConditionResponse
       type: object
@@ -8602,15 +8623,6 @@ components:
     PutTagResponse:
       title: PutTagResponse
       type: object
-      properties:
-        status:
-          type: integer
-          minimum: 100
-          maximum: 999
-          example: 200
-          default: 200
-        message:
-          type: string
       x-examples:
         success:
           status: 200
@@ -8621,6 +8633,20 @@ components:
         failed-bad-request:
           status: 400
           message: Bad request.
+      properties:
+        status:
+          type: integer
+          minimum: 100
+          maximum: 999
+          example: 200
+          default: 200
+          format: int32
+        message:
+          type: string
+          minLength: 1
+      required:
+        - status
+        - message
     FindTagsResponse:
       title: FindTagsResponse
       type: object
@@ -8869,9 +8895,6 @@ components:
           description: 記事本文
           maxLength: 3000
           minLength: 1
-      required:
-        - title
-        - body
     DeleteWikiArticleResponse:
       description: ''
       type: object
