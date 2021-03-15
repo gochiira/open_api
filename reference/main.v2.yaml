@@ -1165,7 +1165,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ReplaceArtResponse'
+                $ref: '#/components/schemas/PostReplaceArtResponse'
       tags:
         - arts
       description: |-
@@ -1177,7 +1177,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ReplaceArtRequest'
+              $ref: '#/components/schemas/PostReplaceArtRequest'
   '/arts/{illustID}/replace_simulate':
     parameters:
       - schema:
@@ -1207,7 +1207,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ReplaceArtRequest'
+              $ref: '#/components/schemas/PostReplaceArtRequest'
   '/arts/{illustID}/tags':
     get:
       summary: Get art tags
@@ -4457,8 +4457,8 @@ components:
         - homepage
         - count
         - lcount
-    ReplaceArtRequest:
-      title: ReplaceArtRequest
+    PostReplaceArtRequest:
+      title: PostReplaceArtRequest
       type: object
       description: ''
       properties:
@@ -4468,7 +4468,7 @@ components:
           minimum: 1
       required:
         - illustID
-    ReplaceArtResponse:
+    PostReplaceArtResponse:
       description: ''
       type: object
       x-examples:
@@ -4484,7 +4484,7 @@ components:
         failed-internal-error:
           status: 500
           message: Server bombed.
-      title: ReplaceArtResponse
+      title: PostReplaceArtResponse
       properties:
         status:
           type: integer
