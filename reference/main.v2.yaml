@@ -4400,23 +4400,23 @@ components:
           description: サークル名
         pixivID:
           type: array
-          example: '40436'
           description: PixivのユーザーID(数字)
           items:
             type: integer
+            example: 40436
         twitterID:
           type: array
-          example: harufcs
           description: Twitterの表示ID(英数字+)
           items:
             type: string
+            example: harufcs
         mastodon:
           type: array
-          example: 'https://pawoo.net/@saiden'
           format: uri-reference
           description: マストドンアカウントのURL
           items:
             type: string
+            example: 'https://pawoo.net/@saiden'
         homepage:
           description: HPのURL
           type: array
