@@ -1050,14 +1050,14 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/LoginWithFormResponse'
+                $ref: '#/components/schemas/PostLoginWithFormResponse'
       operationId: loginWithForm
       description: IDとパスワードを用いてユーザー認証し、APIトークンを発行します
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/LoginWithFormRequest'
+              $ref: '#/components/schemas/PostLoginWithFormRequest'
             examples:
               user:
                 value:
@@ -1775,8 +1775,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PostMylistResponse'
-      description: |-
-        マイリストを作成します
+      description: マイリストを作成します
       tags:
         - mylist
       requestBody:
@@ -2440,7 +2439,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/FindTagsResponse'
+                $ref: '#/components/schemas/GetFindTagsResponse'
       operationId: findTags
       parameters:
         - schema:
@@ -3251,8 +3250,8 @@ components:
             blue:
               type: integer
               description: ブルースター数
-    LoginWithFormRequest:
-      title: LoginWithFormRequest
+    PostLoginWithFormRequest:
+      title: PostLoginWithFormRequest
       type: object
       properties:
         id:
@@ -4227,8 +4226,8 @@ components:
       required:
         - status
         - message
-    LoginWithFormResponse:
-      title: LoginWithFormResponse
+    PostLoginWithFormResponse:
+      title: PostLoginWithFormResponse
       type: object
       properties:
         status:
@@ -8723,8 +8722,8 @@ components:
       required:
         - status
         - message
-    FindTagsResponse:
-      title: FindTagsResponse
+    GetFindTagsResponse:
+      title: GetFindTagsResponse
       type: object
       x-examples:
         success:
