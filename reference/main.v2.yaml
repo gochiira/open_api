@@ -2902,7 +2902,7 @@ components:
         - artist
         - extension
     NewsStruct:
-      title: News
+      title: NewsStruct
       type: object
       description: サイト内の新着情報モデル。
       x-examples: {}
@@ -3360,7 +3360,7 @@ components:
           items:
             type: string
     TagStruct:
-      title: Tag
+      title: TagStruct
       type: object
       x-examples:
         example-1:
@@ -3422,7 +3422,7 @@ components:
           width: 750
           height: 1200
           filesize: 2M
-      title: Replace
+      title: ReplaceStruct
       properties:
         illustID:
           type: integer
@@ -5224,6 +5224,7 @@ components:
       required:
         - status
         - message
+      title: PutWikiArticleResponse
     PutArtCommentResponse:
       description: ''
       type: object
@@ -5403,7 +5404,7 @@ components:
           system:
             - 2021年03月
           nsfw: false
-      title: ''
+      title: PostArtRequest
     PostArtResponse:
       description: ''
       type: object
@@ -5420,7 +5421,7 @@ components:
         failed-invalid-url:
           status: 400
           message: Invalid image url
-      title: ''
+      title: PostArtResponse
       properties:
         status:
           type: integer
@@ -5512,7 +5513,7 @@ components:
             current: 1
             pages: 1
             contents: []
-      title: ''
+      title: GetCatalogArtistResponse
       properties:
         status:
           type: integer
@@ -5753,6 +5754,7 @@ components:
         - status
         - message
         - data
+      title: GetCatalogTagResponse
     GetCatalogUploaderResponse:
       description: ''
       type: object
@@ -5818,6 +5820,7 @@ components:
         - status
         - message
         - data
+      title: GetCatalogUploaderResponse
     GetCatalogCharacterResponse:
       description: ''
       type: object
@@ -5885,6 +5888,7 @@ components:
         - status
         - message
         - data
+      title: GetCatalogCharacterResponse
     UploaderStruct:
       title: UploaderStruct
       type: object
@@ -6101,7 +6105,7 @@ components:
     GetSearchGeneralResponse:
       description: ''
       type: object
-      title: ''
+      title: GetSearchGeneralResponse
       x-examples:
         success:
           status: 200
@@ -6279,7 +6283,7 @@ components:
         - message
         - data
     PostSearchByImageRequest:
-      title: SearchByImageRequest
+      title: PostSearchByImageRequest
       type: object
       properties:
         file:
@@ -6289,7 +6293,7 @@ components:
       required:
         - file
     PostSearchByImageResponse:
-      title: SearchByImageResponse
+      title: PostSearchByImageResponse
       type: object
       x-examples:
         success:
@@ -6569,6 +6573,7 @@ components:
       required:
         - status
         - message
+      title: PostSearchByImageAtSauceNaoResponse
     PostCharacterResponse:
       title: PostCharacterResponse
       type: object
@@ -8613,6 +8618,7 @@ components:
       required:
         - status
         - message
+      title: PostSearchByImageAtAscii2dResponse
     PostGarbageCollectResponse:
       title: PostGarbageCollectResponse
       type: object
@@ -9042,7 +9048,7 @@ components:
           summary: この方はただの例です
           icon:
             - 'https://kenzoishii.example.com/image/165987aklre4'
-      title: ''
+      title: ActivityPubActorStruct
       properties:
         '@context':
           type: array
