@@ -1862,7 +1862,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RegisterWebPushResponse'
+                $ref: '#/components/schemas/PostRegisterWebPushResponse'
       description: |-
         クライアント側で作成したパブリック/プライベートVAPIDキーを
         userID、クライアント名、通知レベルと共にサーバーのデータベースに登録し
@@ -1873,7 +1873,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/RegisterWebPushRequest'
+              $ref: '#/components/schemas/PostRegisterWebPushRequest'
         description: ''
     parameters: []
   /notify/conditions:
@@ -1919,7 +1919,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RegisterLineNotifyResponse'
+                $ref: '#/components/schemas/PostRegisterLineNotifyResponse'
       description: '"ユーザー発行の"LINENotifyのトークンとデバイス名をPOSTして、通知クライアントの一種として保存する。(何個でも設定できる)'
       tags:
         - notify
@@ -1927,7 +1927,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/RegisterLineNotifyRequest'
+              $ref: '#/components/schemas/PostRegisterLineNotifyRequest'
     parameters: []
   '/notify/clients/{clientID}':
     parameters:
@@ -7497,8 +7497,8 @@ components:
         - type
         - level
       description: ''
-    RegisterWebPushRequest:
-      title: RegisterWebPushRequest
+    PostRegisterWebPushRequest:
+      title: PostRegisterWebPushRequest
       type: object
       properties:
         endpoint:
@@ -7521,8 +7521,8 @@ components:
         - auth
         - name
         - level
-    RegisterWebPushResponse:
-      title: RegisterWebPushResponse
+    PostRegisterWebPushResponse:
+      title: PostRegisterWebPushResponse
       type: object
       x-examples:
         success:
@@ -7609,8 +7609,8 @@ components:
       required:
         - status
         - message
-    RegisterLineNotifyRequest:
-      title: RegisterLineNotifyRequest
+    PostRegisterLineNotifyRequest:
+      title: PostRegisterLineNotifyRequest
       type: object
       properties:
         token:
@@ -7634,8 +7634,8 @@ components:
         - token
         - name
         - level
-    RegisterLineNotifyResponse:
-      title: RegisterLineNotifyResponse
+    PostRegisterLineNotifyResponse:
+      title: PostRegisterLineNotifyResponse
       type: object
       x-examples:
         success:
