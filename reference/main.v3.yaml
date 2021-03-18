@@ -36,6 +36,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/AccountStruct'
+        '401':
+          description: Unauthorized
         '404':
           description: Not Found
         '500':
@@ -108,12 +110,8 @@ paths:
               $ref: '#/components/schemas/DeleteAccountRequest'
         description: 危険な操作のため、パスワードが必要になります
       responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DeleteAccountResponse'
+        '204':
+          description: No Content
   '/accounts/{accountID}/upload_history':
     parameters:
       - schema:
@@ -3743,18 +3741,6 @@ components:
           status: 404
           message: The account data was not found.
       properties:
-        status:
-          type: integer
-          description: HTTPステータスコードが入ります
-          format: int32
-          minimum: 100
-          maximum: 999
-          example: 200
-          default: 200
-        message:
-          type: string
-          description: ok もしくは エラー内容
-          minLength: 1
         data:
           type: object
           properties:
@@ -3795,9 +3781,6 @@ components:
             - count
             - current
             - pages
-      required:
-        - status
-        - message
     GetAccountResponse:
       title: GetAccountResponse
       type: object
