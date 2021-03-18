@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  title: Gochiira Backend v2 API
+  title: Gochiira Backend v3 API
   version: '1.0'
   contact:
     name: Omado
@@ -35,7 +35,11 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetAccountResponse'
+                $ref: '#/components/schemas/AccountStruct'
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
       operationId: getAccount
       description: ユーザーのアカウント情報を取得します
       tags:
@@ -49,8 +53,20 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PutAccountResponse'
+                $ref: '#/components/schemas/AccountStruct'
               examples: {}
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal Server Error
       tags:
         - accounts
       description: |-
@@ -9264,6 +9280,16 @@ components:
             type: Note
             name: A Note
       title: PostActivityPubGeneralRequest
+    GeneralMessageResponse:
+      title: GeneralMessageResponse
+      type: object
+      properties:
+        message:
+          type: string
+          description: 応答メッセージ(何が間違っているかの詳細)
+          minLength: 1
+      required:
+        - message
   securitySchemes:
     Authorization:
       type: http
