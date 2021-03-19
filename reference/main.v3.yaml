@@ -2987,7 +2987,8 @@ paths:
         required: true
     get:
       summary: Get invite
-      tags: []
+      tags:
+        - invites
       responses:
         '200':
           description: OK
@@ -3022,6 +3023,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/GeneralMessageResponse'
       description: 指定した招待コードを無効化します
+      tags:
+        - invites
 components:
   schemas:
     SearchResultStruct:
@@ -5665,59 +5668,6 @@ components:
       required:
         - status
         - message
-    PostInviteResponse:
-      title: PostInviteResponse
-      type: object
-      description: ''
-      x-examples:
-        success:
-          status: 200
-          message: ok
-          data:
-            id: 1
-            code: KAFUUCHINO
-        failed-exists:
-          status: 400
-          message: Multiple invitation is not allowed for now.
-        failed-conflict:
-          status: 409
-          message: 'Sorry, your request conflicted. Try again later.'
-        failed-bad-request:
-          status: 400
-          message: Bad request.
-      properties:
-        id:
-          type: integer
-          description: サイト内通し招待番号
-        code:
-          type: string
-          description: 招待コード
-    DeleteInviteRequest:
-      title: DeleteInviteRequest
-      type: object
-      description: ''
-      properties:
-        code:
-          type: string
-          description: 管理者の場合は招待コードを指定することで一括で無効化できます
-      x-examples:
-        example:
-          code: KAFUUCHINO
-    PostInviteRequest:
-      title: PostInviteRequest
-      type: object
-      description: (管理者のみ利用可能)
-      x-examples:
-        example:
-          code: KAFUUCHINO
-          count: 10
-      properties:
-        count:
-          type: integer
-          description: 作成するコード数
-        code:
-          type: string
-          description: 発行したい招待コード
     GetMutesResponse:
       title: GetMutesResponse
       type: object
@@ -8060,6 +8010,8 @@ components:
               type: integer
             name:
               type: string
+        count:
+          type: integer
       required:
         - code
   securitySchemes:
