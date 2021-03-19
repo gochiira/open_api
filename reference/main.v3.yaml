@@ -2295,13 +2295,6 @@ paths:
       summary: Report art
       tags:
         - report
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PostReportGeneralResponse'
       operationId: reportArt
       description: |-
         指定したイラストを運営に通報します
@@ -2311,6 +2304,11 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/PostReportGeneralRequest'
+      responses:
+        '201':
+          description: Created
+        '400':
+          description: Bad Request
   '/report/tags/{tagID}':
     parameters:
       - schema:
@@ -2347,13 +2345,6 @@ paths:
       summary: Report user
       tags:
         - report
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PostReportGeneralResponse'
       operationId: reportUser
       description: |-
         指定したユーザーを運営に通報します
@@ -2363,6 +2354,11 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/PostReportGeneralRequest'
+      responses:
+        '201':
+          description: Created
+        '400':
+          description: Bad Request
   '/report/wiki/{articleID}':
     parameters:
       - schema:
@@ -2375,12 +2371,10 @@ paths:
       tags:
         - report
       responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PostReportGeneralResponse'
+        '201':
+          description: Created
+        '400':
+          description: Bad Request
       operationId: reportArticle
       description: |-
         指定した記事を運営に通報します
@@ -5414,36 +5408,6 @@ components:
         condition_id:
           type: integer
           description: NotifyConditionID
-    PostReportGeneralResponse:
-      title: ReportGeneralResponse
-      type: object
-      x-examples:
-        success:
-          status: 200
-          message: Report succeed.
-        failed-already-reported:
-          status: 400
-          message: You already reported.
-        failed-not-found:
-          status: 404
-          message: The target was not found.
-        failed-permission:
-          status: 400
-          message: You don't have enough permission.
-      properties:
-        status:
-          type: integer
-          minimum: 100
-          maximum: 999
-          format: int32
-          example: 200
-          default: 200
-        message:
-          type: string
-          minLength: 1
-      required:
-        - status
-        - message
     PostReportGeneralRequest:
       title: ReportGeneralRequest
       type: object
@@ -5681,22 +5645,6 @@ components:
     PostScrapeResponse:
       title: PostScrapeResponse
       type: object
-      properties:
-        status:
-          type: integer
-          minimum: 100
-          maximum: 999
-          example: 200
-          format: int32
-          default: 200
-        message:
-          type: string
-          minLength: 1
-        data:
-          $ref: '#/components/schemas/ScrapeResultStruct'
-      required:
-        - status
-        - message
       x-examples:
         success-twitter:
           status: 200
@@ -5988,6 +5936,9 @@ components:
         failed-unsupported:
           status: 412
           message: Specified address is not supported.
+      properties:
+        result:
+          $ref: '#/components/schemas/ScrapeResultStruct'
     PostUploadRequest:
       title: PostUploadRequest
       type: object
@@ -6011,22 +5962,9 @@ components:
           status: 400
           message: Bad request.
       properties:
-        status:
-          type: integer
-          minimum: 100
-          maximum: 999
-          example: 200
-          format: int32
-          default: 200
-        message:
-          type: string
-          minLength: 1
         url:
           description: 投稿したファイルのURL(有効期限は1時間とする)
           type: string
-      required:
-        - status
-        - message
     PostSearchByImageAtAscii2dResponse:
       description: ''
       type: object
