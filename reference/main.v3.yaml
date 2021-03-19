@@ -2661,7 +2661,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PostTagResponse'
+                $ref: '#/components/schemas/TagStruct'
         '400':
           description: Bad Request
         '403':
@@ -2676,7 +2676,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/TagsStruct'
+              $ref: '#/components/schemas/TagStruct'
   '/tags/{tagID}':
     parameters:
       - schema:
@@ -2694,7 +2694,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetTagResponse'
+                $ref: '#/components/schemas/TagStruct'
+        '404':
+          description: Not Found
       operationId: getTag
       description: タグ情報を取得します
     put:
@@ -2706,7 +2708,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PutTagResponse'
+                $ref: '#/components/schemas/TagStruct'
+        '400':
+          description: Bad Request
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
       tags:
         - tags
       description: |-
@@ -2716,22 +2724,24 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/TagsStruct'
+              $ref: '#/components/schemas/TagStruct'
     delete:
       summary: Delete tag
       operationId: deleteTag
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DeleteTagResponse'
       tags:
         - tags
       description: |-
         タグを削除します
         (既にイラストに属しているタグの場合削除できません)
+      responses:
+        '204':
+          description: No Content
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+        '409':
+          description: Conflict
   /tags/finds:
     get:
       summary: Find tags by keyword
@@ -2752,17 +2762,10 @@ paths:
           name: keyword
           description: 検索したいワードを指定します
       description: キーワードからタグを検索します
-  /timeline/follow:
+  '/accounts/{accountID}/timeline/follow':
     post:
       summary: Follow artist
       operationId: followArtist
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PostTimelineFollowResponse'
       description: 絵師をフォローします
       tags:
         - timeline
@@ -2770,19 +2773,24 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PostTimelineGeneralRequest'
-    parameters: []
-  /timeline/unfollow:
+              $ref: '#/components/schemas/TimelineFollowStruct'
+      responses:
+        '204':
+          description: No Content
+        '404':
+          description: Not Found
+        '409':
+          description: Conflict
+    parameters:
+      - schema:
+          type: string
+        name: accountID
+        in: path
+        required: true
+  '/accounts/{accountID}/timeline/unfollow':
     post:
       summary: Unfollow artist
       operationId: unfollowArtist
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PostTimelineUnfollowResponse'
       description: 絵師のフォローを解除します
       tags:
         - timeline
@@ -2790,8 +2798,20 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PostTimelineGeneralRequest'
-    parameters: []
+              $ref: '#/components/schemas/TimelineFollowStruct'
+      responses:
+        '204':
+          description: No Content
+        '404':
+          description: Not Found
+        '409':
+          description: Conflict
+    parameters:
+      - schema:
+          type: string
+        name: accountID
+        in: path
+        required: true
   /search/timeline:
     get:
       summary: Get timeline
@@ -2820,9 +2840,9 @@ paths:
         - $ref: '#/components/parameters/SearchQueryPerPage'
       description: タイムラインを取得します
     parameters: []
-  /timeline:
+  '/accounts/{accountID}/timeline':
     get:
-      summary: Get followings
+      summary: Get timeline followings
       tags:
         - timeline
       responses:
@@ -2834,7 +2854,12 @@ paths:
                 $ref: '#/components/schemas/GetTimelineFollowingResponse'
       operationId: getFollowing
       description: フォロー中の絵師ID一覧を取得します
-    parameters: []
+    parameters:
+      - schema:
+          type: string
+        name: accountID
+        in: path
+        required: true
   /wiki:
     post:
       summary: Add wiki article
@@ -3883,7 +3908,6 @@ components:
           type: integer
           description: タグに属するいいね数
       required:
-        - id
         - name
         - nsfw
         - description
@@ -5251,33 +5275,16 @@ components:
           data:
             hash: string
             illusts: []
-      properties:
-        status:
-          type: integer
-          minimum: 100
-          maximum: 999
-          example: 200
-          format: int32
-          default: 200
-        message:
-          type: string
-          minLength: 1
-        data:
-          type: object
-          required:
-            - hash
-            - illusts
-          properties:
-            hash:
-              type: string
-            illusts:
-              type: array
-              items:
-                $ref: '#/components/schemas/SearchResultStruct'
       required:
-        - status
-        - message
-        - data
+        - hash
+        - illusts
+      properties:
+        hash:
+          type: string
+        illusts:
+          type: array
+          items:
+            $ref: '#/components/schemas/SearchResultStruct'
     PostSearchByImageAtSauceNaoResponse:
       description: ''
       type: object
@@ -5426,144 +5433,64 @@ components:
                   pixiv_id: 54003307
                   member_name: くろい
                   member_id: 3807881
+      title: PostSearchByImageAtSauceNaoResponse
       properties:
-        status:
-          type: integer
-          example: 200
-          default: 200
-          maximum: 999
-          minimum: 200
-          format: int32
-        message:
-          type: string
-          minLength: 1
-        data:
-          type: object
-          properties:
-            result:
-              type: array
-              uniqueItems: true
-              minItems: 1
-              items:
+        result:
+          type: array
+          uniqueItems: true
+          minItems: 1
+          items:
+            type: object
+            properties:
+              header:
                 type: object
                 properties:
-                  header:
-                    type: object
-                    properties:
-                      similarity:
-                        type: string
-                        minLength: 1
-                        description: 類似度(100.00~0.00までのfloatを文字列にしたもの)
-                      thumbnail:
-                        type: string
-                        minLength: 1
-                        description: サムネイル画像(直アクセス可能)
-                      index_id:
-                        type: integer
-                        description: 参照したデータベースID
-                      index_name:
-                        type: string
-                        minLength: 1
-                        description: 参照したデータベース名
-                      dupes:
-                        type: integer
-                    required:
-                      - similarity
-                      - thumbnail
-                      - index_id
-                      - index_name
-                      - dupes
-                  data:
-                    type: object
-                    description: 参照したDBによる異なる追加データ
-                    properties:
-                      ext_urls:
-                        type: array
-                        description: 出典URL(出せる場合)
-                        items:
-                          type: object
-                      yandere_id:
-                        type: integer
-                      creator:
-                        type: string
-                        minLength: 1
-                      material:
-                        type: string
-                      characters:
-                        type: string
-                      source:
-                        type: string
-                        minLength: 1
+                  similarity:
+                    type: string
+                    minLength: 1
+                    description: 類似度(100.00~0.00までのfloatを文字列にしたもの)
+                  thumbnail:
+                    type: string
+                    minLength: 1
+                    description: サムネイル画像(直アクセス可能)
+                  index_id:
+                    type: integer
+                    description: 参照したデータベースID
+                  index_name:
+                    type: string
+                    minLength: 1
+                    description: 参照したデータベース名
+                  dupes:
+                    type: integer
                 required:
-                  - data
-      required:
-        - status
-        - message
-      title: PostSearchByImageAtSauceNaoResponse
-    PostTagResponse:
-      title: PostTagResponse
-      type: object
-      x-examples:
-        success:
-          status: 200
-          message: ok
-          tagID: 1
-        failed-not-satisfied:
-          status: 400
-          message: The parameters were not satisfied.
-        failed-bad-request:
-          status: 400
-          message: Bad request.
-        failed-conflict:
-          status: 409
-          message: The specified tag already exists.
-      properties:
-        status:
-          type: integer
-          minimum: 100
-          maximum: 999
-          example: 200
-          default: 200
-          format: int32
-        message:
-          type: string
-          minLength: 1
-        tagID:
-          type: integer
-      required:
-        - status
-        - message
-    DeleteTagResponse:
-      description: ''
-      type: object
-      x-examples:
-        success:
-          status: 200
-          message: Deleted.
-        failed-not-found:
-          status: 404
-          message: The tag was not found.
-        failed-locked:
-          status: 409
-          message: The tag is referenced by art.
-        failed-permission:
-          status: 400
-          message: You don't have enough permisison.
-      title: DeleteTagResponse
-      properties:
-        status:
-          type: integer
-          example: 200
-          default: 200
-          format: int32
-          minimum: 100
-          maximum: 999
-        message:
-          type: string
-          minLength: 1
-      required:
-        - status
-        - message
+                  - similarity
+                  - thumbnail
+                  - index_id
+                  - index_name
+                  - dupes
+              data:
+                type: object
+                description: 参照したDBによる異なる追加データ
+                properties:
+                  ext_urls:
+                    type: array
+                    description: 出典URL(出せる場合)
+                    items:
+                      type: object
+                  yandere_id:
+                    type: integer
+                  creator:
+                    type: string
+                    minLength: 1
+                  material:
+                    type: string
+                  characters:
+                    type: string
+                  source:
+                    type: string
+                    minLength: 1
+            required:
+              - data
     GetMutesResponse:
       title: GetMutesResponse
       type: object
@@ -6616,155 +6543,54 @@ components:
           data:
             url: 'https://example.com'
             result: []
+      title: PostSearchByImageAtAscii2dResponse
       properties:
-        status:
-          type: integer
-          example: 200
-          format: int32
-          minimum: 100
-          maximum: 999
-          default: 200
-        message:
+        url:
           type: string
           minLength: 1
-        data:
-          type: object
-          properties:
-            url:
-              type: string
-              minLength: 1
-            result:
-              type: array
-              uniqueItems: true
-              minItems: 1
-              items:
+        result:
+          type: array
+          uniqueItems: true
+          minItems: 1
+          items:
+            type: object
+            properties:
+              hash:
+                type: string
+                minLength: 1
+              size:
+                type: string
+                minLength: 1
+              thumbnail:
+                type: string
+                minLength: 1
+              title:
+                type: string
+                minLength: 1
+              artist:
+                type: string
+                minLength: 1
+              urls:
                 type: object
                 properties:
-                  hash:
-                    type: string
-                    minLength: 1
-                  size:
-                    type: string
-                    minLength: 1
-                  thumbnail:
-                    type: string
-                    minLength: 1
-                  title:
+                  source:
                     type: string
                     minLength: 1
                   artist:
                     type: string
                     minLength: 1
-                  urls:
-                    type: object
-                    properties:
-                      source:
-                        type: string
-                        minLength: 1
-                      artist:
-                        type: string
-                        minLength: 1
-                    required:
-                      - source
-                      - artist
                 required:
-                  - hash
-                  - size
-                  - thumbnail
-                  - title
+                  - source
                   - artist
-          required:
-            - url
-            - result
+            required:
+              - hash
+              - size
+              - thumbnail
+              - title
+              - artist
       required:
-        - status
-        - message
-      title: PostSearchByImageAtAscii2dResponse
-    GetTagResponse:
-      title: GetTagResponse
-      type: object
-      description: ''
-      x-examples:
-        success:
-          status: 200
-          message: ok
-          data:
-            id: 1
-            user: 1
-            type: 0
-            name: 香風智乃
-            description: かわいい女の子
-            nsfw: false
-        failed-not-found:
-          status: 404
-          message: Specifed tag was not found.
-      properties:
-        status:
-          type: integer
-          minimum: 100
-          maximum: 999
-          example: 200
-          default: 200
-          format: int32
-        message:
-          type: string
-          minLength: 1
-        data:
-          $ref: '#/components/schemas/TagStruct'
-      required:
-        - status
-        - message
-    TagsStruct:
-      title: TagsStruct
-      type: object
-      x-examples:
-        example:
-          tagName: 香風智乃
-          tagDescription: かわいい女の子
-          tagType: 1
-          nsfw: false
-      properties:
-        name:
-          type: string
-        description:
-          type: string
-        type:
-          type: integer
-          description: 0~9
-        nsfw:
-          type: boolean
-      required:
-        - name
-        - description
-        - type
-        - nsfw
-    PutTagResponse:
-      title: PutTagResponse
-      type: object
-      x-examples:
-        success:
-          status: 200
-          message: Updated
-        failed-already-exists:
-          status: 200
-          message: The specifed name already exists.
-        failed-bad-request:
-          status: 400
-          message: Bad request.
-      properties:
-        status:
-          type: integer
-          minimum: 100
-          maximum: 999
-          example: 200
-          default: 200
-          format: int32
-        message:
-          type: string
-          minLength: 1
-      required:
-        - status
-        - message
+        - url
+        - result
     GetFindTagsResponse:
       title: GetFindTagsResponse
       type: object
@@ -6780,108 +6606,30 @@ components:
           message: ok
           data: []
       properties:
-        status:
-          type: integer
-          minimum: 100
-          maximum: 999
-          default: 200
-          example: 200
-          format: int32
-        message:
-          type: string
-          minLength: 1
-        data:
+        tags:
           type: array
           items:
-            type: object
-            properties:
-              id:
-                type: integer
-                description: タグID
-              name:
-                type: string
-                description: タグ名称
-      required:
-        - status
-        - message
-    PostTimelineGeneralRequest:
-      title: PostTimelineGeneralRequest
+            $ref: '#/components/schemas/TagStruct'
+    TimelineFollowStruct:
+      title: TimelineFollowStruct
       type: object
       properties:
-        artistID:
+        id:
           type: integer
           description: 絵師ID
+        name:
+          type: string
+          description: 絵師名
       required:
-        - artistID
+        - id
     GetTimelineFollowingResponse:
       title: GetTimelineFollowingResponse
       type: object
       properties:
-        data:
+        follows:
           type: array
           items:
-            type: object
-            properties:
-              id:
-                type: integer
-                description: 絵師ID
-              name:
-                type: string
-                description: 絵師名
-    PostTimelineFollowResponse:
-      title: PostTimelineFollowResponse
-      type: object
-      x-examples:
-        success:
-          status: 200
-          message: Followed.
-        failed-bad-request:
-          status: 400
-          message: Bad request.
-        failed-conflict:
-          status: 409
-          message: You already followed the artist.
-      properties:
-        status:
-          type: integer
-          minimum: 100
-          maximum: 999
-          example: 200
-          default: 200
-          format: int32
-        message:
-          type: string
-          minLength: 1
-      required:
-        - status
-        - message
-    PostTimelineUnfollowResponse:
-      title: PostTimelineUnfollowResponse
-      type: object
-      x-examples:
-        success:
-          status: 200
-          message: Unfollowed.
-        failed-bad-request:
-          status: 400
-          message: Bad request.
-        failed-conflict:
-          status: 409
-          message: You already unfollowed the artist.
-      properties:
-        status:
-          type: integer
-          minimum: 100
-          maximum: 999
-          example: 200
-          default: 200
-          format: int32
-        message:
-          type: string
-          minLength: 1
-      required:
-        - status
-        - message
+            $ref: '#/components/schemas/TimelineFollowStruct'
     WikiArticleStruct:
       title: WikiArticleStruct
       type: object
