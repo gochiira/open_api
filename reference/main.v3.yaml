@@ -1027,7 +1027,7 @@ paths:
             type: integer
           in: query
           name: id
-          description: 絵師ID
+          description: マイリストID
           required: true
         - $ref: '#/components/parameters/SearchQueryMylistAllow'
   /search/keyword:
@@ -2026,56 +2026,6 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/InviteStruct'
-  /mutes:
-    post:
-      summary: Add mute
-      operationId: addMute
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PostMuteResponse'
-      tags:
-        - mutes
-      description: ミュート情報を追加します
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PostMuteRequest'
-    get:
-      summary: Get mutes
-      operationId: getMutes
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GetMutesResponse'
-      tags:
-        - mutes
-      description: ミュート中の絵師/タグ情報一覧を取得します
-    delete:
-      summary: Remove mute
-      operationId: deleteMute
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DeleteMuteResponse'
-      tags:
-        - mutes
-      description: ミュート情報を削除します
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/DeleteMuteRequest'
   '/mylists/{mylistID}/finds':
     parameters:
       - schema:
@@ -2936,7 +2886,7 @@ paths:
           in: query
           name: id
           description: 対象の記事ID
-  '/activitypub/uploader/{userID}/outbox':
+  '/activitypub/uploader/{accountID}/outbox':
     get:
       summary: Provide federation user message
       tags:
@@ -2952,8 +2902,8 @@ paths:
       description: 他のサーバーがこのユーザーのメッセージを受け取るときにGETされる
     parameters:
       - schema:
-          type: integer
-        name: userID
+          type: string
+        name: accountID
         in: path
         required: true
   '/activitypub/artist/{artistID}/outbox':
@@ -3054,11 +3004,11 @@ paths:
       description: |-
         ActivityPubのユーザー情報(絵師)を返す
         (実際使うときは https://example.com/artist/{displayID} からリダイレクト?)
-  '/activitypub/uploader/{userID}':
+  '/activitypub/uploader/{accountID}':
     parameters:
       - schema:
           type: string
-        name: userID
+        name: accountID
         in: path
         required: true
     get:
@@ -3288,6 +3238,20 @@ paths:
       description: 指定したミュート情報を削除します
       tags:
         - accounts
+  /mylists:
+    get:
+      summary: Get mylist list
+      tags:
+        - mylist
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetMylistListResponse'
+      operationId: get-mylists
+      description: 全ユーザーの作成したマイリスト一覧を取得します
 components:
   schemas:
     SearchResultStruct:
@@ -5337,16 +5301,6 @@ components:
                 updatedDate: '2021/03/14 02:16:03'
                 private: false
       properties:
-        status:
-          type: integer
-          minimum: 100
-          maximum: 999
-          example: 200
-          default: 200
-          format: int32
-        message:
-          type: string
-          minLength: 1
         data:
           type: object
           required:
@@ -5387,8 +5341,6 @@ components:
               items:
                 $ref: '#/components/schemas/MylistStruct'
       required:
-        - status
-        - message
         - data
     PostSearchByImageRequest:
       title: PostSearchByImageRequest
@@ -5802,16 +5754,6 @@ components:
             tag: []
             artist: []
       properties:
-        status:
-          type: integer
-          minimum: 100
-          maximum: 999
-          format: int32
-          example: 200
-          default: 200
-        message:
-          type: string
-          minLength: 1
         data:
           type: object
           required:
@@ -5829,8 +5771,6 @@ components:
               items:
                 type: integer
       required:
-        - status
-        - message
         - data
     PostMuteRequest:
       title: PostMuteRequest
