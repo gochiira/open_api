@@ -297,38 +297,10 @@ paths:
       operationId: getArtistList
       description: 絵師一覧を取得します
       parameters:
-        - schema:
-            type: integer
-            default: 1
-            minimum: 1
-          in: query
-          name: page
-          description: ページ番号
-        - schema:
-            type: string
-            default: c
-            enum:
-              - d
-              - l
-              - c
-              - 'n'
-            minLength: 1
-            maxLength: 1
-          in: query
-          name: sort
-          description: 'ソート方法 c:ヒット数 d:最終更新 l:いいね数 n:名前'
-        - schema:
-            type: string
-            enum:
-              - d
-              - a
-            default: d
-            example: d
-            minLength: 1
-            maxLength: 1
-          in: query
-          name: order
-          description: 'ソート方向 最大が先頭: "d"esc, 最小が先頭:"a"sc'
+        - $ref: '#/components/parameters/SearchQueryPage'
+        - $ref: '#/components/parameters/SearchQuerySortCatalog'
+        - $ref: '#/components/parameters/SearchQueryOrder'
+        - $ref: '#/components/parameters/SearchQueryPerPage'
     parameters: []
   /catalog/tags:
     get:
@@ -346,39 +318,10 @@ paths:
       operationId: getTagList
       description: タグ一覧を取得します
       parameters:
-        - schema:
-            type: integer
-            exclusiveMinimum: true
-            minimum: 1
-            default: 1
-          in: query
-          name: page
-          description: ページ番号
-        - schema:
-            type: string
-            enum:
-              - c
-              - d
-              - l
-              - 'n'
-            default: c
-            minLength: 1
-            maxLength: 1
-          in: query
-          name: sort
-          description: 'ソート方法 c:ヒット数 d:最終更新 l:いいね数 n:名前'
-        - schema:
-            type: string
-            enum:
-              - d
-              - a
-            default: d
-            example: d
-            maxLength: 1
-            minLength: 1
-          in: query
-          name: order
-          description: 'ソート方向 最大が先頭: "d"esc, 最小が先頭:"a"sc'
+        - $ref: '#/components/parameters/SearchQueryPage'
+        - $ref: '#/components/parameters/SearchQuerySortCatalog'
+        - $ref: '#/components/parameters/SearchQueryOrder'
+        - $ref: '#/components/parameters/SearchQueryPerPage'
     parameters: []
   /catalog/characters:
     get:
@@ -396,39 +339,10 @@ paths:
       operationId: getCharacterList
       description: キャラクター一覧を取得します
       parameters:
-        - schema:
-            type: integer
-            default: 1
-            minimum: 1
-            exclusiveMinimum: true
-          in: query
-          name: page
-          description: ページ番号
-        - schema:
-            type: string
-            enum:
-              - c
-              - d
-              - l
-              - 'n'
-            default: c
-            minLength: 1
-            maxLength: 1
-          in: query
-          name: sort
-          description: 'ソート方法 c:ヒット数 d:最終更新 l:いいね数 n:名前'
-        - schema:
-            type: string
-            default: d
-            enum:
-              - d
-              - a
-            example: d
-            minLength: 1
-            maxLength: 1
-          in: query
-          name: order
-          description: 'ソート方向 最大が先頭: "d"esc, 最小が先頭:"a"sc'
+        - $ref: '#/components/parameters/SearchQueryPage'
+        - $ref: '#/components/parameters/SearchQuerySortCatalog'
+        - $ref: '#/components/parameters/SearchQueryOrder'
+        - $ref: '#/components/parameters/SearchQueryPerPage'
   '/arts/{illustID}':
     parameters:
       - schema:
@@ -1438,10 +1352,6 @@ paths:
       responses:
         '200':
           description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PostReplaceArtResponse'
         '400':
           description: Bad Request
           content:
@@ -1978,6 +1888,7 @@ paths:
         - $ref: '#/components/parameters/SearchQueryPage'
         - $ref: '#/components/parameters/SearchQuerySort'
         - $ref: '#/components/parameters/SearchQueryOrder'
+        - $ref: '#/components/parameters/SearchQueryPerPage'
   /invites:
     post:
       summary: Create invitation
@@ -2143,7 +2054,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PostNotifyConditionResponse'
+                $ref: '#/components/schemas/NotifyConditionStruct'
       description: 通知条件を追加します
       tags:
         - notify
@@ -2315,12 +2226,8 @@ paths:
       summary: Delete notify condition
       operationId: deleteNotifyCondition
       responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DeleteNotifyConditionResponse'
+        '204':
+          description: No Content
         '403':
           description: Forbidden
         '404':
@@ -4027,39 +3934,6 @@ components:
     GetUploadHistoryResponse:
       title: GetUploadHistoryResponse
       type: object
-      properties:
-        title:
-          type: string
-          description: 検索関連共通化のため"アップロード履歴"が入る
-          example: アップロード履歴
-          enum:
-            - アップロード履歴
-          maxLength: 8
-          minLength: 8
-        count:
-          type: integer
-          description: 総ヒット数
-          format: int32
-        current:
-          type: integer
-          description: 現在開いているページ
-          example: 1
-          minimum: 1
-        pages:
-          type: integer
-          description: ヒット数をページ毎の個数で割ったページ数
-          minimum: 0
-          example: 1
-          format: int32
-        contents:
-          type: array
-          uniqueItems: true
-          description: |-
-            指定された範囲で一致するデータ
-            一致するものがなければ空配列
-          minItems: 0
-          items:
-            $ref: '#/components/schemas/UploadHistoryStruct'
       x-examples:
         success:
           value:
@@ -4184,6 +4058,18 @@ components:
         no-account:
           status: 404
           message: The account data was not found.
+      properties:
+        pagination:
+          $ref: '#/components/schemas/PaginationStruct'
+        contents:
+          type: array
+          uniqueItems: true
+          description: |-
+            指定された範囲で一致するデータ
+            一致するものがなければ空配列
+          minItems: 0
+          items:
+            $ref: '#/components/schemas/UploadHistoryStruct'
     PostReissueTokenResponse:
       title: PostReissueTokenResponse
       type: object
@@ -4435,37 +4321,6 @@ components:
           minimum: 1
       required:
         - illustID
-    PostReplaceArtResponse:
-      description: ''
-      type: object
-      x-examples:
-        success:
-          status: 200
-          message: Replace succeed.
-        failed-not-satisfied:
-          status: 400
-          message: Request parameters are not satisfied.
-        failed-not-found:
-          status: 404
-          message: The art data was not found.
-        failed-internal-error:
-          status: 500
-          message: Server bombed.
-      title: PostReplaceArtResponse
-      properties:
-        status:
-          type: integer
-          minimum: 100
-          maximum: 999
-          example: 200
-          default: 200
-          format: int32
-        message:
-          type: string
-          minLength: 1
-      required:
-        - status
-        - message
     PostReplaceArtSimulateResponse:
       description: ''
       type: object
@@ -4575,26 +4430,10 @@ components:
                 blue: 0
       title: PostReplaceArtSimulateResponse
       properties:
-        status:
-          type: integer
-          minimum: 100
-          maximum: 999
-          example: 200
-          default: 200
-          format: int32
-        message:
-          type: string
-          minLength: 1
-        data:
-          type: object
-          properties:
-            to:
-              $ref: '#/components/schemas/ArtStruct'
-            from:
-              $ref: '#/components/schemas/ArtStruct'
-      required:
-        - status
-        - message
+        to:
+          $ref: '#/components/schemas/ArtStruct'
+        from:
+          $ref: '#/components/schemas/ArtStruct'
     GetArtTagsResponse:
       title: GetArtTagsResponse
       type: object
@@ -5782,68 +5621,6 @@ components:
         condition_id:
           type: integer
           description: NotifyConditionID
-    PostNotifyConditionResponse:
-      title: PostNotifyConditionResponse
-      type: object
-      x-examples:
-        success:
-          status: 200
-          message: ok
-          conditionID: 1
-        failed-params:
-          status: 400
-          message: Request parameters are not satisfied.
-        failed-internal-error:
-          status: 500
-          message: Server bombed.
-        failed-too-many:
-          status: 400
-          message: 'You have too many notify conditions. Remove one, and try again.'
-      properties:
-        status:
-          type: integer
-          minimum: 100
-          maximum: 999
-          example: 200
-          default: 200
-          format: int32
-        message:
-          type: string
-          minLength: 1
-        conditionID:
-          type: integer
-          description: 通知条件ID
-      required:
-        - status
-        - message
-    DeleteNotifyConditionResponse:
-      title: DeleteNotifyConditionResponse
-      type: object
-      x-examples:
-        success:
-          status: 200
-          message: ok
-        failed-not-found:
-          status: 404
-          message: The notify condition was not found.
-        failed-permission:
-          status: 400
-          message: You don't have enough permission.
-      properties:
-        status:
-          type: integer
-          description: ''
-          minimum: 100
-          maximum: 999
-          example: 200
-          default: 200
-          format: int32
-        message:
-          type: string
-          minLength: 1
-      required:
-        - status
-        - message
     PostReportGeneralResponse:
       title: ReportGeneralResponse
       type: object
@@ -7032,6 +6809,19 @@ components:
         minimum: 20
         maximum: 100
       description: 1ページ辺りの要素数
+    SearchQuerySortCatalog:
+      in: query
+      schema:
+        type: string
+        default: d
+        enum:
+          - c
+          - d
+          - l
+          - 'n'
+        example: d
+      description: 'ソート方法 c:ヒット数 d:最終更新 l:いいね数 n:名前'
+      name: sort
   examples: {}
   responses: {}
 security:
