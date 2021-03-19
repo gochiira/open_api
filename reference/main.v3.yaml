@@ -5534,25 +5534,20 @@ components:
           data:
             tag: []
             artist: []
-      properties:
-        data:
-          type: object
-          required:
-            - tag
-            - artist
-          properties:
-            tag:
-              type: array
-              description: ミュート中のタグID配列
-              items:
-                $ref: '#/components/schemas/MuteStruct'
-            artist:
-              type: array
-              description: ミュート中の絵師ID配列
-              items:
-                $ref: '#/components/schemas/MuteStruct'
       required:
-        - data
+        - tag
+        - artist
+      properties:
+        tag:
+          type: array
+          description: ミュート中のタグID配列
+          items:
+            $ref: '#/components/schemas/MuteStruct'
+        artist:
+          type: array
+          description: ミュート中の絵師ID配列
+          items:
+            $ref: '#/components/schemas/MuteStruct'
     MylistStruct:
       title: MylistStruct
       type: object
