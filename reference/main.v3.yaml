@@ -1385,6 +1385,10 @@ paths:
                 $ref: '#/components/schemas/GetArtTagsResponse'
         '404':
           description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
       operationId: getArtTags
       description: 指定したイラストに付いているタグのみを一覧で取得します
     parameters:
@@ -1403,7 +1407,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PutArtTagsResponse'
+                $ref: '#/components/schemas/GetArtTagsResponse'
         '400':
           description: Bad Request
           content:
@@ -1427,7 +1431,6 @@ paths:
         (イラスト本体の編集時に付けられたタグ名から
         自動的にタグIDを引き出し追加/削除を行う処理が追加されたため
         こちらのエンドポイントを使用する必要はありません)
-      deprecated: true
       tags:
         - arts
       requestBody:
@@ -1444,7 +1447,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DeleteArtTagsResponse'
+                $ref: '#/components/schemas/GeneralMessageResponse'
         '400':
           description: Bad Request
           content:
@@ -1476,97 +1479,6 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/DeleteArtTagsRequest'
-  '/arts/{illustID}/characters':
-    get:
-      summary: Get art characters
-      tags:
-        - arts
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GetArtTagsResponse'
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GeneralMessageResponse'
-      operationId: getArtCharacters
-      description: 指定したイラストに付いているキャラクターのみを一覧で取得します
-    parameters:
-      - schema:
-          type: integer
-        name: illustID
-        in: path
-        required: true
-        description: 対象のイラストID
-    put:
-      summary: Edit art characters
-      operationId: editArtCharacters
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PutArtCharactersResponse'
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GeneralMessageResponse'
-        '403':
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GeneralMessageResponse'
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GeneralMessageResponse'
-      description: |-
-        指定したイラストのキャラクター一覧に、与えられたIDのキャラクターを追加します
-        (イラスト本体の編集時に付けられたキャラクター名から
-        自動的にキャラクターIDを引き出し追加/削除を行う処理が追加されたため
-        こちらのエンドポイントを使用する必要はありません)
-      deprecated: true
-      tags:
-        - arts
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PutArtChractersRequest'
-    delete:
-      summary: Delete art character
-      operationId: deleteArtCharacters
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DeleteArtCharactersResponse'
-      description: |-
-        指定したイラストのキャラクター一覧から、与えられたIDのキャラクターを削除します
-        (イラスト本体の編集時に付けられたキャラクター名から
-        自動的にキャラクターIDを引き出し追加/削除を行う処理が追加されたため
-        こちらのエンドポイントを使用する必要はありません)
-      deprecated: true
-      tags:
-        - arts
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/DeleteArtCharactersRequest'
   '/arts/{illustID}/likes':
     parameters:
       - schema:
