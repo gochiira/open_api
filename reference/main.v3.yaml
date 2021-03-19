@@ -373,6 +373,16 @@ paths:
                 $ref: '#/components/schemas/ArtStruct'
         '404':
           description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
+        '451':
+          description: Unavailable For Legal Reasons
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
       operationId: getArt
       description: 指定したイラストを取得します
     put:
@@ -1497,6 +1507,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PutArtLikesResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
       tags:
         - arts
       description: |-
@@ -1514,6 +1536,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetArtLikesResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
       description: 指定したイラストのいいね数だけを取得します
       tags:
         - arts
@@ -4991,16 +5019,6 @@ components:
           status: 500
           message: Server bombed.
       properties:
-        status:
-          type: integer
-          minimum: 100
-          maximum: 999
-          example: 200
-          default: 200
-          format: int32
-        message:
-          type: string
-          minLength: 1
         likes:
           type: object
           properties:
@@ -5012,9 +5030,6 @@ components:
               type: integer
             blue:
               type: integer
-      required:
-        - status
-        - message
     GetArtViewsResponse:
       title: GetArtViewsResponse
       type: object
@@ -5099,23 +5114,10 @@ components:
           status: 400
           message: You can't add star anymore today.
       properties:
-        status:
-          type: integer
-          minimum: 100
-          maximum: 999
-          example: 200
-          format: int32
-          default: 200
-        message:
-          type: string
-          minLength: 1
         likes:
           type: integer
           example: 1
           minimum: 1
-      required:
-        - status
-        - message
     PutArtViewsResponse:
       title: PutArtViewsResponse
       type: object
