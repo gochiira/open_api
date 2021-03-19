@@ -2637,11 +2637,15 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PostTagResponse'
+        '400':
+          description: Bad Request
+        '403':
+          description: Forbidden
       tags:
         - tags
       description: |-
         タグを追加します
-        (イラストの編集リクエスト内で指定していれば追加できるため非推奨です)
+        管理者のみリクエスト可能です
       deprecated: true
       requestBody:
         content:
@@ -4860,15 +4864,8 @@ components:
             contents: []
       title: GetCatalogArtistResponse
       properties:
-        title:
-          type: string
-          minLength: 1
-        count:
-          type: integer
-        current:
-          type: integer
-        pages:
-          type: integer
+        pagination:
+          $ref: '#/components/schemas/PaginationStruct'
         contents:
           type: array
           uniqueItems: true
@@ -4876,10 +4873,7 @@ components:
           items:
             $ref: '#/components/schemas/ArtistStruct'
       required:
-        - title
-        - count
-        - current
-        - pages
+        - pagination
         - contents
     GetCatalogTagResponse:
       description: ''
@@ -5045,21 +5039,11 @@ components:
             contents: []
       title: GetCatalogTagResponse
       required:
-        - title
-        - count
-        - current
-        - pages
+        - pagination
         - contents
       properties:
-        title:
-          type: string
-          minLength: 1
-        count:
-          type: integer
-        current:
-          type: integer
-        pages:
-          type: integer
+        pagination:
+          $ref: '#/components/schemas/PaginationStruct'
         contents:
           type: array
           uniqueItems: true
@@ -5159,39 +5143,6 @@ components:
           minItems: 1
           items:
             $ref: '#/components/schemas/NavigationResult'
-    GetNewsResponse:
-      title: GetNewsResponse
-      type: object
-      x-examples:
-        success:
-          status: 200
-          message: ok
-          data:
-            id: 3
-            date: '2021-01-07 15:31:24'
-            color: 0
-            title: 記載中の画像について / About these arts
-            body: これらの画像は素材配布としての意図はなく、サイトの機能検証の
-        failed-not-found:
-          status: 404
-          message: The news was not found.
-      description: ''
-      properties:
-        status:
-          type: integer
-          minimum: 100
-          maximum: 999
-          example: 200
-          format: int32
-          default: 200
-        message:
-          type: string
-          minLength: 1
-        data:
-          $ref: '#/components/schemas/NewsStruct'
-      required:
-        - status
-        - message
     GetNewsListResponse:
       title: GetNewsListResponse
       type: object
@@ -5801,14 +5752,12 @@ components:
       type: object
       properties:
         type:
-          type: integer
+          type: string
+          description: ミュート種別
           enum:
-            - 1
-            - 2
-          example: 1
-          minimum: 1
-          maximum: 2
-          description: 'ミュート種別 1:タグ 2:絵師'
+            - artist
+            - tag
+          example: artist
         id:
           description: 対象のID
           type: integer
@@ -5825,60 +5774,6 @@ components:
         failed-exists:
           status: 400
           message: The mute is already exists.
-        failed-internal-error:
-          status: 500
-          message: Server bombed.
-      properties:
-        status:
-          type: integer
-          minimum: 100
-          maximum: 999
-          example: 200
-          default: 200
-          format: int32
-        message:
-          type: string
-          minLength: 1
-      required:
-        - status
-        - message
-    DeleteMuteRequest:
-      title: DeleteMuteRequest
-      type: object
-      x-examples:
-        example:
-          type: 1
-          id: 1
-      properties:
-        type:
-          type: integer
-          enum:
-            - 1
-            - 2
-          example: 1
-          minimum: 1
-          maximum: 2
-          description: 'ミュート種別 1:タグ 2:絵師'
-        id:
-          type: integer
-          description: 対象のID
-          minimum: 1
-      required:
-        - type
-        - id
-    DeleteMuteResponse:
-      title: DeleteMuteResponse
-      type: object
-      x-examples:
-        success:
-          status: 200
-          message: Removed.
-        failed-not-satisfied:
-          status: 400
-          message: Request parameters are not satisfied.
-        failed-not-exists:
-          status: 400
-          message: The mute was not found.
         failed-internal-error:
           status: 500
           message: Server bombed.
@@ -6044,98 +5939,6 @@ components:
           minLength: 1
         newsID:
           type: integer
-      required:
-        - status
-        - message
-    PutNewsRequest:
-      title: PutNewsRequest
-      type: object
-      x-examples:
-        example:
-          title: 香風智乃がかわいい
-          body: そーんなのー常識ー
-          color: 1
-          date: '2020/03/15 09:11:00'
-      properties:
-        title:
-          type: string
-          description: ニュースのタイトル
-          minLength: 1
-          maxLength: 50
-        body:
-          type: string
-          description: ニュースの本文(Markdown)
-          minLength: 1
-          maxLength: 5000
-        color:
-          type: integer
-          minimum: 1
-          maximum: 9
-          example: 1
-          description: ニュースの表示カラー/種別
-        date:
-          type: string
-          description: 登録日付時刻
-          minLength: 19
-          maxLength: 19
-    PutNewsResponse:
-      description: ''
-      type: object
-      x-examples:
-        success:
-          status: 200
-          message: Updated.
-        failed-not-satisfied:
-          status: 400
-          message: Request parameters are not satisfied.
-        failed-params:
-          status: 400
-          message: Request parameter is invalid.
-        failed-permission:
-          status: 400
-          message: You don't have enough permission.
-      title: PutNewsResponse
-      properties:
-        status:
-          type: integer
-          maximum: 999
-          minimum: 100
-          example: 200
-          default: 200
-          format: int32
-        message:
-          type: string
-          minLength: 1
-      required:
-        - status
-        - message
-    DeleteNewsResponse:
-      title: DeleteNewsResponse
-      type: object
-      x-examples:
-        success:
-          status: 200
-          message: ok
-        failed-internal-error:
-          status: 500
-          message: Server bombed.
-        failed-permission:
-          status: 400
-          message: You don't have enough permission.
-        failed-not-found:
-          status: 404
-          message: The news was not found.
-      properties:
-        status:
-          type: integer
-          minimum: 100
-          maximum: 999
-          example: 200
-          default: 200
-          format: int32
-        message:
-          type: string
-          minLength: 1
       required:
         - status
         - message
