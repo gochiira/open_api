@@ -1244,7 +1244,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/GetSearchGeneralResponse'
       operationId: searchArtByRandom
-      description: ランダムなイラストを取得します
+      description: ランダムなイラストを1つ取得します
       tags:
         - search
       parameters:
@@ -1582,7 +1582,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GeneralMessageResponse'
+                $ref: '#/components/schemas/GetArtTagsResponse'
         '400':
           description: Bad Request
           content:
@@ -1613,7 +1613,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/DeleteArtTagsRequest'
+              $ref: '#/components/schemas/PutArtTagsRequest'
   '/arts/{illustID}/likes/{likeType}':
     parameters:
       - schema:
@@ -2062,7 +2062,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PostNewsRequest'
+              $ref: '#/components/schemas/NewsStruct'
       tags:
         - news
     get:
@@ -2114,7 +2114,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PostRegisterWebPushResponse'
+                $ref: '#/components/schemas/NotifyClientStruct'
       description: |-
         クライアント側で作成したパブリック/プライベートVAPIDキーを
         userID、クライアント名、通知レベルと共にサーバーのデータベースに登録し
@@ -2151,7 +2151,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PostNotifyConditionRequest'
+              $ref: '#/components/schemas/NotifyConditionStruct'
     parameters:
       - schema:
           type: string
@@ -2181,7 +2181,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PostRegisterLineNotifyResponse'
+                $ref: '#/components/schemas/NotifyClientStruct'
       description: '"ユーザー発行の"LINENotifyのトークンとデバイス名をPOSTして、通知クライアントの一種として保存する。(何個でも設定できる)'
       tags:
         - notify
@@ -2218,7 +2218,11 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetNotifyClientResponse'
+                $ref: '#/components/schemas/NotifyClientStruct'
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
       operationId: getNotifyClient
       description: 指定した通知クライアント情報を取得します
     put:
@@ -2230,28 +2234,32 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PutNotifyClientResponse'
+                $ref: '#/components/schemas/NotifyClientStruct'
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
       description: 指定した通知クライアント情報を編集します
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PutNotifyClientRequest'
+              $ref: '#/components/schemas/NotifyClientStruct'
       tags:
         - notify
     delete:
       summary: Delete notify client
       operationId: deleteNotifyClient
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DeleteNotifyClientResponse'
       description: 指定した通知クライアントを削除します
       tags:
         - notify
+      responses:
+        '204':
+          description: No Content
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
   '/accounts/{accountID}/notify/conditions/{conditionID}':
     parameters:
       - schema:
@@ -2274,7 +2282,11 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetNotifyConditionResponse'
+                $ref: '#/components/schemas/NotifyConditionStruct'
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
       operationId: getNotifyCondition
       description: 通知条件を取得します
     put:
@@ -2286,7 +2298,11 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PutNotifyConditionResponse'
+                $ref: '#/components/schemas/NotifyConditionStruct'
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
       tags:
         - notify
       description: 通知条件を編集します
@@ -2305,6 +2321,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DeleteNotifyConditionResponse'
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
       tags:
         - notify
       description: 通知条件を削除します
@@ -2470,11 +2490,11 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/PostReportGeneralRequest'
-  '/report/user/{userID}':
+  '/report/user/{accountID}':
     parameters:
       - schema:
-          type: integer
-        name: userID
+          type: string
+        name: accountID
         in: path
         required: true
     post:
@@ -2611,6 +2631,7 @@ paths:
           name: id
           description: タグIDをカンマ区切りで複数指定します
         - $ref: '#/components/parameters/SearchQueryMylistAllow'
+        - $ref: '#/components/parameters/SearchQueryPerPage'
     parameters: []
   /garbage_collect:
     post:
@@ -2792,6 +2813,7 @@ paths:
           in: query
           name: id
           description: ユーザーID
+        - $ref: '#/components/parameters/SearchQueryPerPage'
       description: タイムラインを取得します
     parameters: []
   /timeline:
@@ -3203,7 +3225,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PostMuteResponse'
+                $ref: '#/components/schemas/MuteStruct'
       tags:
         - accounts
       description: 指定したアカウントのユーザーのミュートを追加します
@@ -3211,7 +3233,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PostMuteRequest'
+              $ref: '#/components/schemas/MuteStruct'
   '/accounts/{accountID}/mutes/{muteID}':
     parameters:
       - schema:
@@ -3231,27 +3253,16 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MuteStruct'
         '403':
           description: Forbidden
         '404':
           description: Not Found
       operationId: get-accounts-accountID-mutes-muteID
       description: 指定したミュート情報を取得します
-    put:
-      summary: Edit mute
-      operationId: put-accounts-accountID-mutes-muteID
-      responses:
-        '200':
-          description: OK
-        '400':
-          description: Bad Request
-        '403':
-          description: Forbidden
-        '404':
-          description: Not Found
-      description: 指定したミュート情報を編集します
-      tags:
-        - accounts
     delete:
       summary: Delete mute
       operationId: delete-accounts-accountID-mutes-muteID
@@ -3427,12 +3438,6 @@ components:
           minLength: 1
           maxLength: 3000
           description: ニュース本文 3000文字まで
-      required:
-        - id
-        - date
-        - color
-        - title
-        - body
     NavigationResult:
       title: NavigationResult
       type: object
@@ -4539,23 +4544,6 @@ components:
             - 1
             - 2
             - 3
-    DeleteArtTagsRequest:
-      title: DeleteArtTagsRequest
-      type: object
-      x-examples:
-        example-1:
-          tagID:
-            - 1
-            - 2
-            - 3
-      properties:
-        tagID:
-          type: array
-          description: イラストから削除したいタグ配列
-          items:
-            type: integer
-      required:
-        - tagID
     GetArtAllLikesResponse:
       title: GetArtAllLikesResponse
       type: object
@@ -4617,23 +4605,10 @@ components:
           message: ok
           comments: []
       properties:
-        status:
-          type: integer
-          minimum: 100
-          maximum: 999
-          format: int32
-          default: 200
-          example: 200
-        message:
-          type: string
-          minLength: 1
         comments:
           type: array
           items:
             $ref: '#/components/schemas/CommentStruct'
-      required:
-        - status
-        - message
     CommentStruct:
       description: コメント型
       type: object
@@ -4727,64 +4702,6 @@ components:
         - status
         - message
       title: PutWikiArticleResponse
-    PutNotifyClientRequest:
-      title: PutNotifyClientRequest
-      type: object
-      description: ''
-      x-examples:
-        change-name:
-          name: Chino laptop2
-        change-level:
-          level: 5
-        change-both:
-          name: Chino laptop3
-          level: 5
-      properties:
-        name:
-          type: string
-          description: クライアント名
-        level:
-          type: integer
-          description: '通知レベル 1:緊急時のみ 5:タグ絵師通知のみ 9:すべて'
-          enum:
-            - 1
-            - 5
-            - 9
-          minimum: 1
-          maximum: 9
-          example: 9
-          default: 9
-    PutNotifyClientResponse:
-      description: ''
-      type: object
-      x-examples:
-        success:
-          status: 200
-          message: Updated.
-        failed-internal-error:
-          status: 500
-          message: Server bombed.
-        failed-not-found:
-          status: 404
-          message: The notify client was not found.
-        failed-not-satisfied:
-          status: 400
-          message: Request parameters are not satisfied.
-      title: PutNotifyClientResponse
-      properties:
-        status:
-          type: integer
-          minimum: 100
-          maximum: 999
-          example: 200
-          default: 200
-          format: int32
-        message:
-          type: string
-          minLength: 1
-      required:
-        - status
-        - message
     GetCatalogArtistResponse:
       description: ''
       type: object
@@ -5076,29 +4993,19 @@ components:
             current: 1
             pages: 1
             contents: []
-      required:
-        - title
-        - count
-        - current
-        - pages
-        - contents
+      title: GetCatalogUploaderResponse
       properties:
-        title:
-          type: string
-          minLength: 1
-        count:
-          type: integer
-        current:
-          type: integer
-        pages:
-          type: integer
+        pagination:
+          $ref: '#/components/schemas/PaginationStruct'
         contents:
           type: array
           uniqueItems: true
           minItems: 1
           items:
             $ref: '#/components/schemas/UploaderStruct'
-      title: GetCatalogUploaderResponse
+      required:
+        - pagination
+        - contents
     UploaderStruct:
       title: UploaderStruct
       type: object
@@ -5213,32 +5120,12 @@ components:
                   name: Manki Kim
                 extension: jpg
       properties:
-        data:
-          type: object
-          required:
-            - title
-            - count
-            - current
-            - pages
-            - imgs
-          properties:
-            title:
-              type: string
-              minLength: 1
-            count:
-              type: integer
-            current:
-              type: integer
-            pages:
-              type: integer
-            imgs:
-              type: array
-              uniqueItems: true
-              minItems: 1
-              items:
-                $ref: '#/components/schemas/SearchResultStruct'
-      required:
-        - data
+        pagination:
+          $ref: '#/components/schemas/PaginationStruct'
+        contents:
+          type: array
+          items:
+            $ref: '#/components/schemas/SearchResultStruct'
     GetMylistListResponse:
       description: ''
       type: object
@@ -5280,43 +5167,18 @@ components:
                 createdDate: '2021/03/14 02:16:03'
                 updatedDate: '2021/03/14 02:16:03'
                 private: false
-      required:
-        - title
-        - count
-        - current
-        - pages
-        - contents
       properties:
-        title:
-          type: string
-          minLength: 1
-        count:
-          type: integer
-          example: 1
-          default: 1
-          minimum: 1
-        current:
-          type: integer
-          default: 1
-          example: 1
-          minimum: 1
-          maximum: 1
-          enum:
-            - 1
-        pages:
-          type: integer
-          example: 1
-          minimum: 1
-          maximum: 1
-          default: 1
-          enum:
-            - 1
+        pagination:
+          $ref: '#/components/schemas/PaginationStruct'
         contents:
           type: array
           uniqueItems: true
           minItems: 1
           items:
             $ref: '#/components/schemas/MylistStruct'
+      required:
+        - pagination
+        - contents
     PostSearchByImageRequest:
       title: PostSearchByImageRequest
       type: object
@@ -5739,58 +5601,14 @@ components:
               type: array
               description: ミュート中のタグID配列
               items:
-                type: integer
+                $ref: '#/components/schemas/MuteStruct'
             artist:
               type: array
               description: ミュート中の絵師ID配列
               items:
-                type: integer
+                $ref: '#/components/schemas/MuteStruct'
       required:
         - data
-    PostMuteRequest:
-      title: PostMuteRequest
-      type: object
-      properties:
-        type:
-          type: string
-          description: ミュート種別
-          enum:
-            - artist
-            - tag
-          example: artist
-        id:
-          description: 対象のID
-          type: integer
-    PostMuteResponse:
-      title: PostMuteResponse
-      type: object
-      x-examples:
-        success:
-          status: 200
-          message: Added.
-        failed-not-satisfied:
-          status: 400
-          message: Request parameters are not satisfied.
-        failed-exists:
-          status: 400
-          message: The mute is already exists.
-        failed-internal-error:
-          status: 500
-          message: Server bombed.
-      properties:
-        status:
-          type: integer
-          minimum: 100
-          maximum: 999
-          example: 200
-          default: 200
-          format: int32
-        message:
-          type: string
-          minLength: 1
-      required:
-        - status
-        - message
     MylistStruct:
       title: MylistStruct
       type: object
@@ -5879,35 +5697,6 @@ components:
           additionalProperties:
             type: string
             description: 指定されたイラストIDをキーとして、それぞれ存在するかのboolean
-    PostNewsRequest:
-      title: PostNewsRequest
-      type: object
-      x-examples:
-        example:
-          title: 香風智乃がかわいい
-          body: そーんなのー常識ー
-          color: 1
-      properties:
-        title:
-          type: string
-          description: ニュースのタイトル
-          minLength: 1
-          maxLength: 50
-        body:
-          type: string
-          description: ニュースの本文(Markdown)
-          minLength: 1
-          maxLength: 5000
-        color:
-          type: integer
-          minimum: 1
-          maximum: 9
-          example: 1
-          description: ニュースの表示カラー/種別
-      required:
-        - title
-        - body
-        - color
     PostNewsResponse:
       description: ''
       type: object
@@ -5961,34 +5750,23 @@ components:
           message: ok
           clients: []
       properties:
-        status:
-          type: integer
-          minimum: 100
-          maximum: 999
-          example: 200
-          default: 200
-          format: int32
-        message:
-          type: string
-          minLength: 1
         clients:
           type: array
           items:
             $ref: '#/components/schemas/NotifyClientStruct'
-      required:
-        - status
-        - message
     NotifyClientStruct:
       title: NotifyClientStruct
       type: object
+      description: ''
       properties:
-        id:
+        client_id:
           type: integer
           description: 通知クライアントID
           minimum: 1
         name:
           type: string
           description: ユーザーが指定した通知クライアント名
+          minLength: 1
         type:
           type: integer
           description: 'クライアント種別 0:WebPush 1:LineNotify'
@@ -6001,12 +5779,6 @@ components:
           minimum: 1
           maximum: 9
           description: '通知レベル 1:緊急時のみ 5:タグ絵師通知のみ 9:すべて'
-      required:
-        - id
-        - name
-        - type
-        - level
-      description: ''
     PostRegisterWebPushRequest:
       title: PostRegisterWebPushRequest
       type: object
@@ -6031,94 +5803,6 @@ components:
         - auth
         - name
         - level
-    PostRegisterWebPushResponse:
-      title: PostRegisterWebPushResponse
-      type: object
-      x-examples:
-        success:
-          status: 200
-          message: ok
-          id: 1
-        failed-bad-request:
-          status: 400
-          message: Bad request.
-      properties:
-        status:
-          type: integer
-          minimum: 100
-          maximum: 999
-          example: 200
-          default: 200
-          format: int32
-        message:
-          type: string
-          minLength: 1
-        id:
-          type: integer
-          description: クライアントID
-          minimum: 1
-      required:
-        - status
-        - message
-    DeleteNotifyClientResponse:
-      title: DeleteNotifyClientResponse
-      type: object
-      x-examples:
-        success:
-          status: 200
-          message: ok
-        failed-not-found:
-          status: 404
-          message: The notify client was not found.
-        failed-permission:
-          status: 400
-          message: You don't have enough permission.
-      properties:
-        status:
-          type: integer
-          description: ''
-          minimum: 100
-          maximum: 999
-          example: 200
-          default: 200
-          format: int32
-        message:
-          type: string
-          minLength: 1
-      required:
-        - status
-        - message
-    GetNotifyClientResponse:
-      title: GetNotifyClientResponse
-      type: object
-      x-examples:
-        success:
-          status: 200
-          message: ok
-          client:
-            id: 1
-            name: Chino laptop
-            type: 0
-            level: 1
-        failed-not-found:
-          status: 404
-          message: The notify client was not found.
-      properties:
-        status:
-          type: integer
-          minimum: 100
-          maximum: 999
-          format: int32
-          default: 200
-          example: 200
-        message:
-          type: string
-          minLength: 1
-        client:
-          $ref: '#/components/schemas/NotifyClientStruct'
-      required:
-        - status
-        - message
     PostRegisterLineNotifyRequest:
       title: PostRegisterLineNotifyRequest
       type: object
@@ -6144,35 +5828,6 @@ components:
         - token
         - name
         - level
-    PostRegisterLineNotifyResponse:
-      title: PostRegisterLineNotifyResponse
-      type: object
-      x-examples:
-        success:
-          status: 200
-          message: ok
-          id: 2
-        failed-bad-request:
-          status: 400
-          message: Bad request.
-      properties:
-        status:
-          type: integer
-          minimum: 100
-          maximum: 999
-          example: 200
-          default: 200
-          format: int32
-        message:
-          type: string
-          minLength: 1
-        id:
-          type: integer
-          description: クライアントID
-          minimum: 1
-      required:
-        - status
-        - message
     GetNotifyConditionsResponse:
       title: GetNotifyConditionsResponse
       type: object
@@ -6189,23 +5844,10 @@ components:
           message: ok
           conditions: []
       properties:
-        status:
-          type: integer
-          minimum: 100
-          maximum: 999
-          example: 200
-          default: 200
-          format: int32
-        message:
-          type: string
-          minLength: 1
         conditions:
           type: array
           items:
             $ref: '#/components/schemas/NotifyConditionStruct'
-      required:
-        - status
-        - message
     NotifyConditionStruct:
       title: NotifyConditionStruct
       type: object
@@ -6219,23 +5861,9 @@ components:
         method:
           type: integer
           description: '通知方法 0:両方 1:Web 2:Line'
-    PostNotifyConditionRequest:
-      title: PostNotifyConditionRequest
-      type: object
-      properties:
-        type:
+        condition_id:
           type: integer
-          description: '条件種別 0:全通知 1:タグ 2:絵師'
-        id:
-          type: integer
-          description: 全てなら0/対象タグID/対象絵師ID
-        method:
-          type: integer
-          description: '通知方法 0:両方 1:Web 2:Line'
-      required:
-        - type
-        - id
-        - method
+          description: NotifyConditionID
     PostNotifyConditionResponse:
       title: PostNotifyConditionResponse
       type: object
@@ -6270,39 +5898,6 @@ components:
       required:
         - status
         - message
-    PutNotifyConditionResponse:
-      title: PutNotifyConditionResponse
-      type: object
-      x-examples:
-        success:
-          status: 200
-          message: Updated.
-        failed-internal-error:
-          status: 500
-          message: Server bombed.
-        failed-not-found:
-          status: 404
-          message: The notify condition was not found.
-        failed-not-satisfied:
-          status: 400
-          message: Request parameters are not satisfied.
-        failed-permission:
-          status: 400
-          message: You don't have enough permission.
-      properties:
-        status:
-          type: integer
-          example: 200
-          default: 200
-          format: int32
-          minimum: 100
-          maximum: 999
-        message:
-          type: string
-          minLength: 1
-      required:
-        - status
-        - message
     DeleteNotifyConditionResponse:
       title: DeleteNotifyConditionResponse
       type: object
@@ -6328,39 +5923,6 @@ components:
         message:
           type: string
           minLength: 1
-      required:
-        - status
-        - message
-    GetNotifyConditionResponse:
-      title: GetNotifyConditionResponse
-      type: object
-      x-examples:
-        success:
-          status: 200
-          message: ok
-          condition:
-            type: 1
-            id: 1
-            method: 1
-        failed-not-found:
-          status: 400
-          message: The notify condition was not found.
-        failed-permission:
-          status: 400
-          message: You don't have enough permission.
-      properties:
-        status:
-          type: integer
-          minimum: 100
-          maximum: 999
-          example: 200
-          default: 200
-          format: int32
-        message:
-          type: string
-          minLength: 1
-        condition:
-          $ref: '#/components/schemas/NotifyConditionStruct'
       required:
         - status
         - message
@@ -7261,16 +6823,6 @@ components:
       title: GetTimelineFollowingResponse
       type: object
       properties:
-        status:
-          type: integer
-          minimum: 100
-          maximum: 999
-          example: 200
-          default: 200
-          format: int32
-        message:
-          type: string
-          minLength: 1
         data:
           type: array
           items:
@@ -7282,9 +6834,6 @@ components:
               name:
                 type: string
                 description: 絵師名
-      required:
-        - status
-        - message
     PostTimelineFollowResponse:
       title: PostTimelineFollowResponse
       type: object
@@ -7733,9 +7282,10 @@ components:
           type: string
           minLength: 1
           example: 香風智乃
+          description: ページネーションタイトル(表示用)
         type:
           type: string
-          description: ''
+          description: ページネーション種別(表示用)
           example: 'mylist,tag'
           default: search
         count:
@@ -7758,6 +7308,25 @@ components:
         - current
         - pages
         - per_page
+    MuteStruct:
+      title: MuteStruct
+      type: object
+      properties:
+        id:
+          type: integer
+          description: 対象のタグ/絵師ID
+        type:
+          type: string
+          description: ミュート種別
+          enum:
+            - tag
+            - artist
+          example: artist
+        mute_id:
+          type: string
+          description: ミュートID
+      required:
+        - type
   securitySchemes:
     Authorization:
       type: http
@@ -7825,6 +7394,23 @@ components:
         minimum: 0
         maximum: 1
       description: マイリスト追加済みかを取得する0/1 (デフォルト0)
+    SearchQueryPerPage:
+      name: per_page
+      in: query
+      required: false
+      schema:
+        type: integer
+        default: 20
+        enum:
+          - 20
+          - 40
+          - 60
+          - 80
+          - 100
+        example: 20
+        minimum: 20
+        maximum: 100
+      description: 1ページ辺りの要素数
   examples: {}
   responses: {}
 security:
