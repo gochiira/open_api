@@ -1864,6 +1864,24 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PostInviteResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
       tags:
         - invites
       description: |-
@@ -5636,28 +5654,12 @@ components:
           status: 400
           message: Bad request.
       properties:
-        status:
+        id:
           type: integer
-          minimum: 100
-          maximum: 999
-          example: 200
-          default: 200
-          format: int32
-        message:
+          description: サイト内通し招待番号
+        code:
           type: string
-          minLength: 1
-        data:
-          type: object
-          properties:
-            id:
-              type: integer
-              description: サイト内通し招待番号
-            code:
-              type: string
-              description: 招待コード
-      required:
-        - status
-        - message
+          description: 招待コード
     DeleteInviteResponse:
       title: DeleteInviteResponse
       type: object
