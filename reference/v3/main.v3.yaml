@@ -688,6 +688,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/GetMylistResponse'
               examples: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
         '404':
           description: Not Found
           content:
@@ -709,7 +715,11 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PutMylistResponse'
+                $ref: '#/components/schemas/GetMylistResponse'
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
       description: マイリストのタイトル/説明文/内容(イラスト)を編集します
       requestBody:
         content:
@@ -2549,12 +2559,10 @@ paths:
       summary: Garbage collect
       operationId: garbageCollect
       responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PostGarbageCollectResponse'
+        '204':
+          description: No Content
+        '403':
+          description: Forbidden
       description: |-
         参照されていない 絵師情報/タグ情報を削除します
         (cron等でやってもいいかもしれないですが 現在は手動)
@@ -2978,7 +2986,6 @@ paths:
                 $ref: '#/components/schemas/ActivityPubActorStruct'
       operationId: get-activitypub-server
       description: ActivityPubのユーザー情報(サーバー)を返す
-
   '/invites/{inviteID}':
     parameters:
       - schema:
@@ -4939,54 +4946,37 @@ components:
             current: 1
             pages: 1
             imgs: []
+      required:
+        - title
+        - count
+        - current
+        - pages
+        - imgs
       properties:
-        status:
-          type: integer
-          minimum: 100
-          maximum: 999
-          example: 200
-          default: 200
-          format: int32
-        message:
+        title:
           type: string
           minLength: 1
-        data:
-          type: object
-          required:
-            - title
-            - count
-            - current
-            - pages
-            - imgs
-          properties:
-            title:
-              type: string
-              minLength: 1
-            count:
-              type: integer
-              minimum: 0
-              default: 0
-              example: 0
-            current:
-              type: integer
-              minimum: 1
-              example: 1
-              default: 1
-            pages:
-              type: integer
-              minimum: 1
-              default: 1
-              example: 1
-            imgs:
-              type: array
-              uniqueItems: true
-              minItems: 1
-              items:
-                $ref: '#/components/schemas/SearchResultStruct'
-      required:
-        - status
-        - message
-        - data
+        count:
+          type: integer
+          minimum: 0
+          default: 0
+          example: 0
+        current:
+          type: integer
+          minimum: 1
+          example: 1
+          default: 1
+        pages:
+          type: integer
+          minimum: 1
+          default: 1
+          example: 1
+        imgs:
+          type: array
+          uniqueItems: true
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/SearchResultStruct'
     GetNavigationGeneralResponse:
       title: GetNavigationGeneralResponse
       type: object
@@ -7390,30 +7380,6 @@ components:
         - status
         - message
       title: PostSearchByImageAtAscii2dResponse
-    PostGarbageCollectResponse:
-      title: PostGarbageCollectResponse
-      type: object
-      x-examples:
-        success:
-          status: 200
-          message: ok
-        failed:
-          status: 400
-          message: Bad request.
-      properties:
-        status:
-          type: integer
-          minimum: 100
-          maximum: 999
-          example: 200
-          default: 200
-          format: int32
-        message:
-          type: string
-          minLength: 1
-      required:
-        - status
-        - message
     GetTagResponse:
       title: GetTagResponse
       type: object
