@@ -1489,7 +1489,6 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/DeleteArtTagsRequest'
-
   '/arts/{illustID}/likes/{likeType}':
     parameters:
       - schema:
@@ -3556,6 +3555,8 @@ components:
             blue:
               type: integer
               description: ブルースター数
+        id:
+          type: integer
     PostLoginWithFormRequest:
       title: PostLoginWithFormRequest
       type: object
@@ -3581,90 +3582,6 @@ components:
       required:
         - id
         - password
-    PostArtistRequest:
-      title: PostArtistRequest
-      type: object
-      x-examples:
-        example:
-          artistName: string
-          artistDescription: string
-          groupName: string
-          pixivID: string
-          twitterID: string
-          mastodon: string
-          homepage: string
-      properties:
-        artistName:
-          type: string
-          description: 絵師名
-        artistDescription:
-          type: string
-          description: 絵師の説明(未使用)
-        groupName:
-          type: string
-          description: サークル名
-        pixivID:
-          description: pixivID(内部ID)配列
-          type: array
-          items:
-            type: integer
-        twitterID:
-          type: array
-          description: twitterID(内部ID)配列
-          items:
-            type: string
-        mastodon:
-          description: マストドンのユーザーページアドレス(配列)
-          type: array
-          items:
-            type: string
-        homepage:
-          type: array
-          description: 関連サイトアドレス(配列)
-          items:
-            type: string
-    PutArtistRequest:
-      title: PutArtistRequest
-      type: object
-      x-examples:
-        example:
-          artistName: string
-          artistDescription: string
-          groupName: string
-          pixivID: string
-          twitterID: string
-          mastodon: string
-          homepage: string
-      properties:
-        artistName:
-          type: string
-          description: 絵師名
-        artistDescription:
-          type: string
-          description: 絵師の説明(未使用)
-        groupName:
-          type: string
-          description: サークル名
-        pixivID:
-          description: pixivID(内部ID)配列
-          type: array
-          items:
-            type: integer
-        twitterID:
-          type: array
-          description: twitterID(内部ID)配列
-          items:
-            type: string
-        mastodon:
-          description: マストドンのユーザーページアドレス(配列)
-          type: array
-          items:
-            type: string
-        homepage:
-          type: array
-          description: 関連サイトアドレス(配列)
-          items:
-            type: string
     TagStruct:
       title: TagStruct
       type: object
@@ -4012,122 +3929,16 @@ components:
         no-account:
           status: 404
           message: The account data was not found.
-    GetAccountResponse:
-      title: GetAccountResponse
-      type: object
-      x-examples:
-        success:
-          status: 200
-          message: ok
-          data:
-            userID: 3
-            displayID: omado
-            name: お窓
-            favorite: 1
-        failed:
-          status: 404
-          message: The account data was not found.
-      properties:
-        status:
-          type: integer
-          description: HTTPステータスコードが入ります
-          format: int32
-          minimum: 100
-          maximum: 999
-          default: 200
-          example: 200
-        message:
-          type: string
-          minLength: 1
-          description: ok もしくは エラー内容
-        data:
-          $ref: '#/components/schemas/AccountStruct'
-      required:
-        - status
-        - message
-    DeleteAccountResponse:
-      title: DeleteAccountResponse
-      type: object
-      x-examples:
-        success:
-          status: 200
-          message: ok thanks for using!
-        failed:
-          status: 400
-          message: authorization failed
-      properties:
-        status:
-          type: integer
-          minimum: 100
-          maximum: 999
-          example: 200
-          format: int32
-          default: 200
-        message:
-          type: string
-          minLength: 1
-      required:
-        - status
-        - message
     PostReissueTokenResponse:
       title: PostReissueTokenResponse
       type: object
       x-examples:
         example:
-          status: 200
-          message: ok
           api_key: DUMMY_API_KEY
       properties:
-        status:
-          type: integer
-          minimum: 100
-          maximum: 999
-          example: 200
-          default: 200
-          format: int32
-        message:
-          type: string
-          minLength: 1
         api_key:
           type: string
           minLength: 1
-      required:
-        - status
-        - message
-    PutAccountResponse:
-      title: PutAccountResponse
-      type: object
-      x-examples:
-        success:
-          value:
-            status: 200
-            message: Update complete
-        server-error:
-          value:
-            status: 500
-            message: Server bombed.
-        password-mismatch:
-          value:
-            status: 400
-            message: password mismatch
-        not-satisfied-params:
-          value:
-            status: 400
-            message: Request parameters are not satisfied.
-      properties:
-        status:
-          type: integer
-          minimum: 100
-          maximum: 999
-          example: 200
-          default: 200
-          format: int32
-        message:
-          type: string
-          minLength: 1
-      required:
-        - status
-        - message
     PostAccountResponse:
       title: PostAccountResponse
       type: object
@@ -4599,6 +4410,23 @@ components:
     ArtistStruct:
       title: ArtistStruct
       type: object
+      x-examples:
+        example-1:
+          id: 0
+          userID: 0
+          name: 彩電
+          description: ごちうさなどのきらら系中心に、オリジナルなどのサークルやってます
+          group: こねこぼたん
+          pixivID:
+            - 40436
+          twitterID:
+            - harufcs
+          mastodon:
+            - 'https://pawoo.net/@saiden'
+          homepage:
+            - string
+          count: 0
+          lcount: 0
       properties:
         id:
           type: integer
@@ -4650,32 +4478,12 @@ components:
           type: integer
           description: 絵師に属するいいね数
       required:
-        - id
         - name
         - description
         - group
         - pixivID
         - twitterID
         - mastodon
-        - count
-        - lcount
-      x-examples:
-        example-1:
-          id: 0
-          userID: 0
-          name: 彩電
-          description: ごちうさなどのきらら系中心に、オリジナルなどのサークルやってます
-          group: こねこぼたん
-          pixivID:
-            - 40436
-          twitterID:
-            - harufcs
-          mastodon:
-            - 'https://pawoo.net/@saiden'
-          homepage:
-            - string
-          count: 0
-          lcount: 0
     PostReplaceArtRequest:
       title: PostReplaceArtRequest
       type: object
