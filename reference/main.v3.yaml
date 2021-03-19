@@ -2345,6 +2345,7 @@ paths:
         - $ref: '#/components/parameters/SearchQueryPage'
         - $ref: '#/components/parameters/SearchQueryOrder'
         - $ref: '#/components/parameters/SearchQueryMylistDeny'
+        - $ref: '#/components/parameters/SearchQueryPerPage'
       description: 年間閲覧数ランキングを取得します
   /ranking/yearly/likes:
     get:
@@ -2363,6 +2364,7 @@ paths:
         - $ref: '#/components/parameters/SearchQueryPage'
         - $ref: '#/components/parameters/SearchQueryOrder'
         - $ref: '#/components/parameters/SearchQueryMylistDeny'
+        - $ref: '#/components/parameters/SearchQueryPerPage'
       description: 年間いいね数ランキングを取得します
   /ranking/monthly/views:
     get:
@@ -2381,6 +2383,7 @@ paths:
         - $ref: '#/components/parameters/SearchQueryPage'
         - $ref: '#/components/parameters/SearchQueryOrder'
         - $ref: '#/components/parameters/SearchQueryMylistDeny'
+        - $ref: '#/components/parameters/SearchQueryPerPage'
       description: 月間閲覧数ランキングを取得します
   /ranking/monthly/likes:
     get:
@@ -2399,6 +2402,7 @@ paths:
         - $ref: '#/components/parameters/SearchQueryPage'
         - $ref: '#/components/parameters/SearchQueryOrder'
         - $ref: '#/components/parameters/SearchQueryMylistDeny'
+        - $ref: '#/components/parameters/SearchQueryPerPage'
       description: 月間いいね数ランキングを取得します
   /ranking/weekly/views:
     get:
@@ -2417,6 +2421,7 @@ paths:
         - $ref: '#/components/parameters/SearchQueryPage'
         - $ref: '#/components/parameters/SearchQueryOrder'
         - $ref: '#/components/parameters/SearchQueryMylistDeny'
+        - $ref: '#/components/parameters/SearchQueryPerPage'
       description: 週間閲覧数ランキングを取得します
   /ranking/weekly/likes:
     get:
@@ -2435,6 +2440,7 @@ paths:
         - $ref: '#/components/parameters/SearchQueryPage'
         - $ref: '#/components/parameters/SearchQueryOrder'
         - $ref: '#/components/parameters/SearchQueryMylistDeny'
+        - $ref: '#/components/parameters/SearchQueryPerPage'
       description: 週間いいね数ランキングを取得します
   '/report/arts/{illustID}':
     parameters:
@@ -3523,19 +3529,27 @@ components:
           maximum: 9
           format: int32
         permission:
-          type: integer
-          description: |-
-            ユーザーが持つ権限を指定します、SysOpのみ変更できます。
-            0:User 5:Admin 9:Sysop になっています
-            (変更されたユーザーは再ログインが必要です)
-          example: 0
-          enum:
-            - 0
-            - 5
-            - 9
-          format: int32
-          minimum: 0
-          maximum: 9
+          type: object
+          description: 権限
+          properties:
+            can_invite:
+              type: boolean
+              description: 招待できるか
+            can_favorite:
+              type: boolean
+              description: いいねできるか
+            can_comment:
+              type: boolean
+              description: コメントできるか
+            can_create_post:
+              type: boolean
+              description: 投稿できるか
+            can_edit_post:
+              type: boolean
+              description: 投稿を編集できるか
+            can_approve_post:
+              type: boolean
+              description: 投稿を承認できるか
         lineID:
           type: string
           description: LINEと連携している場合にユーザーページに表示されることを想定して仮に置かれたものです(未使用)
@@ -3550,8 +3564,46 @@ components:
           type: boolean
           default: false
           description: TOTPを使用するか否か
+        registeredDate:
+          type: string
+          minLength: 1
+          description: 登録日時(datetime)
+        inviter:
+          type: object
+          description: 招待者の情報
+          properties:
+            id:
+              type: integer
+              description: 招待者のユーザー通し番号
+            name:
+              type: string
+              minLength: 1
+              description: 招待者の名前
+          required:
+            - id
+            - name
+        invite:
+          type: object
+          description: 招待情報
+          properties:
+            id:
+              type: integer
+              description: 招待通し番号
+            code:
+              type: string
+              description: 招待コード(shortuuid)
+              minLength: 6
+              maxLength: 12
+            invited:
+              type: integer
+              description: 招待した人数の累計(誰を招待したかは表示されない)
+          required:
+            - id
+            - code
+            - invited
         id:
           type: integer
+          description: ユーザーID
         apiKey:
           type: string
     DeleteAccountRequest:
@@ -3705,10 +3757,16 @@ components:
           required:
             - id
         status:
-          type: integer
-          minimum: 0
-          maximum: 9
+          type: string
           description: '公開/非公開等の表示状態 0:公開 1:置換済み 2:削除(ユーザー) 3:削除(管理者)'
+          enum:
+            - public
+            - hidden
+            - deleted-admin
+            - deleted-legal
+            - deleted-uploader
+          example: public
+          default: public
         width:
           type: integer
           description: RAW画像の横方向のピクセル数
@@ -4251,8 +4309,6 @@ components:
             - inviter
             - invite
             - apiKey
-        '':
-          type: string
     PostLoginWithFormResponse:
       title: PostLoginWithFormResponse
       type: object
