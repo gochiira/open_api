@@ -204,6 +204,58 @@ paths:
       description: アカウントのログインキーを再生成します
       tags:
         - accounts
+  /accounts/me:
+    get:
+      summary: Get user info (self)
+      tags:
+        - accounts
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAccountMeResponse'
+      operationId: getSelfAccount
+      description: |-
+        自分自身にまつわる情報をすべて取得します
+        通常、ログイン時に一度だけ呼び出されます
+    parameters: []
+  /accounts/login/form:
+    post:
+      summary: Login with form
+      tags:
+        - accounts
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostLoginWithFormResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
+      operationId: loginWithForm
+      description: IDとパスワードを用いてユーザー認証し、APIトークンを発行します
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostLoginWithFormRequest'
+            examples:
+              user:
+                value:
+                  id: test_user
+                  password: this_is_only_for_test
+              admin:
+                value:
+                  id: test_admin
+                  password: this_is_only_for_test
+        description: ユーザーIDとパスワードをパラメータに取ります
   /catalog/artists:
     get:
       summary: Get artist list
@@ -1117,58 +1169,6 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/PostSearchByImageRequest'
-  /accounts/me:
-    get:
-      summary: Get user info (self)
-      tags:
-        - accounts
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GetAccountMeResponse'
-      operationId: getSelfAccount
-      description: |-
-        自分自身にまつわる情報をすべて取得します
-        通常、ログイン時に一度だけ呼び出されます
-    parameters: []
-  /accounts/login/form:
-    post:
-      summary: Login with form
-      tags:
-        - accounts
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PostLoginWithFormResponse'
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GeneralMessageResponse'
-      operationId: loginWithForm
-      description: IDとパスワードを用いてユーザー認証し、APIトークンを発行します
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PostLoginWithFormRequest'
-            examples:
-              user:
-                value:
-                  id: test_user
-                  password: this_is_only_for_test
-              admin:
-                value:
-                  id: test_admin
-                  password: this_is_only_for_test
-        description: ユーザーIDとパスワードをパラメータに取ります
   /artists:
     post:
       summary: Create artist
