@@ -596,21 +596,6 @@ paths:
       description: |-
         イラスト数の多い投稿者上位5件を取得します
         サイト内上部 ナビゲーションメニューで使用しています
-  /news/list:
-    get:
-      summary: Get news list
-      tags:
-        - news
-      responses:
-        '200':
-          description: 応答のdataに配列で返却されます
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GetNewsListResponse'
-              examples: {}
-      operationId: getNewsList
-      description: ニュース一覧を取得します
   '/news/{newsID}':
     parameters:
       - schema:
@@ -630,20 +615,22 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetNewsResponse'
+                $ref: '#/components/schemas/NewsStruct'
               examples: {}
+        '404':
+          description: Not Found
       operationId: getNews
       description: 指定したニュースの内容を取得します
     delete:
       summary: Delete news
       operationId: deleteNews
       responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DeleteNewsResponse'
+        '204':
+          description: No Content
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
       tags:
         - news
       description: |-
@@ -658,7 +645,11 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PutNewsResponse'
+                $ref: '#/components/schemas/NewsStruct'
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
       tags:
         - news
       description: |-
@@ -668,7 +659,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PutNewsRequest'
+              $ref: '#/components/schemas/NewsStruct'
   '/mylists/{mylistID}':
     parameters:
       - schema:
@@ -2074,6 +2065,19 @@ paths:
               $ref: '#/components/schemas/PostNewsRequest'
       tags:
         - news
+    get:
+      summary: Get all news
+      operationId: get-news
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetNewsListResponse'
+      description: ニュース一覧を取得します
+      tags:
+        - news
   '/accounts/{accountID}/notify/clients':
     get:
       summary: Get notify clients
@@ -2759,11 +2763,12 @@ paths:
             schema:
               $ref: '#/components/schemas/PostTimelineGeneralRequest'
     parameters: []
-  /timeline:
+  /search/timeline:
     get:
       summary: Get timeline
       tags:
         - timeline
+        - search
       responses:
         '200':
           description: OK
@@ -2771,13 +2776,21 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetSearchGeneralResponse'
+        '403':
+          description: Forbidden
       operationId: getTimeline
       parameters:
         - $ref: '#/components/parameters/SearchQuerySort'
         - $ref: '#/components/parameters/SearchQueryOrder'
         - $ref: '#/components/parameters/SearchQueryPage'
+        - schema:
+            type: integer
+          in: query
+          name: id
+          description: ユーザーID
       description: タイムラインを取得します
-  /timeline/following:
+    parameters: []
+  /timeline:
     get:
       summary: Get followings
       tags:
@@ -2791,6 +2804,7 @@ paths:
                 $ref: '#/components/schemas/GetTimelineFollowingResponse'
       operationId: getFollowing
       description: フォロー中の絵師ID一覧を取得します
+    parameters: []
   /wiki:
     post:
       summary: Add wiki article
@@ -2810,6 +2824,15 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/PostWikiArticleRequest'
+    get:
+      summary: Get wiki articles
+      operationId: getWikiArticles
+      responses:
+        '200':
+          description: OK
+      description: 全記事一覧を取得します
+      tags:
+        - wiki
   '/wiki/{articleID}':
     parameters:
       - schema:
@@ -3252,6 +3275,12 @@ paths:
                 $ref: '#/components/schemas/GetMylistListResponse'
       operationId: get-mylists
       description: 全ユーザーの作成したマイリスト一覧を取得します
+      parameters:
+        - schema:
+            type: boolean
+          in: query
+          name: force_all
+          description: 管理者の場合非公開含めて一括取得できる
 components:
   schemas:
     SearchResultStruct:
@@ -5300,48 +5329,43 @@ components:
                 createdDate: '2021/03/14 02:16:03'
                 updatedDate: '2021/03/14 02:16:03'
                 private: false
-      properties:
-        data:
-          type: object
-          required:
-            - title
-            - count
-            - current
-            - pages
-            - contents
-          properties:
-            title:
-              type: string
-              minLength: 1
-            count:
-              type: integer
-              example: 1
-              default: 1
-              minimum: 1
-            current:
-              type: integer
-              default: 1
-              example: 1
-              minimum: 1
-              maximum: 1
-              enum:
-                - 1
-            pages:
-              type: integer
-              example: 1
-              minimum: 1
-              maximum: 1
-              default: 1
-              enum:
-                - 1
-            contents:
-              type: array
-              uniqueItems: true
-              minItems: 1
-              items:
-                $ref: '#/components/schemas/MylistStruct'
       required:
-        - data
+        - title
+        - count
+        - current
+        - pages
+        - contents
+      properties:
+        title:
+          type: string
+          minLength: 1
+        count:
+          type: integer
+          example: 1
+          default: 1
+          minimum: 1
+        current:
+          type: integer
+          default: 1
+          example: 1
+          minimum: 1
+          maximum: 1
+          enum:
+            - 1
+        pages:
+          type: integer
+          example: 1
+          minimum: 1
+          maximum: 1
+          default: 1
+          enum:
+            - 1
+        contents:
+          type: array
+          uniqueItems: true
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/MylistStruct'
     PostSearchByImageRequest:
       title: PostSearchByImageRequest
       type: object
@@ -7898,6 +7922,39 @@ components:
           type: integer
       required:
         - code
+    PaginationStruct:
+      title: PaginationStruct
+      type: object
+      properties:
+        title:
+          type: string
+          minLength: 1
+          example: 香風智乃
+        type:
+          type: string
+          description: ''
+          example: 'mylist,tag'
+          default: search
+        count:
+          type: integer
+          example: 0
+          description: ヒット総数
+        current:
+          type: integer
+          description: 現在のページ
+        pages:
+          type: integer
+          description: ページ数
+        per_page:
+          type: integer
+          description: ページ毎の取得数
+      required:
+        - title
+        - type
+        - count
+        - current
+        - pages
+        - per_page
   securitySchemes:
     Authorization:
       type: http
