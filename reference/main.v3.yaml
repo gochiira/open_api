@@ -5674,33 +5674,6 @@ components:
         code:
           type: string
           description: 招待コード
-    DeleteInviteResponse:
-      title: DeleteInviteResponse
-      type: object
-      x-examples:
-        success:
-          status: 200
-          message: ok
-        failed-internal-error:
-          status: 500
-          message: Server bombed.
-        failed-permission:
-          status: 400
-          message: You don't have enough permission.
-      properties:
-        status:
-          type: integer
-          minimum: 100
-          maximum: 999
-          example: 200
-          default: 200
-          format: int32
-        message:
-          type: string
-          minLength: 1
-      required:
-        - status
-        - message
     DeleteInviteRequest:
       title: DeleteInviteRequest
       type: object
