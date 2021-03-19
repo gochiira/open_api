@@ -3530,7 +3530,7 @@ components:
           format: int32
         permission:
           type: object
-          description: 権限
+          description: 管理者権限とは別の細かな権限
           properties:
             can_invite:
               type: boolean
