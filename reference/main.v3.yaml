@@ -3409,7 +3409,7 @@ components:
           minimum: 0
           maximum: 9
           format: int32
-        permission:
+        access:
           type: object
           description: 管理者権限とは別の細かな権限
           properties:
@@ -3487,6 +3487,9 @@ components:
           description: ユーザーID
         apiKey:
           type: string
+        permission:
+          type: integer
+          description: '権限レベル 0:普通 5:Modelator 9:SysOp'
     DeleteAccountRequest:
       title: DeleteAccountRequest
       type: object
