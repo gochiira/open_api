@@ -1798,12 +1798,16 @@ paths:
       summary: Create art
       operationId: addArt
       responses:
-        '200':
-          description: OK
+        '201':
+          description: Created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PostArtResponse'
+                $ref: '#/components/schemas/ArtStruct'
+        '400':
+          description: Bad Request
+        '403':
+          description: Forbidden
       tags:
         - arts
       description: パラメータで与えられたイラストを投稿します
@@ -1811,7 +1815,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PostArtRequest'
+              $ref: '#/components/schemas/ArtStruct'
   /search/uploaders:
     get:
       summary: Search by uploader
@@ -3031,7 +3035,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PostAccountResponse'
+                $ref: '#/components/schemas/AccountStruct'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
       tags:
         - accounts
       description: 新しいアカウントを作成します
@@ -3039,7 +3049,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PostAccountRequest'
+              $ref: '#/components/schemas/AccountStruct'
 components:
   schemas:
     SearchResultStruct:
@@ -3365,6 +3375,10 @@ components:
           type: boolean
           default: false
           description: TOTPを使用するか否か
+        id:
+          type: integer
+        apiKey:
+          type: string
     DeleteAccountRequest:
       title: DeleteAccountRequest
       type: object
@@ -3429,6 +3443,21 @@ components:
             green: 0
             red: 0
             blue: 0
+        example-2:
+          title: メグ「今日はマメ風呂だよ〜！」
+          caption: ''
+          originService: Twitter
+          originUrl: 'https://twitter.com/syuyakustar/status/1368170402778935297?page=1'
+          imageUrl: 'https://twitter.com/syuyakustar/status/1368170402778935297?page=1'
+          artist:
+            name: みかミシェ㌠
+          tag:
+            - 奈津恵
+          chara: []
+          group: []
+          system:
+            - 2021年03月
+          nsfw: false
       properties:
         title:
           type: string
@@ -3957,21 +3986,8 @@ components:
           status: 400
           message: Request parameters are not satisfied.
       properties:
-        status:
-          type: integer
-          minimum: 100
-          maximum: 999
-          example: 200
-          default: 200
-          format: int32
-        message:
-          type: string
-          minLength: 1
         apiKey:
           type: string
-      required:
-        - status
-        - message
     GetArtResponse:
       title: GetArtResposnse
       type: object
@@ -5122,44 +5138,27 @@ components:
             contents: []
       title: GetCatalogArtistResponse
       properties:
-        status:
-          type: integer
-          minimum: 100
-          maximum: 999
-          example: 200
-          default: 200
-          format: int32
-        message:
+        title:
           type: string
           minLength: 1
-        data:
-          type: object
-          required:
-            - title
-            - count
-            - current
-            - pages
-            - contents
-          properties:
-            title:
-              type: string
-              minLength: 1
-            count:
-              type: integer
-            current:
-              type: integer
-            pages:
-              type: integer
-            contents:
-              type: array
-              uniqueItems: true
-              minItems: 1
-              items:
-                $ref: '#/components/schemas/ArtistStruct'
+        count:
+          type: integer
+        current:
+          type: integer
+        pages:
+          type: integer
+        contents:
+          type: array
+          uniqueItems: true
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/ArtistStruct'
       required:
-        - status
-        - message
-        - data
+        - title
+        - count
+        - current
+        - pages
+        - contents
     GetCatalogTagResponse:
       description: ''
       type: object
@@ -5322,46 +5321,29 @@ components:
             current: 1
             pages: 1
             contents: []
+      title: GetCatalogTagResponse
+      required:
+        - title
+        - count
+        - current
+        - pages
+        - contents
       properties:
-        status:
-          type: integer
-          minimum: 100
-          maximum: 999
-          example: 200
-          default: 200
-          format: int32
-        message:
+        title:
           type: string
           minLength: 1
-        data:
-          type: object
-          required:
-            - title
-            - count
-            - current
-            - pages
-            - contents
-          properties:
-            title:
-              type: string
-              minLength: 1
-            count:
-              type: integer
-            current:
-              type: integer
-            pages:
-              type: integer
-            contents:
-              type: array
-              uniqueItems: true
-              minItems: 1
-              items:
-                $ref: '#/components/schemas/TagStruct'
-      required:
-        - status
-        - message
-        - data
-      title: GetCatalogTagResponse
+        count:
+          type: integer
+        current:
+          type: integer
+        pages:
+          type: integer
+        contents:
+          type: array
+          uniqueItems: true
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/TagStruct'
     GetCatalogUploaderResponse:
       description: ''
       type: object
@@ -5456,46 +5438,29 @@ components:
             current: 1
             pages: 1
             contents: []
+      title: GetCatalogCharacterResponse
       properties:
-        status:
-          type: integer
-          minimum: 100
-          maximum: 999
-          example: 200
-          default: 200
-          format: int32
-        message:
+        title:
           type: string
           minLength: 1
-        data:
-          type: object
-          required:
-            - title
-            - count
-            - current
-            - pages
-            - contents
-          properties:
-            title:
-              type: string
-              minLength: 1
-            count:
-              type: integer
-            current:
-              type: integer
-            pages:
-              type: integer
-            contents:
-              type: array
-              uniqueItems: true
-              minItems: 1
-              items:
-                $ref: '#/components/schemas/TagStruct'
-      required:
-        - status
-        - message
-        - data
-      title: GetCatalogCharacterResponse
+        count:
+          type: integer
+        current:
+          type: integer
+        pages:
+          type: integer
+        contents:
+          type: array
+          uniqueItems: true
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/TagStruct'
+    　required:
+        - title
+        - count
+        - current
+        - pages
+        - contents
     UploaderStruct:
       title: UploaderStruct
       type: object
