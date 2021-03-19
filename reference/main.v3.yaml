@@ -19,6 +19,31 @@ servers:
   - url: 'http://127.0.0.1:8080'
     description: Dev
 paths:
+  /accounts:
+    post:
+      summary: Create account
+      operationId: createAccount
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountStruct'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
+      tags:
+        - accounts
+      description: 新しいアカウントを作成します
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountStruct'
   '/accounts/{accountID}':
     parameters:
       - schema:
@@ -2953,31 +2978,7 @@ paths:
                 $ref: '#/components/schemas/ActivityPubActorStruct'
       operationId: get-activitypub-server
       description: ActivityPubのユーザー情報(サーバー)を返す
-  /accounts:
-    post:
-      summary: Create account
-      operationId: createAccount
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/AccountStruct'
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GeneralMessageResponse'
-      tags:
-        - accounts
-      description: 新しいアカウントを作成します
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/AccountStruct'
+
   '/invites/{inviteID}':
     parameters:
       - schema:
