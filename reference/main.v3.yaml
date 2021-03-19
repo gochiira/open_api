@@ -1869,7 +1869,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PostInviteResponse'
+                $ref: '#/components/schemas/InviteStruct'
         '400':
           description: Bad Request
           content:
@@ -1897,33 +1897,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PostInviteRequest'
-    delete:
-      summary: Delete invitation
-      operationId: deleteInvitation
-      description: 招待コードを無効化します
-      tags:
-        - invites
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/DeleteInviteRequest'
-      responses:
-        '204':
-          description: No Content
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GeneralMessageResponse'
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GeneralMessageResponse'
+              $ref: '#/components/schemas/InviteStruct'
   /mutes:
     post:
       summary: Add mute
@@ -3004,6 +2978,50 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/AccountStruct'
+  '/invites/{inviteID}':
+    parameters:
+      - schema:
+          type: string
+        name: inviteID
+        in: path
+        required: true
+    get:
+      summary: Get invite
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InviteStruct'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
+      operationId: getInvite
+      description: 指定した招待コードの情報を取得します
+    delete:
+      summary: Delete invite
+      operationId: deleteInvite
+      responses:
+        '204':
+          description: No Content
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
+      description: 指定した招待コードを無効化します
 components:
   schemas:
     SearchResultStruct:
@@ -8027,6 +8045,23 @@ components:
       properties:
         message:
           type: string
+    InviteStruct:
+      title: InviteStruct
+      type: object
+      properties:
+        id:
+          type: integer
+        code:
+          type: string
+        issuer:
+          type: object
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+      required:
+        - code
   securitySchemes:
     Authorization:
       type: http
