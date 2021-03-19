@@ -2841,7 +2841,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PostWikiArticleResponse'
+                $ref: '#/components/schemas/WikiArticleStruct'
       description: Wikiの記事を作成します
       tags:
         - wiki
@@ -2849,7 +2849,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PostWikiArticleRequest'
+              $ref: '#/components/schemas/WikiArticleStruct'
     get:
       summary: Get wiki articles
       operationId: getWikiArticles
@@ -2876,7 +2876,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetWikiArticleResponse'
+                $ref: '#/components/schemas/WikiArticleStruct'
+        '404':
+          description: Not Found
       operationId: getWikiArticle
       description: Wikiの記事を取得します
     put:
@@ -2888,7 +2890,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PutWikiArticleResponse'
+                $ref: '#/components/schemas/WikiArticleStruct'
+        '400':
+          description: Bad Request
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
       description: Wikiの記事を編集します
       tags:
         - wiki
@@ -2896,20 +2904,20 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PutWikiArticleRequest'
+              $ref: '#/components/schemas/WikiArticleStruct'
     delete:
       summary: Delete wiki article
       operationId: deleteWikiArticle
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DeleteWikiArticleResponse'
       tags:
         - wiki
       description: Wikiの記事を削除します
+      responses:
+        '204':
+          description: No Content
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
   /wiki/find:
     get:
       summary: Find wiki article
@@ -4671,37 +4679,6 @@ components:
       required:
         - user
         - comment
-    PutWikiArticleResponse:
-      description: ''
-      type: object
-      x-examples:
-        success:
-          status: 200
-          message: Update comment succeed.
-        failed-internal-error:
-          status: 500
-          message: Server bombed.
-        failed-not-found:
-          status: 404
-          message: The comment was not found.
-        failed-not-satisfied:
-          status: 400
-          message: Request parameters are not satisfied.
-      properties:
-        status:
-          type: integer
-          example: 200
-          minimum: 100
-          maximum: 999
-          default: 200
-          format: int32
-        message:
-          type: string
-          minLength: 1
-      required:
-        - status
-        - message
-      title: PutWikiArticleResponse
     GetCatalogArtistResponse:
       description: ''
       type: object
@@ -5500,39 +5477,6 @@ components:
           type: string
           minLength: 1
         tagID:
-          type: integer
-      required:
-        - status
-        - message
-    PostWikiArticleResponse:
-      title: PostWikiArticleResponse
-      type: object
-      x-examples:
-        success:
-          status: 200
-          message: ok
-          articleID: 1
-        failed-not-satisfied:
-          status: 400
-          message: The parameters were not satisfied.
-        failed-bad-request:
-          status: 400
-          message: Bad request.
-        failed-conflict:
-          status: 409
-          message: The specified article already exists.
-      properties:
-        status:
-          type: integer
-          minimum: 100
-          maximum: 999
-          example: 200
-          default: 200
-          format: int32
-        message:
-          type: string
-          minLength: 1
-        articleID:
           type: integer
       required:
         - status
@@ -6888,10 +6832,19 @@ components:
       required:
         - status
         - message
-    PostWikiArticleRequest:
-      title: PostWikiArticleRequest
+    WikiArticleStruct:
+      title: WikiArticleStruct
       type: object
+      x-examples:
+        example-1:
+          type: 0
+          id: 1
+          title: お窓
+          body: 作者・開発者。えらいひと。
       properties:
+        article_id:
+          type: integer
+          description: 記事ID
         type:
           type: integer
           description: '対象の記事種別 0:ユーザー 1:タグ 2:絵師'
@@ -6919,121 +6872,15 @@ components:
           description: 記事本文
           maxLength: 3000
           minLength: 1
-      required:
-        - type
-        - id
-        - title
-        - body
-      x-examples:
-        example-1:
-          type: 0
-          id: 1
-          title: お窓
-          body: 作者・開発者。えらいひと。
-    GetWikiArticleResponse:
-      title: GetWikiArticleResponse
-      type: object
-      x-examples:
-        success:
-          status: 200
-          message: ok
-          data:
-            type: 0
-            id: 1
-            title: お窓
-            body: 管理者/開発者。すごい。
-      properties:
-        status:
+        date:
+          type: string
+          minLength: 19
+          maxLength: 19
+          description: 作成日時
+        revision:
           type: integer
-          minimum: 100
-          maximum: 999
-          example: 200
-          default: 200
-          format: int32
-        message:
-          type: string
-          minLength: 1
-        data:
-          type: object
-          properties:
-            type:
-              type: integer
-              description: '対象の記事種別 0:ユーザー 1:タグ 2:絵師'
-              enum:
-                - 0
-                - 1
-                - 2
-              example: 0
-              default: 0
-              minimum: 0
-              maximum: 2
-              format: int32
-            id:
-              type: integer
-              description: 対象のユーザー/タグ/絵師ID
-              minimum: 1
-              format: int32
-            title:
-              type: string
-              description: 記事タイトル
-              minLength: 1
-              maxLength: 50
-            body:
-              type: string
-              description: 記事本文
-              maxLength: 3000
-              minLength: 1
-            createdDate:
-              type: string
-              description: 記事の作成日
-            revision:
-              type: integer
-              description: 更新回数
-      required:
-        - status
-        - message
-    PutWikiArticleRequest:
-      title: PutWikiArticleRequest
-      type: object
-      properties:
-        title:
-          type: string
-          description: 記事タイトル
-          minLength: 1
-          maxLength: 50
-        body:
-          type: string
-          description: 記事本文
-          maxLength: 3000
-          minLength: 1
-    DeleteWikiArticleResponse:
-      description: ''
-      type: object
-      x-examples:
-        success:
-          status: 200
-          message: Deleted.
-        failed-not-found:
-          status: 404
-          message: The article was not found.
-        failed-permission:
-          status: 400
-          message: You don't have enough permission.
-      title: DeleteWikiArticleResponse
-      properties:
-        status:
-          type: integer
-          example: 200
-          default: 200
-          minimum: 100
-          maximum: 999
-          format: int32
-        message:
-          type: string
-          minLength: 1
-      required:
-        - status
-        - message
+          description: 総編集回数
+          minimum: 1
     GetFindWikiArticleResponse:
       title: GetFindWikiArticleResponse
       type: object
