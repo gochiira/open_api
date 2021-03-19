@@ -1489,33 +1489,7 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/DeleteArtTagsRequest'
-  '/arts/{illustID}/likes':
-    parameters:
-      - schema:
-          type: integer
-        name: illustID
-        in: path
-        required: true
-        description: いいねしたいイラストのID
-    get:
-      summary: Get art likes with specify type
-      operationId: getArtLikes
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GetArtLikesResponse'
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GeneralMessageResponse'
-      description: 指定したイラストのいいねを取得します
-      tags:
-        - arts
+
   '/arts/{illustID}/likes/{likeType}':
     parameters:
       - schema:
@@ -1525,11 +1499,18 @@ paths:
         required: true
         description: いいねしたいイラストのID
       - schema:
-          type: integer
+          type: string
+          enum:
+            - yellow
+            - green
+            - red
+            - blue
+          default: yellow
+          example: yellow
         name: likeType
         in: path
         required: true
-        description: 'いいね種別 1:黄 2:緑 3:赤 4:青'
+        description: いいね種別
     put:
       summary: Plus art like (with using star)
       operationId: addArtLikeByStar
@@ -1539,7 +1520,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PutArtLikesResponse'
+                $ref: '#/components/schemas/GetArtLikesResponse'
         '402':
           description: Payment Required
           content:
@@ -1548,6 +1529,12 @@ paths:
                 $ref: '#/components/schemas/GeneralMessageResponse'
         '404':
           description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
+        '429':
+          description: Too Many Requests
           content:
             application/json:
               schema:
@@ -1577,6 +1564,33 @@ paths:
       description: 指定したイラストのいいねを取得します
       tags:
         - arts
+  '/arts/{illustID}/likes':
+    parameters:
+      - schema:
+          type: integer
+        name: illustID
+        in: path
+        required: true
+        description: いいねしたいイラストのID
+    get:
+      summary: Get art likes with specify type
+      operationId: getArtLikes
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetArtAllLikesResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
+      description: 指定したイラストのいいねを取得します
+      tags:
+        - arts
   '/arts/{illustID}/views':
     parameters:
       - schema:
@@ -1594,7 +1608,19 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PutArtViewsResponse'
+                $ref: '#/components/schemas/GetArtViewsResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
       tags:
         - arts
       description: |-
@@ -1610,6 +1636,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetArtViewsResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
       description: 指定したイラストの閲覧回数のみを取得します
       tags:
         - arts
@@ -1632,6 +1664,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetArtCommentsResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
       operationId: getArtComments
       description: 指定したイラストに付いているコメントのみを一覧で取得します
     post:
@@ -1643,7 +1681,25 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PostArtCommentResponse'
+                $ref: '#/components/schemas/CommentStruct'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
       description: 指定したイラストにコメントを追加します
       tags:
         - arts
@@ -1651,7 +1707,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PostArtCommentRequest'
+              $ref: '#/components/schemas/CommentEditStruct'
   '/arts/{illustID}/comments/{commentID}':
     parameters:
       - schema:
@@ -1675,7 +1731,19 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PutArtCommentResponse'
+                $ref: '#/components/schemas/CommentStruct'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
       tags:
         - arts
       description: |-
@@ -1685,17 +1753,25 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PutArtCommentRequest'
+              $ref: '#/components/schemas/CommentEditStruct'
     delete:
       summary: Delete art comment
       operationId: deleteArtCommentById
       responses:
-        '200':
-          description: OK
+        '204':
+          description: No Content
+        '403':
+          description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DeleteArtCommentResponse'
+                $ref: '#/components/schemas/GeneralMessageResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
       description: 指定したイラストに付けたコメントを削除します
       tags:
         - arts
@@ -1708,7 +1784,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetArtCommentResponse'
+                $ref: '#/components/schemas/CommentStruct'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
       description: 指定したイラストに付いている、指定されたIDのコメントを取得します
       tags:
         - arts
@@ -5006,20 +5088,10 @@ components:
       required:
         - status
         - message
-    GetArtLikesResponse:
-      title: GetArtLikesResponse
+    GetArtAllLikesResponse:
+      title: GetArtAllLikesResponse
       type: object
-      x-examples:
-        success:
-          status: 200
-          message: ok
-          likes: 1204
-        failed-not-found:
-          status: 404
-          message: The art was not found.
-        failed-internal-error:
-          status: 500
-          message: Server bombed.
+      x-examples: {}
       properties:
         likes:
           type: object
@@ -5032,6 +5104,12 @@ components:
               type: integer
             blue:
               type: integer
+    GetArtLikesResponse:
+      title: GetArtLikesResponse
+      type: object
+      properties:
+        likes:
+          type: integer
     GetArtViewsResponse:
       title: GetArtViewsResponse
       type: object
@@ -5047,22 +5125,9 @@ components:
           status: 500
           message: Server bombed.
       properties:
-        status:
-          type: integer
-          minimum: 100
-          maximum: 999
-          example: 200
-          format: int32
-          default: 200
-        message:
-          type: string
-          minLength: 1
         views:
           type: integer
           minimum: 0
-      required:
-        - status
-        - message
     GetArtCommentResponse:
       title: GetArtCommentResponse
       type: object
@@ -9325,6 +9390,12 @@ components:
           minLength: 1
       required:
         - message
+    CommentEditStruct:
+      title: CommentEditStruct
+      type: object
+      properties:
+        message:
+          type: string
   securitySchemes:
     Authorization:
       type: http
