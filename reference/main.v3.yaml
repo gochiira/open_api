@@ -207,7 +207,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PostReissueTokenResponse'
+                $ref: '#/components/schemas/PostGenerateTokenResponse'
       description: Bot等向けの長期間有効なアクセストークンを生成します
       tags:
         - token
@@ -1900,7 +1900,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PostNewsResponse'
+                $ref: '#/components/schemas/NewsStruct'
       description: |-
         ニュースを追加します
         (管理者のみリクエストできます)
@@ -3333,8 +3333,8 @@ components:
           minLength: 1
           maxLength: 3000
           description: ニュース本文 3000文字まで
-    NavigationResult:
-      title: NavigationResult
+    NavigationStruct:
+      title: NavigationStruct
       type: object
       description: サイト内上部ナビゲーションのエンドポイントで用いる応答モデル
       properties:
@@ -4048,8 +4048,8 @@ components:
           minItems: 0
           items:
             $ref: '#/components/schemas/UploadHistoryStruct'
-    PostReissueTokenResponse:
-      title: PostReissueTokenResponse
+    PostGenerateTokenResponse:
+      title: PostGenerateTokenResponse
       type: object
       x-examples:
         example:
@@ -4285,20 +4285,18 @@ components:
           $ref: '#/components/schemas/ArtStruct'
         from:
           $ref: '#/components/schemas/ArtStruct'
+      required:
+        - to
+        - from
     GetArtTagsResponse:
       title: GetArtTagsResponse
       type: object
       x-examples:
         success:
-          status: 200
-          message: ok
-          data:
+          tags:
             - id: 1
               name: 香風智乃
               nsfw: false
-        failed-not-found:
-          status: 404
-          message: The art don't have any tag.
       properties:
         tags:
           type: array
@@ -4343,17 +4341,7 @@ components:
     GetArtViewsResponse:
       title: GetArtViewsResponse
       type: object
-      x-examples:
-        success:
-          status: 200
-          message: ok
-          views: 1204
-        failed-not-found:
-          status: 404
-          message: The art was not found.
-        failed-internal-error:
-          status: 500
-          message: Server bombed.
+      x-examples: {}
       properties:
         views:
           type: integer
@@ -4363,8 +4351,6 @@ components:
       type: object
       x-examples:
         success:
-          status: 200
-          message: ok
           comments:
             - user:
                 id: 1
@@ -4375,8 +4361,6 @@ components:
                 body: string
                 id: 1
         success-no-data:
-          status: 200
-          message: ok
           comments: []
       properties:
         comments:
@@ -4396,7 +4380,7 @@ components:
             created: string
             updated: string
             body: string
-      title: Comment
+      title: CommentStruct
       properties:
         user:
           type: object
@@ -4728,7 +4712,7 @@ components:
           uniqueItems: true
           minItems: 1
           items:
-            $ref: '#/components/schemas/NavigationResult'
+            $ref: '#/components/schemas/NavigationStruct'
     GetNewsListResponse:
       title: GetNewsListResponse
       type: object
@@ -5241,40 +5225,6 @@ components:
           additionalProperties:
             type: string
             description: 指定されたイラストIDをキーとして、それぞれ存在するかのboolean
-    PostNewsResponse:
-      description: ''
-      type: object
-      x-examples:
-        success:
-          status: 201
-          message: Created.
-          newsID: 1
-        failed-not-satisfied:
-          status: 400
-          message: Request parameters are not satisfied.
-        failed-params:
-          status: 400
-          message: Request parameter is invalid.
-        failed-permission:
-          status: 400
-          message: You don't have enough permission.
-      title: PostNewsResponse
-      properties:
-        status:
-          type: integer
-          minimum: 100
-          maximum: 999
-          example: 200
-          default: 200
-          format: int32
-        message:
-          type: string
-          minLength: 1
-        newsID:
-          type: integer
-      required:
-        - status
-        - message
     GetNotifyClientsResponse:
       title: GetNotifyClientsResponse
       type: object
@@ -5428,14 +5378,13 @@ components:
         type:
           type: string
           description: '通報種別 1:不適切名称 2:不適切年齢 3:規約違反 4:法律違反'
-          format: int32
-          default: 1
           enum:
             - bad-name
             - wrong-info
             - violation-rules
             - dmca
           example: bad-name
+          default: bad-name
         msg:
           type: string
           description: 通報本文
