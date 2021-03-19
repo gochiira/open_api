@@ -1489,6 +1489,33 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/DeleteArtTagsRequest'
+  '/arts/{illustID}/likes':
+    parameters:
+      - schema:
+          type: integer
+        name: illustID
+        in: path
+        required: true
+        description: いいねしたいイラストのID
+    get:
+      summary: Get art likes with specify type
+      operationId: getArtLikes
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetArtLikesResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
+      description: 指定したイラストのいいねを取得します
+      tags:
+        - arts
   '/arts/{illustID}/likes/{likeType}':
     parameters:
       - schema:
@@ -1537,6 +1564,16 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetArtLikesResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
       description: 指定したイラストのいいねを取得します
       tags:
         - arts
