@@ -669,7 +669,7 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/PutNewsRequest'
-  '/mylist/{mylistID}':
+  '/mylists/{mylistID}':
     parameters:
       - schema:
           type: integer
@@ -1015,6 +1015,8 @@ paths:
                             id: 1
                             name: みふね
                           extension: png
+        '403':
+          description: Forbidden
       operationId: searchArtByMylist
       description: 指定したマイリストのイラスト一覧を取得します
       parameters:
@@ -2074,30 +2076,7 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/DeleteMuteRequest'
-  /mylist:
-    post:
-      summary: Create mylist
-      operationId: createMylist
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/MylistStruct'
-        '400':
-          description: Bad Request
-        '409':
-          description: Conflict
-      description: マイリストを作成します
-      tags:
-        - mylist
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/MylistStruct'
-  '/mylist/{mylistID}/finds':
+  '/mylists/{mylistID}/finds':
     parameters:
       - schema:
           type: integer
@@ -2145,7 +2124,7 @@ paths:
               $ref: '#/components/schemas/PostNewsRequest'
       tags:
         - news
-  /notify/clients:
+  '/accounts/{accountID}/notify/clients':
     get:
       summary: Get notify clients
       tags:
@@ -2165,8 +2144,13 @@ paths:
           in: query
           name: type
           description: '0:全て 1:LineNotify 2:WebPush'
-    parameters: []
-  /notify/clients/web:
+    parameters:
+      - schema:
+          type: string
+        name: accountID
+        in: path
+        required: true
+  '/accounts/{accountID}/notify/clients/web':
     post:
       summary: Register webpush notify client
       operationId: registerWebNotifyClient
@@ -2189,8 +2173,13 @@ paths:
             schema:
               $ref: '#/components/schemas/PostRegisterWebPushRequest'
         description: ''
-    parameters: []
-  /notify/conditions:
+    parameters:
+      - schema:
+          type: string
+        name: accountID
+        in: path
+        required: true
+  '/accounts/{accountID}/notify/conditions':
     post:
       summary: Register notify condition
       operationId: registerNotifyCondition
@@ -2209,7 +2198,12 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/PostNotifyConditionRequest'
-    parameters: []
+    parameters:
+      - schema:
+          type: string
+        name: accountID
+        in: path
+        required: true
     get:
       summary: Get notify conditions
       operationId: getNotifyConditions
@@ -2223,7 +2217,7 @@ paths:
       description: 通知条件一覧を取得します
       tags:
         - notify
-  /notify/clients/line:
+  '/accounts/{accountID}/notify/clients/line':
     post:
       summary: Register line notify client
       operationId: registerLineNotifyClient
@@ -2242,12 +2236,22 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/PostRegisterLineNotifyRequest'
-    parameters: []
-  '/notify/clients/{clientID}':
+    parameters:
+      - schema:
+          type: string
+        name: accountID
+        in: path
+        required: true
+  '/accounts/{accountID}/notify/clients/{clientID}':
     parameters:
       - schema:
           type: integer
         name: clientID
+        in: path
+        required: true
+      - schema:
+          type: string
+        name: accountID
         in: path
         required: true
     get:
@@ -2294,11 +2298,16 @@ paths:
       description: 指定した通知クライアントを削除します
       tags:
         - notify
-  '/notify/conditions/{conditionID}':
+  '/accounts/{accountID}/notify/conditions/{conditionID}':
     parameters:
       - schema:
           type: integer
         name: conditionID
+        in: path
+        required: true
+      - schema:
+          type: string
+        name: accountID
         in: path
         required: true
     get:
@@ -3160,6 +3169,125 @@ paths:
                 $ref: '#/components/schemas/GeneralMessageResponse'
       operationId: getUserMylists
       description: 指定したユーザーのマイリスト一覧を取得します
+    post:
+      summary: Create user mylist
+      operationId: createMylist
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MylistStruct'
+        '400':
+          description: Bad Request
+        '403':
+          description: Forbidden
+        '409':
+          description: Conflict
+      description: マイリストを作成します
+      tags:
+        - mylist
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MylistStruct'
+  '/accounts/{accountID}/mutes':
+    parameters:
+      - schema:
+          type: string
+        name: accountID
+        in: path
+        required: true
+    get:
+      summary: Get mute list
+      tags:
+        - accounts
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetMutesResponse'
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      operationId: get-accounts-accountID-mutes
+      description: 指定したアカウントのユーザーのミュート一覧を取得します
+    post:
+      summary: Add mute
+      operationId: post-accounts-accountID-mutes
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostMuteResponse'
+      tags:
+        - accounts
+      description: 指定したアカウントのユーザーのミュートを追加します
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostMuteRequest'
+  '/accounts/{accountID}/mutes/{muteID}':
+    parameters:
+      - schema:
+          type: string
+        name: accountID
+        in: path
+        required: true
+      - schema:
+          type: string
+        name: muteID
+        in: path
+        required: true
+    get:
+      summary: Get mute
+      tags:
+        - accounts
+      responses:
+        '200':
+          description: OK
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      operationId: get-accounts-accountID-mutes-muteID
+      description: 指定したミュート情報を取得します
+    put:
+      summary: Edit mute
+      operationId: put-accounts-accountID-mutes-muteID
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      description: 指定したミュート情報を編集します
+      tags:
+        - accounts
+    delete:
+      summary: Delete mute
+      operationId: delete-accounts-accountID-mutes-muteID
+      responses:
+        '204':
+          description: No Content
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      description: 指定したミュート情報を削除します
+      tags:
+        - accounts
 components:
   schemas:
     SearchResultStruct:
@@ -5032,25 +5160,12 @@ components:
               count: 80
       description: ''
       properties:
-        status:
-          type: integer
-          minimum: 100
-          maximum: 999
-          example: 200
-          default: 200
-          format: int32
-        message:
-          type: string
-          minLength: 1
-        data:
+        navigations:
           type: array
           uniqueItems: true
           minItems: 1
           items:
             $ref: '#/components/schemas/NavigationResult'
-      required:
-        - status
-        - message
     GetNewsResponse:
       title: GetNewsResponse
       type: object
@@ -5103,23 +5218,10 @@ components:
           data: []
       description: ''
       properties:
-        status:
-          type: integer
-          minimum: 100
-          maximum: 999
-          example: 200
-          format: int32
-          default: 200
-        message:
-          type: string
-          minLength: 1
-        data:
+        news:
           type: array
           items:
             $ref: '#/components/schemas/NewsStruct'
-      required:
-        - status
-        - message
     GetSearchGeneralResponse:
       description: ''
       type: object
@@ -5167,16 +5269,6 @@ components:
                   name: Manki Kim
                 extension: jpg
       properties:
-        status:
-          type: integer
-          format: int32
-          default: 200
-          example: 200
-          minimum: 100
-          maximum: 999
-        message:
-          type: string
-          minLength: 1
         data:
           type: object
           required:
@@ -5202,8 +5294,6 @@ components:
               items:
                 $ref: '#/components/schemas/SearchResultStruct'
       required:
-        - status
-        - message
         - data
     GetMylistListResponse:
       description: ''
