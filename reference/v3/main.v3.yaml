@@ -686,7 +686,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetMylistResponse'
+                $ref: '#/components/schemas/MylistStruct'
               examples: {}
         '403':
           description: Forbidden
@@ -702,10 +702,7 @@ paths:
                 $ref: '#/components/schemas/GeneralMessageResponse'
       operationId: getMylist
       description: 指定したマイリストに登録されたイラスト一覧を取得します
-      parameters:
-        - $ref: '#/components/parameters/SearchQueryPage'
-        - $ref: '#/components/parameters/SearchQuerySort'
-        - $ref: '#/components/parameters/SearchQueryOrder'
+      parameters: []
     put:
       summary: Edit mylist
       operationId: editMylist
@@ -715,7 +712,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetMylistResponse'
+                $ref: '#/components/schemas/MylistStruct'
         '403':
           description: Forbidden
         '404':
@@ -725,38 +722,31 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PutMylistRequest'
+              $ref: '#/components/schemas/MylistStruct'
         description: 変更したいものを指定してリクエストします
       tags:
         - mylist
     delete:
       summary: Delete mylist
       operationId: deleteMylist
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DeleteMylistResponse'
       description: マイリストを削除します
       tags:
         - mylist
-  /mylist/list:
-    get:
-      summary: Get mylist list
-      tags:
-        - mylist
       responses:
-        '200':
-          description: OK
+        '204':
+          description: No Content
+        '403':
+          description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetMylistListResponse'
-              examples: {}
-      operationId: getMylists
-      description: 自分の作成したマイリスト一覧を取得します
+                $ref: '#/components/schemas/GeneralMessageResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
   /search/tag:
     get:
       summary: Search by tag
@@ -1993,7 +1983,11 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PostMylistResponse'
+                $ref: '#/components/schemas/MylistStruct'
+        '400':
+          description: Bad Request
+        '409':
+          description: Conflict
       description: マイリストを作成します
       tags:
         - mylist
@@ -2001,7 +1995,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PostMylistRequest'
+              $ref: '#/components/schemas/MylistStruct'
   '/mylist/{mylistID}/finds':
     parameters:
       - schema:
@@ -3033,6 +3027,38 @@ paths:
       description: 指定した招待コードを無効化します
       tags:
         - invites
+  '/accounts/{accountID}/mylists':
+    parameters:
+      - schema:
+          type: string
+        name: accountID
+        in: path
+        required: true
+    get:
+      summary: Get user mylists
+      tags:
+        - accounts
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetMylistListResponse'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
+      operationId: getUserMylists
+      description: 指定したユーザーのマイリスト一覧を取得します
 components:
   schemas:
     SearchResultStruct:
@@ -3681,33 +3707,6 @@ components:
         - finished
         - status
         - illustID
-    DeleteMylistResponse:
-      title: DeleteMylistArtResponse
-      type: object
-      x-examples:
-        success:
-          status: 200
-          message: ok
-        failed-not-found:
-          status: 404
-          message: The mylist was not found.
-        failed-permission:
-          status: 400
-          message: You don't have enough permission.
-      properties:
-        status:
-          type: integer
-          minimum: 100
-          maximum: 999
-          example: 200
-          default: 200
-          format: int32
-        message:
-          type: string
-          minLength: 1
-      required:
-        - status
-        - message
     GetUploadHistoryResponse:
       title: GetUploadHistoryResponse
       type: object
@@ -5812,138 +5811,6 @@ components:
       required:
         - status
         - message
-    PostMylistRequest:
-      title: PostMylistRequest
-      type: object
-      description: ''
-      x-examples:
-        example:
-          name: 外出香風智乃
-          description: ラビハ以外で活躍するアクティブな香風智乃まとめ
-      properties:
-        name:
-          type: string
-          description: マイリスト名
-        description:
-          type: string
-          description: マイリスト説明文
-        private:
-          type: boolean
-          description: 公開か非公開か
-          default: true
-      required:
-        - name
-        - description
-        - private
-    PostMylistResponse:
-      title: CreateMylistResponse
-      type: object
-      x-examples:
-        success-created:
-          status: 201
-          message: Created
-          mylistID: 1
-        failed-bombed:
-          status: 500
-          message: Server bombed
-        failed-bad-request:
-          status: 400
-          message: Bad request.
-        failed-exists:
-          status: 409
-          message: The name is already used.
-        failed-not-satisfied:
-          status: 400
-          message: Request parameters are not satisfied.
-        failed-too-many:
-          status: 400
-          message: 'You have too many mylists, delete one and try again.'
-      properties:
-        status:
-          type: integer
-          minimum: 100
-          maximum: 999
-          default: 200
-          example: 200
-          format: int32
-        message:
-          type: string
-        mylistID:
-          type: integer
-          description: 作成に成功した場合はいるマイリストID
-      required:
-        - status
-        - message
-    PutMylistRequest:
-      title: PutMylistRequest
-      type: object
-      description: ''
-      x-examples:
-        example:
-          title: 外出香風智乃
-          description: 外で活躍する香風智乃まとめ
-          action: add
-          illustID: 1
-      properties:
-        title:
-          type: string
-          description: マイリストのタイトルを編集する場合
-        description:
-          type: string
-          description: マイリストの説明文を編集する場合
-        action:
-          type: string
-          enum:
-            - add
-            - remove
-          default: add
-          example: add
-          description: イラストを追加/削除する場合指定
-        illustID:
-          type: integer
-          description: 追加または削除したいイラストID
-        private:
-          type: boolean
-          description: 公開/非公開
-    PutMylistResponse:
-      title: PutMylistResponse
-      type: object
-      x-examples:
-        success-created:
-          status: 200
-          message: Update complete.
-        failed-bombed:
-          status: 500
-          message: Server bombed.
-        failed-bad-request:
-          status: 400
-          message: Bad request.
-        failed-exists:
-          status: 400
-          message: Already added to the list.
-        failed-not-satisfied:
-          status: 400
-          message: Request parameters are not satisfied.
-        failed-not-admin:
-          status: 400
-          message: You don't have permission to edit.
-        failed-not-exists:
-          status: 400
-          message: Already deleted from the list.
-      properties:
-        status:
-          type: integer
-          minimum: 100
-          maximum: 999
-          example: 200
-          default: 200
-          format: int32
-        message:
-          type: string
-          minLength: 1
-      required:
-        - status
-        - message
     MylistStruct:
       title: MylistStruct
       type: object
@@ -5979,12 +5846,14 @@ components:
           type: boolean
           description: 公開/非公開
           default: true
+        arts:
+          type: array
+          description: データ本体
+          items:
+            type: integer
       required:
-        - id
         - name
         - description
-        - createdDate
-        - updatedDate
         - private
     PostMylistFindsRequest:
       title: PostMylistFindsRequest
@@ -6025,24 +5894,11 @@ components:
           status: 400
           message: You don't have enough permission.
       properties:
-        status:
-          type: integer
-          minimum: 100
-          maximum: 999
-          example: 200
-          default: 200
-          format: int32
-        message:
-          type: string
-          minLength: 1
         data:
           type: object
           additionalProperties:
             type: string
             description: 指定されたイラストIDをキーとして、それぞれ存在するかのboolean
-      required:
-        - status
-        - message
     PostNewsRequest:
       title: PostNewsRequest
       type: object
