@@ -611,6 +611,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/GetMylistResponse'
               examples: {}
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
       operationId: getMylist
       description: 指定したマイリストに登録されたイラスト一覧を取得します
       parameters:
@@ -1895,13 +1901,6 @@ paths:
     delete:
       summary: Delete invitation
       operationId: deleteInvitation
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DeleteInviteResponse'
       description: 招待コードを無効化します
       tags:
         - invites
@@ -1910,6 +1909,21 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/DeleteInviteRequest'
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
   /mutes:
     post:
       summary: Add mute
