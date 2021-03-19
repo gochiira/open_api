@@ -1532,11 +1532,14 @@ paths:
         いいねする都度、likeTypeに指定されたスターを消費します
         (ToyMoneyApiに問い合わせを行った上で増加処理を行うため若干時間がかかります)
     get:
-      summary: ''
-      operationId: get-arts-illustID-likes-likeType
+      summary: Get art likes with specify type
+      operationId: getArtLikesWithType
       responses:
         '200':
           description: OK
+      description: 指定したイラストのいいねを取得します
+      tags:
+        - arts
   '/arts/{illustID}/views':
     parameters:
       - schema:

@@ -1342,44 +1342,7 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/DeleteArtCharactersRequest'
-  '/arts/{illustID}/likes':
-    parameters:
-      - schema:
-          type: integer
-        name: illustID
-        in: path
-        required: true
-        description: いいねしたいイラストのID
-    put:
-      summary: Plus art like
-      operationId: addArtLike
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PutArtLikesResponse'
-      tags:
-        - arts
-      description: |-
-        指定したイラストのいいね数を1増加させます
-        (いいねの種別を選択できる仕様となったため、このエンドポイントは現在非推奨ですが
-        種別を指定するいいねよりも応答が速いため残っています)
-      deprecated: true
-    get:
-      summary: Get art likes
-      operationId: getArtLikes
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GetArtLikesResponse'
-      description: 指定したイラストのいいね数だけを取得します
-      tags:
-        - arts
+
   '/arts/{illustID}/likes/{likeType}':
     parameters:
       - schema:
@@ -1410,6 +1373,7 @@ paths:
         指定したイラストのいいね数を1増加させます
         いいねする都度、likeTypeに指定されたスターを消費します
         (ToyMoneyApiに問い合わせを行った上で増加処理を行うため若干時間がかかります)
+
   '/arts/{illustID}/views':
     parameters:
       - schema:
