@@ -678,59 +678,7 @@ paths:
           description: タグID
           required: true
         - $ref: '#/components/parameters/SearchQueryMylistAllow'
-  /search/character:
-    get:
-      summary: Search by character
-      tags:
-        - search
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GetSearchGeneralResponse'
-              examples:
-                example:
-                  value:
-                    status: 200
-                    message: found
-                    data:
-                      title: パソコン
-                      count: 1
-                      current: 1
-                      pages: 1
-                      imgs:
-                        - illustID: 1
-                          artistID: 1
-                          title: パソコンのキャラクター（ノートパソコン）(笑顔)
-                          caption: |
-                            快調に動く笑顔のノート型のコンピューターと、壊れて困った顔をしているコンピューターのイラストです。
-                          date: '2021-01-07 12:31:01'
-                          pages: 1
-                          like: 53
-                          mylist: 1
-                          mylisted: false
-                          originUrl: 'https://www.irasutoya.com/2017/01/blog-post_792.html?page=1'
-                          originService: 独自
-                          nsfw: false
-                          artist:
-                            id: 1
-                            name: みふね
-                          extension: png
-      operationId: searchArtByCharacter
-      description: 指定したキャラクターを持つイラスト一覧を取得します
-      parameters:
-        - $ref: '#/components/parameters/SearchQuerySort'
-        - $ref: '#/components/parameters/SearchQueryOrder'
-        - $ref: '#/components/parameters/SearchQueryPage'
-        - schema:
-            type: integer
-          in: query
-          name: id
-          description: キャラID(タグIDと同一)
-          required: true
-        - $ref: '#/components/parameters/SearchQueryMylistAllow'
+        - $ref: '#/components/parameters/SearchQueryPerPage'
   /search/artist:
     get:
       summary: Search by artist
@@ -832,6 +780,7 @@ paths:
           description: 絵師ID
           required: true
         - $ref: '#/components/parameters/SearchQueryMylistAllow'
+        - $ref: '#/components/parameters/SearchQueryPerPage'
   /search/mylist:
     get:
       summary: Search by mylist
@@ -935,6 +884,7 @@ paths:
           description: マイリストID
           required: true
         - $ref: '#/components/parameters/SearchQueryMylistAllow'
+        - $ref: '#/components/parameters/SearchQueryPerPage'
   /search/keyword:
     get:
       summary: Search by keyword
@@ -988,6 +938,7 @@ paths:
           description: 検索対象ワード
           required: true
         - $ref: '#/components/parameters/SearchQueryMylistAllow'
+        - $ref: '#/components/parameters/SearchQueryPerPage'
   /search/all:
     get:
       summary: Search all arts
@@ -1147,6 +1098,7 @@ paths:
         - $ref: '#/components/parameters/SearchQueryOrder'
         - $ref: '#/components/parameters/SearchQueryPage'
         - $ref: '#/components/parameters/SearchQueryMylistAllow'
+        - $ref: '#/components/parameters/SearchQueryPerPage'
   /search/random:
     get:
       summary: Search by random
@@ -1163,6 +1115,7 @@ paths:
         - search
       parameters:
         - $ref: '#/components/parameters/SearchQueryMylistAllow'
+        - $ref: '#/components/parameters/SearchQueryPerPage'
   /search/image/self:
     post:
       summary: Search by image
