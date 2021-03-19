@@ -2480,13 +2480,6 @@ paths:
       summary: Report tag
       tags:
         - report
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PostReportGeneralResponse'
       operationId: reportTag
       description: |-
         指定したタグを運営に通報します
@@ -2496,6 +2489,11 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/PostReportGeneralRequest'
+      responses:
+        '201':
+          description: Created
+        '400':
+          description: Bad Request
   '/report/user/{accountID}':
     parameters:
       - schema:
@@ -2930,12 +2928,10 @@ paths:
       tags:
         - wiki
       responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GetFindWikiArticleResponse'
+        '204':
+          description: No Content
+        '404':
+          description: Not Found
       operationId: findWikiArticle
       description: Wikiの記事が存在するかを確認します
       parameters:
@@ -5969,13 +5965,16 @@ components:
           msg: DMCA Request
       properties:
         type:
-          type: integer
+          type: string
           description: '通報種別 1:不適切名称 2:不適切年齢 3:規約違反 4:法律違反'
-          minimum: 1
-          maximum: 9
           format: int32
-          example: 1
           default: 1
+          enum:
+            - bad-name
+            - wrong-info
+            - violation-rules
+            - dmca
+          example: bad-name
         msg:
           type: string
           description: 通報本文
@@ -6725,19 +6724,19 @@ components:
           tagType: 1
           nsfw: false
       properties:
-        tagName:
+        name:
           type: string
-        tagDescription:
+        description:
           type: string
-        tagType:
+        type:
           type: integer
           description: 0~9
         nsfw:
           type: boolean
       required:
-        - tagName
-        - tagDescription
-        - tagType
+        - name
+        - description
+        - type
         - nsfw
     PutTagResponse:
       title: PutTagResponse
@@ -6932,30 +6931,6 @@ components:
           type: integer
           description: 総編集回数
           minimum: 1
-    GetFindWikiArticleResponse:
-      title: GetFindWikiArticleResponse
-      type: object
-      x-examples:
-        success:
-          status: 200
-          message: Found.
-        failed-not-found:
-          status: 404
-          message: Not found.
-      properties:
-        status:
-          type: integer
-          minimum: 100
-          maximum: 999
-          example: 200
-          default: 200
-          format: int32
-        message:
-          type: string
-          minLength: 1
-      required:
-        - status
-        - message
     ActivityPubActorStruct:
       description: 'https://argrath.github.io/activitypub/#actor-objects'
       type: object
