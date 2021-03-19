@@ -927,6 +927,107 @@ paths:
           description: 絵師ID
           required: true
         - $ref: '#/components/parameters/SearchQueryMylistAllow'
+  /search/mylist:
+    get:
+      summary: Search by mylist
+      tags:
+        - search
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetSearchGeneralResponse'
+              examples:
+                example:
+                  value:
+                    status: 200
+                    message: found
+                    data:
+                      title: みふね
+                      count: 4
+                      current: 1
+                      pages: 1
+                      imgs:
+                        - illustID: 4
+                          artistID: 1
+                          title: 社畜のイラスト
+                          caption: 会社に飼い慣らされ家畜のように扱われている男性会社員（サラリーマン）、俗にいう社畜のイラストです。
+                          date: '2021-01-07 14:53:43'
+                          pages: 1
+                          like: 1
+                          mylist: 0
+                          mylisted: false
+                          originUrl: '?page=1'
+                          originService: 独自
+                          nsfw: false
+                          artist:
+                            id: 1
+                            name: みふね
+                          extension: png
+                        - illustID: 3
+                          artistID: 1
+                          title: なかなか当たらないガチャのイラスト
+                          caption: 当たりが出る確率がとても低いガチャガチャを回し続けている人のイラストです。
+                          date: '2021-01-07 14:51:59'
+                          pages: 1
+                          like: 1
+                          mylist: 0
+                          mylisted: false
+                          originUrl: 'https://www.irasutoya.com/2016/02/blog-post_256.html?page=1'
+                          originService: 独自
+                          nsfw: false
+                          artist:
+                            id: 1
+                            name: みふね
+                          extension: png
+                        - illustID: 2
+                          artistID: 1
+                          title: 単位を落とす学生のイラスト（男性）
+                          caption: 大学生の男の子が単位を落として焦っているイラストです。
+                          date: '2021-01-07 12:53:04'
+                          pages: 1
+                          like: 2
+                          mylist: 0
+                          mylisted: false
+                          originUrl: 'https://www.irasutoya.com/2016/10/blog-post_23.html?page=1'
+                          originService: 独自
+                          nsfw: false
+                          artist:
+                            id: 1
+                            name: みふね
+                          extension: png
+                        - illustID: 1
+                          artistID: 1
+                          title: パソコンのキャラクター（ノートパソコン）(笑顔)
+                          caption: |
+                            快調に動く笑顔のノート型のコンピューターと、壊れて困った顔をしているコンピューターのイラストです。
+                          date: '2021-01-07 12:31:01'
+                          pages: 1
+                          like: 53
+                          mylist: 1
+                          mylisted: false
+                          originUrl: 'https://www.irasutoya.com/2017/01/blog-post_792.html?page=1'
+                          originService: 独自
+                          nsfw: false
+                          artist:
+                            id: 1
+                            name: みふね
+                          extension: png
+      operationId: searchArtByMylist
+      description: 指定したマイリストのイラスト一覧を取得します
+      parameters:
+        - $ref: '#/components/parameters/SearchQuerySort'
+        - $ref: '#/components/parameters/SearchQueryOrder'
+        - $ref: '#/components/parameters/SearchQueryPage'
+        - schema:
+            type: integer
+          in: query
+          name: id
+          description: 絵師ID
+          required: true
+        - $ref: '#/components/parameters/SearchQueryMylistAllow'
   /search/keyword:
     get:
       summary: Search by keyword
@@ -4906,76 +5007,6 @@ components:
           type: integer
         lcount:
           type: integer
-    GetMylistResponse:
-      title: GetMylistResponse
-      type: object
-      description: ''
-      x-examples:
-        success:
-          status: 200
-          message: ok
-          data:
-            title: Testのマイリスト
-            count: 1
-            current: 1
-            pages: 1
-            imgs:
-              - illustID: 7
-                artistID: 4
-                title: clear glass cup with tea near brown ceramic teapot
-                caption: ''
-                date: '2021-01-07 15:15:28'
-                pages: 1
-                like: 1
-                mylist: 1
-                mylisted: true
-                originUrl: 'https://unsplash.com/photos/L82-kkEBOd0?page=1'
-                originService: 独自
-                nsfw: false
-                artist:
-                  id: 4
-                  name: Manki Kim
-                extension: jpg
-        success-no-data:
-          status: 200
-          message: ok
-          data:
-            title: マイリスト
-            count: 0
-            current: 1
-            pages: 1
-            imgs: []
-      required:
-        - title
-        - count
-        - current
-        - pages
-        - imgs
-      properties:
-        title:
-          type: string
-          minLength: 1
-        count:
-          type: integer
-          minimum: 0
-          default: 0
-          example: 0
-        current:
-          type: integer
-          minimum: 1
-          example: 1
-          default: 1
-        pages:
-          type: integer
-          minimum: 1
-          default: 1
-          example: 1
-        imgs:
-          type: array
-          uniqueItems: true
-          minItems: 1
-          items:
-            $ref: '#/components/schemas/SearchResultStruct'
     GetNavigationGeneralResponse:
       title: GetNavigationGeneralResponse
       type: object
