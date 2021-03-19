@@ -118,12 +118,6 @@ paths:
       responses:
         '204':
           description: No Content
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GeneralMessageResponse'
         '403':
           description: Forbidden
           content:
@@ -376,7 +370,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetArtResponse'
+                $ref: '#/components/schemas/ArtStruct'
         '404':
           description: Not Found
       operationId: getArt
@@ -390,13 +384,25 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PutArtResponse'
+                $ref: '#/components/schemas/ArtStruct'
         '400':
           description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
         '403':
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
         '404':
           description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
       description: |-
         指定したイラストの情報を編集します
         パラメータで与えられたデータに応じて柔軟に
@@ -413,18 +419,20 @@ paths:
       summary: Delete art
       operationId: delete-arts-illustID
       responses:
-        '200':
-          description: OK
+        '204':
+          description: No Content
+        '403':
+          description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DeleteArtResponse'
-        '400':
-          description: Bad Request
-        '403':
-          description: Forbidden
+                $ref: '#/components/schemas/GeneralMessageResponse'
         '404':
           description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
       description: |-
         指定したイラストを削除します
         削除してほしくないため非推奨とします
@@ -1122,6 +1130,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PostLoginWithFormResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
       operationId: loginWithForm
       description: IDとパスワードを用いてユーザー認証し、APIトークンを発行します
       requestBody:
@@ -1144,12 +1158,30 @@ paths:
       summary: Create artist
       operationId: createArtist
       responses:
-        '200':
-          description: OK
+        '201':
+          description: Created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PostArtistResponse'
+                $ref: '#/components/schemas/ArtistStruct'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
       description: |-
         新しい絵師を生成します(イラスト投稿時に存在しなければ自動で作成されるため
         直接操作する必要はありません)
@@ -1160,7 +1192,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PostArtistRequest'
+              $ref: '#/components/schemas/ArtistStruct'
   '/artists/{artistID}':
     get:
       summary: Get artist
@@ -1172,7 +1204,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetArtistResponse'
+                $ref: '#/components/schemas/ArtistStruct'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
       operationId: getArtist
       description: 指定した絵師の情報を取得します。存在しない情報欄にはnullが入ります。
     parameters:
@@ -1186,12 +1224,26 @@ paths:
       summary: Delete artist
       operationId: deleteArtist
       responses:
-        '200':
-          description: OK
+        '204':
+          description: No Content
+        '403':
+          description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DeleteArtistResponse'
+                $ref: '#/components/schemas/GeneralMessageResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
       description: |-
         指定した絵師の情報を削除します
         (イラストによって参照されていない場合のみ削除できるため、通常利用機会はありません)
@@ -1207,7 +1259,25 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PutArtistResponse'
+                $ref: '#/components/schemas/ArtistStruct'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
       description: |-
         指定した絵師の情報を置き換えます。
         リクエストで指定されたパラメータだけを置き換えます。
@@ -1217,7 +1287,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PutArtistRequest'
+              $ref: '#/components/schemas/ArtistStruct'
         description: ''
   '/arts/{illustID}/replace':
     parameters:
@@ -1237,6 +1307,24 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PostReplaceArtResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
       tags:
         - arts
       description: |-
@@ -1267,6 +1355,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PostReplaceArtSimulateResponse'
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
       tags:
         - arts
       description: |-
@@ -1291,6 +1383,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetArtTagsResponse'
+        '404':
+          description: Not Found
       operationId: getArtTags
       description: 指定したイラストに付いているタグのみを一覧で取得します
     parameters:
@@ -1310,6 +1404,24 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PutArtTagsResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
       description: |-
         指定したイラストのタグ一覧に、与えられたIDのタグを追加します
         (イラスト本体の編集時に付けられたタグ名から
@@ -1333,6 +1445,24 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DeleteArtTagsResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
       description: |-
         指定したイラストのタグ一覧から、与えられたIDのタグを削除します
         (イラスト本体の編集時に付けられたタグ名から
@@ -1357,7 +1487,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetArtChractersResponse'
+                $ref: '#/components/schemas/GetArtTagsResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
       operationId: getArtCharacters
       description: 指定したイラストに付いているキャラクターのみを一覧で取得します
     parameters:
@@ -1377,6 +1513,24 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PutArtCharactersResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
       description: |-
         指定したイラストのキャラクター一覧に、与えられたIDのキャラクターを追加します
         (イラスト本体の編集時に付けられたキャラクター名から
@@ -3309,6 +3463,8 @@ components:
             id:
               type: integer
               description: 絵師のサイト内通し番号(別の絵師のIDを付けたい場合用)
+          required:
+            - id
         user:
           type: object
           description: 投稿者情報
@@ -3319,6 +3475,8 @@ components:
             name:
               type: string
               description: 投稿したユーザーのユーザー名
+          required:
+            - id
         status:
           type: integer
           minimum: 0
@@ -4190,19 +4348,7 @@ components:
           status: 500
           message: Server exploded
       properties:
-        status:
-          type: integer
-          description: HTTPステータスコード
-          format: int32
-          minimum: 100
-          maximum: 999
-          example: 200
-          default: 200
-        message:
-          type: string
-          minLength: 1
-          description: ok もしくはエラー内容
-        data:
+        user:
           type: object
           properties:
             userID:
@@ -4281,21 +4427,11 @@ components:
             - inviter
             - invite
             - apiKey
-      required:
-        - status
-        - message
+        '':
+          type: string
     PostLoginWithFormResponse:
       title: PostLoginWithFormResponse
       type: object
-      properties:
-        status:
-          type: integer
-        message:
-          type: string
-          minLength: 1
-        apiKey:
-          type: string
-          minLength: 1
       x-examples:
         login-success:
           value:
@@ -4306,10 +4442,11 @@ components:
           value:
             status: 404
             message: account not found
-      required:
-        - status
-        - message
       description: ''
+      properties:
+        apiKey:
+          type: string
+          minLength: 1
     PostArtistResponse:
       title: PostArtistResponse
       type: object
@@ -4351,9 +4488,7 @@ components:
       type: object
       x-examples:
         success-default:
-          status: 200
-          message: ok
-          data:
+          artist:
             id: 1
             userID: 1
             name: 彩電
@@ -4364,9 +4499,7 @@ components:
             mastodon: ''
             homepage: ''
         success-fulfilled:
-          status: 200
-          message: ok
-          data:
+          artist:
             id: 1
             userID: 1
             name: 彩電
@@ -4376,27 +4509,9 @@ components:
             twitterID: harufcs
             mastodon: 'https://pawoo.net/@saiden'
             homepage: 'http://konebota.x0.com/PAGE/'
-        not-found:
-          status: 404
-          message: Specified artist was not found
       properties:
-        status:
-          type: integer
-          description: 処理結果のHTTPステータスコード
-          minimum: 100
-          maximum: 999
-          example: 200
-          default: 200
-          format: int32
-        message:
-          type: string
-          description: ok もしくはエラー内容
-          minLength: 1
-        data:
+        artist:
           $ref: '#/components/schemas/ArtistStruct'
-      required:
-        - status
-        - message
     PutArtistResponse:
       title: PutArtistResponse
       type: object
@@ -4723,23 +4838,10 @@ components:
           status: 404
           message: The art don't have any tag.
       properties:
-        status:
-          type: integer
-          minimum: 100
-          maximum: 999
-          example: 200
-          default: 200
-          format: int32
-        message:
-          type: string
-          minLength: 1
-        data:
+        tags:
           type: array
           items:
             $ref: '#/components/schemas/TagStruct'
-      required:
-        - status
-        - message
     GetArtChractersResponse:
       title: GetArtCharactersResponse
       type: object
