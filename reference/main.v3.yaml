@@ -3546,8 +3546,15 @@ components:
           minimum: 0
           maximum: 1
         ipfs_hash:
-          type: string
-          description: IPFSのサムネイルハッシュ
+          type: object
+          description: IPFSのハッシュ情報
+          properties:
+            thumb:
+              type: string
+              description: サムネイルハッシュ
+            orig:
+              type: string
+              description: Raw画像ハッシュ
       required:
         - illustID
         - artistID
@@ -4002,22 +4009,22 @@ components:
         id:
           type: integer
           description: イラストID
-        ipfs:
+        ipfs_hash:
           type: object
           properties:
-            thumb_hash:
+            thumb:
               type: string
               description: このイラストのサムネイル画像
-            small_hash:
+            small:
               type: string
               description: このイラストのSmall画像
-            large_hash:
+            large:
               type: string
               description: このイラストのLarge画像
-            orig_hash:
+            orig:
               type: string
               description: このイラストのRAW画像
-            info_hash:
+            info:
               type: string
               description: このイラスト情報のJSONデータハッシュ
     PostLoginWithFormRequest:
