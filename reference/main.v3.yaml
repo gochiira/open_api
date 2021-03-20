@@ -196,6 +196,7 @@ paths:
           name: sort
           description: 'ソート方法 d:最終更新'
         - $ref: '#/components/parameters/SearchQueryOrder'
+        - $ref: '#/components/parameters/SearchQueryPerPage'
   /token/generate:
     parameters: []
     post:
