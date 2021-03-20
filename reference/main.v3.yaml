@@ -3545,6 +3545,9 @@ components:
           description: 元画像との類似度(画像検索のみ)
           minimum: 0
           maximum: 1
+        ipfs_hash:
+          type: string
+          description: IPFSのサムネイルハッシュ
       required:
         - illustID
         - artistID
@@ -3758,6 +3761,33 @@ components:
         apiSeq:
           type: integer
           description: 長期間有効トークン検証用シーケンス
+        ipfs:
+          type: object
+          description: IPFS設定
+          properties:
+            gateway_url:
+              type: string
+              example: 'https://cloudflare-ipfs.com'
+              default: 'https://cloudflare-ipfs.com'
+              format: uri-reference
+              description: 使用する任意のゲートウェイアドレス
+            node_url:
+              type: string
+              example: 'https://ipfs.example.com'
+              default: 'https://ipfs.example.com'
+              format: uri-reference
+              description: 使用する任意のノードアドレス
+            gateway_enabled:
+              type: boolean
+              default: false
+              description: IPFSゲートウェイを使用するか否か
+            node_enabled:
+              type: boolean
+              default: false
+              description: IPFSノードを使用するか否か
+            pin_enabled:
+              type: boolean
+              description: マイリストを自動Pinningするか
     DeleteAccountRequest:
       title: DeleteAccountRequest
       type: object
@@ -3971,6 +4001,25 @@ components:
               description: ブルースター数
         id:
           type: integer
+          description: イラストID
+        ipfs:
+          type: object
+          properties:
+            thumb_hash:
+              type: string
+              description: このイラストのサムネイル画像
+            small_hash:
+              type: string
+              description: このイラストのSmall画像
+            large_hash:
+              type: string
+              description: このイラストのLarge画像
+            orig_hash:
+              type: string
+              description: このイラストのRAW画像
+            info_hash:
+              type: string
+              description: このイラスト情報のJSONデータハッシュ
     PostLoginWithFormRequest:
       title: PostLoginWithFormRequest
       type: object
