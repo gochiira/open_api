@@ -1489,7 +1489,7 @@ paths:
         description: いいね種別
     put:
       summary: Plus art like (with using star)
-      operationId: addArtLikeByStar
+      operationId: addArtLike
       responses:
         '200':
           description: OK
@@ -1700,7 +1700,7 @@ paths:
         description: 編集したいコメントのID
     put:
       summary: Edit art comment
-      operationId: editArtCommentById
+      operationId: editArtComment
       responses:
         '200':
           description: OK
@@ -1732,7 +1732,7 @@ paths:
               $ref: '#/components/schemas/CommentEditStruct'
     delete:
       summary: Delete art comment
-      operationId: deleteArtCommentById
+      operationId: deleteArtComment
       responses:
         '204':
           description: No Content
@@ -1753,7 +1753,7 @@ paths:
         - arts
     get:
       summary: Get art comment
-      operationId: getArtCommentById
+      operationId: getArtComment
       responses:
         '200':
           description: OK
@@ -1834,7 +1834,7 @@ paths:
   /invites:
     post:
       summary: Create invitation
-      operationId: createInvitation
+      operationId: createInvite
       responses:
         '200':
           description: OK
@@ -1920,7 +1920,7 @@ paths:
         - news
     get:
       summary: Get all news
-      operationId: get-news
+      operationId: getNewsList
       responses:
         '200':
           description: OK
@@ -1931,6 +1931,11 @@ paths:
       description: ニュース一覧を取得します
       tags:
         - news
+      parameters:
+        - $ref: '#/components/parameters/SearchQuerySort'
+        - $ref: '#/components/parameters/SearchQueryOrder'
+        - $ref: '#/components/parameters/SearchQueryPage'
+        - $ref: '#/components/parameters/SearchQueryPerPage'
   '/accounts/{accountID}/notify/clients':
     get:
       summary: Get notify clients
@@ -1959,8 +1964,8 @@ paths:
         required: true
   '/accounts/{accountID}/notify/clients/web':
     post:
-      summary: Register webpush notify client
-      operationId: registerWebNotifyClient
+      summary: Create webpush notify client
+      operationId: addWebNotifyClient
       responses:
         '200':
           description: OK
@@ -2026,8 +2031,8 @@ paths:
         - notify
   '/accounts/{accountID}/notify/clients/line':
     post:
-      summary: Register line notify client
-      operationId: registerLineNotifyClient
+      summary: Create line notify client
+      operationId: addLineNotifyClient
       responses:
         '200':
           description: OK
@@ -2192,8 +2197,8 @@ paths:
       operationId: getYearlyViewsRanking
       parameters:
         - $ref: '#/components/parameters/SearchQueryPage'
-        - $ref: '#/components/parameters/SearchQueryOrder'
-        - $ref: '#/components/parameters/SearchQueryMylistDeny'
+        - $ref: '#/components/parameters/SearchQuerySort'
+        - $ref: '#/components/parameters/SearchQueryMylistAllow'
         - $ref: '#/components/parameters/SearchQueryPerPage'
       description: 年間閲覧数ランキングを取得します
   /ranking/yearly/likes:
@@ -2211,7 +2216,7 @@ paths:
       operationId: getYearlyLikesRanking
       parameters:
         - $ref: '#/components/parameters/SearchQueryPage'
-        - $ref: '#/components/parameters/SearchQueryOrder'
+        - $ref: '#/components/parameters/SearchQuerySort'
         - $ref: '#/components/parameters/SearchQueryMylistDeny'
         - $ref: '#/components/parameters/SearchQueryPerPage'
       description: 年間いいね数ランキングを取得します
@@ -2230,7 +2235,7 @@ paths:
       operationId: getMonthlyViewsRanking
       parameters:
         - $ref: '#/components/parameters/SearchQueryPage'
-        - $ref: '#/components/parameters/SearchQueryOrder'
+        - $ref: '#/components/parameters/SearchQuerySort'
         - $ref: '#/components/parameters/SearchQueryMylistDeny'
         - $ref: '#/components/parameters/SearchQueryPerPage'
       description: 月間閲覧数ランキングを取得します
@@ -2249,7 +2254,7 @@ paths:
       operationId: getMonthlyLikesRanking
       parameters:
         - $ref: '#/components/parameters/SearchQueryPage'
-        - $ref: '#/components/parameters/SearchQueryOrder'
+        - $ref: '#/components/parameters/SearchQuerySort'
         - $ref: '#/components/parameters/SearchQueryMylistDeny'
         - $ref: '#/components/parameters/SearchQueryPerPage'
       description: 月間いいね数ランキングを取得します
@@ -2268,7 +2273,7 @@ paths:
       operationId: getWeeklyViewsRanking
       parameters:
         - $ref: '#/components/parameters/SearchQueryPage'
-        - $ref: '#/components/parameters/SearchQueryOrder'
+        - $ref: '#/components/parameters/SearchQuerySort'
         - $ref: '#/components/parameters/SearchQueryMylistDeny'
         - $ref: '#/components/parameters/SearchQueryPerPage'
       description: 週間閲覧数ランキングを取得します
@@ -2287,7 +2292,7 @@ paths:
       operationId: getWeeklyLikesRanking
       parameters:
         - $ref: '#/components/parameters/SearchQueryPage'
-        - $ref: '#/components/parameters/SearchQueryOrder'
+        - $ref: '#/components/parameters/SearchQuerySort'
         - $ref: '#/components/parameters/SearchQueryMylistDeny'
         - $ref: '#/components/parameters/SearchQueryPerPage'
       description: 週間いいね数ランキングを取得します
@@ -2711,8 +2716,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetTimelineFollowingResponse'
-      operationId: getFollowing
+      operationId: getFollowingArtists
       description: フォロー中の絵師ID一覧を取得します
+      parameters:
+        - $ref: '#/components/parameters/SearchQuerySort'
+        - $ref: '#/components/parameters/SearchQueryOrder'
+        - $ref: '#/components/parameters/SearchQueryPage'
     parameters:
       - schema:
           type: string
@@ -3117,11 +3126,11 @@ paths:
           description: Forbidden
         '404':
           description: Not Found
-      operationId: get-accounts-accountID-mutes
+      operationId: getMutes
       description: 指定したアカウントのユーザーのミュート一覧を取得します
     post:
       summary: Add mute
-      operationId: post-accounts-accountID-mutes
+      operationId: addMute
       responses:
         '200':
           description: OK
@@ -3164,11 +3173,11 @@ paths:
           description: Forbidden
         '404':
           description: Not Found
-      operationId: get-accounts-accountID-mutes-muteID
+      operationId: getMute
       description: 指定したミュート情報を取得します
     delete:
       summary: Delete mute
-      operationId: delete-accounts-accountID-mutes-muteID
+      operationId: deleteMute
       responses:
         '204':
           description: No Content
@@ -3191,7 +3200,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetMylistListResponse'
-      operationId: get-mylists
+      operationId: getMylists
       description: 全ユーザーの作成したマイリスト一覧を取得します
       parameters:
         - schema:
@@ -3202,7 +3211,7 @@ paths:
   /token/verify:
     post:
       summary: Verify token
-      operationId: post-token-verify
+      operationId: verifyToken
       responses:
         '200':
           description: OK
@@ -3214,7 +3223,7 @@ paths:
   /token/revoke:
     post:
       summary: Revoke token
-      operationId: post-token-revoke
+      operationId: revokeToken
       responses:
         '204':
           description: No Content
@@ -3239,7 +3248,7 @@ paths:
           description: Too Many Requests
         '503':
           description: Service Unavailable
-      operationId: get-prefict-nsfw
+      operationId: predictNsfw
       description: |-
         指定された画像がR18かNudeNet/TensorflowLiteを使い推測します
         (管理者のみ使用可)
@@ -3265,7 +3274,7 @@ paths:
           description: Too Many Requests
         '503':
           description: Service Unavailable
-      operationId: get-ml-predict-tags
+      operationId: predictTags
       description: |-
         指定された画像のタグをDeepDanbooruで推測します
         (管理者のみ使用可)
@@ -3290,7 +3299,7 @@ paths:
           description: Too Many Requests
         '503':
           description: Service Unavailable
-      operationId: get-ml-transparent
+      operationId: transparentImage
       description: |-
         指定された画像の背景をrembgまたはhttps://github.com/zymk9/Yet-Another-Anime-Segmenterを使い透過します
         (管理者のみ使用可)
@@ -3302,7 +3311,7 @@ paths:
   /ml/waifu2x:
     post:
       summary: Waifu2x image
-      operationId: post-ml-waifu2x
+      operationId: scaleWaifu2x
       responses:
         '200':
           description: OK
@@ -3379,7 +3388,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GeneralMessageResponse'
-      operationId: get-ml-polling-pollingID
+      operationId: getPolling
       description: |-
         処理結果が返ってくるまでここをPollingします
         1req/10s ぐらいのリクエストでお願いします
@@ -3403,7 +3412,7 @@ paths:
                 $ref: '#/components/schemas/PostPredictNsfwResponse'
         '404':
           description: Not Found
-      operationId: get-ml-predict-nsfw-result-resultID
+      operationId: getNsfwPredictResult
       description: |-
         NSFW推定の処理結果を返します
         結果データは1日で削除されます
@@ -3427,7 +3436,7 @@ paths:
                 $ref: '#/components/schemas/PostPredictTagsResponse'
         '404':
           description: Not Found
-      operationId: get-ml-predict-tags-result-resultID
+      operationId: getTagPredictResult
       description: |-
         タグ推定の処理結果を返します
         結果データは1日で削除されます
@@ -3451,7 +3460,7 @@ paths:
                 $ref: '#/components/schemas/PostMachineLearningTransparentResponse'
         '404':
           description: Not Found
-      operationId: get-ml-transparent-result-resultID
+      operationId: getTransparentImageResult
       description: |-
         透過の処理結果を返します
         結果画像は1日で削除されます
@@ -3475,7 +3484,7 @@ paths:
                 $ref: '#/components/schemas/PostMachineLearningWaifu2xResponse'
         '404':
           description: Not Found
-      operationId: get-ml-waifu2x-result-resultID
+      operationId: getScaleWaifu2xResult
       description: |-
         Waifu2xの処理結果を返します
         結果画像は1日で削除されます
