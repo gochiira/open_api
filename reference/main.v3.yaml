@@ -3203,6 +3203,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PostMachineLearningGeneralResponse'
+        '429':
+          description: Too Many Requests
+        '503':
+          description: Service Unavailable
       operationId: get-prefict-nsfw
       description: |-
         指定された画像がR18かNudeNet/TensorflowLiteを使い推測します
@@ -3225,6 +3229,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PostMachineLearningGeneralResponse'
+        '429':
+          description: Too Many Requests
+        '503':
+          description: Service Unavailable
       operationId: get-ml-predict-tags
       description: |-
         指定された画像のタグをDeepDanbooruで推測します
@@ -3246,6 +3254,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PostMachineLearningGeneralResponse'
+        '429':
+          description: Too Many Requests
+        '503':
+          description: Service Unavailable
       operationId: get-ml-transparent
       description: |-
         指定された画像の背景をrembgまたはhttps://github.com/zymk9/Yet-Another-Anime-Segmenterを使い透過します
@@ -3266,6 +3278,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PostMachineLearningGeneralResponse'
+        '429':
+          description: Too Many Requests
+        '503':
+          description: Service Unavailable
       tags:
         - ml
       description: |-
@@ -3276,6 +3292,31 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/PostMachineLearningGeneralRequest'
+      parameters:
+        - schema:
+            type: number
+            default: 2
+            maximum: 3
+            minimum: 1
+          in: query
+          name: scale
+          required: true
+          description: 拡大レベル
+        - schema:
+            type: integer
+            minimum: 0
+            maximum: 3
+            enum:
+              - 0
+              - 1
+              - 2
+              - 3
+            example: 1
+            default: 1
+          in: query
+          name: denoise
+          required: true
+          description: ノイズ除去レベル
   '/ml/polling/{pollingID}':
     parameters:
       - schema:
@@ -3293,8 +3334,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties: {}
+                $ref: '#/components/schemas/GetPollingFinishResponse'
         '304':
           description: Not Modified
           content:
@@ -3329,6 +3369,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PostPredictNsfwResponse'
+        '404':
+          description: Not Found
       operationId: get-ml-predict-nsfw-result-resultID
       description: |-
         NSFW推定の処理結果を返します
@@ -3351,6 +3393,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PostPredictTagsResponse'
+        '404':
+          description: Not Found
       operationId: get-ml-predict-tags-result-resultID
       description: |-
         タグ推定の処理結果を返します
@@ -3369,6 +3413,12 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostMachineLearningTransparentResponse'
+        '404':
+          description: Not Found
       operationId: get-ml-transparent-result-resultID
       description: |-
         透過の処理結果を返します
@@ -3387,6 +3437,12 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostMachineLearningWaifu2xResponse'
+        '404':
+          description: Not Found
       operationId: get-ml-waifu2x-result-resultID
       description: |-
         Waifu2xの処理結果を返します
@@ -6644,6 +6700,33 @@ components:
           description: Polling用URLを返す(すぐに終わらん)
       required:
         - url
+    PostMachineLearningTransparentResponse:
+      title: PostMachineLearningTransparentResponse
+      type: object
+      properties:
+        url:
+          type: string
+      required:
+        - url
+    PostMachineLearningWaifu2xResponse:
+      title: PostMachineLearningWaifu2xResponse
+      type: object
+      properties:
+        url:
+          type: string
+      required:
+        - url
+    GetPollingFinishResponse:
+      title: GetPollingFinishResponse
+      type: object
+      properties:
+        url:
+          type: string
+        id:
+          type: string
+      required:
+        - url
+        - id
   securitySchemes:
     Authorization:
       type: http
