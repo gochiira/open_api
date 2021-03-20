@@ -53,7 +53,7 @@ paths:
         required: true
         description: 取得したいユーザーのアカウントID
     get:
-      summary: Get user info
+      summary: Get account info
       responses:
         '200':
           description: OK
@@ -72,7 +72,7 @@ paths:
       tags:
         - accounts
     put:
-      summary: Edit user info
+      summary: Edit account info
       operationId: editAccount
       responses:
         '200':
@@ -127,7 +127,7 @@ paths:
           変更したいカラムを与え、値に変更後の値を与えると変更できます
           パスワードを変更する場合のみ、例外的に現在のパスワードが要求されます
     delete:
-      summary: Delete user info
+      summary: Delete account info
       operationId: deleteAccount
       description: |-
         アカウントを削除します
@@ -224,7 +224,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/AccountStruct'
-      operationId: getSelfAccount
+      operationId: getAccountMe
       description: |-
         自分自身にまつわる情報をすべて取得します
         通常、ログイン時に一度だけ呼び出されます
@@ -3846,6 +3846,9 @@ components:
             - 2021年03月
           nsfw: false
       properties:
+        id:
+          type: integer
+          description: イラストID
         title:
           type: string
           minLength: 1
@@ -3862,12 +3865,42 @@ components:
         pages:
           type: integer
           description: グループになっている場合の総ページ数(未使用)
-        like:
+        likes:
           type: integer
           description: 累計いいね数
-        view:
+        views:
           type: integer
           description: 累計閲覧数
+        artists:
+          type: array
+          description: 絵師情報(複数可)
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              name:
+                type: string
+        users:
+          type: array
+          description: 投稿者情報(複数可)
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              name:
+                type: string
+        approvers:
+          type: array
+          description: 承認者情報(複数可)
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              name:
+                type: string
         originUrl:
           type: string
           minLength: 1
@@ -3892,30 +3925,6 @@ components:
             - webp
             - gif
           example: jpg
-        artist:
-          type: object
-          description: 絵師情報
-          properties:
-            name:
-              type: string
-              description: 絵師名(絵師IDをそのままで、他のイラストも同時に変更する時用)
-            id:
-              type: integer
-              description: 絵師のサイト内通し番号(別の絵師のIDを付けたい場合用)
-          required:
-            - id
-        user:
-          type: object
-          description: 投稿者情報
-          properties:
-            id:
-              type: integer
-              description: 投稿者のユーザーID
-            name:
-              type: string
-              description: 投稿したユーザーのユーザー名
-          required:
-            - id
         status:
           type: string
           description: '公開/非公開等の表示状態 0:公開 1:置換済み 2:削除(ユーザー) 3:削除(管理者)'
@@ -3933,6 +3942,9 @@ components:
         height:
           type: integer
           description: RAW画像の縦方向のピクセル数
+        filesize:
+          type: integer
+          description: ファイルサイズをbytesで入力
         tag:
           type: array
           description: '指定したいタグを"名称(文字列)"で指定する NOTE: 内部的に同じものなのでtag/chara/group/systemは全部同じ場所に入力してOK'
@@ -3953,9 +3965,6 @@ components:
           description: '指定したいタグを"名称(文字列)"で指定する NOTE: 内部的に同じものなのでtag/chara/group/systemは全部同じ場所に入力してOK'
           items:
             type: string
-        filesize:
-          type: integer
-          description: ファイルサイズをbytesで入力
         replace:
           type: array
           description: 置き換え履歴データ
@@ -3977,9 +3986,6 @@ components:
             blue:
               type: integer
               description: ブルースター数
-        id:
-          type: integer
-          description: イラストID
         ipfs_hash:
           type: object
           properties:
@@ -4004,22 +4010,23 @@ components:
       description: ''
       x-examples:
         user:
-          value:
-            id: test_user
-            password: this_is_only_for_test
+          id: test_user
+          password: this_is_only_for_test
         admin:
-          value:
-            id: test_admin
-            password: this_is_only_for_test
+          id: test_admin
+          password: this_is_only_for_test
       properties:
         id:
           type: string
           minLength: 1
+          description: ログインID
         password:
           type: string
           minLength: 1
+          description: ログインパスワード
         totp_code:
           type: string
+          description: ログインTOTPトークン
       required:
         - id
         - password
