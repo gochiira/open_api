@@ -1547,7 +1547,7 @@ paths:
         required: true
         description: いいねしたいイラストのID
     get:
-      summary: Get art likes with specify type
+      summary: Get art likes
       operationId: getArtLikes
       responses:
         '200':
@@ -3953,22 +3953,22 @@ components:
           type: array
           description: '指定したいタグを"名称(文字列)"で指定する NOTE: 内部的に同じものなのでtag/chara/group/systemは全部同じ場所に入力してOK'
           items:
-            type: string
+            $ref: '#/components/schemas/TagStruct'
         chara:
           type: array
           description: '指定したいタグを"名称(文字列)"で指定する NOTE: 内部的に同じものなのでtag/chara/group/systemは全部同じ場所に入力してOK'
           items:
-            type: string
+            $ref: '#/components/schemas/TagStruct'
         group:
           type: array
           description: '指定したいタグを"名称(文字列)"で指定する NOTE: 内部的に同じものなのでtag/chara/group/systemは全部同じ場所に入力してOK'
           items:
-            type: string
+            $ref: '#/components/schemas/TagStruct'
         system:
           type: array
           description: '指定したいタグを"名称(文字列)"で指定する NOTE: 内部的に同じものなのでtag/chara/group/systemは全部同じ場所に入力してOK'
           items:
-            type: string
+            $ref: '#/components/schemas/TagStruct'
         replace:
           type: array
           description: 置き換え履歴データ
@@ -4048,6 +4048,9 @@ components:
           minimum: 1
           format: int32
           description: サイト内通しタグ番号
+        type:
+          type: integer
+          description: 'タグ種別 0:通常'
         name:
           type: string
           minLength: 1
