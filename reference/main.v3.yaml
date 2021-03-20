@@ -4048,6 +4048,18 @@ components:
           minimum: 1
           format: int32
           description: サイト内通しタグ番号
+        name:
+          type: string
+          minLength: 1
+          maxLength: 20
+          description: タグの名称
+        description:
+          type: string
+          description: タグの説明文
+        nsfw:
+          type: boolean
+          description: アダルトコンテンツが含まれるタグか
+          default: false
         user:
           type: object
           description: ユーザー情報
@@ -4058,24 +4070,6 @@ components:
             name:
               type: string
               description: ユーザー名
-        name:
-          type: string
-          minLength: 1
-          maxLength: 20
-          description: タグの名称
-        nsfw:
-          type: boolean
-          description: アダルトコンテンツが含まれるタグか
-          default: false
-        description:
-          type: string
-          description: タグの説明文
-        count:
-          type: integer
-          description: タグに属する作品数
-        lcount:
-          type: integer
-          description: タグに属するいいね数
         parent:
           type: array
           description: 親となるタグ
@@ -4086,12 +4080,12 @@ components:
           description: 子となるタグ
           items:
             type: integer
-      required:
-        - name
-        - nsfw
-        - description
-        - count
-        - lcount
+        count:
+          type: integer
+          description: タグに属する作品数
+        lcount:
+          type: integer
+          description: タグに属するいいね数
     ReplaceStruct:
       description: イラストを置き換えた情報のモデル(簡易型イラストモデル)
       type: object
