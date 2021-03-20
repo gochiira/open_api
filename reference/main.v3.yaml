@@ -854,6 +854,8 @@ paths:
                           extension: png
         '403':
           description: Forbidden
+        '404':
+          description: Not Found
       operationId: searchArtByMylist
       description: 指定したマイリストのイラスト一覧を取得します
       parameters:
@@ -2312,6 +2314,10 @@ paths:
       responses:
         '201':
           description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
         '400':
           description: Bad Request
   '/report/tags/{tagID}':
@@ -2337,6 +2343,10 @@ paths:
       responses:
         '201':
           description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
         '400':
           description: Bad Request
   '/report/user/{accountID}':
@@ -2362,6 +2372,10 @@ paths:
       responses:
         '201':
           description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
         '400':
           description: Bad Request
   '/report/wiki/{articleID}':
@@ -2378,6 +2392,10 @@ paths:
       responses:
         '201':
           description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
         '400':
           description: Bad Request
       operationId: reportArticle
@@ -2726,9 +2744,18 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetWikiArticlesResponse'
       description: 全記事一覧を取得します
       tags:
         - wiki
+      parameters:
+        - $ref: '#/components/parameters/SearchQuerySortCatalog'
+        - $ref: '#/components/parameters/SearchQueryOrder'
+        - $ref: '#/components/parameters/SearchQueryPage'
+        - $ref: '#/components/parameters/SearchQueryPerPage'
   '/wiki/{articleID}':
     parameters:
       - schema:
@@ -3509,6 +3536,9 @@ components:
         mylisted:
           type: boolean
           description: リクエストしたユーザーがマイリストしているか
+        imageUrl:
+          type: string
+          description: 画像本体URL
         originUrl:
           type: string
           minLength: 1
@@ -3570,6 +3600,7 @@ components:
         - like
         - mylist
         - mylisted
+        - imageUrl
         - originUrl
         - originService
         - nsfw
@@ -3905,6 +3936,9 @@ components:
                 type: integer
               name:
                 type: string
+        imageUrl:
+          type: string
+          description: 画像本体URL
         originUrl:
           type: string
           minLength: 1
@@ -5415,20 +5449,20 @@ components:
           data:
             tag: []
             artist: []
-      required:
-        - tag
-        - artist
       properties:
-        tag:
+        tags:
           type: array
           description: ミュート中のタグID配列
           items:
             $ref: '#/components/schemas/MuteStruct'
-        artist:
+        artists:
           type: array
           description: ミュート中の絵師ID配列
           items:
             $ref: '#/components/schemas/MuteStruct'
+      required:
+        - tags
+        - artists
     MylistStruct:
       title: MylistStruct
       type: object
@@ -5545,7 +5579,7 @@ components:
       type: object
       description: ''
       properties:
-        client_id:
+        id:
           type: integer
           description: 通知クライアントID
           minimum: 1
@@ -5638,18 +5672,18 @@ components:
       title: NotifyConditionStruct
       type: object
       properties:
-        type:
-          type: integer
-          description: '条件種別 0:全通知 1:タグ 2:絵師'
         id:
           type: integer
+          description: NotifyConditionID
+        targetType:
+          type: integer
+          description: '条件種別 0:全通知 1:タグ 2:絵師'
+        targetID:
+          type: integer
           description: 条件ID 全通知なら0/タグID/絵師ID
-        method:
+        targetMethod:
           type: integer
           description: '通知方法 0:両方 1:Web 2:Line'
-        condition_id:
-          type: integer
-          description: NotifyConditionID
     PostReportGeneralRequest:
       title: ReportGeneralRequest
       type: object
@@ -6389,10 +6423,10 @@ components:
           title: お窓
           body: 作者・開発者。えらいひと。
       properties:
-        article_id:
+        id:
           type: integer
           description: 記事ID
-        type:
+        targetType:
           type: integer
           description: '対象の記事種別 0:ユーザー 1:タグ 2:絵師'
           enum:
@@ -6404,7 +6438,7 @@ components:
           minimum: 0
           maximum: 2
           format: int32
-        id:
+        targetID:
           type: integer
           description: 対象のユーザー/タグ/絵師ID
           minimum: 1
@@ -6684,19 +6718,19 @@ components:
       properties:
         id:
           type: integer
+          description: ミュートID
+        targetID:
+          type: integer
           description: 対象のタグ/絵師ID
-        type:
+        targetType:
           type: string
           description: ミュート種別
           enum:
             - tag
             - artist
           example: artist
-        mute_id:
-          type: string
-          description: ミュートID
       required:
-        - type
+        - targetType
     PostMachineLearningGeneralRequest:
       title: PostMachineLearningGeneralRequest
       type: object
@@ -6763,6 +6797,16 @@ components:
       required:
         - url
         - id
+    GetWikiArticlesResponse:
+      title: GetWikiArticlesResponse
+      type: object
+      properties:
+        articles:
+          type: array
+          items:
+            $ref: '#/components/schemas/WikiArticleStruct'
+        pagination:
+          $ref: '#/components/schemas/PaginationStruct'
   securitySchemes:
     Authorization:
       type: http
