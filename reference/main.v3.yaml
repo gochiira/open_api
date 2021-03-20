@@ -3191,6 +3191,55 @@ paths:
       description: 発行済の長期間有効トークンを無効化します
       tags:
         - token
+  /ml/prefict/nsfw:
+    post:
+      summary: Predict image nsfw
+      tags:
+        - ml
+      responses:
+        '200':
+          description: OK
+      operationId: get-prefict-nsfw
+      description: |-
+        指定された画像がR18か推測します
+        (管理者のみ使用可)
+    parameters: []
+  /ml/predict/tags:
+    post:
+      summary: Predict image tags
+      tags:
+        - ml
+      responses:
+        '200':
+          description: OK
+      operationId: get-ml-predict-tags
+      description: |-
+        指定された画像のタグを推測します
+        (管理者のみ使用可)
+  /ml/transparent:
+    post:
+      summary: Transparent image
+      tags:
+        - ml
+      responses:
+        '200':
+          description: OK
+      operationId: get-ml-transparent
+      description: |-
+        指定された画像の背景を透過します
+        (管理者のみ使用可)
+  /ml/waifu2x:
+    post:
+      summary: Waifu2x image
+      operationId: post-ml-waifu2x
+      responses:
+        '200':
+          description: OK
+      tags:
+        - ml
+      description: |-
+        指定された画像を拡大します
+        (管理者のみ使用可)
 components:
   schemas:
     SearchResultStruct:
@@ -6515,6 +6564,7 @@ tags:
   - name: characters
   - name: garbage_collect
   - name: invites
+  - name: ml
   - name: mutes
   - name: mylist
   - name: navigations
