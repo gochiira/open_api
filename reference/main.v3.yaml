@@ -3191,7 +3191,7 @@ paths:
       description: 発行済の長期間有効トークンを無効化します
       tags:
         - token
-  /ml/prefict/nsfw:
+  /ml/predict/nsfw:
     post:
       summary: Predict image nsfw
       tags:
@@ -3199,10 +3199,19 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostMachineLearningGeneralResponse'
       operationId: get-prefict-nsfw
       description: |-
-        指定された画像がR18か推測します
+        指定された画像がR18かNudeNet/TensorflowLiteを使い推測します
         (管理者のみ使用可)
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostMachineLearningGeneralRequest'
     parameters: []
   /ml/predict/tags:
     post:
@@ -3212,10 +3221,19 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostMachineLearningGeneralResponse'
       operationId: get-ml-predict-tags
       description: |-
-        指定された画像のタグを推測します
+        指定された画像のタグをDeepDanbooruで推測します
         (管理者のみ使用可)
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostMachineLearningGeneralRequest'
   /ml/transparent:
     post:
       summary: Transparent image
@@ -3224,10 +3242,19 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostMachineLearningGeneralResponse'
       operationId: get-ml-transparent
       description: |-
-        指定された画像の背景を透過します
+        指定された画像の背景をrembgまたはhttps://github.com/zymk9/Yet-Another-Anime-Segmenterを使い透過します
         (管理者のみ使用可)
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostMachineLearningGeneralRequest'
   /ml/waifu2x:
     post:
       summary: Waifu2x image
@@ -3235,11 +3262,135 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostMachineLearningGeneralResponse'
       tags:
         - ml
       description: |-
-        指定された画像を拡大します
+        指定された画像をwaifu2x-converter-cpp等で拡大します
         (管理者のみ使用可)
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostMachineLearningGeneralRequest'
+  '/ml/polling/{pollingID}':
+    parameters:
+      - schema:
+          type: string
+        name: pollingID
+        in: path
+        required: true
+    get:
+      summary: Get ml polling
+      tags:
+        - ml
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '304':
+          description: Not Modified
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
+      operationId: get-ml-polling-pollingID
+      description: |-
+        処理結果が返ってくるまでここをPollingします
+        1req/10s ぐらいのリクエストでお願いします
+  '/ml/predict/nsfw/result/{resultID}':
+    parameters:
+      - schema:
+          type: string
+        name: resultID
+        in: path
+        required: true
+    get:
+      summary: Get nsfw predict result
+      tags:
+        - ml
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostPredictNsfwResponse'
+      operationId: get-ml-predict-nsfw-result-resultID
+      description: |-
+        NSFW推定の処理結果を返します
+        結果データは1日で削除されます
+  '/ml/predict/tags/result/{resultID}':
+    parameters:
+      - schema:
+          type: string
+        name: resultID
+        in: path
+        required: true
+    get:
+      summary: Get tags predict result
+      tags:
+        - ml
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostPredictTagsResponse'
+      operationId: get-ml-predict-tags-result-resultID
+      description: |-
+        タグ推定の処理結果を返します
+        結果データは1日で削除されます
+  '/ml/transparent/result/{resultID}':
+    parameters:
+      - schema:
+          type: string
+        name: resultID
+        in: path
+        required: true
+    get:
+      summary: Get transparent result
+      tags:
+        - ml
+      responses:
+        '200':
+          description: OK
+      operationId: get-ml-transparent-result-resultID
+      description: |-
+        透過の処理結果を返します
+        結果画像は1日で削除されます
+  '/ml/waifu2x/result/{resultID}':
+    parameters:
+      - schema:
+          type: string
+        name: resultID
+        in: path
+        required: true
+    get:
+      summary: Get waifu2x result
+      tags:
+        - ml
+      responses:
+        '200':
+          description: OK
+      operationId: get-ml-waifu2x-result-resultID
+      description: |-
+        Waifu2xの処理結果を返します
+        結果画像は1日で削除されます
 components:
   schemas:
     SearchResultStruct:
@@ -6454,6 +6605,45 @@ components:
           description: ミュートID
       required:
         - type
+    PostMachineLearningGeneralRequest:
+      title: PostMachineLearningGeneralRequest
+      type: object
+      properties:
+        image:
+          type: string
+          format: binary
+      required:
+        - image
+    PostPredictNsfwResponse:
+      title: PostPredictNsfwResponse
+      type: object
+      properties:
+        nsfw:
+          type: boolean
+        accuracy:
+          type: number
+    PostPredictTagsResponse:
+      title: PostPredictTagsResponse
+      type: object
+      properties:
+        tags:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              accuracy:
+                type: string
+    PostMachineLearningGeneralResponse:
+      title: PostMachineLearningGeneralResponse
+      type: object
+      properties:
+        url:
+          type: string
+          description: Polling用URLを返す(すぐに終わらん)
+      required:
+        - url
   securitySchemes:
     Authorization:
       type: http
