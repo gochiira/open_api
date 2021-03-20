@@ -1288,6 +1288,10 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArtStruct'
         '400':
           description: Bad Request
           content:
@@ -4451,6 +4455,7 @@ components:
         - pixivID
         - twitterID
         - mastodon
+      description: ''
     PostReplaceArtRequest:
       title: PostReplaceArtRequest
       type: object
