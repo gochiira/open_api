@@ -502,6 +502,7 @@ paths:
         name: newsID
         in: path
         required: true
+        description: 対象のニュースID
     get:
       summary: Get news
       tags:
@@ -564,6 +565,7 @@ paths:
         name: mylistID
         in: path
         required: true
+        description: 対象のマイリストID
     get:
       summary: Get mylist data
       tags:
@@ -1877,6 +1879,7 @@ paths:
         name: mylistID
         in: path
         required: true
+        description: 対象のマイリストID
     post:
       summary: Find arts registered
       operationId: findInMylistByIds
@@ -2320,6 +2323,7 @@ paths:
         name: artID
         in: path
         required: true
+        description: 対象のイラストID
     post:
       summary: Report art
       tags:
@@ -2349,6 +2353,7 @@ paths:
         name: tagID
         in: path
         required: true
+        description: 対象のタグID
     post:
       summary: Report tag
       tags:
@@ -2374,10 +2379,11 @@ paths:
   '/report/user/{accountID}':
     parameters:
       - schema:
-          type: string
+          type: integer
         name: accountID
         in: path
         required: true
+        description: 対象のアカウントID
     post:
       summary: Report user
       tags:
@@ -2407,6 +2413,7 @@ paths:
         name: articleID
         in: path
         required: true
+        description: 対象の記事ID
     post:
       summary: Report article
       tags:
@@ -2565,6 +2572,7 @@ paths:
         name: tagID
         in: path
         required: true
+        description: 対象のタグID
     get:
       summary: Get tag
       tags:
@@ -2788,10 +2796,11 @@ paths:
   '/wiki/{articleID}':
     parameters:
       - schema:
-          type: string
+          type: integer
         name: articleID
         in: path
         required: true
+        description: 対象の記事ID
     get:
       summary: Get wiki article
       tags:
@@ -2879,7 +2888,7 @@ paths:
             application/activity+json:
               schema:
                 $ref: '#/components/schemas/GetActivityPubGeneralResponse'
-      operationId: getActivityPubOutbox
+      operationId: getActivityPubUploaderOutbox
       description: 他のサーバーがこのユーザーのメッセージを受け取るときにGETされる
     parameters:
       - schema:
@@ -2926,7 +2935,7 @@ paths:
               $ref: '#/components/schemas/PostActivityPubGeneralRequest'
     get:
       summary: Check federation server message
-      operationId: getActivityPubServerinbox
+      operationId: getActivityPubServerInbox
       responses:
         '200':
           description: OK
@@ -2984,7 +2993,7 @@ paths:
             application/activity+json:
               schema:
                 $ref: '#/components/schemas/ActivityPubActorStruct'
-      operationId: get-activitypub-displayID
+      operationId: getActivityPubArtistActor
       description: |-
         ActivityPubのユーザー情報(絵師)を返す
         (実際使うときは https://example.com/artist/{displayID} からリダイレクト?)
@@ -3007,7 +3016,7 @@ paths:
             application/activity+json:
               schema:
                 $ref: '#/components/schemas/ActivityPubActorStruct'
-      operationId: get-activitypub-uploader-ID
+      operationId: getActivityPubUploaderActor
       description: |-
         ActivityPubのユーザー情報(投稿者)を返す
         (実際使うときは https://example.com/uploader/{displayID} からリダイレクト?)
@@ -3023,7 +3032,7 @@ paths:
             application/activity+json:
               schema:
                 $ref: '#/components/schemas/ActivityPubActorStruct'
-      operationId: get-activitypub-server
+      operationId: getActivityPubServerActor
       description: ActivityPubのユーザー情報(サーバー)を返す
   '/invites/{inviteID}':
     parameters:
@@ -3390,10 +3399,11 @@ paths:
   '/ml/polling/{pollingID}':
     parameters:
       - schema:
-          type: string
+          type: integer
         name: pollingID
         in: path
         required: true
+        description: 対象のポーリングID
     get:
       summary: Get ml polling
       tags:
@@ -3424,10 +3434,11 @@ paths:
   '/ml/predict/nsfw/result/{resultID}':
     parameters:
       - schema:
-          type: string
+          type: integer
         name: resultID
         in: path
         required: true
+        description: 対象の結果ID
     get:
       summary: Get nsfw predict result
       tags:
@@ -3448,10 +3459,11 @@ paths:
   '/ml/predict/tags/result/{resultID}':
     parameters:
       - schema:
-          type: string
+          type: integer
         name: resultID
         in: path
         required: true
+        description: 対象の結果ID
     get:
       summary: Get tags predict result
       tags:
@@ -3472,10 +3484,11 @@ paths:
   '/ml/transparent/result/{resultID}':
     parameters:
       - schema:
-          type: string
+          type: integer
         name: resultID
         in: path
         required: true
+        description: 対象の結果ID
     get:
       summary: Get transparent result
       tags:
@@ -3496,10 +3509,11 @@ paths:
   '/ml/waifu2x/result/{resultID}':
     parameters:
       - schema:
-          type: string
+          type: integer
         name: resultID
         in: path
         required: true
+        description: 対象の結果ID
     get:
       summary: Get waifu2x result
       tags:
