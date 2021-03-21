@@ -6816,6 +6816,100 @@ components:
             $ref: '#/components/schemas/WikiArticleStruct'
         pagination:
           $ref: '#/components/schemas/PaginationStruct'
+    GetWebAuthnRequestResponse:
+      description: ''
+      type: object
+      x-examples:
+        example-1:
+          rp:
+            name: string
+            id: string
+          user:
+            displayName: string
+            id: string
+            name: string
+          challenge: string
+          pubKeyCredParams:
+            - type: string
+              alg: 0
+          timeout: 0
+          attestation: string
+          excludeCredentials:
+            - id: string
+              type: string
+              transports:
+                - {}
+          authenticatorSelection:
+            authenticatorAttachment: string
+            userVerification: string
+      properties:
+        rp:
+          type: object
+          properties:
+            name:
+              type: string
+              minLength: 1
+            id:
+              type: string
+              minLength: 1
+        user:
+          type: object
+          properties:
+            displayName:
+              type: string
+              minLength: 1
+            id:
+              type: string
+              minLength: 1
+            name:
+              type: string
+              minLength: 1
+        challenge:
+          type: string
+          minLength: 1
+        pubKeyCredParams:
+          type: array
+          uniqueItems: true
+          minItems: 1
+          items:
+            type: object
+            properties:
+              type:
+                type: string
+                minLength: 1
+              alg:
+                type: number
+        timeout:
+          type: number
+        attestation:
+          type: string
+          minLength: 1
+        excludeCredentials:
+          type: array
+          uniqueItems: true
+          minItems: 1
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                minLength: 1
+              type:
+                type: string
+                minLength: 1
+              transports:
+                type: array
+                items:
+                  type: object
+        authenticatorSelection:
+          type: object
+          properties:
+            authenticatorAttachment:
+              type: string
+              minLength: 1
+            userVerification:
+              type: string
+              minLength: 1
   securitySchemes:
     Authorization:
       type: http
