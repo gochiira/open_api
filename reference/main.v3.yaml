@@ -1574,7 +1574,7 @@ paths:
         name: artID
         in: path
         required: true
-        description: 閲覧したイラストのID
+        description: 対象のイラストID
     put:
       summary: Plus art view
       operationId: addArtView
@@ -1950,18 +1950,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetNotifyClientsResponse'
-      parameters:
-        - schema:
-            type: integer
-          in: query
-          name: type
-          description: '0:全て 1:LineNotify 2:WebPush'
+      parameters: []
     parameters:
       - schema:
-          type: string
+          type: integer
         name: accountID
         in: path
         required: true
+        description: 取得対象のアカウントID
   '/accounts/{accountID}/notify/clients/web':
     post:
       summary: Create webpush notify client
@@ -1987,10 +1983,11 @@ paths:
         description: ''
     parameters:
       - schema:
-          type: string
+          type: integer
         name: accountID
         in: path
         required: true
+        description: 取得対象のアカウントID
   '/accounts/{accountID}/notify/conditions':
     post:
       summary: Register notify condition
@@ -2012,10 +2009,11 @@ paths:
               $ref: '#/components/schemas/NotifyConditionStruct'
     parameters:
       - schema:
-          type: string
+          type: integer
         name: accountID
         in: path
         required: true
+        description: 取得対象のアカウントID
     get:
       summary: Get notify conditions
       operationId: getNotifyConditions
@@ -2029,6 +2027,20 @@ paths:
       description: 通知条件一覧を取得します
       tags:
         - notify
+      parameters:
+        - schema:
+            type: integer
+            maximum: 9
+            example: 0
+            minimum: 0
+            enum:
+              - 0
+              - 1
+              - 2
+            default: 0
+          in: query
+          name: type
+          description: '条件種別 0:全通知 1:タグ 2:絵師'
   '/accounts/{accountID}/notify/clients/line':
     post:
       summary: Create line notify client
@@ -2050,22 +2062,25 @@ paths:
               $ref: '#/components/schemas/PostRegisterLineNotifyRequest'
     parameters:
       - schema:
-          type: string
+          type: integer
         name: accountID
         in: path
         required: true
-  '/accounts/{accountID}/notify/clients/{clientID}':
+        description: 対象のアカウントID
+  '/accounts/{accountID}/notify/clients/{notifyClientID}':
     parameters:
       - schema:
           type: integer
-        name: clientID
-        in: path
-        required: true
-      - schema:
-          type: string
         name: accountID
         in: path
         required: true
+        description: 対象のアカウントID
+      - schema:
+          type: integer
+        name: notifyClientID
+        in: path
+        required: true
+        description: 対象の通知クライアントID
     get:
       summary: Get notify client
       tags:
@@ -2125,11 +2140,13 @@ paths:
         name: conditionID
         in: path
         required: true
+        description: 対象の通知条件ID
       - schema:
-          type: string
+          type: integer
         name: accountID
         in: path
         required: true
+        description: 対象のアカウントID
     get:
       summary: Get notify condition
       tags:
@@ -2637,7 +2654,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/TimelineFollowStruct'
+              $ref: '#/components/schemas/LightArtistStruct'
       responses:
         '204':
           description: No Content
@@ -2647,10 +2664,11 @@ paths:
           description: Conflict
     parameters:
       - schema:
-          type: string
+          type: integer
         name: accountID
         in: path
         required: true
+        description: 対象のアカウントID
   '/accounts/{accountID}/timeline/unfollow':
     post:
       summary: Unfollow artist
@@ -2662,7 +2680,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/TimelineFollowStruct'
+              $ref: '#/components/schemas/LightArtistStruct'
       responses:
         '204':
           description: No Content
@@ -2672,10 +2690,11 @@ paths:
           description: Conflict
     parameters:
       - schema:
-          type: string
+          type: integer
         name: accountID
         in: path
         required: true
+        description: 対象のアカウントID
   /search/timeline:
     get:
       summary: Get timeline
@@ -2724,10 +2743,11 @@ paths:
         - $ref: '#/components/parameters/SearchQueryPage'
     parameters:
       - schema:
-          type: string
+          type: integer
         name: accountID
         in: path
         required: true
+        description: 対象のアカウントID
   /wiki:
     post:
       summary: Add wiki article
@@ -2863,10 +2883,11 @@ paths:
       description: 他のサーバーがこのユーザーのメッセージを受け取るときにGETされる
     parameters:
       - schema:
-          type: string
+          type: integer
         name: accountID
         in: path
         required: true
+        description: 対象のアカウントID
   '/activitypub/artist/{artistID}/outbox':
     get:
       summary: Provide federation artist message
@@ -2887,6 +2908,7 @@ paths:
         name: artistID
         in: path
         required: true
+        description: 対象の絵師ID
   /activitypub/server/inbox:
     post:
       summary: Recieve federation to server message
@@ -2946,10 +2968,11 @@ paths:
   '/activitypub/artist/{artistID}':
     parameters:
       - schema:
-          type: string
+          type: integer
         name: artistID
         in: path
         required: true
+        description: 対象の絵師ID
     get:
       summary: Get activitypub artist actor
       tags:
@@ -2972,6 +2995,7 @@ paths:
         name: accountID
         in: path
         required: true
+        description: 対象のアカウントID
     get:
       summary: Get activitypub uploader actor
       tags:
@@ -3008,6 +3032,7 @@ paths:
         name: inviteID
         in: path
         required: true
+        description: 対象の招待ID
     get:
       summary: Get invite
       tags:
@@ -3051,10 +3076,11 @@ paths:
   '/accounts/{accountID}/mylists':
     parameters:
       - schema:
-          type: string
+          type: integer
         name: accountID
         in: path
         required: true
+        description: 対象のアカウントID
     get:
       summary: Get user mylists
       tags:
@@ -3107,10 +3133,11 @@ paths:
   '/accounts/{accountID}/mutes':
     parameters:
       - schema:
-          type: string
+          type: integer
         name: accountID
         in: path
         required: true
+        description: 対象のアカウントID
     get:
       summary: Get mute list
       tags:
@@ -3149,15 +3176,17 @@ paths:
   '/accounts/{accountID}/mutes/{muteID}':
     parameters:
       - schema:
-          type: string
+          type: integer
         name: accountID
         in: path
         required: true
+        description: 対象のアカウントID
       - schema:
-          type: string
+          type: integer
         name: muteID
         in: path
         required: true
+        description: 対象のミュートID
     get:
       summary: Get mute
       tags:
@@ -3754,16 +3783,7 @@ components:
               type: boolean
               description: 投稿を承認できるか
         inviter:
-          type: object
-          description: 招待者の情報
-          properties:
-            accountID:
-              type: integer
-              description: 招待者のユーザー通し番号
-            name:
-              type: string
-              minLength: 1
-              description: 招待者の名前
+          $ref: '#/components/schemas/LightAccountStruct'
         invite:
           type: object
           description: 招待情報
@@ -3923,32 +3943,17 @@ components:
           type: array
           description: 絵師情報(複数可)
           items:
-            type: object
-            properties:
-              artistID:
-                type: integer
-              name:
-                type: string
+            $ref: '#/components/schemas/LightArtistStruct'
         users:
           type: array
           description: 投稿者情報(複数可)
           items:
-            type: object
-            properties:
-              accountID:
-                type: integer
-              name:
-                type: string
+            $ref: '#/components/schemas/LightAccountStruct'
         approvers:
           type: array
           description: 承認者情報(複数可)
           items:
-            type: object
-            properties:
-              accountID:
-                type: integer
-              name:
-                type: string
+            $ref: '#/components/schemas/LightAccountStruct'
         imageUrl:
           type: string
           description: 画像本体URL
@@ -5488,7 +5493,7 @@ components:
           updatedDate: '2021/03/14 02:16:03'
           private: true
       properties:
-        id:
+        mylistID:
           type: integer
           description: マイリストID
         name:
@@ -5592,7 +5597,7 @@ components:
       type: object
       description: ''
       properties:
-        id:
+        notifyClientID:
           type: integer
           description: 通知クライアントID
           minimum: 1
@@ -5685,7 +5690,7 @@ components:
       title: NotifyConditionStruct
       type: object
       properties:
-        id:
+        notifyConditionID:
           type: integer
           description: NotifyConditionID
         targetType:
@@ -6406,18 +6411,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/TagStruct'
-    TimelineFollowStruct:
-      title: TimelineFollowStruct
-      type: object
-      properties:
-        id:
-          type: integer
-          description: 絵師ID
-        name:
-          type: string
-          description: 絵師名
-      required:
-        - id
     GetTimelineFollowingResponse:
       title: GetTimelineFollowingResponse
       type: object
@@ -6425,7 +6418,7 @@ components:
         follows:
           type: array
           items:
-            $ref: '#/components/schemas/TimelineFollowStruct'
+            $ref: '#/components/schemas/LightArtistStruct'
     WikiArticleStruct:
       title: WikiArticleStruct
       type: object
@@ -6914,6 +6907,22 @@ components:
             userVerification:
               type: string
               minLength: 1
+    LightAccountStruct:
+      title: LightAccountStruct
+      type: object
+      properties:
+        accountID:
+          type: integer
+        name:
+          type: string
+    LightArtistStruct:
+      title: LightArtistStruct
+      type: object
+      properties:
+        artistID:
+          type: integer
+        name:
+          type: string
   securitySchemes:
     Authorization:
       type: http
