@@ -3558,9 +3558,6 @@ components:
         artID:
           type: integer
           description: イラストID
-        artistID:
-          type: integer
-          description: 絵師ID(前との互換のために用意、非推奨)
         title:
           type: string
           minLength: 1
@@ -3579,15 +3576,25 @@ components:
         pages:
           type: integer
           description: グループの場合のページ数(未使用)
-        like:
+        likes:
           type: integer
           description: 累計いいね数
-        mylist:
+        views:
+          type: integer
+          description: 累計閲覧数
+        mylists:
           type: integer
           description: マイリスト済みのユーザー数
         mylisted:
           type: boolean
           description: リクエストしたユーザーがマイリストしているか
+        uploader:
+          $ref: '#/components/schemas/LightAccountStruct'
+        artists:
+          type: array
+          description: 絵師情報(複数可)
+          items:
+            $ref: '#/components/schemas/LightArtistStruct'
         imageUrl:
           type: string
           description: 画像本体URL
@@ -3602,8 +3609,6 @@ components:
         nsfw:
           type: boolean
           description: アダルトコンテンツか否か
-        artist:
-          $ref: '#/components/schemas/LightArtistStruct'
         extension:
           type: string
           minLength: 1
@@ -3615,11 +3620,6 @@ components:
             - webp
             - mp4
           example: png
-        similarity:
-          type: number
-          description: 元画像との類似度(画像検索のみ)
-          minimum: 0
-          maximum: 1
         ipfsHash:
           type: object
           description: IPFSのハッシュ情報
@@ -3630,23 +3630,27 @@ components:
             orig:
               type: string
               description: Raw画像ハッシュ
-        uploader:
-          $ref: '#/components/schemas/LightAccountStruct'
+        similarity:
+          type: number
+          description: 元画像との類似度(画像検索のみ)
+          minimum: 0
+          maximum: 1
       required:
         - artID
-        - artistID
         - title
         - caption
         - date
         - pages
-        - like
-        - mylist
+        - likes
+        - views
+        - mylists
         - mylisted
+        - uploader
+        - artists
         - imageUrl
         - originUrl
         - originService
         - nsfw
-        - artist
         - extension
     NewsStruct:
       title: NewsStruct
