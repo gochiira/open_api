@@ -7019,6 +7019,15 @@ components:
           minLength: 1
       required:
         - message
+      x-examples:
+        not-found:
+          message: Specified content was not found.
+        no-permission:
+          message: You don't have enough permission to do it.
+        bad-request:
+          message: Your request body is wrong.
+        locked:
+          message: Specified content is referenced from other content.
     CommentEditStruct:
       title: CommentEditStruct
       type: object
