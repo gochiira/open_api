@@ -4082,16 +4082,41 @@ components:
       title: AccountStruct
       type: object
       x-examples:
-        example:
+        example-admin:
+          accountID: 1
           displayID: omado
-          name: お窓
+          apiKey: DUMMY_ADMIN_API_KEY
+          apiSeq: 0
+          permission: 9
           password: kafuuch1n0
           oldPassword: h0t0c0c0a
+          totpEnabled: false
+          name: お窓
+          description: 開発者さん
           favorite: 1
-          theme: 0
-          permission: 0
-          lineID: dosugamea
-          twitterID: shallow_omado
+          access:
+            canInvite: true
+            canFavorite: true
+            canComment: true
+            canCreatePost: true
+            canEditPost: true
+            canApprovePost: true
+          inviter:
+            accountID: 1
+            name: お窓
+          invite:
+            inviteID: 1
+            code: DEV
+            invitedCount: 0
+          notify:
+            hasLineNotify: false
+            hasWebNotify: false
+          ipfs:
+            gatewayUrl: 'https://cloudflare-ipfs.com'
+            nodeUrl: ''
+            gatewayEnabled: false
+            nodeEnabled: false
+            pinEnabled: true
       description: アカウントの取得/編集に使うリクエスト
       properties:
         accountID:
@@ -4222,6 +4247,7 @@ components:
             pinEnabled:
               type: boolean
               description: マイリストを自動Pinningするか
+              default: false
     DeleteAccountRequest:
       title: DeleteAccountRequest
       type: object
