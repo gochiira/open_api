@@ -3806,7 +3806,7 @@ components:
               description: 招待コード(shortuuid)
               minLength: 6
               maxLength: 12
-            invited:
+            invitedCount:
               type: integer
               description: 招待した人数の累計(誰を招待したかは表示されない)
         notify:
