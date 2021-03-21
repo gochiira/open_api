@@ -143,6 +143,10 @@ paths:
       responses:
         '204':
           description: No Content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
         '403':
           description: Forbidden
           content:
@@ -405,6 +409,10 @@ paths:
       responses:
         '204':
           description: No Content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
         '403':
           description: Forbidden
           content:
@@ -517,6 +525,10 @@ paths:
               examples: {}
         '404':
           description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
       operationId: getNews
       description: 指定したニュースの内容を取得します
     delete:
@@ -525,10 +537,22 @@ paths:
       responses:
         '204':
           description: No Content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
         '403':
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
         '404':
           description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
       tags:
         - news
       description: |-
@@ -546,8 +570,16 @@ paths:
                 $ref: '#/components/schemas/NewsStruct'
         '403':
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
         '404':
           description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
       tags:
         - news
       description: |-
@@ -605,8 +637,16 @@ paths:
                 $ref: '#/components/schemas/MylistStruct'
         '403':
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
         '404':
           description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
       description: マイリストのタイトル/説明文/内容(イラスト)を編集します
       requestBody:
         content:
@@ -625,6 +665,10 @@ paths:
       responses:
         '204':
           description: No Content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
         '403':
           description: Forbidden
           content:
@@ -856,8 +900,16 @@ paths:
                           extension: png
         '403':
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
         '404':
           description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
       operationId: searchArtByMylist
       description: 指定したマイリストのイラスト一覧を取得します
       parameters:
@@ -1215,6 +1267,10 @@ paths:
       responses:
         '204':
           description: No Content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
         '403':
           description: Forbidden
           content:
@@ -1346,8 +1402,16 @@ paths:
                 $ref: '#/components/schemas/PostReplaceArtSimulateResponse'
         '400':
           description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
         '404':
           description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
       tags:
         - arts
       description: |-
@@ -1738,6 +1802,10 @@ paths:
       responses:
         '204':
           description: No Content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
         '403':
           description: Forbidden
           content:
@@ -1785,8 +1853,16 @@ paths:
                 $ref: '#/components/schemas/ArtStruct'
         '400':
           description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
         '403':
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
       tags:
         - arts
       description: パラメータで与えられたイラストを投稿します
@@ -2097,8 +2173,16 @@ paths:
                 $ref: '#/components/schemas/NotifyClientStruct'
         '403':
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
         '404':
           description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
       operationId: getNotifyClient
       description: 指定した通知クライアント情報を取得します
     put:
@@ -2113,8 +2197,16 @@ paths:
                 $ref: '#/components/schemas/NotifyClientStruct'
         '403':
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
         '404':
           description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
       description: 指定した通知クライアント情報を編集します
       requestBody:
         content:
@@ -2132,10 +2224,22 @@ paths:
       responses:
         '204':
           description: No Content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
         '403':
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
         '404':
           description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
   '/accounts/{accountID}/notify/conditions/{conditionID}':
     parameters:
       - schema:
@@ -2163,8 +2267,16 @@ paths:
                 $ref: '#/components/schemas/NotifyConditionStruct'
         '403':
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
         '404':
           description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
       operationId: getNotifyCondition
       description: 通知条件を取得します
     put:
@@ -2179,8 +2291,16 @@ paths:
                 $ref: '#/components/schemas/NotifyConditionStruct'
         '403':
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
         '404':
           description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
       tags:
         - notify
       description: 通知条件を編集します
@@ -2195,10 +2315,22 @@ paths:
       responses:
         '204':
           description: No Content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
         '403':
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
         '404':
           description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
       tags:
         - notify
       description: 通知条件を削除します
@@ -2346,6 +2478,10 @@ paths:
                 $ref: '#/components/schemas/GeneralMessageResponse'
         '400':
           description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
   '/report/tags/{tagID}':
     parameters:
       - schema:
@@ -2376,6 +2512,10 @@ paths:
                 $ref: '#/components/schemas/GeneralMessageResponse'
         '400':
           description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
   '/report/user/{accountID}':
     parameters:
       - schema:
@@ -2406,6 +2546,10 @@ paths:
                 $ref: '#/components/schemas/GeneralMessageResponse'
         '400':
           description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
   '/report/wiki/{articleID}':
     parameters:
       - schema:
@@ -2427,6 +2571,10 @@ paths:
                 $ref: '#/components/schemas/GeneralMessageResponse'
         '400':
           description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
       operationId: reportArticle
       description: |-
         指定した記事を運営に通報します
@@ -2532,8 +2680,16 @@ paths:
       responses:
         '204':
           description: No Content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
         '403':
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
       description: |-
         参照されていない 絵師情報/タグ情報を削除します
         (cron等でやってもいいかもしれないですが 現在は手動)
@@ -2552,8 +2708,16 @@ paths:
                 $ref: '#/components/schemas/TagStruct'
         '400':
           description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
         '403':
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
       tags:
         - tags
       description: |-
@@ -2586,6 +2750,10 @@ paths:
                 $ref: '#/components/schemas/TagStruct'
         '404':
           description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
       operationId: getTag
       description: タグ情報を取得します
     put:
@@ -2600,10 +2768,22 @@ paths:
                 $ref: '#/components/schemas/TagStruct'
         '400':
           description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
         '403':
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
         '404':
           description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
       tags:
         - tags
       description: |-
@@ -2625,12 +2805,28 @@ paths:
       responses:
         '204':
           description: No Content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
         '403':
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
         '404':
           description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
         '409':
           description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
   /tags/finds:
     get:
       summary: Find tags by keyword
@@ -2666,10 +2862,22 @@ paths:
       responses:
         '204':
           description: No Content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
         '404':
           description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
         '409':
           description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
     parameters:
       - schema:
           type: integer
@@ -2692,10 +2900,22 @@ paths:
       responses:
         '204':
           description: No Content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
         '404':
           description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
         '409':
           description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
     parameters:
       - schema:
           type: integer
@@ -2718,6 +2938,10 @@ paths:
                 $ref: '#/components/schemas/GetSearchGeneralResponse'
         '403':
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
       operationId: getTimeline
       parameters:
         - $ref: '#/components/parameters/SearchQuerySort'
@@ -2814,6 +3038,10 @@ paths:
                 $ref: '#/components/schemas/WikiArticleStruct'
         '404':
           description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
       operationId: getWikiArticle
       description: Wikiの記事を取得します
     put:
@@ -2828,10 +3056,22 @@ paths:
                 $ref: '#/components/schemas/WikiArticleStruct'
         '400':
           description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
         '403':
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
         '404':
           description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
       description: Wikiの記事を編集します
       tags:
         - wiki
@@ -2849,10 +3089,22 @@ paths:
       responses:
         '204':
           description: No Content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
         '403':
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
         '404':
           description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
   /wiki/find:
     get:
       summary: Find wiki article
@@ -2861,8 +3113,16 @@ paths:
       responses:
         '204':
           description: No Content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
         '404':
           description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
       operationId: findWikiArticle
       description: Wikiの記事が存在するかを確認します
       parameters:
@@ -2925,6 +3185,10 @@ paths:
       responses:
         '201':
           description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
       description: 他のサーバーがこのサーバーに向けてメッセージを送るときにPOSTされる
       tags:
         - activitypub
@@ -2966,6 +3230,10 @@ paths:
       responses:
         '201':
           description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
       description: このサーバーが他のサーバーに向けてメッセージを送るときにPOSTされる
       tags:
         - activitypub
@@ -3067,6 +3335,10 @@ paths:
       responses:
         '204':
           description: No Content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
         '403':
           description: Forbidden
           content:
@@ -3127,10 +3399,22 @@ paths:
                 $ref: '#/components/schemas/MylistStruct'
         '400':
           description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
         '403':
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
         '409':
           description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
       description: マイリストを作成します
       tags:
         - mylist
@@ -3160,8 +3444,16 @@ paths:
                 $ref: '#/components/schemas/GetMutesResponse'
         '403':
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
         '404':
           description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
       operationId: getMutes
       description: 指定したアカウントのユーザーのミュート一覧を取得します
     post:
@@ -3209,8 +3501,16 @@ paths:
                 $ref: '#/components/schemas/MuteStruct'
         '403':
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
         '404':
           description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
       operationId: getMute
       description: 指定したミュート情報を取得します
     delete:
@@ -3219,10 +3519,22 @@ paths:
       responses:
         '204':
           description: No Content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
         '403':
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
         '404':
           description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
       description: 指定したミュート情報を削除します
       tags:
         - accounts
@@ -3253,8 +3565,16 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
         '401':
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
       tags:
         - token
       description: トークンが使用可能か検証します
@@ -3265,8 +3585,16 @@ paths:
       responses:
         '204':
           description: No Content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
         '401':
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
       description: 発行済の長期間有効トークンを無効化します
       tags:
         - token
@@ -3284,8 +3612,16 @@ paths:
                 $ref: '#/components/schemas/PostMachineLearningGeneralResponse'
         '429':
           description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
         '503':
           description: Service Unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
       operationId: predictNsfw
       description: |-
         指定された画像がR18かNudeNet/TensorflowLiteを使い推測します
@@ -3310,8 +3646,16 @@ paths:
                 $ref: '#/components/schemas/PostMachineLearningGeneralResponse'
         '429':
           description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
         '503':
           description: Service Unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
       operationId: predictTags
       description: |-
         指定された画像のタグをDeepDanbooruで推測します
@@ -3335,8 +3679,16 @@ paths:
                 $ref: '#/components/schemas/PostMachineLearningGeneralResponse'
         '429':
           description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
         '503':
           description: Service Unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
       operationId: transparentImage
       description: |-
         指定された画像の背景をrembgまたはhttps://github.com/zymk9/Yet-Another-Anime-Segmenterを使い透過します
@@ -3359,8 +3711,16 @@ paths:
                 $ref: '#/components/schemas/PostMachineLearningGeneralResponse'
         '429':
           description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
         '503':
           description: Service Unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
       tags:
         - ml
       description: |-
@@ -3452,6 +3812,10 @@ paths:
                 $ref: '#/components/schemas/PostPredictNsfwResponse'
         '404':
           description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
       operationId: getNsfwPredictResult
       description: |-
         NSFW推定の処理結果を返します
@@ -3477,6 +3841,10 @@ paths:
                 $ref: '#/components/schemas/PostPredictTagsResponse'
         '404':
           description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
       operationId: getTagPredictResult
       description: |-
         タグ推定の処理結果を返します
@@ -3502,6 +3870,10 @@ paths:
                 $ref: '#/components/schemas/PostMachineLearningTransparentResponse'
         '404':
           description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
       operationId: getTransparentImageResult
       description: |-
         透過の処理結果を返します
@@ -3527,6 +3899,10 @@ paths:
                 $ref: '#/components/schemas/PostMachineLearningWaifu2xResponse'
         '404':
           description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
       operationId: getScaleWaifu2xResult
       description: |-
         Waifu2xの処理結果を返します
