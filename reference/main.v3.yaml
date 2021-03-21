@@ -3603,19 +3603,7 @@ components:
           type: boolean
           description: アダルトコンテンツか否か
         artist:
-          type: object
-          description: 絵師情報
-          required:
-            - name
-            - id
-          properties:
-            name:
-              type: string
-              minLength: 1
-              description: 絵師名
-            id:
-              type: integer
-              description: 絵師のサイト内通し番号
+          $ref: '#/components/schemas/LightArtistStruct'
         extension:
           type: string
           minLength: 1
@@ -3632,7 +3620,7 @@ components:
           description: 元画像との類似度(画像検索のみ)
           minimum: 0
           maximum: 1
-        ipfs_hash:
+        ipfsHash:
           type: object
           description: IPFSのハッシュ情報
           properties:
@@ -3664,7 +3652,7 @@ components:
       description: サイト内の新着情報モデル。
       x-examples: {}
       properties:
-        id:
+        newsID:
           type: integer
           description: ニュースID
         date:
@@ -3687,6 +3675,8 @@ components:
           minLength: 1
           maxLength: 3000
           description: ニュース本文 3000文字まで
+        author:
+          $ref: '#/components/schemas/LightAccountStruct'
     NavigationStruct:
       title: NavigationStruct
       type: object
@@ -4109,7 +4099,7 @@ components:
           name: 香風智乃
       description: タグデータモデル
       properties:
-        id:
+        tagID:
           type: integer
           minimum: 1
           format: int32
@@ -4130,15 +4120,7 @@ components:
           description: アダルトコンテンツが含まれるタグか
           default: false
         user:
-          type: object
-          description: ユーザー情報
-          properties:
-            id:
-              type: integer
-              description: ユーザーID
-            name:
-              type: string
-              description: ユーザー名
+          $ref: '#/components/schemas/LightAccountStruct'
         parent:
           type: array
           description: 親となるタグ
@@ -4412,7 +4394,7 @@ components:
         example:
           api_key: DUMMY_API_KEY
       properties:
-        api_key:
+        apiKey:
           type: string
           minLength: 1
     PostLoginWithFormResponse:
@@ -4740,53 +4722,29 @@ components:
             body: string
       title: CommentStruct
       properties:
+        commentID:
+          type: integer
+          description: '"作品別" コメントID'
+          minimum: 1
+          format: int32
+        created:
+          type: string
+          description: 投稿時刻(datetime)
+          minLength: 19
+          maxLength: 19
+          example: '2021/03/13 11:29:24'
+        updated:
+          type: string
+          description: 更新時刻(datetime)
+          minLength: 19
+          maxLength: 19
+          example: '2021/03/13 11:29:24'
+        body:
+          type: string
+          description: コメント本文
+          maxLength: 500
         user:
-          type: object
-          required:
-            - id
-            - name
-          description: 投稿ユーザー情報
-          properties:
-            id:
-              type: integer
-              description: ユーザーID
-            name:
-              type: string
-              minLength: 1
-              description: ユーザー名
-        comment:
-          type: object
-          required:
-            - created
-            - updated
-            - body
-            - id
-          description: コメント情報
-          properties:
-            created:
-              type: string
-              description: 投稿時刻(datetime)
-              minLength: 19
-              maxLength: 19
-              example: '2021/03/13 11:29:24'
-            updated:
-              type: string
-              description: 更新時刻(datetime)
-              minLength: 19
-              maxLength: 19
-              example: '2021/03/13 11:29:24'
-            body:
-              type: string
-              description: コメント本文
-              maxLength: 500
-            id:
-              type: integer
-              description: '"作品別" コメントID'
-              minimum: 1
-              format: int32
-      required:
-        - user
-        - comment
+          $ref: '#/components/schemas/LightAccountStruct'
     GetCatalogArtistResponse:
       description: ''
       type: object
@@ -5535,6 +5493,8 @@ components:
           description: データ本体
           items:
             type: integer
+        owner:
+          $ref: '#/components/schemas/LightAccountStruct'
       required:
         - name
         - description
@@ -6443,7 +6403,7 @@ components:
           title: お窓
           body: 作者・開発者。えらいひと。
       properties:
-        id:
+        articleID:
           type: integer
           description: 記事ID
         targetType:
@@ -6482,6 +6442,8 @@ components:
           type: integer
           description: 総編集回数
           minimum: 1
+        author:
+          $ref: '#/components/schemas/LightAccountStruct'
     ActivityPubActorStruct:
       description: 'https://argrath.github.io/activitypub/#actor-objects'
       type: object
@@ -6683,17 +6645,12 @@ components:
       title: InviteStruct
       type: object
       properties:
-        id:
+        inviteID:
           type: integer
         code:
           type: string
         issuer:
-          type: object
-          properties:
-            id:
-              type: integer
-            name:
-              type: string
+          $ref: '#/components/schemas/LightAccountStruct'
         count:
           type: integer
       required:
@@ -6736,7 +6693,7 @@ components:
       title: MuteStruct
       type: object
       properties:
-        id:
+        muteID:
           type: integer
           description: ミュートID
         targetID:
@@ -6821,12 +6778,12 @@ components:
       title: GetWikiArticlesResponse
       type: object
       properties:
+        pagination:
+          $ref: '#/components/schemas/PaginationStruct'
         articles:
           type: array
           items:
             $ref: '#/components/schemas/WikiArticleStruct'
-        pagination:
-          $ref: '#/components/schemas/PaginationStruct'
     GetWebAuthnRequestResponse:
       description: ''
       type: object
