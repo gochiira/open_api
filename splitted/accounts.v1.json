@@ -8,7 +8,7 @@
       "url": "https://twitter.com/shallow_omado",
       "email": "dsgamer777@gmail.com"
     },
-    "termsOfService": "https://illust.gochiusa.team/terms",
+    "termsOfService": "https://github.com/UsagiBooru/accounts-server",
     "description": "ごちイラ内でメインに使用されているAPI。\n現在Bot、ガチャ、フロントエンド の 3箇所で使用中。",
     "license": {
       "name": "GPLv3",
@@ -16,10 +16,6 @@
     }
   },
   "servers": [
-    {
-      "url": "https://api.gochiusa.team",
-      "description": "Prod"
-    },
     {
       "url": "http://127.0.0.1:8080",
       "description": "Dev"
@@ -64,7 +60,8 @@
               }
             }
           }
-        }
+        },
+        "security": []
       }
     },
     "/accounts/{accountID}": {
@@ -381,7 +378,8 @@
             }
           },
           "description": "ユーザーIDとパスワードをパラメータに取ります"
-        }
+        },
+        "security": []
       }
     },
     "/accounts/{accountID}/notify/clients": {
@@ -1068,9 +1066,6 @@
       ],
       "get": {
         "summary": "Get user mylists",
-        "tags": [
-          "accounts"
-        ],
         "responses": {
           "200": {
             "description": "OK",
@@ -1104,7 +1099,10 @@
           }
         },
         "operationId": "getUserMylists",
-        "description": "指定したユーザーのマイリスト一覧を取得します"
+        "description": "指定したユーザーのマイリスト一覧を取得します",
+        "tags": [
+          "mylists"
+        ]
       },
       "post": {
         "summary": "Create user mylist",
@@ -1180,9 +1178,6 @@
       ],
       "get": {
         "summary": "Get mute list",
-        "tags": [
-          "accounts"
-        ],
         "responses": {
           "200": {
             "description": "OK",
@@ -1216,7 +1211,10 @@
           }
         },
         "operationId": "getMutes",
-        "description": "指定したアカウントのユーザーのミュート一覧を取得します"
+        "description": "指定したアカウントのユーザーのミュート一覧を取得します",
+        "tags": [
+          "mutes"
+        ]
       },
       "post": {
         "summary": "Add mute",
@@ -1271,9 +1269,6 @@
       ],
       "get": {
         "summary": "Get mute",
-        "tags": [
-          "accounts"
-        ],
         "responses": {
           "200": {
             "description": "OK",
@@ -1307,7 +1302,10 @@
           }
         },
         "operationId": "getMute",
-        "description": "指定したミュート情報を取得します"
+        "description": "指定したミュート情報を取得します",
+        "tags": [
+          "mutes"
+        ]
       },
       "delete": {
         "summary": "Delete mute",
@@ -2482,6 +2480,13 @@
         "description": "ソート方法 c:ヒット数 d:最終更新 l:いいね数 n:名前",
         "name": "sort"
       }
+    },
+    "securitySchemes": {
+      "Authorization": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": ""
+      }
     }
   },
   "tags": [
@@ -2496,6 +2501,11 @@
     },
     {
       "name": "timeline"
+    }
+  ],
+  "security": [
+    {
+      "Authorization": []
     }
   ]
 }

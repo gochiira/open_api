@@ -6,7 +6,7 @@ info:
     name: Omado
     url: 'https://twitter.com/shallow_omado'
     email: dsgamer777@gmail.com
-  termsOfService: 'https://illust.gochiusa.team/terms'
+  termsOfService: 'https://github.com/UsagiBooru'
   description: |-
     ごちイラ内でメインに使用されているAPI。
     現在Bot、ガチャ、フロントエンド の 3箇所で使用中。
@@ -44,6 +44,7 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/AccountStruct'
+      security: []
   '/accounts/{accountID}':
     parameters:
       - schema:
@@ -268,6 +269,7 @@ paths:
                   id: test_admin
                   password: this_is_only_for_test
         description: ユーザーIDとパスワードをパラメータに取ります
+      security: []
   /catalog/artists:
     get:
       summary: Get artist list
