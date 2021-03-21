@@ -1363,7 +1363,7 @@
             "favorite": 1,
             "theme": 0,
             "permission": 0,
-            "lineID": "dosugamea",
+            "lineID": "omado",
             "twitterID": "shallow_omado"
           }
         },
@@ -2176,28 +2176,20 @@
         "type": "object",
         "x-examples": {
           "success": {
-            "status": 200,
-            "message": "ok",
-            "data": {
-              "tag": [
-                1,
-                2,
-                3
-              ],
-              "artist": [
-                1,
-                2,
-                3
-              ]
-            }
+            "tags": [
+              1,
+              2,
+              3
+            ],
+            "artists": [
+              1,
+              2,
+              3
+            ]
           },
           "success-no-data": {
-            "status": 200,
-            "message": "ok",
-            "data": {
-              "tag": [],
-              "artist": []
-            }
+            "tags": [],
+            "artists": []
           }
         },
         "properties": {
