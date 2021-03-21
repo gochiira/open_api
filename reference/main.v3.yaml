@@ -326,11 +326,11 @@ paths:
         - $ref: '#/components/parameters/SearchQuerySortCatalog'
         - $ref: '#/components/parameters/SearchQueryOrder'
         - $ref: '#/components/parameters/SearchQueryPerPage'
-  '/arts/{illustID}':
+  '/arts/{artID}':
     parameters:
       - schema:
           type: integer
-        name: illustID
+        name: artID
         in: path
         required: true
         description: 取得したいイラストのID
@@ -361,7 +361,7 @@ paths:
       description: 指定したイラストを取得します
     put:
       summary: Edit art
-      operationId: put-arts-illustID
+      operationId: put-arts-artID
       responses:
         '200':
           description: OK
@@ -401,7 +401,7 @@ paths:
         description: ''
     delete:
       summary: Delete art
-      operationId: delete-arts-illustID
+      operationId: delete-arts-artID
       responses:
         '204':
           description: No Content
@@ -685,7 +685,7 @@ paths:
                       current: 1
                       pages: 1
                       imgs:
-                        - illustID: 4
+                        - artID: 4
                           artistID: 1
                           title: 社畜のイラスト
                           caption: 会社に飼い慣らされ家畜のように扱われている男性会社員（サラリーマン）、俗にいう社畜のイラストです。
@@ -701,7 +701,7 @@ paths:
                             id: 1
                             name: みふね
                           extension: png
-                        - illustID: 3
+                        - artID: 3
                           artistID: 1
                           title: なかなか当たらないガチャのイラスト
                           caption: 当たりが出る確率がとても低いガチャガチャを回し続けている人のイラストです。
@@ -717,7 +717,7 @@ paths:
                             id: 1
                             name: みふね
                           extension: png
-                        - illustID: 2
+                        - artID: 2
                           artistID: 1
                           title: 単位を落とす学生のイラスト（男性）
                           caption: 大学生の男の子が単位を落として焦っているイラストです。
@@ -733,7 +733,7 @@ paths:
                             id: 1
                             name: みふね
                           extension: png
-                        - illustID: 1
+                        - artID: 1
                           artistID: 1
                           title: パソコンのキャラクター（ノートパソコン）(笑顔)
                           caption: |
@@ -787,7 +787,7 @@ paths:
                       current: 1
                       pages: 1
                       imgs:
-                        - illustID: 4
+                        - artID: 4
                           artistID: 1
                           title: 社畜のイラスト
                           caption: 会社に飼い慣らされ家畜のように扱われている男性会社員（サラリーマン）、俗にいう社畜のイラストです。
@@ -803,7 +803,7 @@ paths:
                             id: 1
                             name: みふね
                           extension: png
-                        - illustID: 3
+                        - artID: 3
                           artistID: 1
                           title: なかなか当たらないガチャのイラスト
                           caption: 当たりが出る確率がとても低いガチャガチャを回し続けている人のイラストです。
@@ -819,7 +819,7 @@ paths:
                             id: 1
                             name: みふね
                           extension: png
-                        - illustID: 2
+                        - artID: 2
                           artistID: 1
                           title: 単位を落とす学生のイラスト（男性）
                           caption: 大学生の男の子が単位を落として焦っているイラストです。
@@ -835,7 +835,7 @@ paths:
                             id: 1
                             name: みふね
                           extension: png
-                        - illustID: 1
+                        - artID: 1
                           artistID: 1
                           title: パソコンのキャラクター（ノートパソコン）(笑顔)
                           caption: |
@@ -893,7 +893,7 @@ paths:
                       current: 1
                       pages: 1
                       imgs:
-                        - illustID: 6
+                        - artID: 6
                           artistID: 3
                           title: Cafe Image
                           caption: Ready for the breakfast rush to start
@@ -947,7 +947,7 @@ paths:
                       current: 1
                       pages: 1
                       imgs:
-                        - illustID: 8
+                        - artID: 8
                           artistID: 5
                           title: tea pours into white teacup photo
                           caption: ''
@@ -963,7 +963,7 @@ paths:
                             id: 5
                             name: CHI CHEN
                           extension: jpg
-                        - illustID: 7
+                        - artID: 7
                           artistID: 4
                           title: clear glass cup with tea near brown ceramic teapot
                           caption: ''
@@ -979,7 +979,7 @@ paths:
                             id: 4
                             name: Manki Kim
                           extension: jpg
-                        - illustID: 6
+                        - artID: 6
                           artistID: 3
                           title: Cafe Image
                           caption: Ready for the breakfast rush to start
@@ -995,7 +995,7 @@ paths:
                             id: 3
                             name: Andy Falconer
                           extension: jpg
-                        - illustID: 5
+                        - artID: 5
                           artistID: 2
                           title: top view photography of heart latte coffee photo
                           caption: Cappuccino in a bed of fresh roasted coffee beans.
@@ -1011,7 +1011,7 @@ paths:
                             id: 2
                             name: Nathan Dumlao
                           extension: jpg
-                        - illustID: 4
+                        - artID: 4
                           artistID: 1
                           title: 社畜のイラスト
                           caption: 会社に飼い慣らされ家畜のように扱われている男性会社員（サラリーマン）、俗にいう社畜のイラストです。
@@ -1027,7 +1027,7 @@ paths:
                             id: 1
                             name: みふね
                           extension: png
-                        - illustID: 3
+                        - artID: 3
                           artistID: 1
                           title: なかなか当たらないガチャのイラスト
                           caption: 当たりが出る確率がとても低いガチャガチャを回し続けている人のイラストです。
@@ -1043,7 +1043,7 @@ paths:
                             id: 1
                             name: みふね
                           extension: png
-                        - illustID: 2
+                        - artID: 2
                           artistID: 1
                           title: 単位を落とす学生のイラスト（男性）
                           caption: 大学生の男の子が単位を落として焦っているイラストです。
@@ -1059,7 +1059,7 @@ paths:
                             id: 1
                             name: みふね
                           extension: png
-                        - illustID: 1
+                        - artID: 1
                           artistID: 1
                           title: パソコンのキャラクター（ノートパソコン）(笑顔)
                           caption: |
@@ -1276,11 +1276,11 @@ paths:
             schema:
               $ref: '#/components/schemas/ArtistStruct'
         description: ''
-  '/arts/{illustID}/replace':
+  '/arts/{artID}/replace':
     parameters:
       - schema:
           type: integer
-        name: illustID
+        name: artID
         in: path
         required: true
         description: 置き換えしたい(画質が低い方の)イラストID
@@ -1324,11 +1324,11 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/PostReplaceArtRequest'
-  '/arts/{illustID}/replace_simulate':
+  '/arts/{artID}/replace_simulate':
     parameters:
       - schema:
           type: integer
-        name: illustID
+        name: artID
         in: path
         required: true
         description: 置き換えしたい(画質が低い方の)イラストID
@@ -1358,7 +1358,7 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/PostReplaceArtRequest'
-  '/arts/{illustID}/tags':
+  '/arts/{artID}/tags':
     get:
       summary: Get art tags
       tags:
@@ -1381,7 +1381,7 @@ paths:
     parameters:
       - schema:
           type: integer
-        name: illustID
+        name: artID
         in: path
         required: true
         description: 対象のイラストID
@@ -1466,11 +1466,11 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/PutArtTagsRequest'
-  '/arts/{illustID}/likes/{likeType}':
+  '/arts/{artID}/likes/{likeType}':
     parameters:
       - schema:
           type: integer
-        name: illustID
+        name: artID
         in: path
         required: true
         description: いいねしたいイラストのID
@@ -1540,11 +1540,11 @@ paths:
       description: 指定したイラストのいいねを取得します
       tags:
         - arts
-  '/arts/{illustID}/likes':
+  '/arts/{artID}/likes':
     parameters:
       - schema:
           type: integer
-        name: illustID
+        name: artID
         in: path
         required: true
         description: いいねしたいイラストのID
@@ -1567,11 +1567,11 @@ paths:
       description: 指定したイラストのいいねを取得します
       tags:
         - arts
-  '/arts/{illustID}/views':
+  '/arts/{artID}/views':
     parameters:
       - schema:
           type: integer
-        name: illustID
+        name: artID
         in: path
         required: true
         description: 閲覧したイラストのID
@@ -1621,11 +1621,11 @@ paths:
       description: 指定したイラストの閲覧回数のみを取得します
       tags:
         - arts
-  '/arts/{illustID}/comments':
+  '/arts/{artID}/comments':
     parameters:
       - schema:
           type: integer
-        name: illustID
+        name: artID
         in: path
         required: true
         description: 対象のイラストID
@@ -1684,11 +1684,11 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/CommentEditStruct'
-  '/arts/{illustID}/comments/{commentID}':
+  '/arts/{artID}/comments/{commentID}':
     parameters:
       - schema:
           type: integer
-        name: illustID
+        name: artID
         in: path
         required: true
         description: 対象のイラストID
@@ -2296,11 +2296,11 @@ paths:
         - $ref: '#/components/parameters/SearchQueryMylistDeny'
         - $ref: '#/components/parameters/SearchQueryPerPage'
       description: 週間いいね数ランキングを取得します
-  '/report/arts/{illustID}':
+  '/report/arts/{artID}':
     parameters:
       - schema:
           type: integer
-        name: illustID
+        name: artID
         in: path
         required: true
     post:
@@ -3495,7 +3495,7 @@ components:
       type: object
       x-examples:
         example-1:
-          illustID: 0
+          artID: 0
           artistID: 0
           title: string
           caption: string
@@ -3512,7 +3512,7 @@ components:
           extension: string
       description: 検索の応答モデル。配列で並んで返される。
       properties:
-        illustID:
+        artID:
           type: integer
           description: イラストID
         artistID:
@@ -3600,7 +3600,7 @@ components:
               type: string
               description: Raw画像ハッシュ
       required:
-        - illustID
+        - artID
         - artistID
         - title
         - caption
@@ -3711,6 +3711,10 @@ components:
           format: password
           maxLength: 50
           minLength: 8
+        totpEnabled:
+          type: boolean
+          description: TOTPが有効かが入ります
+          default: false
         name:
           type: string
           description: 他のユーザーに表示されるユーザー名/投稿者名
@@ -3731,29 +3735,29 @@ components:
           type: object
           description: 管理者権限とは別の細かな権限
           properties:
-            can_invite:
+            canInvite:
               type: boolean
               description: 招待できるか
-            can_favorite:
+            canFavorite:
               type: boolean
               description: いいねできるか
-            can_comment:
+            canComment:
               type: boolean
               description: コメントできるか
-            can_create_post:
+            canCreatePost:
               type: boolean
               description: 投稿できるか
-            can_edit_post:
+            canEditPost:
               type: boolean
               description: 投稿を編集できるか
-            can_approve_post:
+            canApprovePost:
               type: boolean
               description: 投稿を承認できるか
         inviter:
           type: object
           description: 招待者の情報
           properties:
-            id:
+            accountID:
               type: integer
               description: 招待者のユーザー通し番号
             name:
@@ -3764,7 +3768,7 @@ components:
           type: object
           description: 招待情報
           properties:
-            id:
+            inviteID:
               type: integer
               description: 招待通し番号
             code:
@@ -3779,9 +3783,9 @@ components:
           type: object
           description: 通知クライアントを設定済みか
           properties:
-            has_line_notify:
+            hasLineNotify:
               type: boolean
-            has_web_notify:
+            hasWebNotify:
               type: boolean
         ipfs:
           type: object
@@ -3860,7 +3864,7 @@ components:
             - string
           filesize: 0
           replace:
-            - illustID: 0
+            - artID: 0
               title: string
               caption: string
               date: string
@@ -3890,7 +3894,7 @@ components:
             - 2021年03月
           nsfw: false
       properties:
-        id:
+        artID:
           type: integer
           description: イラストID
         title:
@@ -3921,7 +3925,7 @@ components:
           items:
             type: object
             properties:
-              id:
+              artistID:
                 type: integer
               name:
                 type: string
@@ -3931,7 +3935,7 @@ components:
           items:
             type: object
             properties:
-              id:
+              accountID:
                 type: integer
               name:
                 type: string
@@ -3941,7 +3945,7 @@ components:
           items:
             type: object
             properties:
-              id:
+              accountID:
                 type: integer
               name:
                 type: string
@@ -4033,7 +4037,7 @@ components:
             blue:
               type: integer
               description: ブルースター数
-        ipfs_hash:
+        ipfsHash:
           type: object
           properties:
             thumb:
@@ -4071,7 +4075,7 @@ components:
           type: string
           minLength: 1
           description: ログインパスワード
-        totp_code:
+        totpCode:
           type: string
           description: ログインTOTPトークン
       required:
@@ -4137,7 +4141,7 @@ components:
       type: object
       x-examples:
         example:
-          illustID: 1
+          artID: 1
           title: チノちゃん
           caption: ''
           date: '2021-03-05 01:27:22'
@@ -4148,7 +4152,7 @@ components:
           filesize: 2M
       title: ReplaceStruct
       properties:
-        illustID:
+        artID:
           type: integer
           description: サイト内イラスト通し番号
         title:
@@ -4181,7 +4185,7 @@ components:
           minLength: 1
           description: ファイルサイズに単位を付けた人間が読めるもの
       required:
-        - illustID
+        - artID
         - title
         - caption
         - date
@@ -4200,7 +4204,7 @@ components:
           started: '2021-02-21 22:24:22'
           finished: '2021-02-21 22:24:27'
           status: 5
-          illustID: 9381
+          artID: 9381
       properties:
         uploadID:
           type: integer
@@ -4231,7 +4235,7 @@ components:
             - 5
             - 9
           default: 0
-        illustID:
+        artID:
           type: integer
           format: int32
           description: 投稿に成功した場合入るID
@@ -4242,7 +4246,7 @@ components:
         - started
         - finished
         - status
-        - illustID
+        - artID
     GetUploadHistoryResponse:
       title: GetUploadHistoryResponse
       type: object
@@ -4261,102 +4265,102 @@ components:
                   started: '2021-02-21 22:24:22'
                   finished: '2021-02-21 22:24:27'
                   status: 5
-                  illustID: 9381
+                  artID: 9381
                 - uploadID: 12044
                   started: '2021-02-21 22:23:41'
                   finished: '2021-02-21 22:23:45'
                   status: 5
-                  illustID: 9380
+                  artID: 9380
                 - uploadID: 12036
                   started: '2021-02-21 20:30:39'
                   finished: '2021-02-21 20:30:43'
                   status: 5
-                  illustID: 9375
+                  artID: 9375
                 - uploadID: 12004
                   started: '2021-02-20 20:20:19'
                   finished: '2021-02-20 20:20:29'
                   status: 5
-                  illustID: 9355
+                  artID: 9355
                 - uploadID: 12003
                   started: '2021-02-20 20:03:30'
                   finished: '2021-02-20 20:03:46'
                   status: 5
-                  illustID: 9354
+                  artID: 9354
                 - uploadID: 11972
                   started: '2021-02-19 21:30:58'
                   finished: '2021-02-19 21:31:00'
                   status: 5
-                  illustID: 9336
+                  artID: 9336
                 - uploadID: 11971
                   started: '2021-02-19 21:30:52'
                   finished: '2021-02-19 21:30:55'
                   status: 5
-                  illustID: 9335
+                  artID: 9335
                 - uploadID: 11970
                   started: '2021-02-19 21:30:46'
                   finished: '2021-02-19 21:30:49'
                   status: 5
-                  illustID: 9334
+                  artID: 9334
                 - uploadID: 10756
                   started: '2021-01-20 03:12:57'
                   finished: '2021-01-20 03:13:04'
                   status: 5
-                  illustID: 8418
+                  artID: 8418
                 - uploadID: 10755
                   started: '2021-01-20 03:09:31'
                   finished: '2021-01-20 03:09:39'
                   status: 5
-                  illustID: 8417
+                  artID: 8417
                 - uploadID: 10754
                   started: '2021-01-20 02:57:00'
                   finished: '2021-01-20 02:57:09'
                   status: 5
-                  illustID: 8416
+                  artID: 8416
                 - uploadID: 10753
                   started: '2021-01-20 02:56:44'
                   finished: '2021-01-20 02:56:52'
                   status: 5
-                  illustID: 8415
+                  artID: 8415
                 - uploadID: 10663
                   started: '2021-01-17 22:21:22'
                   finished: '2021-01-17 22:21:35'
                   status: 5
-                  illustID: 8364
+                  artID: 8364
                 - uploadID: 10658
                   started: '2021-01-17 21:14:02'
                   finished: '2021-01-17 21:14:06'
                   status: 5
-                  illustID: 8360
+                  artID: 8360
                 - uploadID: 10657
                   started: '2021-01-17 21:07:54'
                   finished: '2021-01-17 21:07:57'
                   status: 5
-                  illustID: 8359
+                  artID: 8359
                 - uploadID: 10656
                   started: '2021-01-17 21:07:47'
                   finished: '2021-01-17 21:07:51'
                   status: 5
-                  illustID: 8358
+                  artID: 8358
                 - uploadID: 10655
                   started: '2021-01-17 21:07:41'
                   finished: '2021-01-17 21:07:43'
                   status: 5
-                  illustID: 8357
+                  artID: 8357
                 - uploadID: 10654
                   started: '2021-01-17 21:07:34'
                   finished: '2021-01-17 21:07:37'
                   status: 5
-                  illustID: 8356
+                  artID: 8356
                 - uploadID: 10653
                   started: '2021-01-17 21:07:27'
                   finished: '2021-01-17 21:07:30'
                   status: 5
-                  illustID: 8355
+                  artID: 8355
                 - uploadID: 10652
                   started: '2021-01-17 21:06:35'
                   finished: '2021-01-17 21:06:39'
                   status: 5
-                  illustID: 8354
+                  artID: 8354
         no-hit:
           value:
             status: 200
@@ -4432,8 +4436,9 @@ components:
             - string
           count: 0
           lcount: 0
+      description: ''
       properties:
-        id:
+        artistID:
           type: integer
           description: 絵師のID
         userID:
@@ -4495,18 +4500,17 @@ components:
         - pixivID
         - twitterID
         - mastodon
-      description: ''
     PostReplaceArtRequest:
       title: PostReplaceArtRequest
       type: object
       description: ''
       properties:
-        illustID:
+        artID:
           type: integer
           description: より画質が高いイラストのID
           minimum: 1
       required:
-        - illustID
+        - artID
     PostReplaceArtSimulateResponse:
       description: ''
       type: object
@@ -4555,7 +4559,7 @@ components:
                 - string
               filesize: 0
               replace:
-                - illustID: 0
+                - artID: 0
                   title: string
                   caption: string
                   date: string
@@ -4600,7 +4604,7 @@ components:
                 - string
               filesize: 0
               replace:
-                - illustID: 0
+                - artID: 0
                   title: string
                   caption: string
                   date: string
@@ -5085,7 +5089,7 @@ components:
             current: 1
             pages: 1
             imgs:
-              - illustID: 8
+              - artID: 8
                 artistID: 5
                 title: tea pours into white teacup photo
                 caption: ''
@@ -5101,7 +5105,7 @@ components:
                   id: 5
                   name: CHI CHEN
                 extension: jpg
-              - illustID: 7
+              - artID: 7
                 artistID: 4
                 title: clear glass cup with tea near brown ceramic teapot
                 caption: ''
@@ -5197,7 +5201,7 @@ components:
           data:
             hash: string
             illusts:
-              - illustID: 0
+              - artID: 0
                 artistID: 0
                 title: string
                 caption: string
@@ -6711,7 +6715,7 @@ components:
         pages:
           type: integer
           description: ページ数
-        per_page:
+        perPage:
           type: integer
           description: ページ毎の取得数
       required:
@@ -6720,7 +6724,7 @@ components:
         - count
         - current
         - pages
-        - per_page
+        - perPage
     MuteStruct:
       title: MuteStruct
       type: object
