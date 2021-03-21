@@ -1,0 +1,2501 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Accounts v3 API",
+    "version": "1.0",
+    "contact": {
+      "name": "Omado",
+      "url": "https://twitter.com/shallow_omado",
+      "email": "dsgamer777@gmail.com"
+    },
+    "termsOfService": "https://illust.gochiusa.team/terms",
+    "description": "ごちイラ内でメインに使用されているAPI。\n現在Bot、ガチャ、フロントエンド の 3箇所で使用中。",
+    "license": {
+      "name": "GPLv3",
+      "url": "https://www.gnu.org/licenses/gpl-3.0.ja.html"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://api.gochiusa.team",
+      "description": "Prod"
+    },
+    {
+      "url": "http://127.0.0.1:8080",
+      "description": "Dev"
+    }
+  ],
+  "paths": {
+    "/accounts": {
+      "post": {
+        "summary": "Create account",
+        "operationId": "createAccount",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccountStruct"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralMessageResponse"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "accounts"
+        ],
+        "description": "新しいアカウントを作成します",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AccountStruct"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/accounts/{accountID}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "integer"
+          },
+          "name": "accountID",
+          "in": "path",
+          "required": true,
+          "description": "取得したいユーザーのアカウントID"
+        }
+      ],
+      "get": {
+        "summary": "Get account info",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccountStruct"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralMessageResponse"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "getAccount",
+        "description": "ユーザーのアカウント情報を取得します",
+        "tags": [
+          "accounts"
+        ]
+      },
+      "put": {
+        "summary": "Edit account info",
+        "operationId": "editAccount",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccountStruct"
+                },
+                "examples": {}
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralMessageResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralMessageResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralMessageResponse"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "accounts"
+        ],
+        "description": "アカウント情報を編集します\n(本人または管理者のみがリクエストできます)",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AccountStruct"
+              },
+              "examples": {
+                "example": {
+                  "value": {
+                    "userDisplayID": "omado",
+                    "userName": "お窓",
+                    "userPassword": "kafuuch1n0",
+                    "userOldPassword": "h0t0c0c0a",
+                    "userFavorite": 1,
+                    "userTheme": 0,
+                    "userPermission": 0,
+                    "userLineID": "dosugamea",
+                    "userTwitterID": "shallow_omado"
+                  }
+                }
+              }
+            }
+          },
+          "description": "ユーザー本人、もしくは管理者のみデータを変更できます\n変更したいカラムを与え、値に変更後の値を与えると変更できます\nパスワードを変更する場合のみ、例外的に現在のパスワードが要求されます"
+        }
+      },
+      "delete": {
+        "summary": "Delete account info",
+        "operationId": "deleteAccount",
+        "description": "アカウントを削除します\n(本人または管理者のみがリクエストできます)",
+        "tags": [
+          "accounts"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteAccountRequest"
+              }
+            }
+          },
+          "description": "危険な操作のため、パスワードが必要になります"
+        },
+        "responses": {
+          "204": {
+            "description": "No Content",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralMessageResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralMessageResponse"
+                },
+                "examples": {}
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralMessageResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/accounts/{accountID}/upload_history": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "integer"
+          },
+          "name": "accountID",
+          "in": "path",
+          "required": true,
+          "description": "取得したいユーザーのアカウントID"
+        }
+      ],
+      "get": {
+        "summary": "Get upload history",
+        "tags": [
+          "accounts"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetUploadHistoryResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralMessageResponse"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "getUploadHistory",
+        "description": "イラスト投稿履歴を取得します",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/SearchQueryPage"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "d"
+              ],
+              "example": "d",
+              "minLength": 1,
+              "maxLength": 1
+            },
+            "in": "query",
+            "name": "sort",
+            "description": "ソート方法 d:最終更新"
+          },
+          {
+            "$ref": "#/components/parameters/SearchQueryOrder"
+          },
+          {
+            "$ref": "#/components/parameters/SearchQueryPerPage"
+          }
+        ]
+      }
+    },
+    "/accounts/me": {
+      "get": {
+        "summary": "Get user info (self)",
+        "tags": [
+          "accounts"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccountStruct"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "getAccountMe",
+        "description": "自分自身にまつわる情報をすべて取得します\n通常、ログイン時に一度だけ呼び出されます"
+      },
+      "parameters": []
+    },
+    "/accounts/login/form": {
+      "post": {
+        "summary": "Login with form",
+        "tags": [
+          "accounts"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostLoginWithFormResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralMessageResponse"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "loginWithForm",
+        "description": "IDとパスワードを用いてユーザー認証し、APIトークンを発行します",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostLoginWithFormRequest"
+              },
+              "examples": {
+                "user": {
+                  "value": {
+                    "id": "test_user",
+                    "password": "this_is_only_for_test"
+                  }
+                },
+                "admin": {
+                  "value": {
+                    "id": "test_admin",
+                    "password": "this_is_only_for_test"
+                  }
+                }
+              }
+            }
+          },
+          "description": "ユーザーIDとパスワードをパラメータに取ります"
+        }
+      }
+    },
+    "/accounts/{accountID}/notify/clients": {
+      "get": {
+        "summary": "Get notify clients",
+        "tags": [
+          "notify"
+        ],
+        "operationId": "getNotifyClients",
+        "description": "現在のユーザーが設定済みの通知クライアント一覧を取得します",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetNotifyClientsResponse"
+                }
+              }
+            }
+          }
+        },
+        "parameters": []
+      },
+      "parameters": [
+        {
+          "schema": {
+            "type": "integer"
+          },
+          "name": "accountID",
+          "in": "path",
+          "required": true,
+          "description": "取得対象のアカウントID"
+        }
+      ]
+    },
+    "/accounts/{accountID}/notify/clients/web": {
+      "post": {
+        "summary": "Create webpush notify client",
+        "operationId": "addWebNotifyClient",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotifyClientStruct"
+                }
+              }
+            }
+          }
+        },
+        "description": "クライアント側で作成したパブリック/プライベートVAPIDキーを\nuserID、クライアント名、通知レベルと共にサーバーのデータベースに登録し\n通知クライアントの1種として保存する(何個でも設定できる)",
+        "tags": [
+          "notify"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostRegisterWebPushRequest"
+              }
+            }
+          },
+          "description": ""
+        }
+      },
+      "parameters": [
+        {
+          "schema": {
+            "type": "integer"
+          },
+          "name": "accountID",
+          "in": "path",
+          "required": true,
+          "description": "取得対象のアカウントID"
+        }
+      ]
+    },
+    "/accounts/{accountID}/notify/conditions": {
+      "post": {
+        "summary": "Register notify condition",
+        "operationId": "registerNotifyCondition",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotifyConditionStruct"
+                }
+              }
+            }
+          }
+        },
+        "description": "通知条件を追加します",
+        "tags": [
+          "notify"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NotifyConditionStruct"
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "schema": {
+            "type": "integer"
+          },
+          "name": "accountID",
+          "in": "path",
+          "required": true,
+          "description": "取得対象のアカウントID"
+        }
+      ],
+      "get": {
+        "summary": "Get notify conditions",
+        "operationId": "getNotifyConditions",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetNotifyConditionsResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "通知条件一覧を取得します",
+        "tags": [
+          "notify"
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "integer",
+              "maximum": 9,
+              "example": 0,
+              "minimum": 0,
+              "enum": [
+                0,
+                1,
+                2
+              ],
+              "default": 0
+            },
+            "in": "query",
+            "name": "type",
+            "description": "条件種別 0:全通知 1:タグ 2:絵師"
+          }
+        ]
+      }
+    },
+    "/accounts/{accountID}/notify/clients/line": {
+      "post": {
+        "summary": "Create line notify client",
+        "operationId": "addLineNotifyClient",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotifyClientStruct"
+                }
+              }
+            }
+          }
+        },
+        "description": "\"ユーザー発行の\"LINENotifyのトークンとデバイス名をPOSTして、通知クライアントの一種として保存する。(何個でも設定できる)",
+        "tags": [
+          "notify"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostRegisterLineNotifyRequest"
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "schema": {
+            "type": "integer"
+          },
+          "name": "accountID",
+          "in": "path",
+          "required": true,
+          "description": "対象のアカウントID"
+        }
+      ]
+    },
+    "/accounts/{accountID}/notify/clients/{notifyClientID}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "integer"
+          },
+          "name": "accountID",
+          "in": "path",
+          "required": true,
+          "description": "対象のアカウントID"
+        },
+        {
+          "schema": {
+            "type": "integer"
+          },
+          "name": "notifyClientID",
+          "in": "path",
+          "required": true,
+          "description": "対象の通知クライアントID"
+        }
+      ],
+      "get": {
+        "summary": "Get notify client",
+        "tags": [
+          "notify"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotifyClientStruct"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralMessageResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralMessageResponse"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "getNotifyClient",
+        "description": "指定した通知クライアント情報を取得します"
+      },
+      "put": {
+        "summary": "Edit notify client",
+        "operationId": "editNotifyClient",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotifyClientStruct"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralMessageResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralMessageResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "指定した通知クライアント情報を編集します",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NotifyClientStruct"
+              }
+            }
+          }
+        },
+        "tags": [
+          "notify"
+        ]
+      },
+      "delete": {
+        "summary": "Delete notify client",
+        "operationId": "deleteNotifyClient",
+        "description": "指定した通知クライアントを削除します",
+        "tags": [
+          "notify"
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralMessageResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralMessageResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralMessageResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/accounts/{accountID}/notify/conditions/{conditionID}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "integer"
+          },
+          "name": "conditionID",
+          "in": "path",
+          "required": true,
+          "description": "対象の通知条件ID"
+        },
+        {
+          "schema": {
+            "type": "integer"
+          },
+          "name": "accountID",
+          "in": "path",
+          "required": true,
+          "description": "対象のアカウントID"
+        }
+      ],
+      "get": {
+        "summary": "Get notify condition",
+        "tags": [
+          "notify"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotifyConditionStruct"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralMessageResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralMessageResponse"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "getNotifyCondition",
+        "description": "通知条件を取得します"
+      },
+      "put": {
+        "summary": "Edit notify condition",
+        "operationId": "editNotifyCondition",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotifyConditionStruct"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralMessageResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralMessageResponse"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "notify"
+        ],
+        "description": "通知条件を編集します",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NotifyConditionStruct"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete notify condition",
+        "operationId": "deleteNotifyCondition",
+        "responses": {
+          "204": {
+            "description": "No Content",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralMessageResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralMessageResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralMessageResponse"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "notify"
+        ],
+        "description": "通知条件を削除します"
+      }
+    },
+    "/accounts/{accountID}/timeline/follow": {
+      "post": {
+        "summary": "Follow artist",
+        "operationId": "followArtist",
+        "description": "絵師をフォローします",
+        "tags": [
+          "timeline"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LightArtistStruct"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "No Content",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralMessageResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralMessageResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralMessageResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "schema": {
+            "type": "integer"
+          },
+          "name": "accountID",
+          "in": "path",
+          "required": true,
+          "description": "対象のアカウントID"
+        }
+      ]
+    },
+    "/accounts/{accountID}/timeline/unfollow": {
+      "post": {
+        "summary": "Unfollow artist",
+        "operationId": "unfollowArtist",
+        "description": "絵師のフォローを解除します",
+        "tags": [
+          "timeline"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LightArtistStruct"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "No Content",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralMessageResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralMessageResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralMessageResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "schema": {
+            "type": "integer"
+          },
+          "name": "accountID",
+          "in": "path",
+          "required": true,
+          "description": "対象のアカウントID"
+        }
+      ]
+    },
+    "/accounts/{accountID}/timeline": {
+      "get": {
+        "summary": "Get timeline followings",
+        "tags": [
+          "timeline"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetTimelineFollowingResponse"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "getFollowingArtists",
+        "description": "フォロー中の絵師ID一覧を取得します",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/SearchQuerySort"
+          },
+          {
+            "$ref": "#/components/parameters/SearchQueryOrder"
+          },
+          {
+            "$ref": "#/components/parameters/SearchQueryPage"
+          }
+        ]
+      },
+      "parameters": [
+        {
+          "schema": {
+            "type": "integer"
+          },
+          "name": "accountID",
+          "in": "path",
+          "required": true,
+          "description": "対象のアカウントID"
+        }
+      ]
+    },
+    "/accounts/{accountID}/mylists": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "integer"
+          },
+          "name": "accountID",
+          "in": "path",
+          "required": true,
+          "description": "対象のアカウントID"
+        }
+      ],
+      "get": {
+        "summary": "Get user mylists",
+        "tags": [
+          "accounts"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetMylistListResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralMessageResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralMessageResponse"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "getUserMylists",
+        "description": "指定したユーザーのマイリスト一覧を取得します"
+      },
+      "post": {
+        "summary": "Create user mylist",
+        "operationId": "createMylist",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MylistStruct"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralMessageResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralMessageResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralMessageResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "マイリストを作成します",
+        "tags": [
+          "mylist"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MylistStruct"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/accounts/{accountID}/mutes": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "integer"
+          },
+          "name": "accountID",
+          "in": "path",
+          "required": true,
+          "description": "対象のアカウントID"
+        }
+      ],
+      "get": {
+        "summary": "Get mute list",
+        "tags": [
+          "accounts"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetMutesResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralMessageResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralMessageResponse"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "getMutes",
+        "description": "指定したアカウントのユーザーのミュート一覧を取得します"
+      },
+      "post": {
+        "summary": "Add mute",
+        "operationId": "addMute",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MuteStruct"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "accounts"
+        ],
+        "description": "指定したアカウントのユーザーのミュートを追加します",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MuteStruct"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/accounts/{accountID}/mutes/{muteID}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "integer"
+          },
+          "name": "accountID",
+          "in": "path",
+          "required": true,
+          "description": "対象のアカウントID"
+        },
+        {
+          "schema": {
+            "type": "integer"
+          },
+          "name": "muteID",
+          "in": "path",
+          "required": true,
+          "description": "対象のミュートID"
+        }
+      ],
+      "get": {
+        "summary": "Get mute",
+        "tags": [
+          "accounts"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MuteStruct"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralMessageResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralMessageResponse"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "getMute",
+        "description": "指定したミュート情報を取得します"
+      },
+      "delete": {
+        "summary": "Delete mute",
+        "operationId": "deleteMute",
+        "responses": {
+          "204": {
+            "description": "No Content",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralMessageResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralMessageResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralMessageResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "指定したミュート情報を削除します",
+        "tags": [
+          "accounts"
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AccountStruct": {
+        "title": "AccountStruct",
+        "type": "object",
+        "x-examples": {
+          "example": {
+            "displayID": "omado",
+            "name": "お窓",
+            "password": "kafuuch1n0",
+            "oldPassword": "h0t0c0c0a",
+            "favorite": 1,
+            "theme": 0,
+            "permission": 0,
+            "lineID": "dosugamea",
+            "twitterID": "shallow_omado"
+          }
+        },
+        "description": "アカウントの取得/編集に使うリクエスト",
+        "properties": {
+          "accountID": {
+            "type": "integer",
+            "description": "ユーザーID"
+          },
+          "displayID": {
+            "type": "string",
+            "description": "(Twitterのような)表示IDを指定します。ここで指定したIDがログインに使用されます。英数字のみ入力できます。",
+            "example": "omado",
+            "maxLength": 20,
+            "minLength": 3
+          },
+          "apiKey": {
+            "type": "string",
+            "description": "APIキー"
+          },
+          "apiSeq": {
+            "type": "integer",
+            "description": "長期間有効トークン検証用シーケンス"
+          },
+          "permission": {
+            "type": "integer",
+            "description": "権限レベル 0:普通 5:Modelator 9:SysOp"
+          },
+          "password": {
+            "type": "string",
+            "description": "新しいパスワードを入力します",
+            "example": "kafuuch1n0",
+            "format": "password",
+            "maxLength": 50,
+            "minLength": 8
+          },
+          "oldPassword": {
+            "type": "string",
+            "description": "現時点のパスワードを入力します。\nuserPasswordを変更する場合に必要となります。",
+            "example": "h0t0c0c0a",
+            "format": "password",
+            "maxLength": 50,
+            "minLength": 8
+          },
+          "totpEnabled": {
+            "type": "boolean",
+            "description": "TOTPが有効かが入ります",
+            "default": false
+          },
+          "name": {
+            "type": "string",
+            "description": "他のユーザーに表示されるユーザー名/投稿者名",
+            "example": "お窓",
+            "maxLength": 20,
+            "minLength": 1
+          },
+          "description": {
+            "type": "string",
+            "description": "他のユーザーに表示されるユーザー説明文/投稿者説明"
+          },
+          "favorite": {
+            "type": "integer",
+            "description": "ユーザーの推しキャラ(タグID)を選択します",
+            "example": 1,
+            "format": "int32",
+            "maximum": 100,
+            "minimum": 0
+          },
+          "access": {
+            "type": "object",
+            "description": "管理者権限とは別の細かな権限",
+            "properties": {
+              "canInvite": {
+                "type": "boolean",
+                "description": "招待できるか"
+              },
+              "canFavorite": {
+                "type": "boolean",
+                "description": "いいねできるか"
+              },
+              "canComment": {
+                "type": "boolean",
+                "description": "コメントできるか"
+              },
+              "canCreatePost": {
+                "type": "boolean",
+                "description": "投稿できるか"
+              },
+              "canEditPost": {
+                "type": "boolean",
+                "description": "投稿を編集できるか"
+              },
+              "canApprovePost": {
+                "type": "boolean",
+                "description": "投稿を承認できるか"
+              }
+            }
+          },
+          "inviter": {
+            "$ref": "#/components/schemas/LightAccountStruct"
+          },
+          "invite": {
+            "type": "object",
+            "description": "招待情報",
+            "properties": {
+              "inviteID": {
+                "type": "integer",
+                "description": "招待通し番号"
+              },
+              "code": {
+                "type": "string",
+                "description": "招待コード(shortuuid)",
+                "minLength": 6,
+                "maxLength": 12
+              },
+              "invitedCount": {
+                "type": "integer",
+                "description": "招待した人数の累計(誰を招待したかは表示されない)"
+              }
+            }
+          },
+          "notify": {
+            "type": "object",
+            "description": "通知クライアントを設定済みか",
+            "properties": {
+              "hasLineNotify": {
+                "type": "boolean"
+              },
+              "hasWebNotify": {
+                "type": "boolean"
+              }
+            }
+          },
+          "ipfs": {
+            "type": "object",
+            "description": "IPFS設定",
+            "properties": {
+              "gatewayUrl": {
+                "type": "string",
+                "example": "https://cloudflare-ipfs.com",
+                "default": "https://cloudflare-ipfs.com",
+                "format": "uri-reference",
+                "description": "使用する任意のゲートウェイアドレス"
+              },
+              "nodeUrl": {
+                "type": "string",
+                "example": "https://ipfs.example.com",
+                "default": "https://ipfs.example.com",
+                "format": "uri-reference",
+                "description": "使用する任意のノードアドレス"
+              },
+              "gatewayEnabled": {
+                "type": "boolean",
+                "default": false,
+                "description": "IPFSゲートウェイを使用するか否か"
+              },
+              "nodeEnabled": {
+                "type": "boolean",
+                "default": false,
+                "description": "IPFSノードを使用するか否か"
+              },
+              "pinEnabled": {
+                "type": "boolean",
+                "description": "マイリストを自動Pinningするか"
+              }
+            }
+          }
+        }
+      },
+      "GeneralMessageResponse": {
+        "title": "GeneralMessageResponse",
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "応答メッセージ(何が間違っているかの詳細)",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "message"
+        ],
+        "x-examples": {
+          "not-found": {
+            "message": "Specified content was not found."
+          },
+          "no-permission": {
+            "message": "You don't have enough permission to do it."
+          },
+          "bad-request": {
+            "message": "Your request body is wrong."
+          },
+          "locked": {
+            "message": "Specified content is referenced from other content."
+          }
+        }
+      },
+      "DeleteAccountRequest": {
+        "title": "DeleteAccountRequest",
+        "type": "object",
+        "properties": {
+          "password": {
+            "type": "string",
+            "format": "password",
+            "description": "削除したいアカウントのパスワード"
+          }
+        },
+        "required": [
+          "password"
+        ],
+        "description": "アカウントの削除に使うリクエスト",
+        "x-examples": {
+          "example": {
+            "password": "kafuuch1n0"
+          }
+        }
+      },
+      "GetUploadHistoryResponse": {
+        "title": "GetUploadHistoryResponse",
+        "type": "object",
+        "x-examples": {
+          "success": {
+            "value": {
+              "status": 200,
+              "message": "ok",
+              "data": {
+                "title": "アップロード履歴",
+                "count": 2321,
+                "current": 1,
+                "pages": 117,
+                "contents": [
+                  {
+                    "uploadID": 12045,
+                    "started": "2021-02-21 22:24:22",
+                    "finished": "2021-02-21 22:24:27",
+                    "status": 5,
+                    "artID": 9381
+                  },
+                  {
+                    "uploadID": 12044,
+                    "started": "2021-02-21 22:23:41",
+                    "finished": "2021-02-21 22:23:45",
+                    "status": 5,
+                    "artID": 9380
+                  },
+                  {
+                    "uploadID": 12036,
+                    "started": "2021-02-21 20:30:39",
+                    "finished": "2021-02-21 20:30:43",
+                    "status": 5,
+                    "artID": 9375
+                  },
+                  {
+                    "uploadID": 12004,
+                    "started": "2021-02-20 20:20:19",
+                    "finished": "2021-02-20 20:20:29",
+                    "status": 5,
+                    "artID": 9355
+                  },
+                  {
+                    "uploadID": 12003,
+                    "started": "2021-02-20 20:03:30",
+                    "finished": "2021-02-20 20:03:46",
+                    "status": 5,
+                    "artID": 9354
+                  },
+                  {
+                    "uploadID": 11972,
+                    "started": "2021-02-19 21:30:58",
+                    "finished": "2021-02-19 21:31:00",
+                    "status": 5,
+                    "artID": 9336
+                  },
+                  {
+                    "uploadID": 11971,
+                    "started": "2021-02-19 21:30:52",
+                    "finished": "2021-02-19 21:30:55",
+                    "status": 5,
+                    "artID": 9335
+                  },
+                  {
+                    "uploadID": 11970,
+                    "started": "2021-02-19 21:30:46",
+                    "finished": "2021-02-19 21:30:49",
+                    "status": 5,
+                    "artID": 9334
+                  },
+                  {
+                    "uploadID": 10756,
+                    "started": "2021-01-20 03:12:57",
+                    "finished": "2021-01-20 03:13:04",
+                    "status": 5,
+                    "artID": 8418
+                  },
+                  {
+                    "uploadID": 10755,
+                    "started": "2021-01-20 03:09:31",
+                    "finished": "2021-01-20 03:09:39",
+                    "status": 5,
+                    "artID": 8417
+                  },
+                  {
+                    "uploadID": 10754,
+                    "started": "2021-01-20 02:57:00",
+                    "finished": "2021-01-20 02:57:09",
+                    "status": 5,
+                    "artID": 8416
+                  },
+                  {
+                    "uploadID": 10753,
+                    "started": "2021-01-20 02:56:44",
+                    "finished": "2021-01-20 02:56:52",
+                    "status": 5,
+                    "artID": 8415
+                  },
+                  {
+                    "uploadID": 10663,
+                    "started": "2021-01-17 22:21:22",
+                    "finished": "2021-01-17 22:21:35",
+                    "status": 5,
+                    "artID": 8364
+                  },
+                  {
+                    "uploadID": 10658,
+                    "started": "2021-01-17 21:14:02",
+                    "finished": "2021-01-17 21:14:06",
+                    "status": 5,
+                    "artID": 8360
+                  },
+                  {
+                    "uploadID": 10657,
+                    "started": "2021-01-17 21:07:54",
+                    "finished": "2021-01-17 21:07:57",
+                    "status": 5,
+                    "artID": 8359
+                  },
+                  {
+                    "uploadID": 10656,
+                    "started": "2021-01-17 21:07:47",
+                    "finished": "2021-01-17 21:07:51",
+                    "status": 5,
+                    "artID": 8358
+                  },
+                  {
+                    "uploadID": 10655,
+                    "started": "2021-01-17 21:07:41",
+                    "finished": "2021-01-17 21:07:43",
+                    "status": 5,
+                    "artID": 8357
+                  },
+                  {
+                    "uploadID": 10654,
+                    "started": "2021-01-17 21:07:34",
+                    "finished": "2021-01-17 21:07:37",
+                    "status": 5,
+                    "artID": 8356
+                  },
+                  {
+                    "uploadID": 10653,
+                    "started": "2021-01-17 21:07:27",
+                    "finished": "2021-01-17 21:07:30",
+                    "status": 5,
+                    "artID": 8355
+                  },
+                  {
+                    "uploadID": 10652,
+                    "started": "2021-01-17 21:06:35",
+                    "finished": "2021-01-17 21:06:39",
+                    "status": 5,
+                    "artID": 8354
+                  }
+                ]
+              }
+            }
+          },
+          "no-hit": {
+            "value": {
+              "status": 200,
+              "message": "ok",
+              "data": {
+                "title": "アップロード履歴",
+                "count": 0,
+                "current": 1,
+                "pages": 1,
+                "contents": []
+              }
+            }
+          },
+          "no-account": {
+            "status": 404,
+            "message": "The account data was not found."
+          }
+        },
+        "properties": {
+          "pagination": {
+            "$ref": "#/components/schemas/PaginationStruct"
+          },
+          "contents": {
+            "type": "array",
+            "uniqueItems": true,
+            "description": "指定された範囲で一致するデータ\n一致するものがなければ空配列",
+            "minItems": 0,
+            "items": {
+              "$ref": "#/components/schemas/UploadHistoryStruct"
+            }
+          }
+        }
+      },
+      "PostLoginWithFormRequest": {
+        "title": "PostLoginWithFormRequest",
+        "type": "object",
+        "description": "",
+        "x-examples": {
+          "user": {
+            "id": "test_user",
+            "password": "this_is_only_for_test"
+          },
+          "admin": {
+            "id": "test_admin",
+            "password": "this_is_only_for_test"
+          }
+        },
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "description": "ログインID"
+          },
+          "password": {
+            "type": "string",
+            "minLength": 1,
+            "description": "ログインパスワード"
+          },
+          "totpCode": {
+            "type": "string",
+            "description": "ログインTOTPトークン"
+          }
+        },
+        "required": [
+          "id",
+          "password"
+        ]
+      },
+      "PostLoginWithFormResponse": {
+        "title": "PostLoginWithFormResponse",
+        "type": "object",
+        "x-examples": {
+          "login-success": {
+            "value": {
+              "status": 200,
+              "message": "welcome back",
+              "apiKey": "DUMMY_API_KEY"
+            }
+          },
+          "login-failed": {
+            "value": {
+              "status": 404,
+              "message": "account not found"
+            }
+          }
+        },
+        "description": "",
+        "properties": {
+          "apiKey": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "GetNotifyClientsResponse": {
+        "title": "GetNotifyClientsResponse",
+        "type": "object",
+        "x-examples": {
+          "success-exists": {
+            "status": 200,
+            "message": "ok",
+            "clients": [
+              {
+                "id": 1,
+                "name": "ChinoLaptop",
+                "type": 0
+              },
+              {
+                "id": 2,
+                "name": "ChinoPhone",
+                "type": 0
+              }
+            ]
+          },
+          "success-not-exists": {
+            "status": 200,
+            "message": "ok",
+            "clients": []
+          }
+        },
+        "properties": {
+          "clients": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/NotifyClientStruct"
+            }
+          }
+        }
+      },
+      "PostRegisterWebPushRequest": {
+        "title": "PostRegisterWebPushRequest",
+        "type": "object",
+        "properties": {
+          "endpoint": {
+            "type": "string",
+            "description": "WebPushのPOST先エンドポイント(ユーザー毎に異なる)"
+          },
+          "p256dh": {
+            "type": "string",
+            "description": "ブラウザ公開鍵"
+          },
+          "auth": {
+            "type": "string",
+            "description": "WebPushの通知送信認証キー"
+          },
+          "name": {
+            "type": "string",
+            "description": "通知クライアント名"
+          },
+          "level": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "endpoint",
+          "p256dh",
+          "auth",
+          "name",
+          "level"
+        ]
+      },
+      "NotifyClientStruct": {
+        "title": "NotifyClientStruct",
+        "type": "object",
+        "description": "",
+        "properties": {
+          "notifyClientID": {
+            "type": "integer",
+            "description": "通知クライアントID",
+            "minimum": 1
+          },
+          "name": {
+            "type": "string",
+            "description": "ユーザーが指定した通知クライアント名",
+            "minLength": 1
+          },
+          "type": {
+            "type": "integer",
+            "description": "クライアント種別 0:WebPush 1:LineNotify",
+            "minimum": 0,
+            "maximum": 9,
+            "example": 0,
+            "default": 0
+          },
+          "level": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9,
+            "description": "通知レベル 1:緊急時のみ 5:タグ絵師通知のみ 9:すべて"
+          }
+        }
+      },
+      "NotifyConditionStruct": {
+        "title": "NotifyConditionStruct",
+        "type": "object",
+        "properties": {
+          "notifyConditionID": {
+            "type": "integer",
+            "description": "NotifyConditionID"
+          },
+          "targetType": {
+            "type": "integer",
+            "description": "条件種別 0:全通知 1:タグ 2:絵師"
+          },
+          "targetID": {
+            "type": "integer",
+            "description": "条件ID 全通知なら0/タグID/絵師ID"
+          },
+          "targetMethod": {
+            "type": "integer",
+            "description": "通知方法 0:両方 1:Web 2:Line"
+          }
+        }
+      },
+      "GetNotifyConditionsResponse": {
+        "title": "GetNotifyConditionsResponse",
+        "type": "object",
+        "x-examples": {
+          "success": {
+            "status": 200,
+            "message": "ok",
+            "conditions": [
+              {
+                "type": 1,
+                "id": 1,
+                "method": 1
+              }
+            ]
+          },
+          "success-no-data": {
+            "status": 200,
+            "message": "ok",
+            "conditions": []
+          }
+        },
+        "properties": {
+          "conditions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/NotifyConditionStruct"
+            }
+          }
+        }
+      },
+      "PostRegisterLineNotifyRequest": {
+        "title": "PostRegisterLineNotifyRequest",
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string",
+            "description": "LineNotifyのパーソナルトークン"
+          },
+          "name": {
+            "type": "string",
+            "description": "通知クライアント名"
+          },
+          "level": {
+            "type": "integer",
+            "description": "通知レベル 1:緊急時のみ 5:タグ絵師通知のみ 9:すべて",
+            "enum": [
+              1,
+              5,
+              9
+            ],
+            "example": 9,
+            "default": 9,
+            "minimum": 1,
+            "maximum": 9
+          }
+        },
+        "required": [
+          "token",
+          "name",
+          "level"
+        ]
+      },
+      "LightArtistStruct": {
+        "title": "LightArtistStruct",
+        "type": "object",
+        "properties": {
+          "artistID": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "GetTimelineFollowingResponse": {
+        "title": "GetTimelineFollowingResponse",
+        "type": "object",
+        "properties": {
+          "follows": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LightArtistStruct"
+            }
+          }
+        }
+      },
+      "GetMylistListResponse": {
+        "description": "",
+        "type": "object",
+        "title": "GetMylistListResponse",
+        "x-examples": {
+          "success-default": {
+            "status": 200,
+            "message": "ok",
+            "data": {
+              "title": "マイリスト一覧",
+              "count": 2,
+              "current": 1,
+              "pages": 1,
+              "contents": [
+                {
+                  "id": 1,
+                  "name": "お窓のマイリスト",
+                  "description": "ユーザーデフォルトマイリスト",
+                  "createdDate": "2021/03/14 02:16:03",
+                  "updatedDate": "2021/03/14 02:16:03",
+                  "private": true
+                }
+              ]
+            }
+          },
+          "success-multiple": {
+            "status": 200,
+            "message": "ok",
+            "data": {
+              "title": "マイリスト一覧",
+              "count": 2,
+              "current": 1,
+              "pages": 1,
+              "contents": [
+                {
+                  "id": 1,
+                  "name": "お窓のマイリスト",
+                  "description": "ユーザーデフォルトマイリスト",
+                  "createdDate": "2021/03/14 02:16:03",
+                  "updatedDate": "2021/03/14 02:16:03",
+                  "private": true
+                },
+                {
+                  "id": 2,
+                  "name": "お窓のチノリスト",
+                  "description": "だいすき香風智乃",
+                  "createdDate": "2021/03/14 02:16:03",
+                  "updatedDate": "2021/03/14 02:16:03",
+                  "private": false
+                }
+              ]
+            }
+          }
+        },
+        "properties": {
+          "pagination": {
+            "$ref": "#/components/schemas/PaginationStruct"
+          },
+          "contents": {
+            "type": "array",
+            "uniqueItems": true,
+            "minItems": 1,
+            "items": {
+              "$ref": "#/components/schemas/MylistStruct"
+            }
+          }
+        },
+        "required": [
+          "pagination",
+          "contents"
+        ]
+      },
+      "MylistStruct": {
+        "title": "MylistStruct",
+        "type": "object",
+        "x-examples": {
+          "example": {
+            "id": 1,
+            "name": "お窓のマイリスト",
+            "description": "ユーザーデフォルトマイリスト",
+            "createdDate": "2021/03/14 02:16:03",
+            "updatedDate": "2021/03/14 02:16:03",
+            "private": true
+          }
+        },
+        "properties": {
+          "mylistID": {
+            "type": "integer",
+            "description": "マイリストID"
+          },
+          "name": {
+            "type": "string",
+            "description": "マイリスト名"
+          },
+          "description": {
+            "type": "string",
+            "description": "マイリスト説明文"
+          },
+          "createdDate": {
+            "type": "string",
+            "description": "マイリスト作成日時",
+            "minLength": 19,
+            "maxLength": 19
+          },
+          "updatedDate": {
+            "type": "string",
+            "description": "マイリスト更新日時",
+            "minLength": 19,
+            "maxLength": 19
+          },
+          "private": {
+            "type": "boolean",
+            "description": "公開/非公開",
+            "default": true
+          },
+          "arts": {
+            "type": "array",
+            "description": "データ本体",
+            "items": {
+              "type": "integer"
+            }
+          },
+          "owner": {
+            "$ref": "#/components/schemas/LightAccountStruct"
+          }
+        },
+        "required": [
+          "name",
+          "description",
+          "private"
+        ]
+      },
+      "GetMutesResponse": {
+        "title": "GetMutesResponse",
+        "type": "object",
+        "x-examples": {
+          "success": {
+            "status": 200,
+            "message": "ok",
+            "data": {
+              "tag": [
+                1,
+                2,
+                3
+              ],
+              "artist": [
+                1,
+                2,
+                3
+              ]
+            }
+          },
+          "success-no-data": {
+            "status": 200,
+            "message": "ok",
+            "data": {
+              "tag": [],
+              "artist": []
+            }
+          }
+        },
+        "properties": {
+          "tags": {
+            "type": "array",
+            "description": "ミュート中のタグID配列",
+            "items": {
+              "$ref": "#/components/schemas/MuteStruct"
+            }
+          },
+          "artists": {
+            "type": "array",
+            "description": "ミュート中の絵師ID配列",
+            "items": {
+              "$ref": "#/components/schemas/MuteStruct"
+            }
+          }
+        },
+        "required": [
+          "tags",
+          "artists"
+        ]
+      },
+      "MuteStruct": {
+        "title": "MuteStruct",
+        "type": "object",
+        "properties": {
+          "muteID": {
+            "type": "integer",
+            "description": "ミュートID"
+          },
+          "targetID": {
+            "type": "integer",
+            "description": "対象のタグ/絵師ID"
+          },
+          "targetType": {
+            "type": "string",
+            "description": "ミュート種別",
+            "enum": [
+              "tag",
+              "artist"
+            ],
+            "example": "artist"
+          }
+        },
+        "required": [
+          "targetType"
+        ]
+      },
+      "LightAccountStruct": {
+        "title": "LightAccountStruct",
+        "type": "object",
+        "properties": {
+          "accountID": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "PaginationStruct": {
+        "title": "PaginationStruct",
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "minLength": 1,
+            "example": "香風智乃",
+            "description": "ページネーションタイトル(表示用)"
+          },
+          "type": {
+            "type": "string",
+            "description": "ページネーション種別(表示用)",
+            "example": "mylist,tag",
+            "default": "search"
+          },
+          "count": {
+            "type": "integer",
+            "example": 0,
+            "description": "ヒット総数"
+          },
+          "current": {
+            "type": "integer",
+            "description": "現在のページ"
+          },
+          "pages": {
+            "type": "integer",
+            "description": "ページ数"
+          },
+          "perPage": {
+            "type": "integer",
+            "description": "ページ毎の取得数"
+          }
+        },
+        "required": [
+          "title",
+          "type",
+          "count",
+          "current",
+          "pages",
+          "perPage"
+        ]
+      },
+      "UploadHistoryStruct": {
+        "description": "アップロード履歴",
+        "type": "object",
+        "title": "UploadHistory",
+        "x-examples": {
+          "example": {
+            "uploadID": 12045,
+            "started": "2021-02-21 22:24:22",
+            "finished": "2021-02-21 22:24:27",
+            "status": 5,
+            "artID": 9381
+          }
+        },
+        "properties": {
+          "uploadID": {
+            "type": "integer",
+            "format": "int32",
+            "description": "通し投稿履歴番号(インデックス用)",
+            "minimum": 1,
+            "example": 1
+          },
+          "started": {
+            "type": "string",
+            "description": "データ登録処理開始時刻",
+            "minLength": 19,
+            "maxLength": 19,
+            "example": "2021-02-21 22:24:22"
+          },
+          "finished": {
+            "type": "string",
+            "description": "データ登録完了時刻",
+            "minLength": 19,
+            "maxLength": 19,
+            "example": "2021-02-21 22:24:27"
+          },
+          "status": {
+            "type": "integer",
+            "description": "登録処理結果 5:成功 9:内部エラー",
+            "minimum": 0,
+            "maximum": 9,
+            "example": 5,
+            "enum": [
+              0,
+              5,
+              9
+            ],
+            "default": 0
+          },
+          "artID": {
+            "type": "integer",
+            "format": "int32",
+            "description": "投稿に成功した場合入るID",
+            "minimum": 1,
+            "example": 1
+          }
+        },
+        "required": [
+          "uploadID",
+          "started",
+          "finished",
+          "status",
+          "artID"
+        ]
+      }
+    },
+    "parameters": {
+      "SearchQuerySort": {
+        "name": "sort",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "enum": [
+            "l",
+            "d"
+          ],
+          "example": "d",
+          "default": "d"
+        },
+        "description": "ソート方法 l:いいね数順 d:投稿日順"
+      },
+      "SearchQueryOrder": {
+        "name": "order",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "enum": [
+            "d",
+            "a"
+          ],
+          "default": "d",
+          "example": "d",
+          "minLength": 1,
+          "maxLength": 1
+        },
+        "description": "ソート方向 d:降順(大→小) a:昇順(小→大)"
+      },
+      "SearchQueryPage": {
+        "name": "page",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "description": "ページ番号 (NOTE: 1ページ辺りの応答は20件)"
+      },
+      "SearchQueryMylistAllow": {
+        "name": "with_mylisted",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "integer",
+          "format": "int32",
+          "default": 1,
+          "enum": [
+            1,
+            0
+          ],
+          "example": 1,
+          "minimum": 0,
+          "maximum": 1
+        },
+        "description": "マイリスト追加済みかを取得する0/1 (デフォルト1)"
+      },
+      "SearchQueryMylistDeny": {
+        "name": "with_mylisted",
+        "in": "query",
+        "schema": {
+          "type": "integer",
+          "enum": [
+            0,
+            1
+          ],
+          "example": 0,
+          "default": 0,
+          "minimum": 0,
+          "maximum": 1
+        },
+        "description": "マイリスト追加済みかを取得する0/1 (デフォルト0)"
+      },
+      "SearchQueryPerPage": {
+        "name": "per_page",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "integer",
+          "default": 20,
+          "enum": [
+            20,
+            40,
+            60,
+            80,
+            100
+          ],
+          "example": 20,
+          "minimum": 20,
+          "maximum": 100
+        },
+        "description": "1ページ辺りの要素数"
+      },
+      "SearchQuerySortCatalog": {
+        "in": "query",
+        "schema": {
+          "type": "string",
+          "default": "d",
+          "enum": [
+            "c",
+            "d",
+            "l",
+            "n"
+          ],
+          "example": "d"
+        },
+        "description": "ソート方法 c:ヒット数 d:最終更新 l:いいね数 n:名前",
+        "name": "sort"
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "accounts"
+    },
+    {
+      "name": "mylist"
+    },
+    {
+      "name": "notify"
+    },
+    {
+      "name": "timeline"
+    }
+  ]
+}
