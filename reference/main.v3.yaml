@@ -3630,6 +3630,8 @@ components:
             orig:
               type: string
               description: Raw画像ハッシュ
+        uploader:
+          $ref: '#/components/schemas/LightAccountStruct'
       required:
         - artID
         - artistID
@@ -3943,12 +3945,14 @@ components:
         views:
           type: integer
           description: 累計閲覧数
+        uploader:
+          $ref: '#/components/schemas/LightAccountStruct'
         artists:
           type: array
           description: 絵師情報(複数可)
           items:
             $ref: '#/components/schemas/LightArtistStruct'
-        users:
+        contributors:
           type: array
           description: 投稿者情報(複数可)
           items:
@@ -4119,7 +4123,7 @@ components:
           type: boolean
           description: アダルトコンテンツが含まれるタグか
           default: false
-        user:
+        issuer:
           $ref: '#/components/schemas/LightAccountStruct'
         parent:
           type: array
