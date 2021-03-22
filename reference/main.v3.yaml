@@ -1625,7 +1625,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetArtAllLikesResponse'
+                $ref: '#/components/schemas/ArtDetailedLikesStruct'
         '404':
           description: Not Found
           content:
@@ -4082,7 +4082,7 @@ components:
           favorite: 1
           access:
             canInvite: true
-            canFavorite: true
+            canLike: true
             canComment: true
             canCreatePost: true
             canEditPost: true
@@ -4103,11 +4103,47 @@ components:
             gatewayEnabled: false
             nodeEnabled: false
             pinEnabled: true
+        example-user:
+          accountID: 2
+          displayID: chino
+          apiKey: DUMMY_API_KEY
+          apiSeq: 1
+          permission: 0
+          password: kafuuch1n0
+          oldPassword: h0t0c0c0a
+          totpEnabled: false
+          name: 香風智乃
+          description: ラビットハウスの一人娘。クールな性格だがココアのことは嫌いじゃない…!? コーヒーに詳しいしっかり者。
+          favorite: 1
+          access:
+            canInvite: true
+            canLike: true
+            canComment: true
+            canCreatePost: true
+            canEditPost: false
+            canApprovePost: false
+          inviter:
+            accountID: 1
+            name: お窓
+          invite:
+            inviteID: 1
+            code: USAGIDEV
+            invitedCount: 0
+          notify:
+            hasLineNotify: false
+            hasWebNotify: false
+          ipfs:
+            gatewayUrl: 'https://cloudflare-ipfs.com'
+            nodeUrl: ''
+            gatewayEnabled: false
+            nodeEnabled: false
+            pinEnabled: false
       description: アカウントの取得/編集に使うリクエスト
       properties:
         accountID:
           type: integer
           description: ユーザーID
+          example: 1
         displayID:
           type: string
           description: (Twitterのような)表示IDを指定します。ここで指定したIDがログインに使用されます。英数字のみ入力できます。
@@ -4117,12 +4153,18 @@ components:
         apiKey:
           type: string
           description: APIキー
+          example: DUMMY_API_KEY
         apiSeq:
           type: integer
           description: 長期間有効トークン検証用シーケンス
+          minimum: 1
+          example: 1
         permission:
           type: integer
           description: '権限レベル 0:普通 5:Modelator 9:SysOp'
+          example: 0
+          minimum: 0
+          default: 0
         password:
           type: string
           description: 新しいパスワードを入力します
@@ -4152,12 +4194,11 @@ components:
         description:
           type: string
           description: 他のユーザーに表示されるユーザー説明文/投稿者説明
+          example: 開発者さん
         favorite:
           type: integer
           description: ユーザーの推しキャラ(タグID)を選択します
           example: 1
-          format: int32
-          maximum: 100
           minimum: 0
         access:
           type: object
@@ -4166,21 +4207,27 @@ components:
             canInvite:
               type: boolean
               description: 招待できるか
-            canFavorite:
+              default: true
+            canLike:
               type: boolean
               description: いいねできるか
+              default: true
             canComment:
               type: boolean
               description: コメントできるか
+              default: true
             canCreatePost:
               type: boolean
               description: 投稿できるか
+              default: true
             canEditPost:
               type: boolean
               description: 投稿を編集できるか
+              default: false
             canApprovePost:
               type: boolean
               description: 投稿を承認できるか
+              default: false
         inviter:
           $ref: '#/components/schemas/LightAccountStruct'
         invite:
@@ -4190,22 +4237,29 @@ components:
             inviteID:
               type: integer
               description: 招待通し番号
+              example: 1
             code:
               type: string
               description: 招待コード(shortuuid)
               minLength: 6
               maxLength: 12
+              example: USAGIDEV
             invitedCount:
               type: integer
               description: 招待した人数の累計(誰を招待したかは表示されない)
+              minimum: 0
+              example: 0
+              default: 0
         notify:
           type: object
           description: 通知クライアントを設定済みか
           properties:
             hasLineNotify:
               type: boolean
+              default: false
             hasWebNotify:
               type: boolean
+              default: false
         ipfs:
           type: object
           description: IPFS設定
@@ -4218,8 +4272,6 @@ components:
               description: 使用する任意のゲートウェイアドレス
             nodeUrl:
               type: string
-              example: 'https://ipfs.example.com'
-              default: 'https://ipfs.example.com'
               format: uri-reference
               description: 使用する任意のノードアドレス
             gatewayEnabled:
@@ -4280,7 +4332,7 @@ components:
           nsfw: false
           status: public
           replaces: []
-          tag:
+          tags:
             copyrights:
               - tagID: 1
                 name: ご注文はうさぎですか?
@@ -4398,46 +4450,32 @@ components:
           description: 置き換え履歴データ
           items:
             $ref: '#/components/schemas/ReplaceStruct'
-        tag:
+        tags:
           type: object
           description: タグ情報
           properties:
             copyrights:
               type: array
-              description: '指定したいタグを"名称(文字列)"で指定する NOTE: 内部的に同じものなのでtag/chara/group/systemは全部同じ場所に入力してOK'
+              description: 出典タグ
               items:
                 $ref: '#/components/schemas/TagStruct'
             characters:
               type: array
-              description: '指定したいタグを"名称(文字列)"で指定する NOTE: 内部的に同じものなのでtag/chara/group/systemは全部同じ場所に入力してOK'
+              description: キャラクタータグ
               items:
                 $ref: '#/components/schemas/TagStruct'
             generals:
               type: array
-              description: '指定したいタグを"名称(文字列)"で指定する NOTE: 内部的に同じものなのでtag/chara/group/systemは全部同じ場所に入力してOK'
+              description: 一般タグ
               items:
                 $ref: '#/components/schemas/TagStruct'
             metas:
               type: array
-              description: '指定したいタグを"名称(文字列)"で指定する NOTE: 内部的に同じものなのでtag/chara/group/systemは全部同じ場所に入力してOK'
+              description: システムタグ
               items:
                 $ref: '#/components/schemas/TagStruct'
-        star:
-          type: object
-          description: スター情報
-          properties:
-            yellow:
-              type: integer
-              description: イエロースター数
-            green:
-              type: integer
-              description: グリーンスター数
-            red:
-              type: integer
-              description: レッドスター数
-            blue:
-              type: integer
-              description: ブルースター数
+        detailedLikes:
+          $ref: '#/components/schemas/ArtDetailedLikesStruct'
         file:
           type: object
           properties:
@@ -4873,9 +4911,12 @@ components:
         artistID:
           type: integer
           description: 絵師のID
-        userID:
+          example: 1
+        contributors:
           description: 絵師情報を登録したユーザーのID
-          type: integer
+          type: array
+          items:
+            $ref: '#/components/schemas/LightAccountStruct'
         name:
           type: array
           description: 絵師の名前(ペンネーム正式名)
@@ -4895,6 +4936,7 @@ components:
           type: array
           items:
             type: string
+            example: こねこぼたん
         pixivID:
           type: array
           description: PixivのユーザーID(数字)
@@ -4919,19 +4961,17 @@ components:
           type: array
           items:
             type: string
+            example: 'http://konebota.x0.com/PAGE/'
         count:
           type: integer
           description: 絵師に属する作品数
+          minimum: 0
+          example: 1
         lcount:
           type: integer
           description: 絵師に属するいいね数
-      required:
-        - name
-        - description
-        - group
-        - pixivID
-        - twitterID
-        - mastodon
+          example: 1204
+          minimum: 1
     PostReplaceArtRequest:
       title: PostReplaceArtRequest
       type: object
@@ -5063,16 +5103,49 @@ components:
       title: GetArtTagsResponse
       type: object
       x-examples:
-        success:
+        example:
           tags:
-            - id: 1
-              name: 香風智乃
-              nsfw: false
+            copyrights:
+              - tagID: 1
+                name: ご注文はうさぎですか?
+                nsfw: false
+            characters:
+              - tagID: 2
+                name: 香風智乃
+                nsfw: false
+            generals:
+              - tagID: 3
+                name: ロリ
+                nsfw: false
+            metas:
+              - tagID: 4
+                name: FHD
+                nsfw: false
       properties:
         tags:
-          type: array
-          items:
-            $ref: '#/components/schemas/TagStruct'
+          type: object
+          description: タグ情報
+          properties:
+            copyrights:
+              type: array
+              description: 出典タグ
+              items:
+                $ref: '#/components/schemas/TagStruct'
+            characters:
+              type: array
+              description: キャラクタータグ
+              items:
+                $ref: '#/components/schemas/TagStruct'
+            generals:
+              type: array
+              description: 一般タグ
+              items:
+                $ref: '#/components/schemas/TagStruct'
+            metas:
+              type: array
+              description: システムタグ
+              items:
+                $ref: '#/components/schemas/TagStruct'
     PutArtTagsRequest:
       title: PutArtTagsRequest
       type: object
@@ -5087,50 +5160,75 @@ components:
             - 1
             - 2
             - 3
-    GetArtAllLikesResponse:
-      title: GetArtAllLikesResponse
+    ArtDetailedLikesStruct:
+      title: ArtDetailedLikesStruct
       type: object
-      x-examples: {}
+      x-examples:
+        example:
+          yellow: 1204
+          green: 0
+          red: 0
+          blue: 0
       properties:
-        likes:
-          type: object
-          properties:
-            yellow:
-              type: integer
-            green:
-              type: integer
-            red:
-              type: integer
-            blue:
-              type: integer
+        yellow:
+          type: integer
+          example: 1204
+          default: 0
+          minimum: 0
+        green:
+          type: integer
+          minimum: 0
+          default: 0
+          example: 0
+        red:
+          type: integer
+          minimum: 0
+          example: 0
+          default: 0
+        blue:
+          type: integer
+          minimum: 0
+          example: 0
+          default: 0
+      required:
+        - yellow
+        - green
+        - red
+        - blue
     GetArtLikesResponse:
       title: GetArtLikesResponse
       type: object
       properties:
         likes:
           type: integer
+          description: 累計いいね数
+      x-examples:
+        example:
+          likes: 1204
     GetArtViewsResponse:
       title: GetArtViewsResponse
       type: object
-      x-examples: {}
+      x-examples:
+        example:
+          views: 1204
       properties:
         views:
           type: integer
           minimum: 0
+          description: 累計閲覧数
     GetArtCommentsResponse:
       title: GetArtCommentsResponse
       type: object
       x-examples:
         success:
           comments:
-            - user:
-                id: 1
-                name: Omado
-              comment:
-                created: '2021/03/13 11:29:24'
-                updated: '2021/03/13 11:29:24'
-                body: string
-                id: 1
+            - commentID: 1
+              created: '2021/03/13 11:29:24'
+              updated: '2021/03/13 11:29:24'
+              body: Hello world!
+              user:
+                accountID: 1
+                name: お窓
         success-no-data:
           comments: []
       properties:
@@ -5143,14 +5241,13 @@ components:
       type: object
       x-examples:
         example:
+          commentID: 1
+          created: '2021/03/13 11:29:24'
+          updated: '2021/03/13 11:29:24'
+          body: Hello world!
           user:
-            id: 0
-            name: string
-          comment:
-            id: 0
-            created: string
-            updated: string
-            body: string
+            accountID: 1
+            name: お窓
       title: CommentStruct
       properties:
         commentID:
@@ -5180,15 +5277,32 @@ components:
       description: ''
       type: object
       x-examples:
-        success-no-data:
-          status: 200
-          message: found
-          data:
-            title: 絵師
-            count: 0
+        example-1:
+          pagination:
+            title: 香風智乃
+            type: artist
+            count: 1
             current: 1
             pages: 1
-            contents: []
+            perPage: 20
+          contents:
+            - artistID: 1
+              userID: 0
+              name:
+                - 彩電
+              description: ごちうさなどのきらら系中心に、オリジナルなどのサークルやってます
+              group:
+                - こねこぼたん
+              pixivID:
+                - 40436
+              twitterID:
+                - harufcs
+              mastodon:
+                - 'https://pawoo.net/@saiden'
+              homepage:
+                - string
+              count: 0
+              lcount: 0
       title: GetCatalogArtistResponse
       properties:
         pagination:
@@ -7078,12 +7192,15 @@ components:
     CommentEditStruct:
       title: CommentEditStruct
       type: object
-      properties:
-        message:
-          type: string
       x-examples:
-        example-1:
-          message: string
+        example:
+          body: Hello world!
+      properties:
+        body:
+          type: string
+          description: メッセージ本文(これ以外は編集できない)
+      required:
+        - body
     InviteStruct:
       title: InviteStruct
       type: object
@@ -7324,11 +7441,20 @@ components:
     LightAccountStruct:
       title: LightAccountStruct
       type: object
+      x-examples:
+        example:
+          accountID: 1
+          name: お窓
       properties:
         accountID:
           type: integer
+          description: アカウントID
+          example: 1
+          minimum: 1
         name:
           type: string
+          description: アカウント名
+          example: お窓
     LightArtistStruct:
       title: LightArtistStruct
       type: object
