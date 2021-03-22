@@ -3915,57 +3915,82 @@ components:
       title: SearchResultStruct
       type: object
       x-examples:
-        example-1:
-          artID: 0
-          artistID: 0
-          title: string
-          caption: string
-          date: string
-          pages: 0
-          like: 0
-          mylist: 0
-          mylisted: true
-          originUrl: string
-          originService: string
+        example:
+          artID: 1
+          title: 魔法少女は深淵になにをみるか？
+          caption: Ｃ８９の新刊表紙となっていますっ
+          datetime: '2015-12-27T07:29:00Z'
+          page: 1
+          likes: 0
+          views: 0
+          mylists: 0
+          mylisted: false
+          uploader:
+            accountID: 1
+            name: お窓
+          artists:
+            - artistID: 1
+              name: 彩電
+          originUrl: 'https://www.pixiv.net/artworks/54265978'
+          originService: Pixiv
           nsfw: false
-          artist:
-            name: string
-          extension: string
+          file:
+            ipfsHash:
+              thumb: QmYQvXHGoiTdJuFLQWXQpMBz9V4254gNixLjPjMB2T4g5Y
+              orig: QmYQvXHGoiTdJuFLQWXQpMBz9V4254gNixLjPjMB2T4g5Y
+          similarity: 0
       description: 検索の応答モデル。配列で並んで返される。
       properties:
         artID:
           type: integer
           description: イラストID
+          minimum: 1
+          example: 1
         title:
           type: string
           minLength: 1
           description: イラスト(作品)名
+          example: 魔法少女は深淵になにをみるか？
         caption:
           type: string
           description: |-
             説明文
             NOTE: 通常出典記載の説明文と同じ物が入る
+          example: Ｃ８９の新刊表紙となっていますっ
+          minLength: 1
         datetime:
           type: string
-          minLength: 19
-          maxLength: 19
-          example: '2021-01-07 12:48:42'
+          example: '2015-12-27T07:29:00Z'
           description: '登録日(%Y-%m-%d %H:%M:%S)'
+          format: date-time
         page:
           type: integer
           description: グループになっている場合のページ番号
+          default: 1
+          example: 1
+          minimum: 1
         likes:
           type: integer
           description: 累計いいね数
+          minimum: 0
+          example: 0
+          default: 0
         views:
           type: integer
           description: 累計閲覧数
+          minimum: 0
+          example: 0
+          default: 0
         mylists:
           type: integer
           description: マイリスト済みのユーザー数
+          minimum: 0
+          example: 0
+          default: 0
         mylisted:
           type: boolean
           description: リクエストしたユーザーがマイリストしているか
+          default: false
         uploader:
           $ref: '#/components/schemas/LightAccountStruct'
         artists:
@@ -3977,13 +4002,16 @@ components:
           type: string
           minLength: 1
           description: 出典URL
+          example: 'https://www.pixiv.net/artworks/54265978'
         originService:
           type: string
           minLength: 1
           description: 出典のサービス名
+          example: Pixiv
         nsfw:
           type: boolean
           description: アダルトコンテンツか否か
+          default: false
         file:
           type: object
           properties:
@@ -6037,13 +6065,40 @@ components:
       title: MylistStruct
       type: object
       x-examples:
-        example:
-          id: 1
+        example-2:
+          mylistID: 1
           name: お窓のマイリスト
           description: ユーザーデフォルトマイリスト
-          createdDate: '2021/03/14 02:16:03'
-          updatedDate: '2021/03/14 02:16:03'
+          createdDate: '2021-03-14T02:16:03Z'
+          updatedDate: '2021-03-14T02:16:03Z'
           private: true
+          arts:
+            - artID: 0
+              title: string
+              caption: string
+              datetime: '2021-01-07 12:48:42'
+              page: 0
+              likes: 0
+              views: 0
+              mylists: 0
+              mylisted: true
+              uploader:
+                accountID: 1
+                name: お窓
+              artists:
+                - artistID: 1
+                  name: 彩電
+              originUrl: string
+              originService: string
+              nsfw: true
+              file:
+                ipfsHash:
+                  thumb: string
+                  orig: string
+              similarity: 0
+          owner:
+            accountID: 1
+            name: お窓
       properties:
         mylistID:
           type: integer
@@ -6070,12 +6125,12 @@ components:
         private:
           type: boolean
           description: 公開/非公開
-          default: false
+          default: true
         arts:
           type: array
           description: イラストID一覧
           items:
-            type: integer
+            $ref: '#/components/schemas/LightArtStruct'
         owner:
           $ref: '#/components/schemas/LightAccountStruct'
       required:
