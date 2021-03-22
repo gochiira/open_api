@@ -3969,24 +3969,28 @@ components:
           default: 1
           example: 1
           minimum: 1
+          format: int32
         likes:
           type: integer
           description: 累計いいね数
           minimum: 0
           example: 0
           default: 0
+          format: int64
         views:
           type: integer
           description: 累計閲覧数
           minimum: 0
           example: 0
           default: 0
+          format: int64
         mylists:
           type: integer
           description: マイリスト済みのユーザー数
           minimum: 0
           example: 0
           default: 0
+          format: int64
         mylisted:
           type: boolean
           description: リクエストしたユーザーがマイリストしているか
@@ -4003,6 +4007,7 @@ components:
           minLength: 1
           description: 出典URL
           example: 'https://www.pixiv.net/artworks/54265978'
+          format: uri-reference
         originService:
           type: string
           minLength: 1
@@ -4023,10 +4028,12 @@ components:
                   type: string
                   description: サムネイルハッシュ
                   example: QmYQvXHGoiTdJuFLQWXQpMBz9V4254gNixLjPjMB2T4g5Y
+                  maxLength: 100
                 orig:
                   type: string
                   description: Raw画像ハッシュ
                   example: QmYQvXHGoiTdJuFLQWXQpMBz9V4254gNixLjPjMB2T4g5Y
+                  maxLength: 100
         similarity:
           type: number
           description: 元画像との類似度(画像検索のみ)
