@@ -4069,6 +4069,8 @@ components:
           maximum: 9
           minimum: 1
           description: ニュース表記色(色はフロントエンドの実装次第)
+          default: 1
+          example: 1
         title:
           type: string
           minLength: 1
@@ -4908,129 +4910,20 @@ components:
       title: GetUploadHistoryResponse
       type: object
       x-examples:
-        success:
-          value:
-            status: 200
-            message: ok
-            data:
-              title: アップロード履歴
-              count: 2321
-              current: 1
-              pages: 117
-              contents:
-                - uploadID: 12045
-                  started: '2021-02-21 22:24:22'
-                  finished: '2021-02-21 22:24:27'
-                  status: 5
-                  artID: 9381
-                - uploadID: 12044
-                  started: '2021-02-21 22:23:41'
-                  finished: '2021-02-21 22:23:45'
-                  status: 5
-                  artID: 9380
-                - uploadID: 12036
-                  started: '2021-02-21 20:30:39'
-                  finished: '2021-02-21 20:30:43'
-                  status: 5
-                  artID: 9375
-                - uploadID: 12004
-                  started: '2021-02-20 20:20:19'
-                  finished: '2021-02-20 20:20:29'
-                  status: 5
-                  artID: 9355
-                - uploadID: 12003
-                  started: '2021-02-20 20:03:30'
-                  finished: '2021-02-20 20:03:46'
-                  status: 5
-                  artID: 9354
-                - uploadID: 11972
-                  started: '2021-02-19 21:30:58'
-                  finished: '2021-02-19 21:31:00'
-                  status: 5
-                  artID: 9336
-                - uploadID: 11971
-                  started: '2021-02-19 21:30:52'
-                  finished: '2021-02-19 21:30:55'
-                  status: 5
-                  artID: 9335
-                - uploadID: 11970
-                  started: '2021-02-19 21:30:46'
-                  finished: '2021-02-19 21:30:49'
-                  status: 5
-                  artID: 9334
-                - uploadID: 10756
-                  started: '2021-01-20 03:12:57'
-                  finished: '2021-01-20 03:13:04'
-                  status: 5
-                  artID: 8418
-                - uploadID: 10755
-                  started: '2021-01-20 03:09:31'
-                  finished: '2021-01-20 03:09:39'
-                  status: 5
-                  artID: 8417
-                - uploadID: 10754
-                  started: '2021-01-20 02:57:00'
-                  finished: '2021-01-20 02:57:09'
-                  status: 5
-                  artID: 8416
-                - uploadID: 10753
-                  started: '2021-01-20 02:56:44'
-                  finished: '2021-01-20 02:56:52'
-                  status: 5
-                  artID: 8415
-                - uploadID: 10663
-                  started: '2021-01-17 22:21:22'
-                  finished: '2021-01-17 22:21:35'
-                  status: 5
-                  artID: 8364
-                - uploadID: 10658
-                  started: '2021-01-17 21:14:02'
-                  finished: '2021-01-17 21:14:06'
-                  status: 5
-                  artID: 8360
-                - uploadID: 10657
-                  started: '2021-01-17 21:07:54'
-                  finished: '2021-01-17 21:07:57'
-                  status: 5
-                  artID: 8359
-                - uploadID: 10656
-                  started: '2021-01-17 21:07:47'
-                  finished: '2021-01-17 21:07:51'
-                  status: 5
-                  artID: 8358
-                - uploadID: 10655
-                  started: '2021-01-17 21:07:41'
-                  finished: '2021-01-17 21:07:43'
-                  status: 5
-                  artID: 8357
-                - uploadID: 10654
-                  started: '2021-01-17 21:07:34'
-                  finished: '2021-01-17 21:07:37'
-                  status: 5
-                  artID: 8356
-                - uploadID: 10653
-                  started: '2021-01-17 21:07:27'
-                  finished: '2021-01-17 21:07:30'
-                  status: 5
-                  artID: 8355
-                - uploadID: 10652
-                  started: '2021-01-17 21:06:35'
-                  finished: '2021-01-17 21:06:39'
-                  status: 5
-                  artID: 8354
-        no-hit:
-          value:
-            status: 200
-            message: ok
-            data:
-              title: アップロード履歴
-              count: 0
-              current: 1
-              pages: 1
-              contents: []
-        no-account:
-          status: 404
-          message: The account data was not found.
+        example:
+          pagination:
+            title: 投稿履歴一覧
+            type: upload-history
+            count: 0
+            current: 1
+            pages: 1
+            perPage: 20
+          contents:
+            - uploadID: 1
+              started: '2021-02-21 22:24:22'
+              finished: '2021-02-21 22:24:27'
+              status: 5
+              artID: 1
       properties:
         pagination:
           $ref: '#/components/schemas/PaginationStruct'
@@ -5677,15 +5570,16 @@ components:
       title: GetNewsListResponse
       type: object
       x-examples:
-        success:
-          status: 200
-          message: ok
-          data:
-            - id: 3
-              date: '2021-01-07 15:31:24'
-              color: 0
-              title: 記載中の画像について / About these arts
-              body: これらの画像は素材配布としての意図はなく、サイトの機能検証の
+        example:
+          news:
+            - newsID: 1
+              date: '2021-03-22'
+              color: 1
+              title: Welcome to UsagiBooru!
+              body: This is next generation imageboard. This is challenge for me. I hope someone loves this project.
+              author:
+                accountID: 1
+                name: お窓
       description: ''
       properties:
         news:
@@ -5697,47 +5591,38 @@ components:
       type: object
       title: GetSearchGeneralResponse
       x-examples:
-        success:
-          status: 200
-          message: found
-          data:
-            title: ティーカップ
-            count: 2
+        example:
+          pagination:
+            title: 香風智乃
+            type: art
+            count: 1
             current: 1
             pages: 1
-            imgs:
-              - artID: 8
-                artistID: 5
-                title: tea pours into white teacup photo
-                caption: ''
-                date: '2021-01-07 15:16:58'
-                pages: 1
-                like: 1
-                mylist: 0
-                mylisted: false
-                originUrl: 'https://unsplash.com/photos/oBoELXgJR1w?page=1'
-                originService: 独自
-                nsfw: false
-                artist:
-                  id: 5
-                  name: CHI CHEN
-                extension: jpg
-              - artID: 7
-                artistID: 4
-                title: clear glass cup with tea near brown ceramic teapot
-                caption: ''
-                date: '2021-01-07 15:15:28'
-                pages: 1
-                like: 1
-                mylist: 1
-                mylisted: true
-                originUrl: 'https://unsplash.com/photos/L82-kkEBOd0?page=1'
-                originService: 独自
-                nsfw: false
-                artist:
-                  id: 4
-                  name: Manki Kim
-                extension: jpg
+            perPage: 20
+          contents:
+            - artID: 1
+              title: 魔法少女は深淵になにをみるか？
+              caption: Ｃ８９の新刊表紙となっていますっ
+              datetime: '2015-12-27T07:29:00Z'
+              page: 1
+              likes: 0
+              views: 0
+              mylists: 0
+              mylisted: false
+              uploader:
+                accountID: 1
+                name: お窓
+              artists:
+                - artistID: 1
+                  name: 彩電
+              originUrl: 'https://www.pixiv.net/artworks/54265978'
+              originService: Pixiv
+              nsfw: false
+              file:
+                ipfsHash:
+                  thumb: QmYQvXHGoiTdJuFLQWXQpMBz9V4254gNixLjPjMB2T4g5Y
+                  orig: QmYQvXHGoiTdJuFLQWXQpMBz9V4254gNixLjPjMB2T4g5Y
+              similarity: 0
       properties:
         pagination:
           $ref: '#/components/schemas/PaginationStruct'
@@ -6209,20 +6094,12 @@ components:
       title: GetNotifyClientsResponse
       type: object
       x-examples:
-        success-exists:
-          status: 200
-          message: ok
+        example:
           clients:
-            - id: 1
-              name: ChinoLaptop
-              type: 0
-            - id: 2
+            - notifyClientID: 1
               name: ChinoPhone
-              type: 0
-        success-not-exists:
-          status: 200
-          message: ok
-          clients: []
+              type: webpush
+              level: 5
       properties:
         clients:
           type: array
@@ -6232,27 +6109,46 @@ components:
       title: NotifyClientStruct
       type: object
       description: ''
+      x-examples:
+        example-1:
+          notifyClientID: 1
+          name: ChinoPhone
+          type: webpush
+          level: 5
       properties:
         notifyClientID:
           type: integer
           description: 通知クライアントID
           minimum: 1
+          example: 1
         name:
           type: string
           description: ユーザーが指定した通知クライアント名
           minLength: 1
+          example: ChinoPhone
+          maxLength: 30
         type:
-          type: integer
-          description: 'クライアント種別 0:WebPush 1:LineNotify'
-          minimum: 0
-          maximum: 9
-          example: 0
-          default: 0
+          type: string
+          description: クライアント種別
+          enum:
+            - webpush
+            - linenotify
+          example: webpush
+          default: webpush
+          minLength: 1
+          maxLength: 20
         level:
           type: integer
           minimum: 1
           maximum: 9
           description: '通知レベル 1:緊急時のみ 5:タグ絵師通知のみ 9:すべて'
+          enum:
+            - 1
+            - 5
+            - 9
+          example: 5
+          default: 5
+          format: int32
     PostRegisterWebPushRequest:
       title: PostRegisterWebPushRequest
       type: object
@@ -6306,18 +6202,22 @@ components:
       title: GetNotifyConditionsResponse
       type: object
       x-examples:
-        success:
-          status: 200
-          message: ok
+        example:
+          pagination:
+            title: 通知条件一覧
+            type: notify-condition
+            count: 1
+            current: 1
+            pages: 1
+            perPage: 20
           conditions:
-            - type: 1
-              id: 1
-              method: 1
-        success-no-data:
-          status: 200
-          message: ok
-          conditions: []
+            - notifyConditionID: 1
+              targetType: tag
+              targetID: 1
+              targetMethod: all
       properties:
+        pagination:
+          $ref: '#/components/schemas/PaginationStruct'
         conditions:
           type: array
           items:
@@ -6329,15 +6229,42 @@ components:
         notifyConditionID:
           type: integer
           description: NotifyConditionID
+          minimum: 1
+          example: 1
         targetType:
-          type: integer
-          description: '条件種別 0:全通知 1:タグ 2:絵師'
+          type: string
+          description: 条件種別
+          enum:
+            - all
+            - tag
+            - artist
+          example: tag
+          default: tag
+          minLength: 1
+          maxLength: 10
         targetID:
           type: integer
           description: 条件ID 全通知なら0/タグID/絵師ID
+          example: 1
+          default: 0
+          minimum: 0
         targetMethod:
-          type: integer
-          description: '通知方法 0:両方 1:Web 2:Line'
+          type: string
+          description: 通知方法
+          enum:
+            - all
+            - webpush
+            - linenotify
+          example: all
+          default: all
+          minLength: 1
+          maxLength: 30
+      x-examples:
+        example:
+          notifyConditionID: 1
+          targetType: tag
+          targetID: 1
+          targetMethod: all
     PostReportGeneralRequest:
       title: ReportGeneralRequest
       type: object
@@ -7054,6 +6981,11 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/LightArtistStruct'
+      x-examples:
+        example:
+          follows:
+            - artistID: 1
+              name: 彩電
     WikiArticleStruct:
       title: WikiArticleStruct
       type: object
@@ -7354,7 +7286,8 @@ components:
             - follow
             - article
             - mylist-list
-            - mylist-arts
+            - art
+            - upload-history
           default: tag
         count:
           type: integer
@@ -7482,11 +7415,22 @@ components:
       properties:
         url:
           type: string
+          format: uri-reference
+          minLength: 1
+          maxLength: 100
+          example: 'https://api.example.com/ml/predict/tags/result/1'
         id:
           type: string
+          minLength: 1
+          maxLength: 100
+          example: '1'
       required:
         - url
         - id
+      x-examples:
+        example:
+          url: 'https://api.example.com/ml/predict/tags/result/1'
+          id: '1'
     GetWikiArticlesResponse:
       title: GetWikiArticlesResponse
       type: object
@@ -7619,7 +7563,7 @@ components:
           type: string
           example: 彩電
       x-examples:
-        example-1:
+        example:
           artistID: 1
           name: 彩電
   securitySchemes:
