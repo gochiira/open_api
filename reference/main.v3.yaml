@@ -4074,15 +4074,25 @@ components:
       title: NavigationStruct
       type: object
       description: サイト内上部ナビゲーションのエンドポイントで用いる応答モデル
+      x-examples:
+        example-1:
+          name: 香風智乃
+          id: 1
+          count: 1204
       properties:
         name:
           type: string
           minLength: 1
           maxLength: 50
+          example: 香風智乃
         id:
           type: integer
+          example: 1
+          minimum: 1
         count:
           type: integer
+          example: 1204
+          minimum: 1
       required:
         - name
         - id
@@ -5451,7 +5461,7 @@ components:
       description: ''
       type: object
       x-examples:
-        example-2:
+        example:
           pagination:
             title: 絵師一覧
             type: artist
@@ -5496,7 +5506,7 @@ components:
       description: ''
       type: object
       x-examples:
-        example-1:
+        example:
           pagination:
             title: タグ一覧
             type: tag
@@ -5570,7 +5580,7 @@ components:
       description: ''
       type: object
       x-examples:
-        example-1:
+        example:
           pagination:
             title: 投稿者一覧
             type: uploader
@@ -5617,25 +5627,31 @@ components:
       title: GetNavigationGeneralResponse
       type: object
       x-examples:
-        success:
-          status: 200
-          message: ok
-          data:
-            - name: ごちシコ
-              id: 413
-              count: 129
-            - name: きゅんもふ
-              id: 88
-              count: 92
-            - name: KS
-              id: 146
-              count: 86
-            - name: りかたん☆
-              id: 548
-              count: 83
-            - name: きよ蔵
-              id: 71
-              count: 80
+        example-copyright:
+          navigations:
+            - name: ご注文はうさぎですか?
+              id: 1
+              count: 1
+        example-character:
+          navigations:
+            - name: 香風智乃
+              id: 1
+              count: 1
+        example-general:
+          navigations:
+            - name: ロリ
+              id: 1
+              count: 1
+        example-artist:
+          navigations:
+            - name: 彩電
+              id: 1
+              count: 1
+        example-uploader:
+          navigations:
+            - name: お窓
+              id: 1
+              count: 1
       description: ''
       properties:
         navigations:
