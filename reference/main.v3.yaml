@@ -3952,7 +3952,7 @@ components:
           example: '2021-01-07 12:48:42'
           description: '登録日(%Y-%m-%d %H:%M:%S)'
         page:
-          type: string
+          type: integer
           description: グループになっている場合のページ番号
         likes:
           type: integer
@@ -4259,9 +4259,10 @@ components:
           caption: Ｃ８９の新刊表紙となっていますっ
           datetime: '2015/12/27 07:29:00'
           page: 1
-          pages: 1
           likes: 1204
           views: 1204
+          mylists: 1
+          mylisted: true
           uploader:
             accountID: 1
             name: お窓
@@ -4274,90 +4275,47 @@ components:
           approvers:
             - accountID: 1
               name: お窓
-          imageUrl: 'https://i.pximg.net/img-original/img/2015/12/27/07/29/50/54265978_p0.png'
           originUrl: 'https://www.pixiv.net/artworks/54265978'
           originService: Pixiv
           nsfw: false
-          hash: DUMMYHASH
-          extension: png
           status: public
-          width: 1200
-          height: 1569
-          filesize: 1.3M
+          replaces: []
           tag:
-            - tagID: 1
-              type: 0
-              name: string
-              description: string
-              nsfw: false
-              parent: []
-              child: []
-          chara:
-            - tagID: 1
-              type: 0
-              name: string
-              description: string
-              nsfw: false
-              issuer:
-                accountID: 0
-                name: string
-              parent:
-                - 0
-              child:
-                - 0
-              count: 0
-              lcount: 0
-          group:
-            - tagID: 1
-              type: 0
-              name: string
-              description: string
-              nsfw: false
-              issuer:
-                accountID: 0
-                name: string
-              parent:
-                - 0
-              child:
-                - 0
-              count: 0
-              lcount: 0
-          system:
-            - tagID: 1
-              type: 0
-              name: string
-              description: string
-              nsfw: false
-              issuer:
-                accountID: 0
-                name: string
-              parent:
-                - 0
-              child:
-                - 0
-              count: 0
-              lcount: 0
-          replace:
-            - artID: 0
-              title: string
-              caption: string
-              date: string
-              originService: string
-              originUrl: string
-              width: 0
-              height: 0
-              filesize: string
+            copyrights:
+              - tagID: 1
+                name: ご注文はうさぎですか?
+                nsfw: false
+            characters:
+              - tagID: 2
+                name: 香風智乃
+                nsfw: false
+            generals:
+              - tagID: 3
+                name: ロリ
+                nsfw: false
+            metas:
+              - tagID: 4
+                name: FHD
+                nsfw: false
           star:
-            yellow: 0
+            yellow: 1204
             green: 0
             red: 0
             blue: 0
-          ipfsHash:
-            thumb: string
-            small: string
-            large: string
-            orig: string
-            info: string
+          file:
+            original:
+              width: 1200
+              height: 1569
+              filesize: 1385794
+              extension: png
+              pHash: DUMMY_HASH
+              sha256: DUMMY_HASH
+            ipfsHash:
+              thumb: string
+              small: string
+              large: string
+              orig: string
+              info: string
       properties:
         artID:
           type: integer
@@ -4505,10 +4463,6 @@ components:
                     - webp
                     - gif
                   example: jpg
-            imageHash:
-              type: object
-              description: ''
-              properties:
                 pHash:
                   type: string
                   description: 画像ハッシュ
