@@ -4889,7 +4889,9 @@ components:
       x-examples:
         example:
           artistID: 1
-          userID: 1
+          contributors:
+            - accountID: 1
+              name: お窓
           name:
             - 彩電
           description: ごちうさなどのきらら系中心に、オリジナルなどのサークルやってます
@@ -4899,7 +4901,6 @@ components:
             - 40436
           twitterID:
             - harufcs
-            - sdn_knb
           mastodon:
             - 'https://pawoo.net/@saiden'
           homepage:
@@ -4951,27 +4952,30 @@ components:
             example: harufcs
         mastodon:
           type: array
-          format: uri-reference
           description: マストドンアカウントのURL
           items:
             type: string
             example: 'https://pawoo.net/@saiden'
+            format: uri-reference
         homepage:
           description: HPのURL
           type: array
           items:
             type: string
             example: 'http://konebota.x0.com/PAGE/'
+            format: uri-reference
         count:
           type: integer
           description: 絵師に属する作品数
           minimum: 0
           example: 1
+          default: 0
         lcount:
           type: integer
           description: 絵師に属するいいね数
           example: 1204
-          minimum: 1
+          default: 0
+          minimum: 0
     PostReplaceArtRequest:
       title: PostReplaceArtRequest
       type: object
