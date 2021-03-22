@@ -4267,36 +4267,96 @@ components:
       type: object
       title: ArtStruct
       x-examples:
-        example-1:
+        example-2:
+          artID: 0
           title: string
           caption: string
           date: stringstringstrings
           pages: 0
-          like: 0
-          view: 0
+          likes: 0
+          views: 0
+          uploader:
+            accountID: 0
+            name: string
+          artists:
+            - artistID: 0
+              name: string
+          contributors:
+            - accountID: 0
+              name: string
+          approvers:
+            - accountID: 0
+              name: string
+          imageUrl: string
           originUrl: string
           originService: string
           nsfw: true
           hash: string
           extension: jpg
-          artist:
-            name: string
-            id: 0
-          user:
-            id: 0
-            name: string
-          status: 0
+          status: public
           width: 0
           height: 0
-          tag:
-            - string
-          chara:
-            - string
-          group:
-            - string
-          system:
-            - string
           filesize: 0
+          tag:
+            - tagID: 1
+              type: 0
+              name: string
+              description: string
+              nsfw: false
+              issuer:
+                accountID: 0
+                name: string
+              parent:
+                - 0
+              child:
+                - 0
+              count: 0
+              lcount: 0
+          chara:
+            - tagID: 1
+              type: 0
+              name: string
+              description: string
+              nsfw: false
+              issuer:
+                accountID: 0
+                name: string
+              parent:
+                - 0
+              child:
+                - 0
+              count: 0
+              lcount: 0
+          group:
+            - tagID: 1
+              type: 0
+              name: string
+              description: string
+              nsfw: false
+              issuer:
+                accountID: 0
+                name: string
+              parent:
+                - 0
+              child:
+                - 0
+              count: 0
+              lcount: 0
+          system:
+            - tagID: 1
+              type: 0
+              name: string
+              description: string
+              nsfw: false
+              issuer:
+                accountID: 0
+                name: string
+              parent:
+                - 0
+              child:
+                - 0
+              count: 0
+              lcount: 0
           replace:
             - artID: 0
               title: string
@@ -4312,21 +4372,12 @@ components:
             green: 0
             red: 0
             blue: 0
-        example-2:
-          title: メグ「今日はマメ風呂だよ〜！」
-          caption: ''
-          originService: Twitter
-          originUrl: 'https://twitter.com/syuyakustar/status/1368170402778935297?page=1'
-          imageUrl: 'https://twitter.com/syuyakustar/status/1368170402778935297?page=1'
-          artist:
-            name: みかミシェ㌠
-          tag:
-            - 奈津恵
-          chara: []
-          group: []
-          system:
-            - 2021年03月
-          nsfw: false
+          ipfsHash:
+            thumb: string
+            small: string
+            large: string
+            orig: string
+            info: string
       properties:
         artID:
           type: integer
@@ -4831,9 +4882,9 @@ components:
       title: ArtistStruct
       type: object
       x-examples:
-        example-1:
-          id: 0
-          userID: 0
+        example:
+          artistID: 1
+          userID: 1
           name:
             - 彩電
           description: ごちうさなどのきらら系中心に、オリジナルなどのサークルやってます
@@ -4843,12 +4894,13 @@ components:
             - 40436
           twitterID:
             - harufcs
+            - sdn_knb
           mastodon:
             - 'https://pawoo.net/@saiden'
           homepage:
-            - string
-          count: 0
-          lcount: 0
+            - 'http://konebota.x0.com/PAGE/'
+          count: 1
+          lcount: 1204
       description: ''
       properties:
         artistID:
