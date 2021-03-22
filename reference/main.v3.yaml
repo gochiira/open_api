@@ -4267,51 +4267,45 @@ components:
       type: object
       title: ArtStruct
       x-examples:
-        example-2:
-          artID: 0
-          title: string
-          caption: string
-          date: stringstringstrings
-          pages: 0
-          likes: 0
-          views: 0
+        example:
+          artID: 1
+          title: 魔法少女は深淵になにをみるか？
+          caption: Ｃ８９の新刊表紙となっていますっ
+          datetime: '2015/12/27 07:29:00'
+          page: 1
+          pages: 1
+          likes: 1204
+          views: 1204
           uploader:
-            accountID: 0
-            name: string
+            accountID: 1
+            name: お窓
           artists:
-            - artistID: 0
-              name: string
+            - artistID: 1
+              name: 彩電
           contributors:
-            - accountID: 0
-              name: string
+            - accountID: 1
+              name: お窓
           approvers:
-            - accountID: 0
-              name: string
-          imageUrl: string
-          originUrl: string
-          originService: string
-          nsfw: true
-          hash: string
-          extension: jpg
+            - accountID: 1
+              name: お窓
+          imageUrl: 'https://i.pximg.net/img-original/img/2015/12/27/07/29/50/54265978_p0.png'
+          originUrl: 'https://www.pixiv.net/artworks/54265978'
+          originService: Pixiv
+          nsfw: false
+          hash: DUMMYHASH
+          extension: png
           status: public
-          width: 0
-          height: 0
-          filesize: 0
+          width: 1200
+          height: 1569
+          filesize: 1.3M
           tag:
             - tagID: 1
               type: 0
               name: string
               description: string
               nsfw: false
-              issuer:
-                accountID: 0
-                name: string
-              parent:
-                - 0
-              child:
-                - 0
-              count: 0
-              lcount: 0
+              parent: []
+              child: []
           chara:
             - tagID: 1
               type: 0
@@ -4390,14 +4384,21 @@ components:
           type: string
           minLength: 1
           description: '説明文 NOTE: 通常出典に記載されていた内容そのままが入る'
-        date:
+        datetime:
           type: string
           minLength: 19
           maxLength: 19
           description: '登録日時(%Y-%m-%d %H:%M:%S)'
+        page:
+          type: integer
+          description: グループになっている場合のページ番号
+          minimum: 1
+          default: 1
         pages:
           type: integer
-          description: グループになっている場合の総ページ数(未使用)
+          description: グループになっている場合の総ページ数
+          minimum: 1
+          default: 1
         likes:
           type: integer
           description: 累計いいね数
@@ -4466,7 +4467,7 @@ components:
           type: integer
           description: RAW画像の縦方向のピクセル数
         filesize:
-          type: integer
+          type: string
           description: ファイルサイズをbytesで入力
         tag:
           type: array
@@ -4568,8 +4569,15 @@ components:
           format: int32
           description: サイト内通しタグ番号
         type:
-          type: integer
-          description: 'タグ種別 0:通常'
+          type: string
+          description: タグ種別
+          enum:
+            - copyright
+            - character
+            - general
+            - meta
+          default: general
+          example: general
         name:
           type: string
           minLength: 1
@@ -7114,6 +7122,9 @@ components:
       properties:
         message:
           type: string
+      x-examples:
+        example-1:
+          message: string
     InviteStruct:
       title: InviteStruct
       type: object
