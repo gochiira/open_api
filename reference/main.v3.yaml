@@ -5547,28 +5547,23 @@ components:
       description: ''
       type: object
       x-examples:
-        success:
-          status: 200
-          message: found
-          data:
-            title: 投稿者
-            count: 1
+        example-1:
+          pagination:
+            title: 投稿者一覧
+            type: uploader
+            count: 2
             current: 1
             pages: 1
-            contents:
-              - id: 1
-                name: お窓
-                count: 1
-                lcount: 1204
-        success-no-data:
-          status: 200
-          message: found
-          data:
-            title: 投稿者
-            count: 0
-            current: 1
-            pages: 1
-            contents: []
+            perPage: 20
+          contents:
+            - id: 1
+              name: お窓
+              count: 0
+              lcount: 0
+            - id: 2
+              name: 香風智乃
+              count: 0
+              lcount: 0
       title: GetCatalogUploaderResponse
       properties:
         pagination:
@@ -6967,16 +6962,15 @@ components:
       title: GetFindTagsResponse
       type: object
       x-examples:
-        success:
-          status: 200
-          message: ok
-          data:
-            - id: 1
+        example:
+          tags:
+            - tagID: 1
+              type: character
               name: 香風智乃
-        failed-not-found:
-          status: 200
-          message: ok
-          data: []
+              description: ラビットハウスの一人娘。クールな性格だがココアのことは嫌いじゃない…!? コーヒーに詳しいしっかり者。
+              nsfw: false
+              count: 0
+              lcount: 0
       properties:
         tags:
           type: array
