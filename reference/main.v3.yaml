@@ -4120,7 +4120,7 @@ components:
           accountID: 1
           displayID: omado
           apiKey: DUMMY_ADMIN_API_KEY
-          apiSeq: 0
+          apiSeq: 1
           permission: 9
           password: kafuuch1n0
           oldPassword: h0t0c0c0a
@@ -4157,8 +4157,8 @@ components:
           apiKey: DUMMY_API_KEY
           apiSeq: 1
           permission: 0
-          password: kafuuch1n0
-          oldPassword: h0t0c0c0a
+          password: h0t0c0c0a
+          oldPassword: kafuuch1n0
           totpEnabled: false
           name: 香風智乃
           description: ラビットハウスの一人娘。クールな性格だがココアのことは嫌いじゃない…!? コーヒーに詳しいしっかり者。
@@ -4630,11 +4630,11 @@ components:
       description: ''
       x-examples:
         user:
-          id: test_user
-          password: this_is_only_for_test
+          id: omado
+          password: kafuuch1n0
         admin:
-          id: test_admin
-          password: this_is_only_for_test
+          id: chino
+          password: h0t0c0c0a
       properties:
         id:
           type: string
@@ -4941,7 +4941,7 @@ components:
       type: object
       x-examples:
         example:
-          api_key: DUMMY_API_KEY
+          apiKey: DUMMY_API_KEY
       properties:
         apiKey:
           type: string
@@ -4950,15 +4950,8 @@ components:
       title: PostLoginWithFormResponse
       type: object
       x-examples:
-        login-success:
-          value:
-            status: 200
-            message: welcome back
-            apiKey: DUMMY_API_KEY
-        login-failed:
-          value:
-            status: 404
-            message: account not found
+        example:
+          apiKey: DUMMY_API_KEY
       description: ''
       properties:
         apiKey:
