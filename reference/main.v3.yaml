@@ -4914,7 +4914,7 @@ components:
           pagination:
             title: 投稿履歴一覧
             type: upload-history
-            count: 0
+            count: 1
             current: 1
             pages: 1
             perPage: 20
@@ -6977,12 +6977,21 @@ components:
       title: GetTimelineFollowingResponse
       type: object
       properties:
+        pagination:
+          $ref: '#/components/schemas/PaginationStruct'
         follows:
           type: array
           items:
             $ref: '#/components/schemas/LightArtistStruct'
       x-examples:
         example:
+          pagination:
+            title: フォロー一覧
+            type: follow
+            count: 1
+            current: 1
+            pages: 1
+            perPage: 20
           follows:
             - artistID: 1
               name: 彩電
@@ -7535,6 +7544,7 @@ components:
             userVerification:
               type: string
               minLength: 1
+      title: ''
     LightAccountStruct:
       title: LightAccountStruct
       type: object
