@@ -7392,10 +7392,12 @@ components:
     PostMachineLearningGeneralRequest:
       title: PostMachineLearningGeneralRequest
       type: object
+      x-examples: {}
       properties:
         image:
           type: string
           format: binary
+          description: Binary型の画像
       required:
         - image
     PostPredictNsfwResponse:
@@ -7426,8 +7428,12 @@ components:
         url:
           type: string
           description: Polling用URLを返す(すぐに終わらん)
+          format: iri-reference
       required:
         - url
+      x-examples:
+        example:
+          url: 'https://api.example.com/ml/polling/1'
     PostMachineLearningTransparentResponse:
       title: PostMachineLearningTransparentResponse
       type: object
