@@ -3912,7 +3912,7 @@ paths:
 components:
   schemas:
     LightArtStruct:
-      title: SearchResultStruct
+      title: LightArtStruct
       type: object
       x-examples:
         example:
@@ -5725,42 +5725,48 @@ components:
       type: object
       title: GetMylistListResponse
       x-examples:
-        success-default:
-          status: 200
-          message: ok
-          data:
+        example:
+          pagination:
             title: マイリスト一覧
-            count: 2
+            type: mylist
+            count: 1
             current: 1
             pages: 1
-            contents:
-              - id: 1
-                name: お窓のマイリスト
-                description: ユーザーデフォルトマイリスト
-                createdDate: '2021/03/14 02:16:03'
-                updatedDate: '2021/03/14 02:16:03'
-                private: true
-        success-multiple:
-          status: 200
-          message: ok
-          data:
-            title: マイリスト一覧
-            count: 2
-            current: 1
-            pages: 1
-            contents:
-              - id: 1
-                name: お窓のマイリスト
-                description: ユーザーデフォルトマイリスト
-                createdDate: '2021/03/14 02:16:03'
-                updatedDate: '2021/03/14 02:16:03'
-                private: true
-              - id: 2
-                name: お窓のチノリスト
-                description: だいすき香風智乃
-                createdDate: '2021/03/14 02:16:03'
-                updatedDate: '2021/03/14 02:16:03'
-                private: false
+            perPage: 20
+          contents:
+            - mylistID: 1
+              name: お窓のマイリスト
+              description: string
+              createdDate: '2021-03-14T02:16:03Z'
+              updatedDate: '2021-03-14T02:16:03Z'
+              private: true
+              arts:
+                - artID: 1
+                  title: 魔法少女は深淵になにをみるか？
+                  caption: Ｃ８９の新刊表紙となっていますっ
+                  datetime: '2015-12-27T07:29:00Z'
+                  page: 1
+                  likes: 0
+                  views: 0
+                  mylists: 0
+                  mylisted: false
+                  uploader:
+                    accountID: 1
+                    name: お窓
+                  artists:
+                    - artistID: 1
+                      name: 彩電
+                  originUrl: 'https://www.pixiv.net/artworks/54265978'
+                  originService: Pixiv
+                  nsfw: false
+                  file:
+                    ipfsHash:
+                      thumb: QmYQvXHGoiTdJuFLQWXQpMBz9V4254gNixLjPjMB2T4g5Y
+                      orig: QmYQvXHGoiTdJuFLQWXQpMBz9V4254gNixLjPjMB2T4g5Y
+                  similarity: 0
+              owner:
+                accountID: 1
+                name: お窓
       properties:
         pagination:
           $ref: '#/components/schemas/PaginationStruct'
@@ -6104,9 +6110,11 @@ components:
           type: string
           description: マイリスト名
           minLength: 1
+          example: お窓のマイリスト
         description:
           type: string
           description: マイリスト説明文
+          example: ユーザーデフォルトマイリスト
         createdDate:
           type: string
           description: マイリスト作成日時
@@ -6128,10 +6136,6 @@ components:
             $ref: '#/components/schemas/LightArtStruct'
         owner:
           $ref: '#/components/schemas/LightAccountStruct'
-      required:
-        - name
-        - description
-        - private
     PostMylistFindsRequest:
       title: PostMylistFindsRequest
       type: object
