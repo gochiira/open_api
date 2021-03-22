@@ -6013,24 +6013,12 @@ components:
       title: GetMutesResponse
       type: object
       x-examples:
-        success:
-          status: 200
-          message: ok
-          data:
-            tag:
-              - 1
-              - 2
-              - 3
-            artist:
-              - 1
-              - 2
-              - 3
-        success-no-data:
-          status: 200
-          message: ok
-          data:
-            tag: []
-            artist: []
+        example:
+          tags:
+            - muteID: 1
+              targetType: tag
+              targetID: 1
+          artists: []
       properties:
         tags:
           type: array
@@ -7328,22 +7316,29 @@ components:
     MuteStruct:
       title: MuteStruct
       type: object
+      x-examples:
+        example:
+          muteID: 1
+          targetID: 1
+          targetType: tag
       properties:
         muteID:
           type: integer
           description: ミュートID
-        targetID:
-          type: integer
-          description: 対象のタグ/絵師ID
+          minimum: 1
+          example: 1
         targetType:
           type: string
           description: ミュート種別
           enum:
             - tag
             - artist
-          example: artist
-      required:
-        - targetType
+          example: tag
+        targetID:
+          type: integer
+          description: 対象のタグ/絵師ID
+          minimum: 1
+          example: 1
     PostMachineLearningGeneralRequest:
       title: PostMachineLearningGeneralRequest
       type: object
