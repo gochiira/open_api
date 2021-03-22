@@ -4043,31 +4043,44 @@ components:
       title: NewsStruct
       type: object
       description: サイト内の新着情報モデル。
-      x-examples: {}
+      x-examples:
+        example:
+          newsID: 1
+          date: '2021-03-22'
+          color: 1
+          title: Welcome to UsagiBooru!
+          body: This is next generation imageboard. This is challenge. I hope someone loves this project.
+          author:
+            accountID: 1
+            name: お窓
       properties:
         newsID:
           type: integer
           description: ニュースID
+          minimum: 1
+          example: 1
         date:
           type: string
-          minLength: 19
-          maxLength: 19
           description: 投稿日付時刻
+          format: date
+          example: '2021-03-22'
         color:
           type: integer
           maximum: 9
-          minimum: 0
-          description: ニュース表記色(色はフロントの実装次第)
+          minimum: 1
+          description: ニュース表記色(色はフロントエンドの実装次第)
         title:
           type: string
           minLength: 1
           maxLength: 50
           description: ニュースタイトル 50文字まで
+          example: Welcome to UsagiBooru!
         body:
           type: string
           minLength: 1
           maxLength: 3000
           description: ニュース本文 3000文字まで
+          example: This is next generation imageboard. This is challenge. I hope someone loves this project.
         author:
           $ref: '#/components/schemas/LightAccountStruct'
     NavigationStruct:
@@ -5673,10 +5686,6 @@ components:
               color: 0
               title: 記載中の画像について / About these arts
               body: これらの画像は素材配布としての意図はなく、サイトの機能検証の
-        success-no-data:
-          status: 200
-          message: ok
-          data: []
       description: ''
       properties:
         news:
