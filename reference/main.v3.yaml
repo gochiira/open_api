@@ -4350,7 +4350,7 @@ components:
                 name: FHD
                 nsfw: false
           detailedLikes:
-            yellow: 1204
+            yellow: 0
             green: 0
             red: 0
             blue: 0
@@ -5220,14 +5220,14 @@ components:
       type: object
       x-examples:
         example:
-          yellow: 1204
+          yellow: 0
           green: 0
           red: 0
           blue: 0
       properties:
         yellow:
           type: integer
-          example: 1204
+          example: 0
           default: 0
           minimum: 0
         green:
