@@ -5253,39 +5253,44 @@ components:
     GetArtLikesResponse:
       title: GetArtLikesResponse
       type: object
+      x-examples:
+        example:
+          likes: 0
       properties:
         likes:
           type: integer
           description: 累計いいね数
-      x-examples:
-        example:
-          likes: 1204
+          default: 0
+          example: 0
+          minimum: 0
     GetArtViewsResponse:
       title: GetArtViewsResponse
       type: object
       x-examples:
         example:
-          views: 1204
+          views: 0
       properties:
         views:
           type: integer
           minimum: 0
           description: 累計閲覧数
+          example: 0
+          default: 0
     GetArtCommentsResponse:
       title: GetArtCommentsResponse
       type: object
       x-examples:
+        success-no-data:
+          comments: []
         success:
           comments:
             - commentID: 1
-              created: '2021/03/13 11:29:24'
-              updated: '2021/03/13 11:29:24'
+              created: '2021-03-13T11:29:24Z'
+              updated: '2021-03-13T11:29:24Z'
               body: Hello world!
-              user:
+              author:
                 accountID: 1
                 name: お窓
-        success-no-data:
-          comments: []
       properties:
         comments:
           type: array
@@ -5297,10 +5302,10 @@ components:
       x-examples:
         example:
           commentID: 1
-          created: '2021/03/13 11:29:24'
-          updated: '2021/03/13 11:29:24'
+          created: '2021-03-13T11:29:24Z'
+          updated: '2021-03-13T11:29:24Z'
           body: Hello world!
-          user:
+          author:
             accountID: 1
             name: お窓
       title: CommentStruct
@@ -5313,20 +5318,20 @@ components:
         created:
           type: string
           description: 投稿時刻(datetime)
-          minLength: 19
-          maxLength: 19
-          example: '2021/03/13 11:29:24'
+          example: '2021-03-13T11:29:24Z'
+          format: date-time
         updated:
           type: string
           description: 更新時刻(datetime)
-          minLength: 19
-          maxLength: 19
-          example: '2021/03/13 11:29:24'
+          example: '2021-03-13T11:29:24Z'
+          format: date-time
         body:
           type: string
           description: コメント本文
           maxLength: 500
-        user:
+          minLength: 1
+          example: Hello world!
+        author:
           $ref: '#/components/schemas/LightAccountStruct'
     GetCatalogArtistResponse:
       description: ''
