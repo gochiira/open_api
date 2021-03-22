@@ -4022,28 +4022,16 @@ components:
                 thumb:
                   type: string
                   description: サムネイルハッシュ
+                  example: QmYQvXHGoiTdJuFLQWXQpMBz9V4254gNixLjPjMB2T4g5Y
                 orig:
                   type: string
                   description: Raw画像ハッシュ
+                  example: QmYQvXHGoiTdJuFLQWXQpMBz9V4254gNixLjPjMB2T4g5Y
         similarity:
           type: number
           description: 元画像との類似度(画像検索のみ)
           minimum: 0
           maximum: 1
-      required:
-        - artID
-        - title
-        - caption
-        - datetime
-        - likes
-        - views
-        - mylists
-        - mylisted
-        - uploader
-        - artists
-        - originUrl
-        - originService
-        - nsfw
     NewsStruct:
       title: NewsStruct
       type: object
