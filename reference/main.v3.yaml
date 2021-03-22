@@ -4629,10 +4629,10 @@ components:
       type: object
       description: ''
       x-examples:
-        user:
+        admin:
           id: omado
           password: kafuuch1n0
-        admin:
+        user:
           id: chino
           password: h0t0c0c0a
       properties:
