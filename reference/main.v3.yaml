@@ -3945,12 +3945,15 @@ components:
           description: |-
             説明文
             NOTE: 通常出典記載の説明文と同じ物が入る
-        date:
+        datetime:
           type: string
           minLength: 19
           maxLength: 19
           example: '2021-01-07 12:48:42'
           description: '登録日(%Y-%m-%d %H:%M:%S)'
+        page:
+          type: string
+          description: グループになっている場合のページ番号
         likes:
           type: integer
           description: 累計いいね数
@@ -3970,9 +3973,6 @@ components:
           description: 絵師情報(複数可)
           items:
             $ref: '#/components/schemas/LightArtistStruct'
-        imageUrl:
-          type: string
-          description: 画像本体URL
         originUrl:
           type: string
           minLength: 1
@@ -3984,27 +3984,19 @@ components:
         nsfw:
           type: boolean
           description: アダルトコンテンツか否か
-        extension:
-          type: string
-          minLength: 1
-          description: RAWファイルの拡張子
-          enum:
-            - png
-            - jpg
-            - jpeg
-            - webp
-            - mp4
-          example: png
-        ipfsHash:
+        file:
           type: object
-          description: IPFSのハッシュ情報
           properties:
-            thumb:
-              type: string
-              description: サムネイルハッシュ
-            orig:
-              type: string
-              description: Raw画像ハッシュ
+            ipfsHash:
+              type: object
+              description: IPFSのハッシュ情報
+              properties:
+                thumb:
+                  type: string
+                  description: サムネイルハッシュ
+                orig:
+                  type: string
+                  description: Raw画像ハッシュ
         similarity:
           type: number
           description: 元画像との類似度(画像検索のみ)
@@ -4014,18 +4006,16 @@ components:
         - artID
         - title
         - caption
-        - date
+        - datetime
         - likes
         - views
         - mylists
         - mylisted
         - uploader
         - artists
-        - imageUrl
         - originUrl
         - originService
         - nsfw
-        - extension
     NewsStruct:
       title: NewsStruct
       type: object
@@ -4390,11 +4380,6 @@ components:
           description: グループになっている場合のページ番号
           minimum: 1
           default: 1
-        pages:
-          type: integer
-          description: グループになっている場合の総ページ数
-          minimum: 1
-          default: 1
         likes:
           type: integer
           minimum: 0
@@ -4428,9 +4413,6 @@ components:
           description: 承認者情報(複数可)
           items:
             $ref: '#/components/schemas/LightAccountStruct'
-        imageUrl:
-          type: string
-          description: 画像本体URL
         originUrl:
           type: string
           minLength: 1
