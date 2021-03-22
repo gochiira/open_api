@@ -4606,15 +4606,63 @@ components:
       title: TagStruct
       type: object
       x-examples:
-        example-1:
-          id: 1
+        example-copyright:
+          tagID: 1
+          type: copyright
+          name: ご注文はうさぎですか?
+          description: こころぴょんぴょんする漫画 from 芳文社
+          nsfw: false
+          issuer:
+            accountID: 1
+            name: お窓
+          parent: []
+          child: []
+          count: 0
+          lcount: 0
+        example-character:
+          tagID: 2
+          type: character
           name: 香風智乃
+          description: ラビットハウスの一人娘。クールな性格だがココアのことは嫌いじゃない…!? コーヒーに詳しいしっかり者。
+          nsfw: false
+          issuer:
+            accountID: 1
+            name: お窓
+          parent: []
+          child: []
+          count: 0
+          lcount: 0
+        example-general:
+          tagID: 3
+          type: general
+          name: ロリ
+          description: 小さな女の子
+          nsfw: false
+          issuer:
+            accountID: 1
+            name: お窓
+          parent: []
+          child: []
+          count: 0
+          lcount: 0
+        example-meta:
+          tagID: 4
+          type: meta
+          name: FHD
+          description: フルHD並の解像度がある画像
+          nsfw: false
+          issuer:
+            accountID: 1
+            name: お窓
+          parent: []
+          child: []
+          count: 0
+          lcount: 0
       description: タグデータモデル
       properties:
         tagID:
           type: integer
           minimum: 1
-          format: int32
           description: サイト内通しタグ番号
         type:
           type: string
@@ -4634,6 +4682,8 @@ components:
         description:
           type: string
           description: タグの説明文
+          maxLength: 280
+          minLength: 0
         nsfw:
           type: boolean
           description: アダルトコンテンツが含まれるタグか
@@ -4643,19 +4693,60 @@ components:
         parent:
           type: array
           description: 親となるタグ
+          minItems: 0
           items:
-            type: integer
+            $ref: '#/components/schemas/LightTagStruct'
         child:
           type: array
           description: 子となるタグ
+          minItems: 0
           items:
-            type: integer
+            $ref: '#/components/schemas/LightTagStruct'
         count:
           type: integer
           description: タグに属する作品数
+          example: 0
+          minimum: 0
+          default: 0
         lcount:
           type: integer
           description: タグに属するいいね数
+          minimum: 0
+          example: 0
+          default: 0
+    LightTagStruct:
+      title: LightTagStruct
+      type: object
+      x-examples:
+        example-copyright:
+          tagID: 1
+          type: copyright
+          name: ご注文はうさぎですか?
+        example-character:
+          tagID: 2
+          type: character
+          name: 香風智乃
+        example-general:
+          tagID: 3
+          type: general
+          name: ロリ
+        example-meta:
+          tagID: 4
+          type: meta
+          name: FHD
+      description: タグデータ簡易モデル
+      properties:
+        tagID:
+          type: integer
+          minimum: 1
+          description: サイト内通しタグ番号
+          example: 2
+        name:
+          type: string
+          minLength: 1
+          maxLength: 20
+          description: タグの名称
+          example: 香風智乃
     ReplaceStruct:
       description: イラストを置き換えた情報のモデル(簡易型イラストモデル)
       type: object
@@ -7282,26 +7373,56 @@ components:
         title:
           type: string
           minLength: 1
-          example: 香風智乃
           description: ページネーションタイトル(表示用)
+          example: 香風智乃
         type:
           type: string
           description: ページネーション種別(表示用)
-          example: 'mylist,tag'
-          default: search
+          example: tag
+          enum:
+            - artist
+            - tag
+            - uploader
+            - notify-client
+            - notify-condition
+            - mute
+            - follow
+            - article
+            - mylist-list
+            - mylist-arts
+          default: tag
         count:
           type: integer
           example: 0
           description: ヒット総数
+          minimum: 0
+          default: 0
         current:
           type: integer
           description: 現在のページ
+          minimum: 1
+          example: 1
+          default: 1
         pages:
           type: integer
           description: ページ数
+          minimum: 1
+          example: 1
+          default: 1
         perPage:
           type: integer
           description: ページ毎の取得数
+          default: 20
+          example: 20
+          minimum: 20
+          enum:
+            - 20
+            - 40
+            - 60
+            - 80
+            - 100
+          maximum: 100
+          format: int32
       required:
         - title
         - type
