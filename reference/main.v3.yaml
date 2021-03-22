@@ -3911,7 +3911,7 @@ paths:
         結果画像は1日で削除されます
 components:
   schemas:
-    SearchResultStruct:
+    LightArtStruct:
       title: SearchResultStruct
       type: object
       x-examples:
@@ -5696,7 +5696,7 @@ components:
         contents:
           type: array
           items:
-            $ref: '#/components/schemas/SearchResultStruct'
+            $ref: '#/components/schemas/LightArtStruct'
     GetMylistListResponse:
       description: ''
       type: object
@@ -5802,7 +5802,7 @@ components:
         illusts:
           type: array
           items:
-            $ref: '#/components/schemas/SearchResultStruct'
+            $ref: '#/components/schemas/LightArtStruct'
     PostSearchByImageAtSauceNaoResponse:
       description: ''
       type: object
@@ -6048,29 +6048,32 @@ components:
         mylistID:
           type: integer
           description: マイリストID
+          example: 1
+          minimum: 1
         name:
           type: string
           description: マイリスト名
+          minLength: 1
         description:
           type: string
           description: マイリスト説明文
         createdDate:
           type: string
           description: マイリスト作成日時
-          minLength: 19
-          maxLength: 19
+          format: date-time
+          example: '2021-03-14T02:16:03Z'
         updatedDate:
           type: string
           description: マイリスト更新日時
-          minLength: 19
-          maxLength: 19
+          format: date-time
+          example: '2021-03-14T02:16:03Z'
         private:
           type: boolean
           description: 公開/非公開
-          default: true
+          default: false
         arts:
           type: array
-          description: データ本体
+          description: イラストID一覧
           items:
             type: integer
         owner:
