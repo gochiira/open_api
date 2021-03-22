@@ -3951,9 +3951,6 @@ components:
           maxLength: 19
           example: '2021-01-07 12:48:42'
           description: '登録日(%Y-%m-%d %H:%M:%S)'
-        pages:
-          type: integer
-          description: グループの場合のページ数(未使用)
         likes:
           type: integer
           description: 累計いいね数
@@ -4018,7 +4015,6 @@ components:
         - title
         - caption
         - date
-        - pages
         - likes
         - views
         - mylists
@@ -4401,10 +4397,20 @@ components:
           default: 1
         likes:
           type: integer
+          minimum: 0
           description: 累計いいね数
         views:
           type: integer
+          minimum: 0
           description: 累計閲覧数
+        mylists:
+          type: integer
+          minimum: 0
+          description: 累計マイリスト数
+        mylisted:
+          type: boolean
+          default: false
+          description: マイリスト登録済みか否か
         uploader:
           $ref: '#/components/schemas/LightAccountStruct'
         artists:
@@ -4436,22 +4442,9 @@ components:
         nsfw:
           type: boolean
           description: アダルトコンテンツかどうか
-        hash:
-          type: string
-          description: 画像ハッシュ(pHash)
-        extension:
-          type: string
-          description: 拡張子(通常、jpgもしくはpng)
-          enum:
-            - jpg
-            - jpeg
-            - png
-            - webp
-            - gif
-          example: jpg
         status:
           type: string
-          description: '公開/非公開等の表示状態 0:公開 1:置換済み 2:削除(ユーザー) 3:削除(管理者)'
+          description: 公開/非公開等の表示状態
           enum:
             - public
             - hidden
@@ -4460,40 +4453,35 @@ components:
             - deleted-uploader
           example: public
           default: public
-        width:
-          type: integer
-          description: RAW画像の横方向のピクセル数
-        height:
-          type: integer
-          description: RAW画像の縦方向のピクセル数
-        filesize:
-          type: string
-          description: ファイルサイズをbytesで入力
-        tag:
-          type: array
-          description: '指定したいタグを"名称(文字列)"で指定する NOTE: 内部的に同じものなのでtag/chara/group/systemは全部同じ場所に入力してOK'
-          items:
-            $ref: '#/components/schemas/TagStruct'
-        chara:
-          type: array
-          description: '指定したいタグを"名称(文字列)"で指定する NOTE: 内部的に同じものなのでtag/chara/group/systemは全部同じ場所に入力してOK'
-          items:
-            $ref: '#/components/schemas/TagStruct'
-        group:
-          type: array
-          description: '指定したいタグを"名称(文字列)"で指定する NOTE: 内部的に同じものなのでtag/chara/group/systemは全部同じ場所に入力してOK'
-          items:
-            $ref: '#/components/schemas/TagStruct'
-        system:
-          type: array
-          description: '指定したいタグを"名称(文字列)"で指定する NOTE: 内部的に同じものなのでtag/chara/group/systemは全部同じ場所に入力してOK'
-          items:
-            $ref: '#/components/schemas/TagStruct'
-        replace:
+        replaces:
           type: array
           description: 置き換え履歴データ
           items:
             $ref: '#/components/schemas/ReplaceStruct'
+        tag:
+          type: object
+          description: タグ情報
+          properties:
+            copyrights:
+              type: array
+              description: '指定したいタグを"名称(文字列)"で指定する NOTE: 内部的に同じものなのでtag/chara/group/systemは全部同じ場所に入力してOK'
+              items:
+                $ref: '#/components/schemas/TagStruct'
+            characters:
+              type: array
+              description: '指定したいタグを"名称(文字列)"で指定する NOTE: 内部的に同じものなのでtag/chara/group/systemは全部同じ場所に入力してOK'
+              items:
+                $ref: '#/components/schemas/TagStruct'
+            generals:
+              type: array
+              description: '指定したいタグを"名称(文字列)"で指定する NOTE: 内部的に同じものなのでtag/chara/group/systemは全部同じ場所に入力してOK'
+              items:
+                $ref: '#/components/schemas/TagStruct'
+            metas:
+              type: array
+              description: '指定したいタグを"名称(文字列)"で指定する NOTE: 内部的に同じものなのでtag/chara/group/systemは全部同じ場所に入力してOK'
+              items:
+                $ref: '#/components/schemas/TagStruct'
         star:
           type: object
           description: スター情報
@@ -4510,24 +4498,59 @@ components:
             blue:
               type: integer
               description: ブルースター数
-        ipfsHash:
+        file:
           type: object
           properties:
-            thumb:
-              type: string
-              description: このイラストのサムネイル画像
-            small:
-              type: string
-              description: このイラストのSmall画像
-            large:
-              type: string
-              description: このイラストのLarge画像
-            orig:
-              type: string
-              description: このイラストのRAW画像
-            info:
-              type: string
-              description: このイラスト情報のJSONデータハッシュ
+            original:
+              type: object
+              properties:
+                width:
+                  type: integer
+                  description: RAW画像の横方向のピクセル数
+                height:
+                  type: integer
+                  description: RAW画像の縦方向のピクセル数
+                size:
+                  type: integer
+                  description: ファイルサイズをbytesで入力
+                extension:
+                  type: string
+                  description: 拡張子(通常、jpgもしくはpng)
+                  enum:
+                    - jpg
+                    - jpeg
+                    - png
+                    - webp
+                    - gif
+                  example: jpg
+            imageHash:
+              type: object
+              description: ''
+              properties:
+                pHash:
+                  type: string
+                  description: 画像ハッシュ
+                sha256:
+                  type: string
+                  description: ファイルハッシュ
+            ipfsHash:
+              type: object
+              properties:
+                thumb:
+                  type: string
+                  description: このイラストのサムネイル画像
+                small:
+                  type: string
+                  description: このイラストのSmall画像
+                large:
+                  type: string
+                  description: このイラストのLarge画像
+                orig:
+                  type: string
+                  description: このイラストのRAW画像
+                info:
+                  type: string
+                  description: このイラスト情報のJSONデータハッシュ
     PostLoginWithFormRequest:
       title: PostLoginWithFormRequest
       type: object
