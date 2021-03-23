@@ -3869,7 +3869,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PostMachineLearningTransparentResponse'
+                $ref: '#/components/schemas/GetMachineLearningGeneralResponse'
         '404':
           description: Not Found
           content:
@@ -3898,7 +3898,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PostMachineLearningWaifu2xResponse'
+                $ref: '#/components/schemas/GetMachineLearningGeneralResponse'
         '404':
           description: Not Found
           content:
@@ -6049,7 +6049,7 @@ components:
           items:
             type: integer
       x-examples:
-        example-1:
+        example:
           id:
             - 1
             - 2
@@ -6059,24 +6059,10 @@ components:
       type: object
       x-examples:
         success:
-          status: 200
-          message: ok
           data:
             '1': true
             '2': false
             '3': true
-        failed-not-satisfied:
-          status: 400
-          message: Request parameters are not satisfied.
-        failed-not-exists:
-          status: 404
-          message: The mylist was not exists.
-        failed-internal-error:
-          status: 500
-          message: Server bombed.
-        failed-permission:
-          status: 400
-          message: You don't have enough permission.
       properties:
         data:
           type: object
@@ -7406,8 +7392,11 @@ components:
       properties:
         nsfw:
           type: boolean
+          default: false
         accuracy:
           type: number
+          minimum: 0
+          maximum: 1
     PostPredictTagsResponse:
       title: PostPredictTagsResponse
       type: object
@@ -7434,22 +7423,21 @@ components:
       x-examples:
         example:
           url: 'https://api.example.com/ml/polling/1'
-    PostMachineLearningTransparentResponse:
-      title: PostMachineLearningTransparentResponse
+    GetMachineLearningGeneralResponse:
+      title: GetMachineLearningGeneralResponse
       type: object
       properties:
         url:
           type: string
+          format: uri-reference
+          minLength: 1
+          maxLength: 100
+          example: 'https://api.example.com/ml/result/12345.png'
       required:
         - url
-    PostMachineLearningWaifu2xResponse:
-      title: PostMachineLearningWaifu2xResponse
-      type: object
-      properties:
-        url:
-          type: string
-      required:
-        - url
+      x-examples:
+        example:
+          url: 'https://api.example.com/ml/result/12345.png'
     GetPollingFinishResponse:
       title: GetPollingFinishResponse
       type: object
