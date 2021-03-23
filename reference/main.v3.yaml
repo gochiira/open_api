@@ -2110,18 +2110,18 @@ paths:
         - notify
       parameters:
         - schema:
-            type: integer
+            type: string
             maximum: 9
-            example: 0
+            example: all
             minimum: 0
+            default: all
             enum:
-              - 0
-              - 1
-              - 2
-            default: 0
+              - all
+              - tag
+              - artist
           in: query
           name: type
-          description: '条件種別 0:全通知 1:タグ 2:絵師'
+          description: 条件種別
   '/accounts/{accountID}/notify/clients/line':
     post:
       summary: Create line notify client
@@ -6155,13 +6155,22 @@ components:
     PostRegisterLineNotifyRequest:
       title: PostRegisterLineNotifyRequest
       type: object
+      x-examples:
+        example:
+          token: DUMMY_LINE_NOTIFY_TOKEN_BEARER
+          name: 1対1で受け取る
+          level: 5
       properties:
         token:
           type: string
           description: LineNotifyのパーソナルトークン
+          example: DUMMY_LINE_NOTIFY_TOKEN_BEARER
+          minLength: 30
+          maxLength: 120
         name:
           type: string
           description: 通知クライアント名
+          example: 1対1で受け取る
         level:
           type: integer
           description: '通知レベル 1:緊急時のみ 5:タグ絵師通知のみ 9:すべて'
@@ -6169,10 +6178,11 @@ components:
             - 1
             - 5
             - 9
-          example: 9
-          default: 9
+          example: 5
+          default: 5
           minimum: 1
           maximum: 9
+          format: int32
       required:
         - token
         - name
@@ -6194,6 +6204,7 @@ components:
               targetType: tag
               targetID: 1
               targetMethod: all
+              targetClient: -1
       properties:
         pagination:
           $ref: '#/components/schemas/PaginationStruct'
@@ -6204,6 +6215,13 @@ components:
     NotifyConditionStruct:
       title: NotifyConditionStruct
       type: object
+      x-examples:
+        example:
+          notifyConditionID: 1
+          targetType: tag
+          targetID: 1
+          targetMethod: all
+          targetClient: -1
       properties:
         notifyConditionID:
           type: integer
@@ -6238,12 +6256,13 @@ components:
           default: all
           minLength: 1
           maxLength: 30
-      x-examples:
-        example:
-          notifyConditionID: 1
-          targetType: tag
-          targetID: 1
-          targetMethod: all
+        targetClient:
+          type: integer
+          minimum: -1
+          default: -1
+          example: -1
+          format: int32
+          description: 対象の通知クライアント(ターゲットが全てなら-1)
     PostReportGeneralRequest:
       title: ReportGeneralRequest
       type: object
@@ -7397,19 +7416,47 @@ components:
           type: number
           minimum: 0
           maximum: 1
+          example: 0.8889
+      required:
+        - nsfw
+        - accuracy
+      x-examples:
+        example:
+          nsfw: false
+          accuracy: 0.8889
     PostPredictTagsResponse:
       title: PostPredictTagsResponse
       type: object
       properties:
         tags:
           type: array
+          minItems: 0
+          maxItems: 100
           items:
             type: object
             properties:
               name:
                 type: string
+                description: タグ名
+                minLength: 1
+                maxLength: 100
+                example: kafuu_chino
               accuracy:
-                type: string
+                type: number
+                minimum: 0
+                maximum: 1
+                example: 0.8889
+                description: 推定の確実度
+            required:
+              - name
+              - accuracy
+      required:
+        - tags
+      x-examples:
+        example-1:
+          tags:
+            - name: kafuu_chino
+              accuracy: 0.8889
     PostMachineLearningGeneralResponse:
       title: PostMachineLearningGeneralResponse
       type: object
