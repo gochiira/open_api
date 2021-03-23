@@ -6135,23 +6135,50 @@ components:
         endpoint:
           type: string
           description: WebPushのPOST先エンドポイント(ユーザー毎に異なる)
+          format: uri-reference
+          minLength: 1
+          maxLength: 200
         p256dh:
           type: string
           description: ブラウザ公開鍵
+          minLength: 10
+          maxLength: 200
         auth:
           type: string
           description: WebPushの通知送信認証キー
+          minLength: 10
+          maxLength: 200
         name:
           type: string
           description: 通知クライアント名
+          example: ChinoLaptop
+          minLength: 1
+          maxLength: 30
         level:
-          type: number
+          type: integer
+          description: '通知レベル 1:緊急時のみ 5:タグ絵師通知のみ 9:すべて'
+          enum:
+            - 1
+            - 5
+            - 9
+          example: 5
+          default: 5
+          format: int32
+          minimum: 1
+          maximum: 9
       required:
         - endpoint
         - p256dh
         - auth
         - name
         - level
+      x-examples:
+        example-1:
+          endpoint: string
+          p256dh: stringstri
+          auth: stringstri
+          name: ChinoLaptop
+          level: 5
     PostRegisterLineNotifyRequest:
       title: PostRegisterLineNotifyRequest
       type: object
