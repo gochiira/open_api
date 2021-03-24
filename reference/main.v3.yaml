@@ -1372,6 +1372,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GeneralMessageResponse'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
       tags:
         - arts
       description: |-
@@ -1410,6 +1416,12 @@ paths:
                 $ref: '#/components/schemas/GeneralMessageResponse'
         '404':
           description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
+        '409':
+          description: Conflict
           content:
             application/json:
               schema:
@@ -5059,115 +5071,152 @@ components:
           type: integer
           description: より画質が高いイラストのID
           minimum: 1
+          example: 2
       required:
         - artID
+      x-examples:
+        example:
+          artID: 2
     PostReplaceArtSimulateResponse:
       description: ''
       type: object
       x-examples:
-        failed-not-satisfied:
-          status: 400
-          message: Request parameters are not satisfied.
-        failed-not-found:
-          status: 404
-          message: The art data was not found.
-        failed-internal-error:
-          status: 500
-          message: Server bombed.
-        success:
-          status: 200
-          message: ok
-          data:
-            to:
-              title: string
-              caption: string
-              date: stringstringstrings
-              pages: 0
-              like: 0
-              view: 0
-              originUrl: string
-              originService: string
-              nsfw: true
-              hash: string
-              extension: jpg
-              artist:
-                name: string
-                id: 0
-              user:
-                id: 0
-                name: string
-              status: 0
-              width: 0
-              height: 0
-              tag:
-                - string
-              chara:
-                - string
-              group:
-                - string
-              system:
-                - string
-              filesize: 0
-              replace:
-                - artID: 0
-                  title: string
-                  caption: string
-                  date: string
-                  originService: string
-                  originUrl: string
-                  width: 0
-                  height: 0
-                  filesize: string
-              star:
-                yellow: 0
-                green: 0
-                red: 0
-                blue: 0
-            from:
-              title: string
-              caption: string
-              date: stringstringstrings
-              pages: 0
-              like: 0
-              view: 0
-              originUrl: string
-              originService: string
-              nsfw: true
-              hash: string
-              extension: jpg
-              artist:
-                name: string
-                id: 0
-              user:
-                id: 0
-                name: string
-              status: 0
-              width: 0
-              height: 0
-              tag:
-                - string
-              chara:
-                - string
-              group:
-                - string
-              system:
-                - string
-              filesize: 0
-              replace:
-                - artID: 0
-                  title: string
-                  caption: string
-                  date: string
-                  originService: string
-                  originUrl: string
-                  width: 0
-                  height: 0
-                  filesize: string
-              star:
-                yellow: 0
-                green: 0
-                red: 0
-                blue: 0
+        example:
+          to:
+            artID: 1
+            title: 魔法少女は深淵になにをみるか？
+            caption: Ｃ８９の新刊表紙となっていますっ
+            datetime: '2015-12-27T07:29:00Z'
+            page: 1
+            likes: 1204
+            views: 0
+            mylists: 0
+            mylisted: false
+            uploader:
+              accountID: 1
+              name: お窓
+            artists:
+              - artistID: 1
+                name: 彩電
+            contributors:
+              - accountID: 1
+                name: お窓
+            approvers:
+              - accountID: 1
+                name: お窓
+            originUrl: 'https://www.pixiv.net/artworks/54265978'
+            originService: Pixiv
+            nsfw: false
+            status: public
+            replaces:
+              - artID: 2
+                title: チノちゃん
+                caption: ''
+                date: '2021-03-05 01:27:22'
+                originService: Pixiv
+                originUrl: 'https://www.pixiv.net/artworks/88062684'
+                width: 750
+                height: 1200
+                filesize: 2M
+            tags:
+              copyrights:
+                - tagID: 1
+                  name: ご注文はうさぎですか?
+                  nsfw: false
+              characters:
+                - tagID: 2
+                  name: 香風智乃
+                  nsfw: false
+              generals:
+                - tagID: 3
+                  name: ロリ
+                  nsfw: false
+              metas:
+                - tagID: 4
+                  name: FHD
+                  nsfw: false
+            detailedLikes:
+              yellow: 1204
+              green: 0
+              red: 0
+              blue: 0
+            file:
+              original:
+                width: 1200
+                height: 1569
+                size: 1385794
+                extension: png
+                pHash: e5d2de31c62dd320
+                sha256: 0d68d378bec11f768f43925db81dd416c000de0d9ee2a8a1c2ec02aecb312e62
+              ipfsHash:
+                thumb: QmYQvXHGoiTdJuFLQWXQpMBz9V4254gNixLjPjMB2T4g5Y
+                small: QmYQvXHGoiTdJuFLQWXQpMBz9V4254gNixLjPjMB2T4g5Y
+                large: QmYQvXHGoiTdJuFLQWXQpMBz9V4254gNixLjPjMB2T4g5Y
+                orig: QmYQvXHGoiTdJuFLQWXQpMBz9V4254gNixLjPjMB2T4g5Y
+                info: QmYQvXHGoiTdJuFLQWXQpMBz9V4254gNixLjPjMB2T4g5Y
+          from:
+            artID: 1
+            title: 魔法少女は深淵になにをみるか？
+            caption: Ｃ８９の新刊表紙となっていますっ
+            datetime: '2015-12-27T07:29:00Z'
+            page: 1
+            likes: 0
+            views: 0
+            mylists: 0
+            mylisted: false
+            uploader:
+              accountID: 1
+              name: お窓
+            artists:
+              - artistID: 1
+                name: 彩電
+            contributors:
+              - accountID: 1
+                name: お窓
+            approvers:
+              - accountID: 1
+                name: お窓
+            originUrl: 'https://www.pixiv.net/artworks/54265978'
+            originService: Pixiv
+            nsfw: false
+            status: public
+            replaces: []
+            tags:
+              copyrights:
+                - tagID: 1
+                  name: ご注文はうさぎですか?
+                  nsfw: false
+              characters:
+                - tagID: 2
+                  name: 香風智乃
+                  nsfw: false
+              generals:
+                - tagID: 3
+                  name: ロリ
+                  nsfw: false
+              metas:
+                - tagID: 4
+                  name: FHD
+                  nsfw: false
+            detailedLikes:
+              yellow: 0
+              green: 0
+              red: 0
+              blue: 0
+            file:
+              original:
+                width: 1200
+                height: 1569
+                size: 1385794
+                extension: png
+                pHash: e5d2de31c62dd320
+                sha256: 0d68d378bec11f768f43925db81dd416c000de0d9ee2a8a1c2ec02aecb312e62
+              ipfsHash:
+                thumb: QmYQvXHGoiTdJuFLQWXQpMBz9V4254gNixLjPjMB2T4g5Y
+                small: QmYQvXHGoiTdJuFLQWXQpMBz9V4254gNixLjPjMB2T4g5Y
+                large: QmYQvXHGoiTdJuFLQWXQpMBz9V4254gNixLjPjMB2T4g5Y
+                orig: QmYQvXHGoiTdJuFLQWXQpMBz9V4254gNixLjPjMB2T4g5Y
+                info: QmYQvXHGoiTdJuFLQWXQpMBz9V4254gNixLjPjMB2T4g5Y
       title: PostReplaceArtSimulateResponse
       properties:
         to:
@@ -6131,6 +6180,13 @@ components:
     PostRegisterWebPushRequest:
       title: PostRegisterWebPushRequest
       type: object
+      x-examples:
+        example:
+          endpoint: 'https://example.com/webpush/endpoint'
+          p256dh: DUMMY_PUBLIC_KEY
+          auth: DUMMY_AUTH_TOKEN
+          name: ChinoLaptop
+          level: 5
       properties:
         endpoint:
           type: string
@@ -6138,16 +6194,19 @@ components:
           format: uri-reference
           minLength: 1
           maxLength: 200
+          example: 'https://example.com/webpush/endpoint'
         p256dh:
           type: string
           description: ブラウザ公開鍵
           minLength: 10
           maxLength: 200
+          example: DUMMY_PUBLIC_KEY
         auth:
           type: string
           description: WebPushの通知送信認証キー
           minLength: 10
           maxLength: 200
+          example: DUMMY_AUTH_TOKEN
         name:
           type: string
           description: 通知クライアント名
@@ -6172,13 +6231,6 @@ components:
         - auth
         - name
         - level
-      x-examples:
-        example-1:
-          endpoint: string
-          p256dh: stringstri
-          auth: stringstri
-          name: ChinoLaptop
-          level: 5
     PostRegisterLineNotifyRequest:
       title: PostRegisterLineNotifyRequest
       type: object
