@@ -570,6 +570,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/NewsStruct'
+        '400':
+          description: Bad Request
         '403':
           description: Forbidden
           content:
@@ -637,6 +639,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/MylistStruct'
+        '400':
+          description: Bad Request
         '403':
           description: Forbidden
           content:
@@ -1788,6 +1792,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CommentStruct'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
         '403':
           description: Forbidden
           content:
@@ -1980,6 +1990,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PostMylistFindsResponse'
+        '400':
+          description: Bad Request
       description: |-
         指定したイラスト(単数/複数)がマイリストに含まれているかを判定します
         検索リクエストでwith_mylisted=0としている場合、必要となる可能性があります
@@ -2001,6 +2013,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/NewsStruct'
+        '400':
+          description: Bad Request
+        '403':
+          description: Forbidden
       description: |-
         ニュースを追加します
         (管理者のみリクエストできます)
@@ -2043,6 +2059,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetNotifyClientsResponse'
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
       parameters: []
     parameters:
       - schema:
@@ -2062,6 +2082,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/NotifyClientStruct'
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
       description: |-
         クライアント側で作成したパブリック/プライベートVAPIDキーを
         userID、クライアント名、通知レベルと共にサーバーのデータベースに登録し
@@ -2117,6 +2141,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetNotifyConditionsResponse'
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
       description: 通知条件一覧を取得します
       tags:
         - notify
@@ -2145,6 +2173,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/NotifyClientStruct'
+        '400':
+          description: Bad Request
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
       description: '"ユーザー発行の"LINENotifyのトークンとデバイス名をPOSTして、通知クライアントの一種として保存する。(何個でも設定できる)'
       tags:
         - notify
@@ -2303,6 +2337,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/NotifyConditionStruct'
+        '400':
+          description: Bad Request
         '403':
           description: Forbidden
           content:
@@ -2496,6 +2532,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GeneralMessageResponse'
+        '403':
+          description: Forbidden
   '/report/tags/{tagID}':
     parameters:
       - schema:
@@ -2530,6 +2568,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GeneralMessageResponse'
+        '403':
+          description: Forbidden
   '/report/user/{accountID}':
     parameters:
       - schema:
@@ -2564,6 +2604,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GeneralMessageResponse'
+        '403':
+          description: Forbidden
   '/report/wiki/{articleID}':
     parameters:
       - schema:
@@ -2589,6 +2631,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GeneralMessageResponse'
+        '403':
+          description: Forbidden
       operationId: reportArticle
       description: |-
         指定した記事を運営に通報します
@@ -2980,12 +3024,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetSearchGeneralResponse'
-        '403':
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GeneralMessageResponse'
       operationId: getTimeline
       parameters:
         - $ref: '#/components/parameters/SearchQuerySort'
@@ -3192,6 +3230,8 @@ paths:
             application/activity+json:
               schema:
                 $ref: '#/components/schemas/GetActivityPubGeneralResponse'
+        '404':
+          description: Not Found
       operationId: getActivityPubUploaderOutbox
       description: 他のサーバーがこのユーザーのメッセージを受け取るときにGETされる
     parameters:
@@ -3213,6 +3253,8 @@ paths:
             application/activity+json:
               schema:
                 $ref: '#/components/schemas/GetActivityPubGeneralResponse'
+        '404':
+          description: Not Found
       operationId: getActivityPubArtistOutbox
       description: 他のサーバーがこのユーザーのメッセージを受け取るときにGETされる
     parameters:
@@ -3305,6 +3347,8 @@ paths:
             application/activity+json:
               schema:
                 $ref: '#/components/schemas/ActivityPubActorStruct'
+        '404':
+          description: Not Found
       operationId: getActivityPubArtistActor
       description: |-
         ActivityPubのユーザー情報(絵師)を返す
@@ -3328,6 +3372,8 @@ paths:
             application/activity+json:
               schema:
                 $ref: '#/components/schemas/ActivityPubActorStruct'
+        '404':
+          description: Not Found
       operationId: getActivityPubUploaderActor
       description: |-
         ActivityPubのユーザー情報(投稿者)を返す
@@ -3459,6 +3505,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GeneralMessageResponse'
+        '429':
+          description: Too Many Requests
       description: マイリストを作成します
       tags:
         - mylist
@@ -3510,6 +3558,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/MuteStruct'
+        '400':
+          description: Bad Request
+        '403':
+          description: Forbidden
+        '429':
+          description: Too Many Requests
       tags:
         - accounts
       description: 指定したアカウントのユーザーのミュートを追加します
