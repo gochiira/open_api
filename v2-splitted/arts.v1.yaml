@@ -1,12 +1,12 @@
 openapi: 3.0.0
 info:
-  title: UsagiBooru API
+  title: UsagiBooru Arts API
   version: '2.0'
   contact:
     name: Omado
     url: 'https://twitter.com/shallow_omado'
     email: dsgamer777@gmail.com
-  description: 関連API
+  description: アート関連API
   license:
     name: GPLv3
     url: 'https://www.gnu.org/licenses/gpl-3.0.ja.html'
