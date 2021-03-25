@@ -72,7 +72,41 @@ paths:
       description: ユーザーのアカウント情報を取得します
       tags:
         - accounts
-    put:
+    delete:
+      summary: Delete account info
+      operationId: deleteAccount
+      description: |-
+        アカウントを削除します
+        (本人または管理者のみがリクエストできます)
+      tags:
+        - accounts
+      responses:
+        '204':
+          description: No Content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
+              examples: {}
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: password
+          description: 削除確認用パスワード
+    patch:
       summary: Edit account info
       operationId: editAccount
       responses:
@@ -127,40 +161,6 @@ paths:
           ユーザー本人、もしくは管理者のみデータを変更できます
           変更したいカラムを与え、値に変更後の値を与えると変更できます
           パスワードを変更する場合のみ、例外的に現在のパスワードが要求されます
-    delete:
-      summary: Delete account info
-      operationId: deleteAccount
-      description: |-
-        アカウントを削除します
-        (本人または管理者のみがリクエストできます)
-      tags:
-        - accounts
-      responses:
-        '204':
-          description: No Content
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GeneralMessageResponse'
-        '403':
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GeneralMessageResponse'
-              examples: {}
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GeneralMessageResponse'
-      parameters:
-        - schema:
-            type: string
-          in: header
-          name: password
-          description: 削除確認用パスワード
   '/accounts/{accountID}/upload_history':
     parameters:
       - schema:
@@ -365,7 +365,37 @@ paths:
                 $ref: '#/components/schemas/GeneralMessageResponse'
       operationId: getArt
       description: 指定したイラストを取得します
-    put:
+    delete:
+      summary: Delete art
+      operationId: delete-arts-artID
+      responses:
+        '204':
+          description: No Content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
+      description: |-
+        指定したイラストを削除します
+        削除してほしくないため非推奨とします
+        (このエンドポイントから削除したイラストは
+        参照が不可能になるだけであり一定日数サーバー上に残されます)
+      deprecated: true
+      tags:
+        - arts
+    patch:
       summary: Edit art
       operationId: put-arts-artID
       responses:
@@ -405,36 +435,6 @@ paths:
             schema:
               $ref: '#/components/schemas/ArtStruct'
         description: ''
-    delete:
-      summary: Delete art
-      operationId: delete-arts-artID
-      responses:
-        '204':
-          description: No Content
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GeneralMessageResponse'
-        '403':
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GeneralMessageResponse'
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GeneralMessageResponse'
-      description: |-
-        指定したイラストを削除します
-        削除してほしくないため非推奨とします
-        (このエンドポイントから削除したイラストは
-        参照が不可能になるだけであり一定日数サーバー上に残されます)
-      deprecated: true
-      tags:
-        - arts
   /navigations/characters:
     get:
       summary: Get character navigation tab (for site)
@@ -560,7 +560,7 @@ paths:
       description: |-
         指定したニュースを削除します
         管理者のみリクエストできます
-    put:
+    patch:
       summary: Edit news
       operationId: editNews
       responses:
@@ -633,7 +633,32 @@ paths:
       operationId: getMylist
       description: 指定したマイリストに登録されたイラスト一覧を取得します
       parameters: []
-    put:
+    delete:
+      summary: Delete mylist
+      operationId: deleteMylist
+      description: マイリストを削除します
+      tags:
+        - mylist
+      responses:
+        '204':
+          description: No Content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
+    patch:
       summary: Edit mylist
       operationId: editMylist
       responses:
@@ -670,31 +695,6 @@ paths:
         description: 変更したいものを指定してリクエストします
       tags:
         - mylist
-    delete:
-      summary: Delete mylist
-      operationId: deleteMylist
-      description: マイリストを削除します
-      tags:
-        - mylist
-      responses:
-        '204':
-          description: No Content
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GeneralMessageResponse'
-        '403':
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GeneralMessageResponse'
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GeneralMessageResponse'
   /search/tag:
     get:
       summary: Search by tag
@@ -1309,7 +1309,7 @@ paths:
       deprecated: true
       tags:
         - artists
-    put:
+    patch:
       summary: Edit artist
       operationId: editArtist
       responses:
@@ -1356,7 +1356,7 @@ paths:
         in: path
         required: true
         description: 置き換えしたい(画質が低い方の)イラストID
-    put:
+    patch:
       summary: Combine art info
       operationId: replaceArt
       responses:
@@ -1410,7 +1410,7 @@ paths:
         in: path
         required: true
         description: 置き換えしたい(画質が低い方の)イラストID
-    put:
+    patch:
       summary: Combine art info(simulate)
       operationId: replaceArtSimulate
       responses:
@@ -1477,7 +1477,7 @@ paths:
         in: path
         required: true
         description: 対象のイラストID
-    put:
+    patch:
       summary: Edit art tags
       operationId: editArtTags
       responses:
@@ -1539,7 +1539,26 @@ paths:
         in: path
         required: true
         description: いいね種別
-    put:
+    get:
+      summary: Get art likes with specify type
+      operationId: getArtLikesWithType
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetArtLikesResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
+      description: 指定したイラストのいいねを取得します
+      tags:
+        - arts
+    patch:
       summary: Plus art like (with using star)
       operationId: addArtLike
       responses:
@@ -1573,25 +1592,6 @@ paths:
         指定したイラストのいいね数を1増加させます
         いいねする都度、likeTypeに指定されたスターを消費します
         (ToyMoneyApiに問い合わせを行った上で増加処理を行うため若干時間がかかります)
-    get:
-      summary: Get art likes with specify type
-      operationId: getArtLikesWithType
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GetArtLikesResponse'
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GeneralMessageResponse'
-      description: 指定したイラストのいいねを取得します
-      tags:
-        - arts
   '/arts/{artID}/likes':
     parameters:
       - schema:
@@ -1627,7 +1627,26 @@ paths:
         in: path
         required: true
         description: 対象のイラストID
-    put:
+    get:
+      summary: Get art views
+      operationId: getArtViews
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetArtViewsResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
+      description: 指定したイラストの閲覧回数のみを取得します
+      tags:
+        - arts
+    patch:
       summary: Plus art view
       operationId: addArtView
       responses:
@@ -1654,25 +1673,6 @@ paths:
       description: |-
         指定したイラストの閲覧回数を1増加させます
         同一アカウントからのイラスト閲覧は1日1回のみカウントされます
-    get:
-      summary: Get art views
-      operationId: getArtViews
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GetArtViewsResponse'
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GeneralMessageResponse'
-      description: 指定したイラストの閲覧回数のみを取得します
-      tags:
-        - arts
   '/arts/{artID}/comments':
     parameters:
       - schema:
@@ -1750,44 +1750,6 @@ paths:
         in: path
         required: true
         description: 編集したいコメントのID
-    put:
-      summary: Edit art comment
-      operationId: editArtComment
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CommentStruct'
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GeneralMessageResponse'
-        '403':
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GeneralMessageResponse'
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GeneralMessageResponse'
-      tags:
-        - arts
-      description: |-
-        指定したイラストに付けたコメントを編集します
-        (ActivityPubを使用している場合、編集後の内容が再投稿されます)
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CommentEditStruct'
     delete:
       summary: Delete art comment
       operationId: deleteArtComment
@@ -1832,6 +1794,44 @@ paths:
       description: 指定したイラストに付いている、指定されたIDのコメントを取得します
       tags:
         - arts
+    patch:
+      summary: Edit art comment
+      operationId: editArtComment
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommentStruct'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
+      tags:
+        - arts
+      description: |-
+        指定したイラストに付けたコメントを編集します
+        (ActivityPubを使用している場合、編集後の内容が再投稿されます)
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CommentEditStruct'
   /arts:
     post:
       summary: Create art
@@ -2249,7 +2249,32 @@ paths:
                 $ref: '#/components/schemas/GeneralMessageResponse'
       operationId: getNotifyClient
       description: 指定した通知クライアント情報を取得します
-    put:
+    delete:
+      summary: Delete notify client
+      operationId: deleteNotifyClient
+      description: 指定した通知クライアントを削除します
+      tags:
+        - notify
+      responses:
+        '204':
+          description: No Content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
+    patch:
       summary: Edit notify client
       operationId: editNotifyClient
       responses:
@@ -2279,31 +2304,6 @@ paths:
               $ref: '#/components/schemas/NotifyClientStruct'
       tags:
         - notify
-    delete:
-      summary: Delete notify client
-      operationId: deleteNotifyClient
-      description: 指定した通知クライアントを削除します
-      tags:
-        - notify
-      responses:
-        '204':
-          description: No Content
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GeneralMessageResponse'
-        '403':
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GeneralMessageResponse'
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GeneralMessageResponse'
   '/accounts/{accountID}/notify/conditions/{conditionID}':
     parameters:
       - schema:
@@ -2343,7 +2343,32 @@ paths:
                 $ref: '#/components/schemas/GeneralMessageResponse'
       operationId: getNotifyCondition
       description: 通知条件を取得します
-    put:
+    delete:
+      summary: Delete notify condition
+      operationId: deleteNotifyCondition
+      responses:
+        '204':
+          description: No Content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
+      tags:
+        - notify
+      description: 通知条件を削除します
+    patch:
       summary: Edit notify condition
       operationId: editNotifyCondition
       responses:
@@ -2379,31 +2404,6 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/NotifyConditionStruct'
-    delete:
-      summary: Delete notify condition
-      operationId: deleteNotifyCondition
-      responses:
-        '204':
-          description: No Content
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GeneralMessageResponse'
-        '403':
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GeneralMessageResponse'
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GeneralMessageResponse'
-      tags:
-        - notify
-      description: 通知条件を削除します
   /ranking/yearly/views:
     get:
       summary: Get yearly views ranking
@@ -2922,7 +2922,40 @@ paths:
                 $ref: '#/components/schemas/GeneralMessageResponse'
       operationId: getTag
       description: タグ情報を取得します
-    put:
+    delete:
+      summary: Delete tag
+      operationId: deleteTag
+      tags:
+        - tags
+      description: |-
+        タグを削除します
+        (既にイラストに属しているタグの場合削除できません)
+      responses:
+        '204':
+          description: No Content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
+    patch:
       summary: Edit tag
       operationId: editTag
       responses:
@@ -2960,39 +2993,6 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/TagStruct'
-    delete:
-      summary: Delete tag
-      operationId: deleteTag
-      tags:
-        - tags
-      description: |-
-        タグを削除します
-        (既にイラストに属しているタグの場合削除できません)
-      responses:
-        '204':
-          description: No Content
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GeneralMessageResponse'
-        '403':
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GeneralMessageResponse'
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GeneralMessageResponse'
-        '409':
-          description: Conflict
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GeneralMessageResponse'
   /tags/finds:
     get:
       summary: Find tags by keyword
@@ -3222,7 +3222,32 @@ paths:
                 $ref: '#/components/schemas/GeneralMessageResponse'
       operationId: getWikiArticle
       description: Wikiの記事を取得します
-    put:
+    delete:
+      summary: Delete wiki article
+      operationId: deleteWikiArticle
+      tags:
+        - wiki
+      description: Wikiの記事を削除します
+      responses:
+        '204':
+          description: No Content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
+    patch:
       summary: Edit wiki article
       operationId: editWikiArticle
       responses:
@@ -3258,31 +3283,6 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/WikiArticleStruct'
-    delete:
-      summary: Delete wiki article
-      operationId: deleteWikiArticle
-      tags:
-        - wiki
-      description: Wikiの記事を削除します
-      responses:
-        '204':
-          description: No Content
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GeneralMessageResponse'
-        '403':
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GeneralMessageResponse'
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GeneralMessageResponse'
   /wiki/find:
     get:
       summary: Find wiki article
