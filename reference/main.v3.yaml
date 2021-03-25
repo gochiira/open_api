@@ -2704,6 +2704,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PostUploadResponse'
+        '400':
+          description: Bad Request
+        '403':
+          description: Forbidden
+        '429':
+          description: Too Many Requests
       description: |-
         画像や動画を投稿するエンドポイントです
         むやみに利用するとアカウントが停止される可能性があります
@@ -2927,6 +2933,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetFindTagsResponse'
+        '400':
+          description: Bad Request
       operationId: findTags
       parameters:
         - schema:
@@ -3073,6 +3081,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/WikiArticleStruct'
+        '400':
+          description: Bad Request
+        '403':
+          description: Forbidden
       description: Wikiの記事を作成します
       tags:
         - wiki
@@ -3195,10 +3207,6 @@ paths:
       responses:
         '204':
           description: No Content
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GeneralMessageResponse'
         '404':
           description: Not Found
           content:
