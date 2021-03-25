@@ -1,0 +1,681 @@
+openapi: 3.0.0
+info:
+  title: UsagiBooru Scrape API
+  version: '2.0'
+  contact:
+    name: Omado
+    url: 'https://twitter.com/shallow_omado'
+    email: dsgamer777@gmail.com
+  description: |-
+    スクレイピング関連API
+    (Optional)
+  license:
+    name: GPLv3
+    url: 'https://www.gnu.org/licenses/gpl-3.0.ja.html'
+servers:
+  - url: 'https://api.gochiusa.team'
+    description: Prod
+  - url: 'https://api-next.gochiusa.team'
+    description: Staging
+  - url: 'http://127.0.0.1:8080'
+    description: Dev
+paths:
+  /scrape:
+    post:
+      summary: Scrape content
+      operationId: scrapeContent
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostScrapeResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
+        '415':
+          description: Unsupported Media Type
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
+        '501':
+          description: Not Implemented
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
+        '504':
+          description: Gateway Timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
+      tags:
+        - scrape
+      description: |-
+        渡されたURLのページ情報をスクレイピングします
+        むやみに利用するとアカウントが停止される可能性があります
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostScrapeRequest'
+components:
+  schemas:
+    PostScrapeRequest:
+      title: PostScrapeRequest
+      type: object
+      x-examples:
+        twitter:
+          url: 'https://twitter.com/mozukun43/status/1369660632409153537'
+        pixiv:
+          url: 'https://www.pixiv.net/artworks/87348005'
+        danbooru:
+          url: 'https://danbooru.donmai.us/posts/4359777'
+        nicoseiga:
+          url: 'https://seiga.nicovideo.jp/seiga/im10677929'
+        booth:
+          url: 'https://booth.pm/ja/items/2500039'
+        booth2:
+          url: 'https://picupdoll.booth.pm/items/2500039'
+      properties:
+        url:
+          type: string
+          description: スクレイピングするURL
+          example: 'https://twitter.com/mozukun43/status/1369660632409153537'
+          format: uri-reference
+          minLength: 1
+          maxLength: 500
+      required:
+        - url
+    PostScrapeResponse:
+      title: PostScrapeResponse
+      type: object
+      x-examples:
+        success-twitter:
+          result:
+            illust:
+              type: twitter
+              id: 1369660632409153500
+              title: 不機嫌チノちゃん
+              caption: 不機嫌チノちゃん
+              imgs:
+                - width: 965
+                  height: 1160
+                  large_src: 'https://pbs.twimg.com/media/EwIDEmRXIAEHEju?format=jpg&name=orig'
+                  thumb_src: 'https://pbs.twimg.com/media/EwIDEmRXIAEHEju?format=jpg&name=thumb'
+              tags:
+                - ごちうさ
+              source: 'https://twitter.com/mozukun43/status/1369660632409153537'
+              artist:
+                name: もくず
+                id: mozukun43
+                source: 'https://twitter.com/mozukun43'
+              R18: true
+            extra:
+              twitter_user:
+                id: 0
+                screen_name: mozukun43
+                name: もくず
+                description: 'ジャンル雑多(ごちうさ多め)。本業も趣味も絵を描いて生きています。アルバカレーに生かされてます。旅客機が好きです。女の子と食べ物を描くことが多いです。だいたい健全。返信はのんびり 2/14〜体調不良でちょっと更新頻度低めです fanbox▷http://mozukun43.fanbox.cc'
+                profile_image: 'https://pbs.twimg.com/profile_images/1314875319791177728/HZtotQN-_400x400.jpg'
+                banner_image: 'https://pbs.twimg.com/profile_banners/1018545218776207361/1603160166/1500x500'
+        success-pixiv:
+          result:
+            illust:
+              type: pixiv
+              id: 87348005
+              title: "チノ「もぅ\U0001F495・・・見ないでください///・・」"
+              caption: ''
+              imgs:
+                - width: 900
+                  height: 1432
+                  large_src: 'https://i.pximg.net/img-original/img/2021/01/28/00/02/31/87348005_p0.jpg'
+                  thumb_src: 'https://api.gochiusa.team/temp/hoge.jpg'
+              tags:
+                - 香風智乃
+                - パンチラ
+                - 風チラ
+                - セーラー服
+              source: 'https://www.pixiv.net/artworks/87348005'
+              artist:
+                name: くまふり
+                id: '62583422'
+                source: 'https://www.pixiv.net/users/62583422'
+              R18: false
+            extra:
+              pixiv_user:
+                id: 62583422
+                name: くまふり
+                description: えっちな絵を中心に投稿していきます
+                profile_image: 'https://i.pximg.net/user-profile/img/2020/12/12/22/23/41/19820326_fb09523b351d514c7ec4e7ae819e5502_170.jpg'
+                banner_image: ''
+        success-danbooru:
+          result:
+            illust:
+              type: danbooru
+              id: 4359777
+              title: YESチョコくわえちゃうチノちゃん
+              caption: 誰かさんに言われるがまま咥えてみたけど、意味分かってないチノちゃんのらくがき
+              imgs:
+                - width: 599
+                  height: 687
+                  large_src: 'https://danbooru.donmai.us/data/__kafuu_chino_gochuumon_wa_usagi_desu_ka_drawn_by_araki495__c12cdf2a0cbec190e15b64620caaffa6.png?download=1'
+                  thumb_src: 'https://cdn.donmai.us/preview/c1/2c/c12cdf2a0cbec190e15b64620caaffa6.jpg'
+              tags:
+                - 1girl
+                - '??'
+                - araki495
+                - bangs
+                - blue_bow
+                - blue_eyes
+                - blue_hair
+                - blue_vest
+                - blush
+                - bow
+                - candy
+                - chocolate
+                - chocolate_heart
+                - closed_mouth
+                - collared_shirt
+                - commentary_request
+                - dress_shirt
+                - eyebrows_visible_through_hair
+                - food
+                - food_in_mouth
+                - gochuumon_wa_usagi_desu_ka?
+                - hair_between_eyes
+                - hair_ornament
+                - hands_up
+                - heart
+                - holding
+                - holding_food
+                - kafuu_chino
+                - long_hair
+                - looking_at_viewer
+                - puffy_short_sleeves
+                - puffy_sleeves
+                - rabbit_house_uniform
+                - shirt
+                - short_sleeves
+                - solo
+                - translated
+                - uniform
+                - upper_body
+                - vest
+                - waitress
+                - white_shirt
+                - x_hair_ornament
+                - 'yes'
+              source: 'https://danbooru.donmai.us/posts/4359777'
+              artist:
+                name: araki495
+                id: araki495
+                source: 'https://danbooru.donmai.us/posts?tags=araki495'
+              R18: false
+            extra:
+              danbooru_user:
+                id: 430030
+                name: Unbreakable
+        success-nicoseiga:
+          result:
+            illust:
+              type: nicoseiga
+              id: 10677929
+              title: ナースチノちゃん
+              caption: ''
+              imgs:
+                - width: 1750
+                  height: 1684
+                  large_src: 'https://lohas.nicoseiga.jp/priv/a9db9d0eb330004b69875ed94dcc3db96fadb6a0/1615764084/10677929'
+                  thumb_src: 'https://lohas.nicoseiga.jp//thumb/10677929uz?1610798673'
+              tags:
+                - アニメ
+                - ご注文はうさぎですか?
+                - 香風智乃
+              source: 'https://seiga.nicovideo.jp/seiga/im10677929'
+              artist:
+                name: Azel司令官
+                id: '12038745'
+                source: 'https://seiga.nicovideo.jp/user/illust/12038745'
+              R18: false
+            extra:
+              nicoseiga_user:
+                id: 12038745
+                name: Azel司令官
+                profile_image: 'https://secure-dcdn.cdn.nimg.jp/nicoaccount/usericon/1203/12038745.jpg?1572444258'
+        success-booth:
+          result:
+            illust:
+              type: booth
+              id: 2500039
+              title: 'Pic Up Doll 33 Level:★★★★☆'
+              caption: |-
+                Pic Up Dollはペーパークラフト組立キットです 、差し込み式で設計、接着剤などは使用していません。お部屋の机や会社のデスクにちょこんと置くのも かわいいです、カメラやスマートフォンで撮影して楽しんでいただければと思います。また、大切な人へ の贈り物としてもオススメしています。サイズが小さいためパーツが小さくて、小さな子ども向けではな いようです。
+
+                Level:★☆☆☆☆
+                初級者にとって取り組みやすいグレードで、パーツも少なめです。
+
+                Level:★★☆☆☆
+                形の似ている部品や小さな部品が含まれているので注意してください。
+
+                Level:★★★☆☆
+                組み立てには時間を要するかもしれません。
+
+                Level:★★★★☆
+                細かさもパーツ数もハ イレベル、組み立ての難易度は5つ星に近いです。
+
+                Level:★★★★★
+                組み立ては非常に難しく、お手入れと忍耐が必要です。
+
+                製作の所要時間は個人差があります、ゆっくりと丁寧に楽しみながら作って ください。工具の使い方やコツを知っておくだけで、Pic Up Dollの組み立てはぐっと楽になります。
+
+                ※ 二次創作の元になっているキャラクターデザインや設定などの著作権は、原作者・版権元にあります。
+              imgs:
+                - width: 3001
+                  height: 3000
+                  large_src: 'https://booth.pximg.net/5e7d554d-3111-4e62-9caa-5a2985236192/i/2500039/dbb72dbe-3f16-4086-a354-94bfd2462dee.jpg'
+                  thumb_src: 'https://booth.pximg.net/5e7d554d-3111-4e62-9caa-5a2985236192/i/2500039/dbb72dbe-3f16-4086-a354-94bfd2462dee_base_resized.jpg'
+                - width: 1080
+                  height: 1080
+                  large_src: 'https://booth.pximg.net/5e7d554d-3111-4e62-9caa-5a2985236192/i/2500039/13d31dc9-d7eb-4a42-9d92-5d7b16652f34.jpg'
+                  thumb_src: 'https://booth.pximg.net/5e7d554d-3111-4e62-9caa-5a2985236192/i/2500039/13d31dc9-d7eb-4a42-9d92-5d7b16652f34_base_resized.jpg'
+                - width: 1080
+                  height: 1080
+                  large_src: 'https://booth.pximg.net/5e7d554d-3111-4e62-9caa-5a2985236192/i/2500039/ab6ae45f-ced8-4fb5-bc74-4d8d88284823.jpg'
+                  thumb_src: 'https://booth.pximg.net/5e7d554d-3111-4e62-9caa-5a2985236192/i/2500039/ab6ae45f-ced8-4fb5-bc74-4d8d88284823_base_resized.jpg'
+                - width: 1080
+                  height: 1080
+                  large_src: 'https://booth.pximg.net/5e7d554d-3111-4e62-9caa-5a2985236192/i/2500039/e0837269-f593-4d24-b6f7-353da119e581.jpg'
+                  thumb_src: 'https://booth.pximg.net/5e7d554d-3111-4e62-9caa-5a2985236192/i/2500039/e0837269-f593-4d24-b6f7-353da119e581_base_resized.jpg'
+                - width: 1080
+                  height: 1080
+                  large_src: 'https://booth.pximg.net/5e7d554d-3111-4e62-9caa-5a2985236192/i/2500039/94526010-c5d2-4ede-98d8-8abeed9e0165.jpg'
+                  thumb_src: 'https://booth.pximg.net/5e7d554d-3111-4e62-9caa-5a2985236192/i/2500039/94526010-c5d2-4ede-98d8-8abeed9e0165_base_resized.jpg'
+                - width: 1080
+                  height: 1080
+                  large_src: 'https://booth.pximg.net/5e7d554d-3111-4e62-9caa-5a2985236192/i/2500039/abfafead-b6ad-4947-9d85-31b3894340d9.jpg'
+                  thumb_src: 'https://booth.pximg.net/5e7d554d-3111-4e62-9caa-5a2985236192/i/2500039/abfafead-b6ad-4947-9d85-31b3894340d9_base_resized.jpg'
+                - width: 1080
+                  height: 1080
+                  large_src: 'https://booth.pximg.net/5e7d554d-3111-4e62-9caa-5a2985236192/i/2500039/fe2eaa2a-3da9-49a9-8230-a75e67650a67.jpg'
+                  thumb_src: 'https://booth.pximg.net/5e7d554d-3111-4e62-9caa-5a2985236192/i/2500039/fe2eaa2a-3da9-49a9-8230-a75e67650a67_base_resized.jpg'
+                - width: 1080
+                  height: 1080
+                  large_src: 'https://booth.pximg.net/5e7d554d-3111-4e62-9caa-5a2985236192/i/2500039/dcd8f43b-77ee-475f-a7e0-46d1c8364aff.jpg'
+                  thumb_src: 'https://booth.pximg.net/5e7d554d-3111-4e62-9caa-5a2985236192/i/2500039/dcd8f43b-77ee-475f-a7e0-46d1c8364aff_base_resized.jpg'
+                - width: 1080
+                  height: 1080
+                  large_src: 'https://booth.pximg.net/5e7d554d-3111-4e62-9caa-5a2985236192/i/2500039/18217e23-0ea8-43d0-8b5a-01783143d3d0.jpg'
+                  thumb_src: 'https://booth.pximg.net/5e7d554d-3111-4e62-9caa-5a2985236192/i/2500039/18217e23-0ea8-43d0-8b5a-01783143d3d0_base_resized.jpg'
+                - width: 1080
+                  height: 1080
+                  large_src: 'https://booth.pximg.net/5e7d554d-3111-4e62-9caa-5a2985236192/i/2500039/20407936-3496-4db9-b693-bde929fc35c8.jpg'
+                  thumb_src: 'https://booth.pximg.net/5e7d554d-3111-4e62-9caa-5a2985236192/i/2500039/20407936-3496-4db9-b693-bde929fc35c8_base_resized.jpg'
+                - width: 1080
+                  height: 1080
+                  large_src: 'https://booth.pximg.net/5e7d554d-3111-4e62-9caa-5a2985236192/i/2500039/2a51cd57-c485-42c0-b22a-76a5dc3e5ce0.jpg'
+                  thumb_src: 'https://booth.pximg.net/5e7d554d-3111-4e62-9caa-5a2985236192/i/2500039/2a51cd57-c485-42c0-b22a-76a5dc3e5ce0_base_resized.jpg'
+                - width: 1080
+                  height: 1080
+                  large_src: 'https://booth.pximg.net/5e7d554d-3111-4e62-9caa-5a2985236192/i/2500039/3f13b558-1037-47f7-88fe-b70004437004.jpg'
+                  thumb_src: 'https://booth.pximg.net/5e7d554d-3111-4e62-9caa-5a2985236192/i/2500039/3f13b558-1037-47f7-88fe-b70004437004_base_resized.jpg'
+                - width: 1080
+                  height: 1080
+                  large_src: 'https://booth.pximg.net/5e7d554d-3111-4e62-9caa-5a2985236192/i/2500039/aa66279a-f9e6-4664-b896-d944ab719ab6.jpg'
+                  thumb_src: 'https://booth.pximg.net/5e7d554d-3111-4e62-9caa-5a2985236192/i/2500039/aa66279a-f9e6-4664-b896-d944ab719ab6_base_resized.jpg'
+                - width: 1080
+                  height: 1080
+                  large_src: 'https://booth.pximg.net/5e7d554d-3111-4e62-9caa-5a2985236192/i/2500039/e4d59aea-150e-4a87-be1d-dd08b14d3fed.jpg'
+                  thumb_src: 'https://booth.pximg.net/5e7d554d-3111-4e62-9caa-5a2985236192/i/2500039/e4d59aea-150e-4a87-be1d-dd08b14d3fed_base_resized.jpg'
+                - width: 1080
+                  height: 1080
+                  large_src: 'https://booth.pximg.net/5e7d554d-3111-4e62-9caa-5a2985236192/i/2500039/598236b1-01d1-4b4f-8267-f036377b16d2.jpg'
+                  thumb_src: 'https://booth.pximg.net/5e7d554d-3111-4e62-9caa-5a2985236192/i/2500039/598236b1-01d1-4b4f-8267-f036377b16d2_base_resized.jpg'
+                - width: 1080
+                  height: 1080
+                  large_src: 'https://booth.pximg.net/5e7d554d-3111-4e62-9caa-5a2985236192/i/2500039/4f4e31bb-3987-4316-b296-c606b4ba63fe.jpg'
+                  thumb_src: 'https://booth.pximg.net/5e7d554d-3111-4e62-9caa-5a2985236192/i/2500039/4f4e31bb-3987-4316-b296-c606b4ba63fe_base_resized.jpg'
+                - width: 1080
+                  height: 1080
+                  large_src: 'https://booth.pximg.net/5e7d554d-3111-4e62-9caa-5a2985236192/i/2500039/cc054f57-a0e6-439a-8040-68592e17145d.jpg'
+                  thumb_src: 'https://booth.pximg.net/5e7d554d-3111-4e62-9caa-5a2985236192/i/2500039/cc054f57-a0e6-439a-8040-68592e17145d_base_resized.jpg'
+                - width: 1080
+                  height: 1080
+                  large_src: 'https://booth.pximg.net/5e7d554d-3111-4e62-9caa-5a2985236192/i/2500039/c2c5259e-00d2-4b24-8e2a-d0f38cff58a0.jpg'
+                  thumb_src: 'https://booth.pximg.net/5e7d554d-3111-4e62-9caa-5a2985236192/i/2500039/c2c5259e-00d2-4b24-8e2a-d0f38cff58a0_base_resized.jpg'
+              tags:
+                - ペーパークラフト
+                - 香風智乃
+                - ティッピー
+                - おりがみ
+                - ご注文はうさぎですか
+                - ペーパートイ
+              source: 'https://picupdoll.booth.pm/items/2500039'
+              artist:
+                name: Pic Up Doll
+                id: picupdoll
+                source: 'https://picupdoll.booth.pm/'
+              R18: true
+            extra:
+              booth_shop:
+                name: Pic Up Doll
+                link: 'https://picupdoll.booth.pm'
+                sns:
+                  - 'https://www.pixiv.net/users/55242393'
+                  - 'https://twitter.com/picupdoll/'
+                  - 'https://www.instagram.com/PicUpDoll/'
+                  - 'https://www.facebook.com/PicUpDoll'
+      properties:
+        result:
+          $ref: '#/components/schemas/ScrapeResultStruct'
+      required:
+        - result
+    GeneralMessageResponse:
+      title: GeneralMessageResponse
+      type: object
+      properties:
+        message:
+          type: string
+          description: 応答メッセージ(何が間違っているかの詳細)
+          minLength: 1
+      required:
+        - message
+      x-examples:
+        not-found:
+          message: Specified content was not found.
+        no-permission:
+          message: You don't have enough permission to do it.
+        bad-request:
+          message: Your request body is wrong.
+        locked:
+          message: Specified content is referenced from other content.
+    ScrapeResultStruct:
+      title: ScrapeResultStruct
+      type: object
+      description: スクレイピング結果
+      x-examples:
+        twitter:
+          illust:
+            type: twitter
+            id: 1368965591470547000
+            title: 'ラ〇ッドハウスの店員さん '
+            caption: 'ラ〇ッドハウスの店員さん '
+            imgs:
+              - width: 1159
+                height: 1577
+                large_src: 'https://pbs.twimg.com/media/Ev-K11BVoAktP3d.jpg?format=jpg&name=orig'
+                thumb_src: 'https://pbs.twimg.com/media/Ev-K11BVoAktP3d.jpg?format=jpg&name=thumb'
+            tags: []
+            source: 'https://twitter.com/PURA1192/status/1368965591470546949'
+            artist: きゅーぷら
+            R18: false
+          extra:
+            twitter_user:
+              id: 1176867370238800000
+              screen_name: PURA1192
+              name: きゅーぷら
+              description: |-
+                オメガウェポン
+
+                https://t.co/sffwGeETPk
+              profile_image: 'https://pbs.twimg.com/profile_images/1362206358922092549/uWD9eZId_normal.jpg'
+              banner_image: 'https://pbs.twimg.com/profile_banners/1176867370238799872/1611142275'
+      properties:
+        illust:
+          type: object
+          description: 投稿に必須となるデータ
+          properties:
+            type:
+              type: string
+              description: スクレイプ元のサイト名(英語で短く表現)
+            id:
+              description: 外部サイト内でのイラストID
+              type: integer
+            title:
+              type: string
+              description: 作品タイトル
+            caption:
+              type: string
+              description: 作品説明文
+            imgs:
+              type: array
+              items:
+                type: object
+                properties:
+                  width:
+                    description: 画像の横幅(取得できる場合)
+                    type: integer
+                  height:
+                    type: integer
+                    description: 縦幅(取得できる場合)
+                  large_src:
+                    type: string
+                    description: 実際に保存される画像へのURL(取得できる場合)
+                    format: uri-reference
+                    example: 'https://example.com/hoge'
+                  thumb_src:
+                    type: string
+                    description: サムネイル画像へのURL
+                required:
+                  - thumb_src
+            tags:
+              type: array
+              description: 取得したサイト内で指定されていたタグ
+              items:
+                type: string
+            source:
+              type: string
+              description: 取得したURLの正規URL
+            artist:
+              description: 絵師の名前
+              type: object
+              required:
+                - source
+                - name
+                - id
+              properties:
+                source:
+                  type: string
+                  description: 絵師ページへの直URL
+                name:
+                  type: string
+                  description: 絵師の名前
+                id:
+                  type: string
+                  description: 絵師のID
+            R18:
+              type: boolean
+              description: アダルトコンテンツか否か
+          required:
+            - type
+            - id
+            - title
+            - caption
+            - imgs
+            - tags
+            - source
+            - artist
+            - R18
+        extra:
+          type: object
+          description: 投稿に必須ではない追加データ(他で再利用できるように)
+          properties:
+            booth_shop:
+              type: object
+              description: Boothのショップ型
+              properties:
+                name:
+                  type: string
+                link:
+                  type: string
+            twitter_user:
+              type: object
+              description: Twitterのユーザー型
+              properties:
+                id:
+                  type: integer
+                screen_name:
+                  type: string
+                name:
+                  type: string
+                description:
+                  type: string
+                profile_image:
+                  type: string
+                banner_image:
+                  type: string
+            danbooru_user:
+              type: object
+              description: Danbooruのユーザー型
+              properties:
+                id:
+                  type: integer
+                  description: ユーザーID
+                name:
+                  type: string
+                  description: ユーザー名
+            pixiv_user:
+              type: object
+              description: Pixivのユーザー型
+              properties:
+                id:
+                  type: integer
+                  description: ユーザーID(整数値)
+                name:
+                  type: string
+                  description: ユーザー名
+                description:
+                  type: string
+                  description: 説明文
+                profile_image:
+                  type: string
+                  description: アバター画像
+                banner_image:
+                  type: string
+                  description: バナー画像
+            nicoseiga_user:
+              type: object
+              description: ニコニコ静画のユーザー型
+              properties:
+                id:
+                  type: integer
+                  description: ユーザーID
+                name:
+                  type: string
+                  description: ユーザー名
+                profile_image:
+                  type: string
+                  description: プロフィール画像
+  parameters:
+    SearchQuerySort:
+      name: sort
+      in: query
+      required: false
+      schema:
+        type: string
+        enum:
+          - l
+          - d
+        example: d
+        default: d
+      description: 'ソート方法 l:いいね数順 d:投稿日順'
+    SearchQueryOrder:
+      name: order
+      in: query
+      required: false
+      schema:
+        type: string
+        enum:
+          - d
+          - a
+        default: d
+        example: d
+        minLength: 1
+        maxLength: 1
+      description: 'ソート方向 d:降順(大→小) a:昇順(小→大)'
+    SearchQueryPage:
+      name: page
+      in: query
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+      description: 'ページ番号 (NOTE: 1ページ辺りの応答は20件)'
+    SearchQueryMylistAllow:
+      name: with_mylisted
+      in: query
+      required: false
+      schema:
+        type: integer
+        format: int32
+        default: 1
+        enum:
+          - 1
+          - 0
+        example: 1
+        minimum: 0
+        maximum: 1
+      description: マイリスト追加済みかを取得する0/1 (デフォルト1)
+    SearchQueryMylistDeny:
+      name: with_mylisted
+      in: query
+      schema:
+        type: integer
+        enum:
+          - 0
+          - 1
+        example: 0
+        default: 0
+        minimum: 0
+        maximum: 1
+      description: マイリスト追加済みかを取得する0/1 (デフォルト0)
+    SearchQueryPerPage:
+      name: per_page
+      in: query
+      required: false
+      schema:
+        type: integer
+        default: 20
+        enum:
+          - 20
+          - 40
+          - 60
+          - 80
+          - 100
+        example: 20
+        minimum: 20
+        maximum: 100
+      description: 1ページ辺りの要素数
+    SearchQuerySortCatalog:
+      in: query
+      schema:
+        type: string
+        default: d
+        enum:
+          - c
+          - d
+          - l
+          - 'n'
+        example: d
+      description: 'ソート方法 c:ヒット数 d:最終更新 l:いいね数 n:名前'
+      name: sort
+  securitySchemes:
+    Authorization:
+      type: http
+      scheme: bearer
+tags:
+  - name: scrape
+security:
+  - Authorization: []
