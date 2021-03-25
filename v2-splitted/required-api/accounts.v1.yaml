@@ -718,8 +718,6 @@ paths:
         description: 対象のアカウントID
     get:
       summary: Get user mylists
-      tags:
-        - accounts
       responses:
         '200':
           description: OK
@@ -741,6 +739,8 @@ paths:
                 $ref: '#/components/schemas/GeneralMessageResponse'
       operationId: getUserMylists
       description: 指定したユーザーのマイリスト一覧を取得します
+      tags:
+        - mylist
     post:
       summary: Create user mylist
       operationId: createMylist
@@ -793,8 +793,6 @@ paths:
         description: 対象のアカウントID
     get:
       summary: Get mute list
-      tags:
-        - accounts
       responses:
         '200':
           description: OK
@@ -816,6 +814,8 @@ paths:
                 $ref: '#/components/schemas/GeneralMessageResponse'
       operationId: getMutes
       description: 指定したアカウントのユーザーのミュート一覧を取得します
+      tags:
+        - mutes
     post:
       summary: Add mute
       operationId: addMute
@@ -868,8 +868,6 @@ paths:
         description: 対象のミュートID
     get:
       summary: Get mute
-      tags:
-        - accounts
       responses:
         '200':
           description: OK
@@ -891,6 +889,8 @@ paths:
                 $ref: '#/components/schemas/GeneralMessageResponse'
       operationId: getMute
       description: 指定したミュート情報を取得します
+      tags:
+        - mutes
     delete:
       summary: Delete mute
       operationId: deleteMute
