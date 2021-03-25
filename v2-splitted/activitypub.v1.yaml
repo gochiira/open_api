@@ -6,7 +6,9 @@ info:
     name: Omado
     url: 'https://twitter.com/shallow_omado'
     email: dsgamer777@gmail.com
-  description: ActivityPub関連API (Optional)
+  description: |-
+    ActivityPub関連API
+    (Optional)
   license:
     name: GPLv3
     url: 'https://www.gnu.org/licenses/gpl-3.0.ja.html'
