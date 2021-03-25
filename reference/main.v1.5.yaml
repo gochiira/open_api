@@ -6,7 +6,6 @@ info:
     name: Omado
     url: 'https://twitter.com/shallow_omado'
     email: dsgamer777@gmail.com
-  termsOfService: 'https://illust.gochiusa.team/terms'
   description: |-
     ごちイラ内でメインに使用されているAPIの定義を書き直したもの。
     未使用、あくまでメモ扱い。

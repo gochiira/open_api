@@ -6,7 +6,6 @@ info:
     name: Omado
     url: 'https://twitter.com/shallow_omado'
     email: dsgamer777@gmail.com
-  termsOfService: 'https://github.com/UsagiBooru'
   description: |-
     ごちイラの次バージョンで実装予定のAPI。
     なるべく仕様を変えないよう気をつけつつ、Structの統一を図った。
@@ -16,6 +15,8 @@ info:
 servers:
   - url: 'https://api.gochiusa.team'
     description: Prod
+  - url: 'https://api-next.gochiusa.team'
+    description: Staging
   - url: 'http://127.0.0.1:8080'
     description: Dev
 paths:

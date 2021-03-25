@@ -8,7 +8,6 @@
       "url": "https://twitter.com/shallow_omado",
       "email": "dsgamer777@gmail.com"
     },
-    "termsOfService": "https://illust.gochiusa.team/terms",
     "description": "ごちイラ内でメインに使用されているAPIのドキュメント。\n完全にこれ通りにはなっていない。\n現在Bot、ガチャ、フロントエンド の 3箇所で使用中。",
     "license": {
       "name": "GPLv3",
