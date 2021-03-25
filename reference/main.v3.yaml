@@ -135,12 +135,6 @@ paths:
         (本人または管理者のみがリクエストできます)
       tags:
         - accounts
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/DeleteAccountRequest'
-        description: 危険な操作のため、パスワードが必要になります
       responses:
         '204':
           description: No Content
@@ -161,6 +155,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GeneralMessageResponse'
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: password
+          description: 削除確認用パスワード
   '/accounts/{accountID}/upload_history':
     parameters:
       - schema:
@@ -572,6 +572,10 @@ paths:
                 $ref: '#/components/schemas/NewsStruct'
         '400':
           description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
         '403':
           description: Forbidden
           content:
@@ -641,6 +645,10 @@ paths:
                 $ref: '#/components/schemas/MylistStruct'
         '400':
           description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
         '403':
           description: Forbidden
           content:
@@ -1498,51 +1506,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/GeneralMessageResponse'
       description: |-
-        指定したイラストのタグ一覧に、与えられたIDのタグを追加します
+        指定したイラストのタグ一覧に、与えられたIDのタグを設定します
+        削除も同様にこのエンドポイントを用います
         (イラスト本体の編集時に付けられたタグ名から
         自動的にタグIDを引き出し追加/削除を行う処理が追加されたため
         こちらのエンドポイントを使用する必要はありません)
-      tags:
-        - arts
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PutArtTagsRequest'
-    delete:
-      summary: Delete art tag
-      operationId: deleteArtTags
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GetArtTagsResponse'
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GeneralMessageResponse'
-        '403':
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GeneralMessageResponse'
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GeneralMessageResponse'
-      description: |-
-        指定したイラストのタグ一覧から、与えられたIDのタグを削除します
-        (イラスト本体の編集時に付けられたタグ名から
-        自動的にタグIDを引き出し追加/削除を行う処理が追加されたため
-        こちらのエンドポイントを使用する必要はありません)
-      deprecated: true
       tags:
         - arts
       requestBody:
@@ -1992,6 +1960,10 @@ paths:
                 $ref: '#/components/schemas/PostMylistFindsResponse'
         '400':
           description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
       description: |-
         指定したイラスト(単数/複数)がマイリストに含まれているかを判定します
         検索リクエストでwith_mylisted=0としている場合、必要となる可能性があります
@@ -2015,8 +1987,16 @@ paths:
                 $ref: '#/components/schemas/NewsStruct'
         '400':
           description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
         '403':
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
       description: |-
         ニュースを追加します
         (管理者のみリクエストできます)
@@ -2061,8 +2041,16 @@ paths:
                 $ref: '#/components/schemas/GetNotifyClientsResponse'
         '403':
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
         '404':
           description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
       parameters: []
     parameters:
       - schema:
@@ -2084,8 +2072,16 @@ paths:
                 $ref: '#/components/schemas/NotifyClientStruct'
         '403':
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
         '404':
           description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
       description: |-
         クライアント側で作成したパブリック/プライベートVAPIDキーを
         userID、クライアント名、通知レベルと共にサーバーのデータベースに登録し
@@ -2143,8 +2139,16 @@ paths:
                 $ref: '#/components/schemas/GetNotifyConditionsResponse'
         '403':
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
         '404':
           description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
       description: 通知条件一覧を取得します
       tags:
         - notify
@@ -2175,10 +2179,22 @@ paths:
                 $ref: '#/components/schemas/NotifyClientStruct'
         '400':
           description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
         '403':
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
         '404':
           description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
       description: '"ユーザー発行の"LINENotifyのトークンとデバイス名をPOSTして、通知クライアントの一種として保存する。(何個でも設定できる)'
       tags:
         - notify
@@ -2339,6 +2355,10 @@ paths:
                 $ref: '#/components/schemas/NotifyConditionStruct'
         '400':
           description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
         '403':
           description: Forbidden
           content:
@@ -2534,6 +2554,16 @@ paths:
                 $ref: '#/components/schemas/GeneralMessageResponse'
         '403':
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
   '/report/tags/{tagID}':
     parameters:
       - schema:
@@ -2570,6 +2600,16 @@ paths:
                 $ref: '#/components/schemas/GeneralMessageResponse'
         '403':
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
   '/report/user/{accountID}':
     parameters:
       - schema:
@@ -2606,6 +2646,16 @@ paths:
                 $ref: '#/components/schemas/GeneralMessageResponse'
         '403':
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
   '/report/wiki/{articleID}':
     parameters:
       - schema:
@@ -2633,6 +2683,16 @@ paths:
                 $ref: '#/components/schemas/GeneralMessageResponse'
         '403':
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
       operationId: reportArticle
       description: |-
         指定した記事を運営に通報します
@@ -2706,10 +2766,22 @@ paths:
                 $ref: '#/components/schemas/PostUploadResponse'
         '400':
           description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
         '403':
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
         '429':
           description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
       description: |-
         画像や動画を投稿するエンドポイントです
         むやみに利用するとアカウントが停止される可能性があります
@@ -2721,7 +2793,7 @@ paths:
             schema:
               $ref: '#/components/schemas/PostUploadRequest'
   /search/image/ascii2d:
-    get:
+    post:
       summary: Search by image at ascii2d
       tags:
         - search
@@ -2935,6 +3007,10 @@ paths:
                 $ref: '#/components/schemas/GetFindTagsResponse'
         '400':
           description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
       operationId: findTags
       parameters:
         - schema:
@@ -3083,8 +3159,16 @@ paths:
                 $ref: '#/components/schemas/WikiArticleStruct'
         '400':
           description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
         '403':
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
       description: Wikiの記事を作成します
       tags:
         - wiki
@@ -3207,6 +3291,10 @@ paths:
       responses:
         '204':
           description: No Content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
         '404':
           description: Not Found
           content:
@@ -3240,6 +3328,10 @@ paths:
                 $ref: '#/components/schemas/GetActivityPubGeneralResponse'
         '404':
           description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
       operationId: getActivityPubUploaderOutbox
       description: 他のサーバーがこのユーザーのメッセージを受け取るときにGETされる
     parameters:
@@ -3263,6 +3355,10 @@ paths:
                 $ref: '#/components/schemas/GetActivityPubGeneralResponse'
         '404':
           description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
       operationId: getActivityPubArtistOutbox
       description: 他のサーバーがこのユーザーのメッセージを受け取るときにGETされる
     parameters:
@@ -3357,6 +3453,10 @@ paths:
                 $ref: '#/components/schemas/ActivityPubActorStruct'
         '404':
           description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
       operationId: getActivityPubArtistActor
       description: |-
         ActivityPubのユーザー情報(絵師)を返す
@@ -3382,6 +3482,10 @@ paths:
                 $ref: '#/components/schemas/ActivityPubActorStruct'
         '404':
           description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
       operationId: getActivityPubUploaderActor
       description: |-
         ActivityPubのユーザー情報(投稿者)を返す
@@ -3515,6 +3619,10 @@ paths:
                 $ref: '#/components/schemas/GeneralMessageResponse'
         '429':
           description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
       description: マイリストを作成します
       tags:
         - mylist
@@ -3568,10 +3676,22 @@ paths:
                 $ref: '#/components/schemas/MuteStruct'
         '400':
           description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
         '403':
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
         '429':
           description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
       tags:
         - accounts
       description: 指定したアカウントのユーザーのミュートを追加します
@@ -4438,20 +4558,6 @@ components:
               type: boolean
               description: マイリストを自動Pinningするか
               default: false
-    DeleteAccountRequest:
-      title: DeleteAccountRequest
-      type: object
-      properties:
-        password:
-          type: string
-          format: password
-          description: 削除したいアカウントのパスワード
-      required:
-        - password
-      description: アカウントの削除に使うリクエスト
-      x-examples:
-        example:
-          password: kafuuch1n0
     ArtStruct:
       description: イラスト編集リクエスト
       type: object
