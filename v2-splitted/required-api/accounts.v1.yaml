@@ -844,14 +844,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GeneralMessageResponse'
-      tags:
-        - accounts
       description: 指定したアカウントのユーザーのミュートを追加します
       requestBody:
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/MuteStruct'
+      tags:
+        - mutes
   '/accounts/{accountID}/mutes/{muteID}':
     parameters:
       - schema:
@@ -915,7 +915,7 @@ paths:
                 $ref: '#/components/schemas/GeneralMessageResponse'
       description: 指定したミュート情報を削除します
       tags:
-        - accounts
+        - mutes
 components:
   schemas:
     AccountStruct:
@@ -2039,6 +2039,7 @@ components:
       scheme: bearer
 tags:
   - name: accounts
+  - name: mutes
   - name: mylist
   - name: notify
   - name: timeline
