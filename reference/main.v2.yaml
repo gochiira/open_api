@@ -4597,6 +4597,7 @@ components:
               name: お窓
           originUrl: 'https://www.pixiv.net/artworks/54265978'
           originService: Pixiv
+          originDatetime: '2015-12-27T07:29:00Z'
           nsfw: false
           status: public
           replaces: []
@@ -4654,7 +4655,7 @@ components:
           example: Ｃ８９の新刊表紙となっていますっ
         datetime:
           type: string
-          description: '登録日時(%Y-%m-%d %H:%M:%S)'
+          description: '登録日時(%Y-%m-%dY%H:%M:%SZ)'
           example: '2015-12-27T07:29:00Z'
           format: date-time
         page:
@@ -4717,6 +4718,11 @@ components:
           minLength: 1
           description: 出典サービス名
           example: Pixiv
+        originDatetime:
+          type: string
+          description: '出典投稿日時(%Y-%m-%dY%H:%M:%SZ)'
+          example: '2015-12-27T07:29:00Z'
+          format: date-time
         nsfw:
           type: boolean
           description: アダルトコンテンツかどうか
