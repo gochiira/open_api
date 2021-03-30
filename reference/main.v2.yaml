@@ -4349,6 +4349,7 @@ components:
           permission: 9
           password: kafuuch1n0
           oldPassword: h0t0c0c0a
+          mail: dsgamer777@gmail.com
           totpEnabled: false
           name: お窓
           description: 開発者さん
@@ -4384,6 +4385,7 @@ components:
           permission: 0
           password: h0t0c0c0a
           oldPassword: kafuuch1n0
+          mail: dsgamer777@gmail.com
           totpEnabled: false
           name: 香風智乃
           description: ラビットハウスの一人娘。クールな性格だがココアのことは嫌いじゃない…!? コーヒーに詳しいしっかり者。
@@ -4454,6 +4456,13 @@ components:
           format: password
           maxLength: 50
           minLength: 8
+        mail:
+          type: string
+          description: ユーザーのメールアドレス(連絡用)
+          format: email
+          example: dsgamer777@gmail.com
+          minLength: 1
+          maxLength: 150
         totpEnabled:
           type: boolean
           description: TOTPが有効かが入ります
