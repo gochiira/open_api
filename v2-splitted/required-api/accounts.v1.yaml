@@ -1035,6 +1035,13 @@ components:
           format: password
           maxLength: 50
           minLength: 8
+        mail:
+          type: string
+          description: ユーザーのメールアドレス(連絡用)
+          format: email
+          example: dsgamer777@gmail.com
+          minLength: 1
+          maxLength: 150
         totpEnabled:
           type: boolean
           description: TOTPが有効かが入ります
