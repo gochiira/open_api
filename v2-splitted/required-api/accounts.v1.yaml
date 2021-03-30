@@ -18,6 +18,32 @@ servers:
   - url: 'http://127.0.0.1:8080'
     description: Dev
 paths:
+  /accounts:
+    post:
+      summary: Create account
+      operationId: createAccount
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountStruct'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
+      tags:
+        - accounts
+      description: 新しいアカウントを作成します
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountStruct'
+      security: []
   '/accounts/{accountID}':
     parameters:
       - schema:
@@ -76,9 +102,9 @@ paths:
       parameters:
         - schema:
             type: string
-          in: query
-          description: 削除確認用パスワード
+          in: header
           name: password
+          description: 削除確認用パスワード
     patch:
       summary: Edit account info
       operationId: editAccount
@@ -930,6 +956,7 @@ components:
           permission: 9
           password: kafuuch1n0
           oldPassword: h0t0c0c0a
+          mail: dsgamer777@gmail.com
           totpEnabled: false
           name: お窓
           description: 開発者さん
@@ -965,6 +992,7 @@ components:
           permission: 0
           password: h0t0c0c0a
           oldPassword: kafuuch1n0
+          mail: dsgamer777@gmail.com
           totpEnabled: false
           name: 香風智乃
           description: ラビットハウスの一人娘。クールな性格だがココアのことは嫌いじゃない…!? コーヒーに詳しいしっかり者。
