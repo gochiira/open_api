@@ -1684,12 +1684,18 @@ components:
       x-examples:
         example:
           muteID: 1
+          accountID: 1
           targetID: 1
           targetType: tag
       properties:
         muteID:
           type: integer
           description: ミュートID
+          minimum: 1
+          example: 1
+        accountID:
+          type: integer
+          description: 作成者のアカウントID
           minimum: 1
           example: 1
         targetType:
