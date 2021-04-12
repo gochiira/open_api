@@ -5134,6 +5134,7 @@ components:
           example: 1
       required:
         - uploadID
+        - accountID
         - started
         - finished
         - status
