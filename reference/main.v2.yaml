@@ -46,6 +46,23 @@ paths:
             schema:
               $ref: '#/components/schemas/AccountStruct'
       security: []
+  /accounts/me:
+    get:
+      summary: Get user info (self)
+      tags:
+        - accounts
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountStruct'
+      operationId: getAccountMe
+      description: |-
+        自分自身にまつわる情報をすべて取得します
+        通常、ログイン時に一度だけ呼び出されます
+    parameters: []
   '/accounts/{accountID}':
     parameters:
       - schema:
@@ -218,23 +235,6 @@ paths:
       description: Bot等向けの長期間有効なアクセストークンを生成します
       tags:
         - token
-  /accounts/me:
-    get:
-      summary: Get user info (self)
-      tags:
-        - accounts
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/AccountStruct'
-      operationId: getAccountMe
-      description: |-
-        自分自身にまつわる情報をすべて取得します
-        通常、ログイン時に一度だけ呼び出されます
-    parameters: []
   /accounts/login/form:
     post:
       summary: Login with form
