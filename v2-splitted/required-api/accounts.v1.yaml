@@ -1268,6 +1268,7 @@ components:
         example:
           clients:
             - notifyClientID: 1
+              accountID: 1
               name: ChinoPhone
               type: webpush
               level: 5
@@ -1337,6 +1338,7 @@ components:
       x-examples:
         example:
           notifyClientID: 1
+          accountID: 1
           name: ChinoPhone
           type: webpush
           level: 5
@@ -1344,6 +1346,11 @@ components:
         notifyClientID:
           type: integer
           description: 通知クライアントID
+          minimum: 1
+          example: 1
+        accountID:
+          type: integer
+          description: 情報作成者のアカウントID
           minimum: 1
           example: 1
         name:
@@ -1380,6 +1387,7 @@ components:
       x-examples:
         example:
           notifyConditionID: 1
+          accountID: 1
           targetType: tag
           targetID: 1
           targetMethod: all
@@ -1388,6 +1396,11 @@ components:
         notifyConditionID:
           type: integer
           description: NotifyConditionID
+          minimum: 1
+          example: 1
+        accountID:
+          type: integer
+          description: 情報作成者のアカウントID
           minimum: 1
           example: 1
         targetType:
@@ -1439,6 +1452,7 @@ components:
             perPage: 20
           conditions:
             - notifyConditionID: 1
+              accountID: 1
               targetType: tag
               targetID: 1
               targetMethod: all
@@ -1661,6 +1675,7 @@ components:
         example:
           tags:
             - muteID: 1
+              accountID: 1
               targetType: tag
               targetID: 1
           artists: []
@@ -1684,12 +1699,18 @@ components:
       x-examples:
         example:
           muteID: 1
+          accountID: 1
           targetID: 1
           targetType: tag
       properties:
         muteID:
           type: integer
           description: ミュートID
+          minimum: 1
+          example: 1
+        accountID:
+          type: integer
+          description: 情報作成者のアカウントID
           minimum: 1
           example: 1
         targetType:
@@ -1801,6 +1822,7 @@ components:
       x-examples:
         example:
           uploadID: 12045
+          accountID: 1
           started: '2021-02-21 22:24:22'
           finished: '2021-02-21 22:24:27'
           status: 5
@@ -1810,6 +1832,11 @@ components:
           type: integer
           format: int32
           description: 通し投稿履歴番号(インデックス用)
+          minimum: 1
+          example: 1
+        accountID:
+          type: integer
+          description: 情報作成者のアカウントID
           minimum: 1
           example: 1
         started:
