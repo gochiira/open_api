@@ -5086,6 +5086,7 @@ components:
       x-examples:
         example:
           uploadID: 12045
+          accountID: 1
           started: '2021-02-21 22:24:22'
           finished: '2021-02-21 22:24:27'
           status: 5
@@ -5095,6 +5096,11 @@ components:
           type: integer
           format: int32
           description: 通し投稿履歴番号(インデックス用)
+          minimum: 1
+          example: 1
+        accountID:
+          type: integer
+          description: 情報作成者のアカウントID
           minimum: 1
           example: 1
         started:
@@ -5146,6 +5152,7 @@ components:
             perPage: 20
           contents:
             - uploadID: 1
+              accountID: 1
               started: '2021-02-21 22:24:22'
               finished: '2021-02-21 22:24:27'
               status: 5
