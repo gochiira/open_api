@@ -4413,7 +4413,7 @@ components:
             gatewayEnabled: false
             nodeEnabled: false
             pinEnabled: false
-      description: アカウントの取得/編集に使うリクエスト
+      description: アカウントの取得/編集に使う構造体
       properties:
         accountID:
           type: integer
@@ -4569,7 +4569,7 @@ components:
               description: マイリストを自動Pinningするか
               default: false
     ArtStruct:
-      description: イラスト編集リクエスト
+      description: イラストの作成/編集に使う構造体
       type: object
       title: ArtStruct
       x-examples:
@@ -5215,7 +5215,7 @@ components:
             - 'http://konebota.x0.com/PAGE/'
           count: 1
           lcount: 1204
-      description: ''
+      description: イラストの絵師情報構造体
       properties:
         artistID:
           type: integer
@@ -5495,6 +5495,7 @@ components:
               description: システムタグ
               items:
                 $ref: '#/components/schemas/TagStruct'
+      description: イラストに設定されているタグ一覧の応答構造体
     PutArtTagsRequest:
       title: PutArtTagsRequest
       type: object
@@ -5548,6 +5549,7 @@ components:
         - green
         - red
         - blue
+      description: イラストのいいね詳細情報構造体
     GetArtLikesResponse:
       title: GetArtLikesResponse
       type: object
@@ -5561,6 +5563,7 @@ components:
           default: 0
           example: 0
           minimum: 0
+      description: イラストに対するいいね数の応答構造体
     GetArtViewsResponse:
       title: GetArtViewsResponse
       type: object
@@ -5574,6 +5577,7 @@ components:
           description: 累計閲覧数
           example: 0
           default: 0
+      description: イラストの累計閲覧数の応答構造体
     GetArtCommentsResponse:
       title: GetArtCommentsResponse
       type: object
@@ -5594,8 +5598,9 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/CommentStruct'
+      description: イラストに対するコメント一覧が入るコメント構造体
     CommentStruct:
-      description: コメント型
+      description: コメント情報構造体(読み取り専用)
       type: object
       x-examples:
         example:
@@ -5632,7 +5637,7 @@ components:
         author:
           $ref: '#/components/schemas/LightAccountStruct'
     GetCatalogArtistResponse:
-      description: ''
+      description: イラストのいいね数の応答構造体
       type: object
       x-examples:
         example:
@@ -7404,7 +7409,9 @@ components:
         author:
           $ref: '#/components/schemas/LightAccountStruct'
     ActivityPubActorStruct:
-      description: 'https://argrath.github.io/activitypub/#actor-objects'
+      description: |-
+        ActivityPubのアクター(ユーザー)構造体(仮)
+        https://argrath.github.io/activitypub/#actor-objects
       type: object
       x-examples:
         example-1:
@@ -7482,7 +7489,7 @@ components:
         - summary
         - icon
     GetActivityPubGeneralResponse:
-      description: ''
+      description: ActivityPubのBoxを取得した際等に返される汎用構造体
       type: object
       properties:
         '@context':
@@ -7603,6 +7610,7 @@ components:
           message: Your request body is wrong.
         locked:
           message: Specified content is referenced from other content.
+      description: 共通の応答構造体(404/401/400等を返す際に使用)
     CommentEditStruct:
       title: CommentEditStruct
       type: object
@@ -7615,6 +7623,7 @@ components:
           description: メッセージ本文(これ以外は編集できない)
       required:
         - body
+      description: コメントの編集に使う構造体
     InviteStruct:
       title: InviteStruct
       type: object
