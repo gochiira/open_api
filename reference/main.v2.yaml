@@ -4932,7 +4932,7 @@ components:
           child: []
           count: 0
           lcount: 0
-      description: タグデータモデル
+      description: タグ情報の構造体
       properties:
         tagID:
           type: integer
@@ -5022,7 +5022,7 @@ components:
           description: タグの名称
           example: 香風智乃
     ReplaceStruct:
-      description: イラストを置き換えた情報のモデル(簡易型イラストモデル)
+      description: イラストを置き換えた情報構造体(簡易イラスト構造体)
       type: object
       x-examples:
         example:
@@ -5080,7 +5080,7 @@ components:
         - height
         - filesize
     UploadHistoryStruct:
-      description: アップロード履歴
+      description: 投稿履歴の応答構造体
       type: object
       title: UploadHistory
       x-examples:
@@ -5289,7 +5289,7 @@ components:
     PostReplaceArtRequest:
       title: PostReplaceArtRequest
       type: object
-      description: ''
+      description: イラストを置き換える場合の要求構造体
       properties:
         artID:
           type: integer
@@ -5302,7 +5302,7 @@ components:
         example:
           artID: 2
     PostReplaceArtSimulateResponse:
-      description: ''
+      description: イラストの置き換えを検証する場合の要求構造体
       type: object
       x-examples:
         example:
@@ -5516,6 +5516,7 @@ components:
             type: integer
       required:
         - tagID
+      description: イラストのタグ一覧をIDを用いて上書きする場合の要求構造体
     ArtDetailedLikesStruct:
       title: ArtDetailedLikesStruct
       type: object
@@ -5794,7 +5795,7 @@ components:
     UploaderStruct:
       title: UploaderStruct
       type: object
-      description: 投稿者ユーザー型
+      description: 投稿者情報の応答構造体
       x-examples:
         example:
           accountID: 1
@@ -5998,6 +5999,7 @@ components:
           description: 画像ファイル(binary)
       required:
         - file
+      description: 画像を用いて検索する場合の要求構造体
     PostSearchByImageResponse:
       title: PostSearchByImageResponse
       type: object
@@ -6041,8 +6043,9 @@ components:
       required:
         - hash
         - illusts
+      description: 画像を用いて検索した結果の応答構造体
     PostSearchByImageAtSauceNaoResponse:
-      description: ''
+      description: SauceNaoを用いて検索する場合の要求構造体
       type: object
       x-examples:
         example-1:
@@ -6361,6 +6364,7 @@ components:
             - 1
             - 2
             - 3
+      description: マイリストにイラストが含まれているかを検索する要求構造体
     PostMylistFindsResponse:
       title: PostMylistFindsResponse
       type: object
@@ -6376,6 +6380,7 @@ components:
           additionalProperties:
             type: string
             description: 指定されたイラストIDをキーとして、それぞれ存在するかのboolean
+      description: マイリストにイラストが含まれているかを検索した結果の応答構造体
     GetNotifyClientsResponse:
       title: GetNotifyClientsResponse
       type: object
@@ -6496,6 +6501,7 @@ components:
         - auth
         - name
         - level
+      description: WebPushのトークンを登録する際の要求構造体
     PostRegisterLineNotifyRequest:
       title: PostRegisterLineNotifyRequest
       type: object
@@ -6531,6 +6537,7 @@ components:
         - token
         - name
         - level
+      description: LineNotifyのトークンを登録する際の要求構造体
     GetNotifyConditionsResponse:
       title: GetNotifyConditionsResponse
       type: object
@@ -6650,10 +6657,11 @@ components:
       required:
         - type
         - msg
+      description: 通報を行う場合の汎用要求構造体
     ScrapeResultStruct:
       title: ScrapeResultStruct
       type: object
-      description: スクレイピング結果
+      description: スクレイピング結果の応答構造体
       x-examples:
         twitter:
           illust:
@@ -6853,6 +6861,7 @@ components:
           maxLength: 500
       required:
         - url
+      description: スクレイピングを行う場合の汎用要求構造体
     PostScrapeResponse:
       title: PostScrapeResponse
       type: object
@@ -7136,10 +7145,11 @@ components:
           $ref: '#/components/schemas/ScrapeResultStruct'
       required:
         - result
+      description: スクレイピングを行う場合の汎用応答構造体
     PostUploadRequest:
       title: PostUploadRequest
       type: object
-      description: ''
+      description: ファイルをアップロードする際の要求構造体
       properties:
         file:
           type: string
@@ -7157,8 +7167,9 @@ components:
         url:
           description: 投稿したファイルのURL(有効期限は1時間とする)
           type: string
+      description: ファイルをアップロードした際の応答構造体
     PostSearchByImageAtAscii2dResponse:
-      description: ''
+      description: Ascii2dを用いて検索する場合の要求構造体
       type: object
       x-examples:
         success:
@@ -7417,6 +7428,7 @@ components:
           example: 1
         author:
           $ref: '#/components/schemas/LightAccountStruct'
+      description: Wikiの記事の応答構造体
     ActivityPubActorStruct:
       description: |-
         ActivityPubのアクター(ユーザー)構造体(仮)
@@ -7801,6 +7813,7 @@ components:
         example:
           nsfw: false
           accuracy: 0.8889
+      description: 画像がNSFWか検証した結果の応答構造体
     PostPredictTagsResponse:
       title: PostPredictTagsResponse
       type: object
@@ -7834,6 +7847,7 @@ components:
           tags:
             - name: kafuu_chino
               accuracy: 0.8889
+      description: 画像からタグを推定した結果の応答構造体
     PostMachineLearningGeneralResponse:
       title: PostMachineLearningGeneralResponse
       type: object
