@@ -5302,7 +5302,7 @@ components:
         example:
           artID: 2
     PostReplaceArtSimulateResponse:
-      description: イラストの置き換えを検証する場合の要求構造体
+      description: イラストの置き換えを検証した場合の応答構造体
       type: object
       x-examples:
         example:
@@ -6045,7 +6045,7 @@ components:
         - illusts
       description: 画像を用いて検索した結果の応答構造体
     PostSearchByImageAtSauceNaoResponse:
-      description: SauceNaoを用いて検索する場合の要求構造体
+      description: SauceNaoを用いて検索した場合の応答構造体
       type: object
       x-examples:
         example-1:
@@ -7169,7 +7169,7 @@ components:
           type: string
       description: ファイルをアップロードした際の応答構造体
     PostSearchByImageAtAscii2dResponse:
-      description: Ascii2dを用いて検索する場合の要求構造体
+      description: Ascii2dを用いて検索した場合の応答構造体
       type: object
       x-examples:
         success:
