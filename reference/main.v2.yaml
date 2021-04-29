@@ -5601,7 +5601,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/CommentStruct'
-      description: イラストに対するコメント一覧が入るコメント構造体
+      description: イラストに対するコメント一覧の応答構造体
     CommentStruct:
       description: コメント情報構造体(読み取り専用)
       type: object
@@ -7366,7 +7366,7 @@ components:
           follows:
             - artistID: 1
               name: 彩電
-      description: なんらかの手段で検索した場合の汎用応答構造体
+      description: タイムラインのフォロー一覧の応答構造体
     WikiArticleStruct:
       title: WikiArticleStruct
       type: object
@@ -7510,7 +7510,7 @@ components:
         - summary
         - icon
     GetActivityPubGeneralResponse:
-      description: ActivityPubのBoxを取得した際等に返される汎用構造体
+      description: ActivityPubのBoxを取得した際等に返される汎用応答構造体
       type: object
       properties:
         '@context':
@@ -7558,7 +7558,7 @@ components:
               name: Another Simple Note
       title: GetActivityPubGeneralResponse
     PostActivityPubGeneralRequest:
-      description: ActivityPubのBox宛へPOSTする場合の汎用構造体
+      description: ActivityPubのBox宛へPOSTする場合の汎用要求構造体
       type: object
       properties:
         '@context':
