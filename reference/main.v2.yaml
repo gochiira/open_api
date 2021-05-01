@@ -271,6 +271,38 @@ paths:
                   password: this_is_only_for_test
         description: ユーザーIDとパスワードをパラメータに取ります
       security: []
+  /accounts/login/reset_password:
+    post:
+      summary: Reset password
+      tags:
+        - accounts
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralMessageResponse'
+      operationId: reissuePassword
+      description: 指定されたメールアドレスにパスワード再発行メールを送信します
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostResetPasswordRequest'
+            examples:
+              admin:
+                value:
+                  mail: dsgamer777@gmail.com
+        description: メールアドレスをリクエストに取ります
+      security: []
+    parameters: []
   /catalog/artists:
     get:
       summary: Get artist list
@@ -8060,6 +8092,17 @@ components:
           artistID: 1
           name: 彩電
       description: 絵師情報の簡易構造体(読み取り専用)
+    PostResetPasswordRequest:
+      title: PostResetPasswordRequest
+      type: object
+      description: パスワードをリセットする際に使う要求構造体
+      x-examples:
+        admin:
+          mail: dsgamer777@gmail.com
+      properties:
+        mail:
+          type: string
+          description: メールアドレス(のみ)
   securitySchemes:
     Authorization:
       type: http
